@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+  <meta http-equiv="content-type" content="text/html;charset=utf-8">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noodp"/>
+  <meta name="author" content="JadeRong">
+  <meta name="description" content="主要分享一些平时学习和开发中用到的知识">
+  
+  
+  <link rel="prev" href="https://rrrwx.github.io/2020/%E5%9F%BA%E7%A1%80%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E4%B8%80/" />
+  <link rel="next" href="https://rrrwx.github.io/2020/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/" />
+  <link rel="canonical" href="https://rrrwx.github.io/2020/%E5%9F%BA%E7%A1%80%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E4%BA%8C/" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+  <meta name="msapplication-TileColor" content="#da532c">
+  <meta name="theme-color" content="#ffffff">
+  <title>
+       
+       
+           java基础学习笔记（二） | JadeRong
+       
+  </title>
+  <meta name="title" content="java基础学习笔记（二） | JadeRong">
+    
+  
+  <link rel="stylesheet" href="/font/iconfont.css">
+  <link rel="stylesheet" href="/css/main.min.css">
+
+
+  
+  
+ 
+
+<script type="application/ld+json">
+ "@context" : "http://schema.org",
+    "@type" : "BlogPosting",
+    "mainEntityOfPage": {
+         "@type": "WebPage",
+         "@id": "https:\/\/rrrwx.github.io"
+    },
+    "articleSection" : "posts",
+    "name" : "java基础学习笔记（二）",
+    "headline" : "java基础学习笔记（二）",
+    "description" : "12.字符编码 System.out.println(\x26#34;系统默认编码：\x26#34;\x2b System.getProperty(\x26#34;file.encoding\x26#34;);\/\/获取本地系统默认编码 \/\/系统默认编码：UTF-8 （从JDK1.9起）  ISO8859-1：一种国际通用的单字节编码，最多只能表示0~255的字符范围，主要在英文传输中使用；\nGBK\/GB2312：中文的国标编码，专门用来表示汉字，是双字节编码，如果在此编码器中出现了中文，则使用ISO8859-1编码。GBK可以表示简体中文和繁体中文，而GB2312只能表示简体中文，GBK兼容GBK2312；\nUNICODE：十六进制编码，可以准确地表示出任何语言文字，此编码不兼容ISO8859-1编码；\nUTF-8编码：由于UNICODE不支持ISO8859-1编码，而且占用空间较多，英文字母也需要双字节去编码，不便于存储和传输，于是产生了UTF编码。UTF兼容ISO8859-1编码，同时也可以用来表示所有语言字符，但是UTF编码是不定长的编码，每一个字符的长度从1~6个字节不等，一般在中文网页使用此编码，可以节省空间。\n 13.String.intern() https:\/\/blog.csdn.net\/tyyking\/article\/details\/82496901\n new String都是在堆上创建字符串对象。当调用 intern() 方法时，编译器会将字符串添加到常量池中（stringTable维护），并返回指向该常量的引用。\nJDK 1.7后，intern方法还是会先去查询常量池中是否有已经存在，如果存在，则返回常量池中的引用，这一点与之前没有区别，区别在于，如果在常量池找不到对应的字符串，则不会再将字符串拷贝到常量池，而只是在常量池中生成一个对原字符串的引用。简单的说，就是往常量池放的东西变了：原来在常量池中找不到时，复制一个副本放到常量池，1.7后则是将在堆上的地址引用复制到常量池。\n \/\/Q：下列程序的输出结果： String s1 = “abc”; String s2 = “abc”; System.out.println(s1 == s2); \/\/A：true，均指向常量池中对象。  \/\/Q：下列程序的输出结果： String s1 = new String(“abc”); String s2 = new String(“abc”); System.out.println(s1 == s2); \/\/A：false，两个引用指向堆中的不同对象。  \/\/Q：下列程序的输出结果： String s1 = “abc”; String s2 = “a”; String s3 = “bc”; String s4 = s2 \x2b s3; System.",
+    "inLanguage" : "en-us",
+    "author" : "JadeRong",
+    "creator" : "JadeRong",
+    "publisher": "JadeRong",
+    "accountablePerson" : "JadeRong",
+    "copyrightHolder" : "JadeRong",
+    "copyrightYear" : "2020",
+    "datePublished": "2020-02-15 00:15:36 \x2b0800 CST",
+    "dateModified" : "2020-02-15 00:15:36 \x2b0800 CST",
+    "url" : "https:\/\/rrrwx.github.io\/2020\/%E5%9F%BA%E7%A1%80%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E4%BA%8C\/",
+    "wordCount" : "175",
+    "keywords" : [ "java","学习笔记", "JadeRong"]
+}
+</script>
+
+</head>
+
+  
+
+
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  <body class="">
+    <div class="wrapper">
+        <nav class="navbar">
+    <div class="container">
+        <div class="navbar-header header-logo">
+            <a href="https://rrrwx.github.io">JadeRong</a>&nbsp;
+        	<a href="javascript:void(0);" class="theme-switch"><i class="iconfont icon-table-lamp"></i></a>
+
+        </div>
+        <div class="menu navbar-right">
+                
+                
+                <a class="menu-item" href="/posts/" title="">Blogs</a>
+                
+                <a class="menu-item" href="/categories/" title="">Categories</a>
+                
+                <a class="menu-item" href="/tags/" title="">Tags</a>
+                
+                <a class="menu-item" href="/about/" title="">About</a>
+                
+        </div>
+    </div>
+</nav>
+<nav class="navbar-mobile" id="nav-mobile" style="display: none">
+     <div class="container">
+        <div class="navbar-header">
+            <div>  <a href="javascript:void(0);" class="theme-switch"><i class="iconfont icon-table-lamp"></i></a>&nbsp;<a href="https://rrrwx.github.io">JadeRong</a></div>
+            <div class="menu-toggle">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+     
+          <div class="menu" id="mobile-menu">
+                
+                
+                <a class="menu-item" href="/posts/" title="">Blogs</a>
+                
+                <a class="menu-item" href="/categories/" title="">Categories</a>
+                
+                <a class="menu-item" href="/tags/" title="">Tags</a>
+                
+                <a class="menu-item" href="/about/" title="">About</a>
+                
+        </div>
+    </div>
+</nav>
+    	 <main class="main">
+          <div class="container">
+      		
+<article class="post-warp" itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">java基础学习笔记（二）</h1>
+
+
+
+                Written by <a itemprop="name" href="https://rrrwx.github.io" rel="author">JadeRong</a>, included in <i class="iconfont icon-folder"></i>
+
+                <span class="post-category">
+                            <a href="https://rrrwx.github.io/categories/java%E5%AD%A6%E4%B9%A0/"> java学习 </a>
+                            
+                    </span>
+
+        
+        <h1 id="wc" style="font-size: 0.75rem;text-align: left;">约 175 个字    |    预计阅读 1 分钟    |    本文总阅读量<span id="busuanzi_value_page_pv"></span>次</h1>
+    </header>
+    <div class="post-content">
+        
+
+        
+
+        
+        
+     
+          
+          
+          
+
+          
+          
+          
+
+          <h4 id="12字符编码"><em>12.字符编码</em></h4>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java">System<span style="color:#f92672">.</span><span style="color:#a6e22e">out</span><span style="color:#f92672">.</span><span style="color:#a6e22e">println</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;系统默认编码：&#34;</span><span style="color:#f92672">+</span>
+         System<span style="color:#f92672">.</span><span style="color:#a6e22e">getProperty</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;file.encoding&#34;</span><span style="color:#f92672">);</span><span style="color:#75715e">//获取本地系统默认编码
+</span><span style="color:#75715e">//系统默认编码：UTF-8 （从JDK1.9起）
+</span></code></pre></div><blockquote>
+<p>ISO8859-1：一种国际通用的单字节编码，最多只能表示0~255的字符范围，主要在英文传输中使用；</p>
+<p>GBK/GB2312：中文的国标编码，专门用来表示汉字，是双字节编码，如果在此编码器中出现了中文，则使用ISO8859-1编码。GBK可以表示简体中文和繁体中文，而GB2312只能表示简体中文，GBK兼容GBK2312；</p>
+<p>UNICODE：十六进制编码，可以准确地表示出任何语言文字，此编码不兼容ISO8859-1编码；</p>
+<p>UTF-8编码：由于UNICODE不支持ISO8859-1编码，而且占用空间较多，英文字母也需要双字节去编码，不便于存储和传输，于是产生了UTF编码。UTF兼容ISO8859-1编码，同时也可以用来表示所有语言字符，但是UTF编码是不定长的编码，每一个字符的长度从1~6个字节不等，一般在中文网页使用此编码，可以节省空间。</p>
+</blockquote>
+<h4 id="13stringintern"><em>13.String.intern()</em></h4>
+<p><a href="https://blog.csdn.net/tyyking/article/details/82496901">https://blog.csdn.net/tyyking/article/details/82496901</a></p>
+<blockquote>
+<p><code>new String</code>都是在堆上创建字符串对象。当调用 intern() 方法时，编译器会将字符串添加到常量池中（stringTable维护），并返回指向该常量的引用。</p>
+<p>JDK 1.7后，intern方法还是会先去查询常量池中是否有已经存在，如果存在，则返回常量池中的引用，这一点与之前没有区别，区别在于，如果在常量池找不到对应的字符串，则不会再将字符串拷贝到常量池，而只是在常量池中生成一个对原字符串的引用。简单的说，就是往常量池放的东西变了：原来在常量池中找不到时，复制一个副本放到常量池，1.7后则是将在堆上的地址引用复制到常量池。</p>
+</blockquote>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#75715e">//Q：下列程序的输出结果：
+</span><span style="color:#75715e"></span>String s1 <span style="color:#f92672">=</span> <span style="color:#960050;background-color:#1e0010">“</span>abc<span style="color:#960050;background-color:#1e0010">”</span><span style="color:#f92672">;</span>
+String s2 <span style="color:#f92672">=</span> <span style="color:#960050;background-color:#1e0010">“</span>abc<span style="color:#960050;background-color:#1e0010">”</span><span style="color:#f92672">;</span>
+System<span style="color:#f92672">.</span><span style="color:#a6e22e">out</span><span style="color:#f92672">.</span><span style="color:#a6e22e">println</span><span style="color:#f92672">(</span>s1 <span style="color:#f92672">==</span> s2<span style="color:#f92672">);</span>
+<span style="color:#75715e">//A：true，均指向常量池中对象。
+</span><span style="color:#75715e"></span>
+<span style="color:#75715e">//Q：下列程序的输出结果：
+</span><span style="color:#75715e"></span>String s1 <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> String<span style="color:#f92672">(</span><span style="color:#960050;background-color:#1e0010">“</span>abc<span style="color:#960050;background-color:#1e0010">”</span><span style="color:#f92672">);</span>
+String s2 <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> String<span style="color:#f92672">(</span><span style="color:#960050;background-color:#1e0010">“</span>abc<span style="color:#960050;background-color:#1e0010">”</span><span style="color:#f92672">);</span>
+System<span style="color:#f92672">.</span><span style="color:#a6e22e">out</span><span style="color:#f92672">.</span><span style="color:#a6e22e">println</span><span style="color:#f92672">(</span>s1 <span style="color:#f92672">==</span> s2<span style="color:#f92672">);</span>
+<span style="color:#75715e">//A：false，两个引用指向堆中的不同对象。
+</span><span style="color:#75715e"></span>
+<span style="color:#75715e">//Q：下列程序的输出结果：
+</span><span style="color:#75715e"></span>String s1 <span style="color:#f92672">=</span> <span style="color:#960050;background-color:#1e0010">“</span>abc<span style="color:#960050;background-color:#1e0010">”</span><span style="color:#f92672">;</span>
+String s2 <span style="color:#f92672">=</span> <span style="color:#960050;background-color:#1e0010">“</span>a<span style="color:#960050;background-color:#1e0010">”</span><span style="color:#f92672">;</span>
+String s3 <span style="color:#f92672">=</span> <span style="color:#960050;background-color:#1e0010">“</span>bc<span style="color:#960050;background-color:#1e0010">”</span><span style="color:#f92672">;</span>
+String s4 <span style="color:#f92672">=</span> s2 <span style="color:#f92672">+</span> s3<span style="color:#f92672">;</span>
+System<span style="color:#f92672">.</span><span style="color:#a6e22e">out</span><span style="color:#f92672">.</span><span style="color:#a6e22e">println</span><span style="color:#f92672">(</span>s1 <span style="color:#f92672">==</span> s4<span style="color:#f92672">);</span>
+<span style="color:#75715e">//A：false，因为s2+s3实际上是使用StringBuilder.append来完成，会生成不同的对象。
+</span><span style="color:#75715e"></span>
+<span style="color:#75715e">//Q：下列程序的输出结果：
+</span><span style="color:#75715e"></span>String s1 <span style="color:#f92672">=</span> <span style="color:#960050;background-color:#1e0010">“</span>abc<span style="color:#960050;background-color:#1e0010">”</span><span style="color:#f92672">;</span>
+<span style="color:#66d9ef">final</span> String s2 <span style="color:#f92672">=</span> <span style="color:#960050;background-color:#1e0010">“</span>a<span style="color:#960050;background-color:#1e0010">”</span><span style="color:#f92672">;</span>
+<span style="color:#66d9ef">final</span> String s3 <span style="color:#f92672">=</span> <span style="color:#960050;background-color:#1e0010">“</span>bc<span style="color:#960050;background-color:#1e0010">”</span><span style="color:#f92672">;</span>
+String s4 <span style="color:#f92672">=</span> s2 <span style="color:#f92672">+</span> s3<span style="color:#f92672">;</span>
+System<span style="color:#f92672">.</span><span style="color:#a6e22e">out</span><span style="color:#f92672">.</span><span style="color:#a6e22e">println</span><span style="color:#f92672">(</span>s1 <span style="color:#f92672">==</span> s4<span style="color:#f92672">);</span>
+<span style="color:#75715e">//A：true，因为final变量在编译后会直接替换成对应的值，所以实际上等于s4=”a”+”bc”，而这种情况下，编译器会直接合并为s4=”abc”，所以最终s1==s4。
+</span><span style="color:#75715e"></span>
+<span style="color:#75715e">//Q：下列程序的输出结果：
+</span><span style="color:#75715e"></span>String s <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> String<span style="color:#f92672">(</span><span style="color:#960050;background-color:#1e0010">“</span>abc<span style="color:#960050;background-color:#1e0010">”</span><span style="color:#f92672">);</span>
+String s1 <span style="color:#f92672">=</span> <span style="color:#960050;background-color:#1e0010">“</span>abc<span style="color:#960050;background-color:#1e0010">”</span><span style="color:#f92672">;</span>
+String s2 <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> String<span style="color:#f92672">(</span><span style="color:#960050;background-color:#1e0010">“</span>abc<span style="color:#960050;background-color:#1e0010">”</span><span style="color:#f92672">);</span>
+System<span style="color:#f92672">.</span><span style="color:#a6e22e">out</span><span style="color:#f92672">.</span><span style="color:#a6e22e">println</span><span style="color:#f92672">(</span>s <span style="color:#f92672">==</span> s1<span style="color:#f92672">.</span><span style="color:#a6e22e">intern</span><span style="color:#f92672">());</span>
+System<span style="color:#f92672">.</span><span style="color:#a6e22e">out</span><span style="color:#f92672">.</span><span style="color:#a6e22e">println</span><span style="color:#f92672">(</span>s <span style="color:#f92672">==</span> s2<span style="color:#f92672">.</span><span style="color:#a6e22e">intern</span><span style="color:#f92672">());</span>
+System<span style="color:#f92672">.</span><span style="color:#a6e22e">out</span><span style="color:#f92672">.</span><span style="color:#a6e22e">println</span><span style="color:#f92672">(</span>s1 <span style="color:#f92672">==</span> s2<span style="color:#f92672">.</span><span style="color:#a6e22e">intern</span><span style="color:#f92672">());</span>
+<span style="color:#75715e">//A：false，false，true。
+</span></code></pre></div><h4 id="14类加载的准备阶段"><em>14.类加载的准备阶段</em></h4>
+<p><a href="https://www.cnblogs.com/chanshuyi/p/jvm_serial_07_jvm_class_loader_mechanism.html">https://www.cnblogs.com/chanshuyi/p/jvm_serial_07_jvm_class_loader_mechanism.html</a></p>
+<blockquote>
+<p><strong>当完成字节码文件的校验之后，JVM 便会开始为类变量分配内存并初始化。这里需要注意两个关键点，即内存分配的对象以及初始化的类型。</strong></p>
+<p><code>内存分配的对象：</code>Java 中的变量有「<code>类变量</code>」和「<code>类成员变量</code>」两种类型，「类变量」指的是被 static 修饰的变量，而其他所有类型的变量都属于「类成员变量」。在准备阶段，JVM 只会为「类变量」分配内存，而不会为「类成员变量」分配内存。「类成员变量」的内存分配需要等到初始化阶段才开始。</p>
+<p><code>初始化的类型：</code>在准备阶段，JVM 会为<code>类变量</code>分配内存，并为其初始化。但是这里的初始化指的是为变量赋予 Java 语言中该数据类型的零值，而不是用户代码里初始化的值。但如果一个变量是常量（被 static final 修饰）的话，那么在准备阶段，属性便会被赋予用户希望的值。</p>
+</blockquote>
+<h4 id="15-java类体中只能有变量定义和成员方法的定义不能有单独的语句要放在方法体里">15. Java类体中只能有变量定义和成员方法的定义，不能有单独的语句，要放在方法体里*</h4>
+<blockquote>
+<p>在Java 中创建类之后，还需要为类添加类体，类体主由成员变量和方法两部分组成。</p>
+<p>在Java 的类中定义成员变量和方法的类声明格式如下：</p>
+<ul>
+<li>成员变量名1、成员变量名2……成员变量名n 是类的成员变量，数据类型可以是基本的数据类型，也可以是对象类型。</li>
+<li>成员方法名1 是类的成员方法，返回值类型是通过该方法获得值的数据类型，方法体是该方法要执行的语句，返回值就是调用该方法得到的值。</li>
+<li>成员方法名2 是类的成员方法，void 表示该方法没有返回值，方法体是该方法要执行的语句。</li>
+</ul>
+</blockquote>
+<h4 id="16类加载相关"><em>16.类加载相关</em></h4>
+<p><a href="https://www.cnblogs.com/chanshuyi/p/jvm_serial_07_jvm_class_loader_mechanism.html">https://www.cnblogs.com/chanshuyi/p/jvm_serial_07_jvm_class_loader_mechanism.html</a></p>
+<blockquote>
+<p>对于静态字段，只有直接定义这个字段的类才会被初始化（执行静态代码块）。因此通过其子类来引用父类中定义的静态字段，只会触发父类的初始化而不会触发子类的初始化。</p>
+</blockquote>
+<h5 id="一个类的执行顺序大概可以按照如下步骤">一个类的执行顺序大概可以按照如下步骤：</h5>
+<blockquote>
+<p><code>1.确定类变量的初始值。</code>在类加载的准备阶段，JVM 会为类变量初始化零值，这时候类变量会有一个初始的零值。如果是被 final 修饰的类变量，则直接会被初始成用户想要的值。</p>
+<p><code>2.初始化入口方法。</code>当进入类加载的初始化阶段后，JVM 会寻找整个 main 方法入口，从而初始化 main 方法所在的整个类。当需要对一个类进行初始化时，会首先初始化类构造器（），之后初始化对象构造器（）。</p>
+<p><code>3.初始化类构造器。</code>JVM 会按顺序收集类变量的赋值语句、静态代码块，最终组成类构造器由 JVM 执行。</p>
+<p><code>4.初始化对象构造器。</code>JVM 会按照收集成员变量的赋值语句、普通代码块，最后收集构造方法，将它们组成对象构造器，最终由 JVM 执行。</p>
+<p>如果在初始化 main 方法所在类的时候遇到了其他类 的初始化，那么就先加载对应的类，加载完成之后返回。如此反复循环，最终返回 main 方法所在类。</p>
+</blockquote>
+
+    </div>
+
+
+
+    <div class="post-copyright">
+                
+        
+
+
+        <section>
+            <p class="share-item">
+                <span>Share :</span>
+                
+                <span>
+
+      
+        <a href="//twitter.com/share?url=https%3a%2f%2frrrwx.github.io%2f2020%2f%25E5%259F%25BA%25E7%25A1%2580%25E5%25AD%25A6%25E4%25B9%25A0%25E7%25AC%2594%25E8%25AE%25B0%25E4%25BA%258C%2f&amp;text=java%e5%9f%ba%e7%a1%80%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0%ef%bc%88%e4%ba%8c%ef%bc%89&amp;via=" target="_blank" title="Share on Twitter">
+          <i class="iconfont icon-twitter"></i>
+        </a>
+        
+
+      
+      
+        <a href="//www.facebook.com/sharer/sharer.php?u=https%3a%2f%2frrrwx.github.io%2f2020%2f%25E5%259F%25BA%25E7%25A1%2580%25E5%25AD%25A6%25E4%25B9%25A0%25E7%25AC%2594%25E8%25AE%25B0%25E4%25BA%258C%2f" target="_blank" title="Share on Facebook">
+          <i class="iconfont icon-facebook"></i>
+        </a>
+        
+      
+      
+      
+      
+      
+      
+        
+      
+        
+      
+
+          
+
+          
+
+          
+        <a href="//www.douban.com/recommend/?url=https%3a%2f%2frrrwx.github.io%2f2020%2f%25E5%259F%25BA%25E7%25A1%2580%25E5%25AD%25A6%25E4%25B9%25A0%25E7%25AC%2594%25E8%25AE%25B0%25E4%25BA%258C%2f&amp;title=java%e5%9f%ba%e7%a1%80%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0%ef%bc%88%e4%ba%8c%ef%bc%89" target="_blank" title="Share on Douban ">
+            <i class="iconfont icon-douban"></i>
+          </a>
+          
+
+          
+        <a href="//service.weibo.com/share/share.php?url=https%3a%2f%2frrrwx.github.io%2f2020%2f%25E5%259F%25BA%25E7%25A1%2580%25E5%25AD%25A6%25E4%25B9%25A0%25E7%25AC%2594%25E8%25AE%25B0%25E4%25BA%258C%2f&amp;appkey=&amp;title=java%e5%9f%ba%e7%a1%80%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0%ef%bc%88%e4%ba%8c%ef%bc%89" target="_blank" title="Share on Douban ">
+            <i class="iconfont icon-weibo"></i>
+          </a>
+          
+
+</span>
+                
+            </p>
+        </section>
+
+
+        <section>
+            <p class="copyright-item">
+                <span>Updated </span>
+                <span class="post-time">
+                on 
+                <time datetime=2020-02-15 itemprop="datePublished">February 15, 2020</time>
+                </span>
+
+            </p>
+        </section>
+    </div>
+
+  
+    <div class="post-tags">
+        
+            <section>
+            
+            <span class="tag"><a href="https://rrrwx.github.io/tags/java/">
+                    <i class="iconfont icon-tag"></i>java</a></span>
+            
+            <span class="tag"><a href="https://rrrwx.github.io/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">
+                    <i class="iconfont icon-tag"></i>学习笔记</a></span>
+            
+            </section>
+        
+        <section>
+                <a href="javascript:window.history.back();">back</a></span> · 
+                <span><a href="https://rrrwx.github.io">home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav">
+        
+        <a href="https://rrrwx.github.io/2020/%E5%9F%BA%E7%A1%80%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E4%B8%80/" class="prev" rel="prev" title="java基础学习笔记（一）"><i class="iconfont icon-left"></i>&nbsp;java基础学习笔记（一）</a>
+         
+        
+        <a href="https://rrrwx.github.io/2020/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/" class="next" rel="next" title="java正则表达式">java正则表达式&nbsp;<i class="iconfont icon-right"></i></a>
+        
+    </div>
+
+    <div class="post-comment">
+          
+                 
+          
+    </div>
+</article>
+          </div>
+		   </main>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="">
+                <i class="fas fa-arrow-up fa-fw"></i>
+            </a>
+        </div>
+
+      <footer class="footer">
+
+
+
+
+    <div class="copyright">
+
+            <div class="footer-line">
+                &copy;<i class="far fa-copyright fa-fw"></i>&nbsp;<span itemprop="copyrightYear">2020</span>&nbsp;&nbsp;<span class="author" itemprop="copyrightHolder"><a href="https://rrrwx.github.io">JadeRong</a></span>&nbsp;|&nbsp;<span class="license">Released under <a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span>
+                &nbsp;|&nbsp;<span>Powered by <a href="https://gohugo.io/" target="_blank" rel="external nofollow">Hugo</a> & <a href="https://github.com/liuzc/leaveit" target="_blank" rel="external nofollow">LeaveIt</a></span>
+            </div>
+
+
+    </div>
+</footer>
+
+
+
+
+
+
+
+
+
+
+
+
+    
+    
+    <script src="/js/vendor_no_gallery.min.js" async=""></script>
+    
+  
+
+
+
+
+     </div>
+  </body>
+</html>

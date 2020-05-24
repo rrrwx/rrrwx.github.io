@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+  <meta http-equiv="content-type" content="text/html;charset=utf-8">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noodp"/>
+  <meta name="author" content="JadeRong">
+  <meta name="description" content="主要分享一些平时学习和开发中用到的知识">
+  
+  
+  <link rel="prev" href="https://rrrwx.github.io/2020/dql%E6%95%B0%E6%8D%AE%E6%9F%A5%E8%AF%A2%E8%AF%AD%E8%A8%80/" />
+  <link rel="next" href="https://rrrwx.github.io/2020/%E4%BA%8C%E5%A4%9A%E8%A1%A8%E6%9F%A5%E8%AF%A2/" />
+  <link rel="canonical" href="https://rrrwx.github.io/2020/%E4%B8%80%E7%BA%A6%E6%9D%9F/" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+  <meta name="msapplication-TileColor" content="#da532c">
+  <meta name="theme-color" content="#ffffff">
+  <title>
+       
+       
+           SQL语法之约束 | JadeRong
+       
+  </title>
+  <meta name="title" content="SQL语法之约束 | JadeRong">
+    
+  
+  <link rel="stylesheet" href="/font/iconfont.css">
+  <link rel="stylesheet" href="/css/main.min.css">
+
+
+  
+  
+ 
+
+<script type="application/ld+json">
+ "@context" : "http://schema.org",
+    "@type" : "BlogPosting",
+    "mainEntityOfPage": {
+         "@type": "WebPage",
+         "@id": "https:\/\/rrrwx.github.io"
+    },
+    "articleSection" : "posts",
+    "name" : "SQL语法之约束",
+    "headline" : "SQL语法之约束",
+    "description" : "https:\/\/edu.aliyun.com\/roadmap\/java?spm=a2c6h.12999620.1371257.1.5a195738ZJjjex#part1\n约束 约束是使用在列上，用于约束列的\n参考 https:\/\/blog.csdn.net\/f45056231p\/article\/details\/81070437\n主键、外键和索引的区别？\n    主键 外键 索引     定义： 唯一标识一条记录，不能有重复的，不允许为空 表的外键是另一表的主键, 外键可以有重复的, 可以是空值 该字段没有重复值，但可以有一个空值   作用： 用来保证数据完整性 用来和其他表建立联系用的 是提高查询排序的速度   个数： 主键只能有一个 一个表可以有多个外键 一个表可以有多个惟一索引    1. 主键约束（唯一标识）  关系型数据库中的一条记录中有若干个属性，若其中某一个属性组(注意是组)能唯一标识一条记录，该属性组就可以成为一个主键\n  特点：唯一、非空、可引用  -- 设置主键 -- 方法一 create table stu ( sid int primary key, name varchar(50), age int ) ; -- 方法二 create table stu ( sid int, name varchar(50), age int, primary key (sid) ); -- 方法三 alter table stu add primary key(sid); -- 删除主键 alter table stu drop primary key; 2.",
+    "inLanguage" : "en-us",
+    "author" : "JadeRong",
+    "creator" : "JadeRong",
+    "publisher": "JadeRong",
+    "accountablePerson" : "JadeRong",
+    "copyrightHolder" : "JadeRong",
+    "copyrightYear" : "2020",
+    "datePublished": "2020-05-16 08:30:48 \x2b0800 CST",
+    "dateModified" : "2020-05-16 08:30:48 \x2b0800 CST",
+    "url" : "https:\/\/rrrwx.github.io\/2020\/%E4%B8%80%E7%BA%A6%E6%9D%9F\/",
+    "wordCount" : "437",
+    "keywords" : [ "学习笔记","mysql","SQL语法", "JadeRong"]
+}
+</script>
+
+</head>
+
+  
+
+
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  <body class="">
+    <div class="wrapper">
+        <nav class="navbar">
+    <div class="container">
+        <div class="navbar-header header-logo">
+            <a href="https://rrrwx.github.io">JadeRong</a>&nbsp;
+        	<a href="javascript:void(0);" class="theme-switch"><i class="iconfont icon-table-lamp"></i></a>
+
+        </div>
+        <div class="menu navbar-right">
+                
+                
+                <a class="menu-item" href="/posts/" title="">Blogs</a>
+                
+                <a class="menu-item" href="/categories/" title="">Categories</a>
+                
+                <a class="menu-item" href="/tags/" title="">Tags</a>
+                
+                <a class="menu-item" href="/about/" title="">About</a>
+                
+        </div>
+    </div>
+</nav>
+<nav class="navbar-mobile" id="nav-mobile" style="display: none">
+     <div class="container">
+        <div class="navbar-header">
+            <div>  <a href="javascript:void(0);" class="theme-switch"><i class="iconfont icon-table-lamp"></i></a>&nbsp;<a href="https://rrrwx.github.io">JadeRong</a></div>
+            <div class="menu-toggle">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+     
+          <div class="menu" id="mobile-menu">
+                
+                
+                <a class="menu-item" href="/posts/" title="">Blogs</a>
+                
+                <a class="menu-item" href="/categories/" title="">Categories</a>
+                
+                <a class="menu-item" href="/tags/" title="">Tags</a>
+                
+                <a class="menu-item" href="/about/" title="">About</a>
+                
+        </div>
+    </div>
+</nav>
+    	 <main class="main">
+          <div class="container">
+      		
+<article class="post-warp" itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">SQL语法之约束</h1>
+
+
+
+                Written by <a itemprop="name" href="https://rrrwx.github.io" rel="author">JadeRong</a>, included in <i class="iconfont icon-folder"></i>
+
+                <span class="post-category">
+                            <a href="https://rrrwx.github.io/categories/mysql%E5%AD%A6%E4%B9%A0/"> mysql学习 </a>
+                            <a href="https://rrrwx.github.io/categories/sql%E8%AF%AD%E6%B3%95/"> SQL语法 </a>
+                            
+                    </span>
+
+        
+        <h1 id="wc" style="font-size: 0.75rem;text-align: left;">约 437 个字    |    预计阅读 3 分钟    |    本文总阅读量<span id="busuanzi_value_page_pv"></span>次</h1>
+    </header>
+    <div class="post-content">
+        
+
+        
+
+        
+        
+     
+          
+          
+          
+
+          
+          
+          
+
+          <p><a href="https://edu.aliyun.com/roadmap/java?spm=a2c6h.12999620.1371257.1.5a195738ZJjjex#part1">https://edu.aliyun.com/roadmap/java?spm=a2c6h.12999620.1371257.1.5a195738ZJjjex#part1</a></p>
+<h1 id="约束">约束</h1>
+<p><strong>约束是使用在列上，用于约束列的</strong></p>
+<p>参考 <a href="https://blog.csdn.net/f45056231p/article/details/81070437">https://blog.csdn.net/f45056231p/article/details/81070437</a></p>
+<p>主键、外键和索引的区别？</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>主键</th>
+<th>外键</th>
+<th>索引</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>定义：</td>
+<td>唯一标识一条记录，不能有重复的，不允许为空</td>
+<td>表的外键是另一表的主键, 外键可以有重复的, 可以是空值</td>
+<td>该字段没有重复值，但可以有一个空值</td>
+</tr>
+<tr>
+<td>作用：</td>
+<td>用来保证数据完整性</td>
+<td>用来和其他表建立联系用的</td>
+<td>是提高查询排序的速度</td>
+</tr>
+<tr>
+<td>个数：</td>
+<td>主键只能有一个</td>
+<td>一个表可以有多个外键</td>
+<td>一个表可以有多个惟一索引</td>
+</tr>
+</tbody>
+</table>
+<h2 id="1-主键约束唯一标识">1. 主键约束（唯一标识）</h2>
+<blockquote>
+<p>关系型数据库中的一条记录中有若干个属性，若其中某一个属性组(注意是组)能唯一标识一条记录，该属性组就可以成为一个主键</p>
+</blockquote>
+<ul>
+<li>特点：<strong>唯一、非空、可引用</strong></li>
+</ul>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-SQL" data-lang="SQL"><span style="color:#75715e">-- 设置主键
+</span><span style="color:#75715e">-- 方法一
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">create</span> <span style="color:#66d9ef">table</span> stu (
+  sid int <span style="color:#66d9ef">primary</span> <span style="color:#66d9ef">key</span>,
+  name varchar(<span style="color:#ae81ff">50</span>),
+  age int
+) ;
+<span style="color:#75715e">-- 方法二
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">create</span> <span style="color:#66d9ef">table</span> stu (
+	sid int,
+  name varchar(<span style="color:#ae81ff">50</span>),
+  age int,
+  <span style="color:#66d9ef">primary</span> <span style="color:#66d9ef">key</span> (sid)
+);
+<span style="color:#75715e">-- 方法三
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">alter</span> <span style="color:#66d9ef">table</span> stu <span style="color:#66d9ef">add</span> <span style="color:#66d9ef">primary</span> <span style="color:#66d9ef">key</span>(sid);
+
+<span style="color:#75715e">-- 删除主键
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">alter</span> <span style="color:#66d9ef">table</span> stu <span style="color:#66d9ef">drop</span> <span style="color:#66d9ef">primary</span> <span style="color:#66d9ef">key</span>;
+</code></pre></div><h2 id="2-主键自增长">2. 主键自增长</h2>
+<ul>
+<li>使用auto_increment实现自增长，存记录时如果设置主键值为null，则自动自增，因此真实主键值不为空；</li>
+<li>主键需要是整型int；</li>
+</ul>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-SQL" data-lang="SQL"><span style="color:#66d9ef">create</span> <span style="color:#66d9ef">table</span> stu(
+  sid int <span style="color:#66d9ef">primary</span> <span style="color:#66d9ef">key</span> auto_increment,
+  name varchar(<span style="color:#ae81ff">50</span>),
+  age int
+);
+
+<span style="color:#75715e">-- 此时插入记录时候可以使用null，但是auto_increment会自动实现自增
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">insert</span> <span style="color:#66d9ef">into</span> stu <span style="color:#66d9ef">values</span> (
+  <span style="color:#66d9ef">null</span>, <span style="color:#e6db74">&#39;zhangSan&#39;</span>, <span style="color:#ae81ff">18</span>
+);
+</code></pre></div><h2 id="3-非空约束">3. 非空约束</h2>
+<ul>
+<li>使用<strong>NOT NULL</strong>实现非空约束</li>
+</ul>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#66d9ef">create</span> <span style="color:#66d9ef">table</span> stu (
+  sid int <span style="color:#66d9ef">primary</span> <span style="color:#66d9ef">key</span>,
+  name varchar(<span style="color:#ae81ff">50</span>) <span style="color:#66d9ef">not</span> <span style="color:#66d9ef">null</span>,
+  age int
+);
+</code></pre></div><h2 id="4-唯一性约束">4. 唯一性约束</h2>
+<ul>
+<li>使用<strong>UNIQUE</strong>实现唯一性约束</li>
+<li>可以和非空约束同时存在</li>
+</ul>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#66d9ef">create</span> <span style="color:#66d9ef">table</span> stu (
+  sid int <span style="color:#66d9ef">primary</span> <span style="color:#66d9ef">key</span>,
+  name varchar(<span style="color:#ae81ff">50</span>) <span style="color:#66d9ef">not</span> <span style="color:#66d9ef">null</span> <span style="color:#66d9ef">unique</span>,
+  age int <span style="color:#66d9ef">not</span> <span style="color:#66d9ef">null</span>
+);
+</code></pre></div><h2 id="5-概念模型">5. 概念模型</h2>
+<ul>
+<li>对象模型：类似于java中的domain，例如User、Student</li>
+<li>关系模型：数据库中的表的概念（只能多方引用一方，而且只能引用主键，而不是一整行记录）
+<ul>
+<li>1对1</li>
+<li>1对多</li>
+<li>多对多</li>
+</ul>
+</li>
+<li>互相引用</li>
+</ul>
+<h2 id="6-外键">6. 外键</h2>
+<ul>
+<li>外键必须是另一张表（或本表）的主键</li>
+<li>外键可以不唯一</li>
+<li>外键可以重复</li>
+<li>外键可以为空</li>
+</ul>
+<h2 id="7-数据库的对应关系">7. 数据库的对应关系</h2>
+<h3 id="71-多对一关系最常见">7.1 多对一关系（最常见）</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#75715e">-- 下面的dept和emp是一个“多对一”的例子
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">create</span> <span style="color:#66d9ef">table</span> <span style="color:#66d9ef">if</span> <span style="color:#66d9ef">not</span> <span style="color:#66d9ef">exists</span> dept(
+		deptno int <span style="color:#66d9ef">primary</span> <span style="color:#66d9ef">key</span>,
+    dname varchar(<span style="color:#ae81ff">50</span>),
+    loc varchar(<span style="color:#ae81ff">50</span>)
+);
+
+<span style="color:#75715e">-- 这里的外键deptno引用的是表dept的主键
+</span><span style="color:#75715e">-- 外键mgr引用的是自身表中的主键
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">create</span> <span style="color:#66d9ef">table</span> <span style="color:#66d9ef">if</span> <span style="color:#66d9ef">not</span> <span style="color:#66d9ef">exists</span> emp(
+		empno int <span style="color:#66d9ef">primary</span> <span style="color:#66d9ef">key</span>,
+    ename varchar(<span style="color:#ae81ff">50</span>),
+    job varchar(<span style="color:#ae81ff">50</span>),
+    mgr int,
+    hiredate date,
+    sal decimal(<span style="color:#ae81ff">7</span>,<span style="color:#ae81ff">2</span>),
+    COMM decimal(<span style="color:#ae81ff">7</span>,<span style="color:#ae81ff">2</span>),
+    deptno int,
+    <span style="color:#66d9ef">constraint</span> fk_emp <span style="color:#66d9ef">foreign</span> <span style="color:#66d9ef">key</span>(mgr) <span style="color:#66d9ef">references</span> emp(empno),
+    <span style="color:#66d9ef">constraint</span> fk_emp_dept <span style="color:#66d9ef">foreign</span> <span style="color:#66d9ef">key</span>(deptno) <span style="color:#66d9ef">references</span> dept(deptno)
+);
+</code></pre></div><h3 id="72-一对一关系">7.2 一对一关系</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#75715e">-- 如何实现一对一的关系模型？
+</span><span style="color:#75715e">-- 将外键设置为自身主键，然后引用另一个表的主键
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">create</span> <span style="color:#66d9ef">table</span> <span style="color:#66d9ef">if</span> <span style="color:#66d9ef">not</span> <span style="color:#66d9ef">exists</span> hasband (
+		hid int <span style="color:#66d9ef">primary</span> <span style="color:#66d9ef">key</span> auto_increment,
+  	hname varchar(<span style="color:#ae81ff">50</span>)
+);
+<span style="color:#66d9ef">insert</span> <span style="color:#66d9ef">into</span> hasband <span style="color:#66d9ef">values</span> (<span style="color:#66d9ef">null</span>, <span style="color:#e6db74">&#39;zhangSan&#39;</span>);
+<span style="color:#66d9ef">insert</span> <span style="color:#66d9ef">into</span> hasband <span style="color:#66d9ef">values</span> (<span style="color:#66d9ef">null</span>, <span style="color:#e6db74">&#39;liSi&#39;</span>);
+<span style="color:#75715e">-- 由于auto_increment的作用，这里设置的null会自动填充
+</span><span style="color:#75715e"></span>
+<span style="color:#66d9ef">create</span> <span style="color:#66d9ef">table</span> <span style="color:#66d9ef">if</span> <span style="color:#66d9ef">not</span> <span style="color:#66d9ef">exists</span> wife (
+		wid int <span style="color:#66d9ef">primary</span> <span style="color:#66d9ef">key</span> auto_increment,
+  	wname varchar(<span style="color:#ae81ff">50</span>)
+);
+<span style="color:#75715e">-- 可以通过alter修改表操作来设置表的外键
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">alter</span> <span style="color:#66d9ef">table</span> wife 
+<span style="color:#66d9ef">add</span> <span style="color:#66d9ef">constraint</span> fk_wife_hasband <span style="color:#66d9ef">foreign</span> <span style="color:#66d9ef">key</span>(wid) <span style="color:#66d9ef">references</span> hasband(hid);
+<span style="color:#75715e">-- 这里将主键wid设置为外键，并引用hasband的主键hid，就能实现唯一的hid/wid对应一对夫妻，即一对一关系
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">insert</span> <span style="color:#66d9ef">into</span> wife <span style="color:#66d9ef">values</span> (<span style="color:#ae81ff">1</span>, <span style="color:#e6db74">&#39;wangWu&#39;</span>);
+<span style="color:#66d9ef">insert</span> <span style="color:#66d9ef">into</span> wife <span style="color:#66d9ef">values</span> (<span style="color:#ae81ff">2</span>, <span style="color:#e6db74">&#39;zhaoLiu&#39;</span>);
+<span style="color:#75715e">-- 这里由于主键设置成了外键，因此其必须需要满足唯一性、非空性、引用hid（由于自增效果，这里hid从1开始）
+</span></code></pre></div><h3 id="73-多对多关系">7.3 多对多关系</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#75715e">-- 实现多对多的关系模型
+</span><span style="color:#75715e">-- 需要使用第三张表充当“中间表”，在中间表中使用两个外键，每个外键分别引用其他两个表的主键
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">create</span> <span style="color:#66d9ef">table</span> stu (
+		sid int <span style="color:#66d9ef">primary</span> <span style="color:#66d9ef">key</span> auto_increment,
+  	sname varchar(<span style="color:#ae81ff">50</span>)
+);
+<span style="color:#66d9ef">insert</span> <span style="color:#66d9ef">into</span> stu <span style="color:#66d9ef">values</span> (<span style="color:#66d9ef">null</span>, <span style="color:#e6db74">&#39;zhangSan&#39;</span>);
+<span style="color:#66d9ef">insert</span> <span style="color:#66d9ef">into</span> stu <span style="color:#66d9ef">values</span> (<span style="color:#66d9ef">null</span>, <span style="color:#e6db74">&#39;liSi&#39;</span>);
+<span style="color:#66d9ef">insert</span> <span style="color:#66d9ef">into</span> stu <span style="color:#66d9ef">values</span> (<span style="color:#66d9ef">null</span>, <span style="color:#e6db74">&#39;wangWu&#39;</span>);
+<span style="color:#66d9ef">insert</span> <span style="color:#66d9ef">into</span> stu <span style="color:#66d9ef">values</span> (<span style="color:#66d9ef">null</span>, <span style="color:#e6db74">&#39;zhaoLiu&#39;</span>);
+
+<span style="color:#66d9ef">create</span> <span style="color:#66d9ef">table</span> teacher (
+		tid int <span style="color:#66d9ef">primary</span> <span style="color:#66d9ef">key</span> auto_increment,
+  	tname varchar(<span style="color:#ae81ff">50</span>)
+);
+<span style="color:#66d9ef">insert</span> <span style="color:#66d9ef">into</span> teacher <span style="color:#66d9ef">values</span> (<span style="color:#66d9ef">null</span>, <span style="color:#e6db74">&#39;Bob&#39;</span>);
+<span style="color:#66d9ef">insert</span> <span style="color:#66d9ef">into</span> teacher <span style="color:#66d9ef">values</span> (<span style="color:#66d9ef">null</span>, <span style="color:#e6db74">&#39;Jack&#39;</span>);
+<span style="color:#66d9ef">insert</span> <span style="color:#66d9ef">into</span> teacher <span style="color:#66d9ef">values</span> (<span style="color:#66d9ef">null</span>, <span style="color:#e6db74">&#39;Rose&#39;</span>);
+
+<span style="color:#75715e">-- 中间表
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">create</span> <span style="color:#66d9ef">table</span> stu_tea (
+		sid int,
+  	tid int,
+  	<span style="color:#66d9ef">constraint</span> fk_stu <span style="color:#66d9ef">foreign</span> <span style="color:#66d9ef">key</span>(sid) <span style="color:#66d9ef">references</span> stu(sid),
+  	<span style="color:#66d9ef">constraint</span> fk_tea <span style="color:#66d9ef">foreign</span> <span style="color:#66d9ef">key</span>(tid) <span style="color:#66d9ef">references</span> tea(tid)
+);
+<span style="color:#66d9ef">insert</span> <span style="color:#66d9ef">into</span> stu_tea <span style="color:#66d9ef">values</span> (<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">1</span>);
+<span style="color:#66d9ef">insert</span> <span style="color:#66d9ef">into</span> stu_tea <span style="color:#66d9ef">values</span> (<span style="color:#ae81ff">3</span>, <span style="color:#ae81ff">1</span>);
+<span style="color:#66d9ef">insert</span> <span style="color:#66d9ef">into</span> stu_tea <span style="color:#66d9ef">values</span> (<span style="color:#ae81ff">4</span>, <span style="color:#ae81ff">1</span>);
+<span style="color:#66d9ef">insert</span> <span style="color:#66d9ef">into</span> stu_tea <span style="color:#66d9ef">values</span> (<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">2</span>);
+<span style="color:#66d9ef">insert</span> <span style="color:#66d9ef">into</span> stu_tea <span style="color:#66d9ef">values</span> (<span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">2</span>);
+<span style="color:#66d9ef">insert</span> <span style="color:#66d9ef">into</span> stu_tea <span style="color:#66d9ef">values</span> (<span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">3</span>);
+<span style="color:#66d9ef">insert</span> <span style="color:#66d9ef">into</span> stu_tea <span style="color:#66d9ef">values</span> (<span style="color:#ae81ff">4</span>, <span style="color:#ae81ff">3</span>);
+</code></pre></div>
+    </div>
+
+
+
+    <div class="post-copyright">
+                
+        
+
+
+        <section>
+            <p class="share-item">
+                <span>Share :</span>
+                
+                <span>
+
+      
+        <a href="//twitter.com/share?url=https%3a%2f%2frrrwx.github.io%2f2020%2f%25E4%25B8%2580%25E7%25BA%25A6%25E6%259D%259F%2f&amp;text=SQL%e8%af%ad%e6%b3%95%e4%b9%8b%e7%ba%a6%e6%9d%9f&amp;via=" target="_blank" title="Share on Twitter">
+          <i class="iconfont icon-twitter"></i>
+        </a>
+        
+
+      
+      
+        <a href="//www.facebook.com/sharer/sharer.php?u=https%3a%2f%2frrrwx.github.io%2f2020%2f%25E4%25B8%2580%25E7%25BA%25A6%25E6%259D%259F%2f" target="_blank" title="Share on Facebook">
+          <i class="iconfont icon-facebook"></i>
+        </a>
+        
+      
+      
+      
+      
+      
+      
+        
+      
+        
+      
+
+          
+
+          
+
+          
+        <a href="//www.douban.com/recommend/?url=https%3a%2f%2frrrwx.github.io%2f2020%2f%25E4%25B8%2580%25E7%25BA%25A6%25E6%259D%259F%2f&amp;title=SQL%e8%af%ad%e6%b3%95%e4%b9%8b%e7%ba%a6%e6%9d%9f" target="_blank" title="Share on Douban ">
+            <i class="iconfont icon-douban"></i>
+          </a>
+          
+
+          
+        <a href="//service.weibo.com/share/share.php?url=https%3a%2f%2frrrwx.github.io%2f2020%2f%25E4%25B8%2580%25E7%25BA%25A6%25E6%259D%259F%2f&amp;appkey=&amp;title=SQL%e8%af%ad%e6%b3%95%e4%b9%8b%e7%ba%a6%e6%9d%9f" target="_blank" title="Share on Douban ">
+            <i class="iconfont icon-weibo"></i>
+          </a>
+          
+
+</span>
+                
+            </p>
+        </section>
+
+
+        <section>
+            <p class="copyright-item">
+                <span>Updated </span>
+                <span class="post-time">
+                on 
+                <time datetime=2020-05-16 itemprop="datePublished">May 16, 2020</time>
+                </span>
+
+            </p>
+        </section>
+    </div>
+
+  
+    <div class="post-tags">
+        
+            <section>
+            
+            <span class="tag"><a href="https://rrrwx.github.io/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">
+                    <i class="iconfont icon-tag"></i>学习笔记</a></span>
+            
+            <span class="tag"><a href="https://rrrwx.github.io/tags/mysql/">
+                    <i class="iconfont icon-tag"></i>mysql</a></span>
+            
+            <span class="tag"><a href="https://rrrwx.github.io/tags/sql%E8%AF%AD%E6%B3%95/">
+                    <i class="iconfont icon-tag"></i>SQL语法</a></span>
+            
+            </section>
+        
+        <section>
+                <a href="javascript:window.history.back();">back</a></span> · 
+                <span><a href="https://rrrwx.github.io">home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav">
+        
+        <a href="https://rrrwx.github.io/2020/dql%E6%95%B0%E6%8D%AE%E6%9F%A5%E8%AF%A2%E8%AF%AD%E8%A8%80/" class="prev" rel="prev" title="SQL语法之DQL"><i class="iconfont icon-left"></i>&nbsp;SQL语法之DQL</a>
+         
+        
+        <a href="https://rrrwx.github.io/2020/%E4%BA%8C%E5%A4%9A%E8%A1%A8%E6%9F%A5%E8%AF%A2/" class="next" rel="next" title="SQL语法之多表查询">SQL语法之多表查询&nbsp;<i class="iconfont icon-right"></i></a>
+        
+    </div>
+
+    <div class="post-comment">
+          
+                 
+          
+    </div>
+</article>
+          </div>
+		   </main>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="">
+                <i class="fas fa-arrow-up fa-fw"></i>
+            </a>
+        </div>
+
+      <footer class="footer">
+
+
+
+
+    <div class="copyright">
+
+            <div class="footer-line">
+                &copy;<i class="far fa-copyright fa-fw"></i>&nbsp;<span itemprop="copyrightYear">2020</span>&nbsp;&nbsp;<span class="author" itemprop="copyrightHolder"><a href="https://rrrwx.github.io">JadeRong</a></span>&nbsp;|&nbsp;<span class="license">Released under <a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span>
+                &nbsp;|&nbsp;<span>Powered by <a href="https://gohugo.io/" target="_blank" rel="external nofollow">Hugo</a> & <a href="https://github.com/liuzc/leaveit" target="_blank" rel="external nofollow">LeaveIt</a></span>
+            </div>
+
+
+    </div>
+</footer>
+
+
+
+
+
+
+
+
+
+
+
+
+    
+    
+    <script src="/js/vendor_no_gallery.min.js" async=""></script>
+    
+  
+
+
+
+
+     </div>
+  </body>
+</html>

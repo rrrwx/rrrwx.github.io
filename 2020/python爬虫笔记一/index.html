@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+  <meta http-equiv="content-type" content="text/html;charset=utf-8">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noodp"/>
+  <meta name="author" content="JadeRong">
+  <meta name="description" content="主要分享一些平时学习和开发中用到的知识">
+  
+  
+  <link rel="prev" href="https://rrrwx.github.io/2020/jvm%E5%AD%A6%E4%B9%A0%E5%85%AB%E5%AD%97%E8%8A%82%E7%A0%81%E6%8C%87%E4%BB%A4/" />
+  <link rel="next" href="https://rrrwx.github.io/2020/python%E7%88%AC%E8%99%AB%E7%AC%94%E8%AE%B0%E4%BA%8C/" />
+  <link rel="canonical" href="https://rrrwx.github.io/2020/python%E7%88%AC%E8%99%AB%E7%AC%94%E8%AE%B0%E4%B8%80/" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+  <meta name="msapplication-TileColor" content="#da532c">
+  <meta name="theme-color" content="#ffffff">
+  <title>
+       
+       
+           python爬虫笔记（一） | JadeRong
+       
+  </title>
+  <meta name="title" content="python爬虫笔记（一） | JadeRong">
+    
+  
+  <link rel="stylesheet" href="/font/iconfont.css">
+  <link rel="stylesheet" href="/css/main.min.css">
+
+
+  
+  
+ 
+
+<script type="application/ld+json">
+ "@context" : "http://schema.org",
+    "@type" : "BlogPosting",
+    "mainEntityOfPage": {
+         "@type": "WebPage",
+         "@id": "https:\/\/rrrwx.github.io"
+    },
+    "articleSection" : "posts",
+    "name" : "python爬虫笔记（一）",
+    "headline" : "python爬虫笔记（一）",
+    "description" : "http:\/\/www.icourse163.org\/course\/BIT-1001870001?tid=1001962001#\/info\n授课老师：嵩天\n课程简介：“The website is the API.”网络爬虫逐渐成为自动获取网络信息的主要形式。\n Requests库的使用：\nimport requests r = requests.get(url) 构造一个向服务器请求资源的Request对象（大写）；\n返回一个包含服务器资源的Response对象；\n（1）Response对象的属性\n r.status_code(200表示连接成功)\nr.text（url响应内容）\nr.content（响应内容的二进制形式）\nr.encoding（从头部预测的编码方式）\nr.apparent_encoding（从内容分析的编码方式）\n\x26mdash;\x26mdash;-r.encoding = r.apparent_encoding\n (2)通用框架\nimport requests def getHTMLText(url): try: r = requests.get(url, timeout=30) r.raise_for_status() r.encoding = r.apparent_encoding return r.text except: return \x26#34;wrong connection...\x26#34; if __name__ == \x26#34;__main__\x26#34;: this_url = \x26#34;http:\/\/www.baidu.com\x26#34; print(getHTMLText(this_url)) (3)Requests库的主要方法\nrequests.request() #---------基础方法 requests.get();\nrequests.head();\nrequests.post();\nrequests.put();\nrequests.patch();\nrequests.delete()",
+    "inLanguage" : "en-us",
+    "author" : "JadeRong",
+    "creator" : "JadeRong",
+    "publisher": "JadeRong",
+    "accountablePerson" : "JadeRong",
+    "copyrightHolder" : "JadeRong",
+    "copyrightYear" : "2020",
+    "datePublished": "2020-05-01 00:19:18 \x2b0800 CST",
+    "dateModified" : "2020-05-01 00:19:18 \x2b0800 CST",
+    "url" : "https:\/\/rrrwx.github.io\/2020\/python%E7%88%AC%E8%99%AB%E7%AC%94%E8%AE%B0%E4%B8%80\/",
+    "wordCount" : "61",
+    "keywords" : [ "python爬虫","学习笔记", "JadeRong"]
+}
+</script>
+
+</head>
+
+  
+
+
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  <body class="">
+    <div class="wrapper">
+        <nav class="navbar">
+    <div class="container">
+        <div class="navbar-header header-logo">
+            <a href="https://rrrwx.github.io">JadeRong</a>&nbsp;
+        	<a href="javascript:void(0);" class="theme-switch"><i class="iconfont icon-table-lamp"></i></a>
+
+        </div>
+        <div class="menu navbar-right">
+                
+                
+                <a class="menu-item" href="/posts/" title="">Blogs</a>
+                
+                <a class="menu-item" href="/categories/" title="">Categories</a>
+                
+                <a class="menu-item" href="/tags/" title="">Tags</a>
+                
+                <a class="menu-item" href="/about/" title="">About</a>
+                
+        </div>
+    </div>
+</nav>
+<nav class="navbar-mobile" id="nav-mobile" style="display: none">
+     <div class="container">
+        <div class="navbar-header">
+            <div>  <a href="javascript:void(0);" class="theme-switch"><i class="iconfont icon-table-lamp"></i></a>&nbsp;<a href="https://rrrwx.github.io">JadeRong</a></div>
+            <div class="menu-toggle">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+     
+          <div class="menu" id="mobile-menu">
+                
+                
+                <a class="menu-item" href="/posts/" title="">Blogs</a>
+                
+                <a class="menu-item" href="/categories/" title="">Categories</a>
+                
+                <a class="menu-item" href="/tags/" title="">Tags</a>
+                
+                <a class="menu-item" href="/about/" title="">About</a>
+                
+        </div>
+    </div>
+</nav>
+    	 <main class="main">
+          <div class="container">
+      		
+<article class="post-warp" itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">python爬虫笔记（一）</h1>
+
+
+
+                Written by <a itemprop="name" href="https://rrrwx.github.io" rel="author">JadeRong</a>, included in <i class="iconfont icon-folder"></i>
+
+                <span class="post-category">
+                            <a href="https://rrrwx.github.io/categories/python%E7%88%AC%E8%99%AB%E7%AC%94%E8%AE%B0/"> python爬虫笔记 </a>
+                            
+                    </span>
+
+        
+        <h1 id="wc" style="font-size: 0.75rem;text-align: left;">约 61 个字    |    预计阅读 1 分钟    |    本文总阅读量<span id="busuanzi_value_page_pv"></span>次</h1>
+    </header>
+    <div class="post-content">
+        
+
+        
+
+        
+        
+     
+          
+          
+          
+
+          
+          
+          
+
+          <blockquote>
+<p><a href="http://www.icourse163.org/course/BIT-1001870001?tid=1001962001#/info">http://www.icourse163.org/course/BIT-1001870001?tid=1001962001#/info</a></p>
+<p>授课老师：嵩天</p>
+<p>课程简介：“The website is the API.”网络爬虫逐渐成为自动获取网络信息的主要形式。</p>
+</blockquote>
+<p>Requests库的使用：</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> requests
+r <span style="color:#f92672">=</span> requests<span style="color:#f92672">.</span>get(url)
+</code></pre></div><p>构造一个向服务器请求资源的Request对象（<!-- raw HTML omitted -->大写<!-- raw HTML omitted -->）；</p>
+<p>返回一个包含服务器资源的Response对象；</p>
+<p>（1）Response对象的属性</p>
+<blockquote>
+<p>r.status_code(200表示连接成功)</p>
+<p>r.text（url响应内容）</p>
+<p>r.content（响应内容的二进制形式）</p>
+<p>r.encoding（从头部预测的编码方式）</p>
+<p>r.apparent_encoding（从内容分析的编码方式）</p>
+<p>&mdash;&mdash;-r.encoding = r.apparent_encoding</p>
+</blockquote>
+<p>(2)通用框架</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> requests
+
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">getHTMLText</span>(url):
+    <span style="color:#66d9ef">try</span>:
+        r <span style="color:#f92672">=</span> requests<span style="color:#f92672">.</span>get(url, timeout<span style="color:#f92672">=</span><span style="color:#ae81ff">30</span>)
+        r<span style="color:#f92672">.</span>raise_for_status()
+        r<span style="color:#f92672">.</span>encoding <span style="color:#f92672">=</span> r<span style="color:#f92672">.</span>apparent_encoding
+        <span style="color:#66d9ef">return</span> r<span style="color:#f92672">.</span>text
+    <span style="color:#66d9ef">except</span>:
+        <span style="color:#66d9ef">return</span> <span style="color:#e6db74">&#34;wrong connection...&#34;</span>
+
+<span style="color:#66d9ef">if</span> __name__ <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;__main__&#34;</span>:
+    this_url <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;http://www.baidu.com&#34;</span>
+    <span style="color:#66d9ef">print</span>(getHTMLText(this_url))
+</code></pre></div><p>(3)Requests库的主要方法</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">requests<span style="color:#f92672">.</span>request()  <span style="color:#75715e">#---------基础方法</span>
+</code></pre></div><p>requests.get();</p>
+<p>requests.head();</p>
+<p>requests.post();</p>
+<p>requests.put();</p>
+<p>requests.patch();</p>
+<p>requests.delete()</p>
+
+    </div>
+
+
+
+    <div class="post-copyright">
+                
+        
+
+
+        <section>
+            <p class="share-item">
+                <span>Share :</span>
+                
+                <span>
+
+      
+        <a href="//twitter.com/share?url=https%3a%2f%2frrrwx.github.io%2f2020%2fpython%25E7%2588%25AC%25E8%2599%25AB%25E7%25AC%2594%25E8%25AE%25B0%25E4%25B8%2580%2f&amp;text=python%e7%88%ac%e8%99%ab%e7%ac%94%e8%ae%b0%ef%bc%88%e4%b8%80%ef%bc%89&amp;via=" target="_blank" title="Share on Twitter">
+          <i class="iconfont icon-twitter"></i>
+        </a>
+        
+
+      
+      
+        <a href="//www.facebook.com/sharer/sharer.php?u=https%3a%2f%2frrrwx.github.io%2f2020%2fpython%25E7%2588%25AC%25E8%2599%25AB%25E7%25AC%2594%25E8%25AE%25B0%25E4%25B8%2580%2f" target="_blank" title="Share on Facebook">
+          <i class="iconfont icon-facebook"></i>
+        </a>
+        
+      
+      
+      
+      
+      
+      
+        
+      
+        
+      
+
+          
+
+          
+
+          
+        <a href="//www.douban.com/recommend/?url=https%3a%2f%2frrrwx.github.io%2f2020%2fpython%25E7%2588%25AC%25E8%2599%25AB%25E7%25AC%2594%25E8%25AE%25B0%25E4%25B8%2580%2f&amp;title=python%e7%88%ac%e8%99%ab%e7%ac%94%e8%ae%b0%ef%bc%88%e4%b8%80%ef%bc%89" target="_blank" title="Share on Douban ">
+            <i class="iconfont icon-douban"></i>
+          </a>
+          
+
+          
+        <a href="//service.weibo.com/share/share.php?url=https%3a%2f%2frrrwx.github.io%2f2020%2fpython%25E7%2588%25AC%25E8%2599%25AB%25E7%25AC%2594%25E8%25AE%25B0%25E4%25B8%2580%2f&amp;appkey=&amp;title=python%e7%88%ac%e8%99%ab%e7%ac%94%e8%ae%b0%ef%bc%88%e4%b8%80%ef%bc%89" target="_blank" title="Share on Douban ">
+            <i class="iconfont icon-weibo"></i>
+          </a>
+          
+
+</span>
+                
+            </p>
+        </section>
+
+
+        <section>
+            <p class="copyright-item">
+                <span>Updated </span>
+                <span class="post-time">
+                on 
+                <time datetime=2020-05-01 itemprop="datePublished">May 1, 2020</time>
+                </span>
+
+            </p>
+        </section>
+    </div>
+
+  
+    <div class="post-tags">
+        
+            <section>
+            
+            <span class="tag"><a href="https://rrrwx.github.io/tags/python%E7%88%AC%E8%99%AB/">
+                    <i class="iconfont icon-tag"></i>python爬虫</a></span>
+            
+            <span class="tag"><a href="https://rrrwx.github.io/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">
+                    <i class="iconfont icon-tag"></i>学习笔记</a></span>
+            
+            </section>
+        
+        <section>
+                <a href="javascript:window.history.back();">back</a></span> · 
+                <span><a href="https://rrrwx.github.io">home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav">
+        
+        <a href="https://rrrwx.github.io/2020/jvm%E5%AD%A6%E4%B9%A0%E5%85%AB%E5%AD%97%E8%8A%82%E7%A0%81%E6%8C%87%E4%BB%A4/" class="prev" rel="prev" title="JVM学习八之字节码指令"><i class="iconfont icon-left"></i>&nbsp;JVM学习八之字节码指令</a>
+         
+        
+        <a href="https://rrrwx.github.io/2020/python%E7%88%AC%E8%99%AB%E7%AC%94%E8%AE%B0%E4%BA%8C/" class="next" rel="next" title="python爬虫笔记（二）">python爬虫笔记（二）&nbsp;<i class="iconfont icon-right"></i></a>
+        
+    </div>
+
+    <div class="post-comment">
+          
+                 
+          
+    </div>
+</article>
+          </div>
+		   </main>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="">
+                <i class="fas fa-arrow-up fa-fw"></i>
+            </a>
+        </div>
+
+      <footer class="footer">
+
+
+
+
+    <div class="copyright">
+
+            <div class="footer-line">
+                &copy;<i class="far fa-copyright fa-fw"></i>&nbsp;<span itemprop="copyrightYear">2020</span>&nbsp;&nbsp;<span class="author" itemprop="copyrightHolder"><a href="https://rrrwx.github.io">JadeRong</a></span>&nbsp;|&nbsp;<span class="license">Released under <a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span>
+                &nbsp;|&nbsp;<span>Powered by <a href="https://gohugo.io/" target="_blank" rel="external nofollow">Hugo</a> & <a href="https://github.com/liuzc/leaveit" target="_blank" rel="external nofollow">LeaveIt</a></span>
+            </div>
+
+
+    </div>
+</footer>
+
+
+
+
+
+
+
+
+
+
+
+
+    
+    
+    <script src="/js/vendor_no_gallery.min.js" async=""></script>
+    
+  
+
+
+
+
+     </div>
+  </body>
+</html>

@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+  <meta http-equiv="content-type" content="text/html;charset=utf-8">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noodp"/>
+  <meta name="author" content="JadeRong">
+  <meta name="description" content="主要分享一些平时学习和开发中用到的知识">
+  
+  
+  <link rel="prev" href="https://rrrwx.github.io/2020/%E7%BA%BF%E7%A8%8B/" />
+  <link rel="next" href="https://rrrwx.github.io/2020/jvm%E5%AD%A6%E4%B9%A0%E4%B8%80%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA%E5%9F%9F/" />
+  <link rel="canonical" href="https://rrrwx.github.io/2020/jvm%E5%AD%A6%E4%B9%A0%E4%B8%80%E4%BA%9B%E9%87%8D%E8%A6%81%E7%9F%A5%E8%AF%86%E7%82%B9/" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+  <meta name="msapplication-TileColor" content="#da532c">
+  <meta name="theme-color" content="#ffffff">
+  <title>
+       
+       
+           JVM学习之一些重要的知识点 | JadeRong
+       
+  </title>
+  <meta name="title" content="JVM学习之一些重要的知识点 | JadeRong">
+    
+  
+  <link rel="stylesheet" href="/font/iconfont.css">
+  <link rel="stylesheet" href="/css/main.min.css">
+
+
+  
+  
+ 
+
+<script type="application/ld+json">
+ "@context" : "http://schema.org",
+    "@type" : "BlogPosting",
+    "mainEntityOfPage": {
+         "@type": "WebPage",
+         "@id": "https:\/\/rrrwx.github.io"
+    },
+    "articleSection" : "posts",
+    "name" : "JVM学习之一些重要的知识点",
+    "headline" : "JVM学习之一些重要的知识点",
+    "description" : "https:\/\/www.cnblogs.com\/chanshuyi\/p\/jvm_serial_04_from_source_code_to_machine_code.html\n1、编译器和解释器，源代码到字节码再到机器码 JIT编译器（Just In Time Compiler）  当源代码转化为字节码之后，其实要运行程序，有两种选择。一种是使用 Java 解释器解释执行字节码，另一种则是使用 JIT 编译器将字节码转化为本地机器代码。\n这两种方式的区别在于，前者启动速度快但运行速度慢，而后者启动速度慢但运行速度快。至于为什么会这样，其原因很简单。因为解释器不需要像 JIT 编译器一样，将所有字节码都转化为机器码，自然就少去了优化的时间。而当 JIT 编译器完成第一次编译后，其会将字节码对应的机器码保存下来，下次可以直接使用。而我们知道，机器码的运行效率肯定是高于 Java 解释器的。所以在实际情况中，为了运行速度以及效率，我们通常采用两者相结合的方式进行 Java 代码的编译执行。\n  在 JVM 中有三个非常重要的编译器，它们分别是：前端编译器、JIT 编译器、AOT 编译器。\n前端编译器，最常见的就是我们的 javac 编译器，其将 Java 源代码编译为 Java 字节码文件。JIT 即时编译器，最常见的是 HotSpot 虚拟机中的 Client Compiler 和 Server Compiler，其将 Java 字节码编译为本地机器代码。而 AOT 编译器则能将源代码直接编译为本地机器码。这三种编译器的编译速度和编译质量如下：\n编译速度上，解释执行 \x26gt; AOT 编译器 \x26gt; JIT 编译器。\n编译质量上，JIT 编译器 \x26gt; AOT 编译器 \x26gt; 解释执行。\n而在 JVM 中，通过这几种不同方式的配合，使得 JVM 的编译质量和运行速度达到最优的状态。\n 2、字节码结构 https:\/\/www.cnblogs.com\/chanshuyi\/p\/jvm_serial_05_jvm_bytecode_analysis.html\n3、类加载执行步骤  JVM 虚拟机执行 class 字节码的过程可以分为七个阶段：加载、验证、准备、解析、初始化、使用、卸载。",
+    "inLanguage" : "en-us",
+    "author" : "JadeRong",
+    "creator" : "JadeRong",
+    "publisher": "JadeRong",
+    "accountablePerson" : "JadeRong",
+    "copyrightHolder" : "JadeRong",
+    "copyrightYear" : "2020",
+    "datePublished": "2020-03-17 00:10:36 \x2b0800 CST",
+    "dateModified" : "2020-03-17 00:10:36 \x2b0800 CST",
+    "url" : "https:\/\/rrrwx.github.io\/2020\/jvm%E5%AD%A6%E4%B9%A0%E4%B8%80%E4%BA%9B%E9%87%8D%E8%A6%81%E7%9F%A5%E8%AF%86%E7%82%B9\/",
+    "wordCount" : "224",
+    "keywords" : [ "jvm","java","学习笔记", "JadeRong"]
+}
+</script>
+
+</head>
+
+  
+
+
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  <body class="">
+    <div class="wrapper">
+        <nav class="navbar">
+    <div class="container">
+        <div class="navbar-header header-logo">
+            <a href="https://rrrwx.github.io">JadeRong</a>&nbsp;
+        	<a href="javascript:void(0);" class="theme-switch"><i class="iconfont icon-table-lamp"></i></a>
+
+        </div>
+        <div class="menu navbar-right">
+                
+                
+                <a class="menu-item" href="/posts/" title="">Blogs</a>
+                
+                <a class="menu-item" href="/categories/" title="">Categories</a>
+                
+                <a class="menu-item" href="/tags/" title="">Tags</a>
+                
+                <a class="menu-item" href="/about/" title="">About</a>
+                
+        </div>
+    </div>
+</nav>
+<nav class="navbar-mobile" id="nav-mobile" style="display: none">
+     <div class="container">
+        <div class="navbar-header">
+            <div>  <a href="javascript:void(0);" class="theme-switch"><i class="iconfont icon-table-lamp"></i></a>&nbsp;<a href="https://rrrwx.github.io">JadeRong</a></div>
+            <div class="menu-toggle">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+     
+          <div class="menu" id="mobile-menu">
+                
+                
+                <a class="menu-item" href="/posts/" title="">Blogs</a>
+                
+                <a class="menu-item" href="/categories/" title="">Categories</a>
+                
+                <a class="menu-item" href="/tags/" title="">Tags</a>
+                
+                <a class="menu-item" href="/about/" title="">About</a>
+                
+        </div>
+    </div>
+</nav>
+    	 <main class="main">
+          <div class="container">
+      		
+<article class="post-warp" itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">JVM学习之一些重要的知识点</h1>
+
+
+
+                Written by <a itemprop="name" href="https://rrrwx.github.io" rel="author">JadeRong</a>, included in <i class="iconfont icon-folder"></i>
+
+                <span class="post-category">
+                            <a href="https://rrrwx.github.io/categories/jvm%E5%AD%A6%E4%B9%A0/"> jvm学习 </a>
+                            
+                    </span>
+
+        
+        <h1 id="wc" style="font-size: 0.75rem;text-align: left;">约 224 个字    |    预计阅读 2 分钟    |    本文总阅读量<span id="busuanzi_value_page_pv"></span>次</h1>
+    </header>
+    <div class="post-content">
+        
+
+        
+            
+        
+
+        
+        
+     
+          
+          
+          
+
+          
+          
+          
+
+          <p><a href="https://www.cnblogs.com/chanshuyi/p/jvm_serial_04_from_source_code_to_machine_code.html">https://www.cnblogs.com/chanshuyi/p/jvm_serial_04_from_source_code_to_machine_code.html</a></p>
+<h4 id="1编译器和解释器源代码到字节码再到机器码">1、编译器和解释器，源代码到字节码再到机器码</h4>
+<p><img src="../../../../images/jvm/%E7%BC%96%E8%AF%91%E5%99%A8%E7%A7%8D%E7%B1%BB.png" alt="编译器种类.png"></p>
+<h5 id="jit编译器just-in-time-compiler">JIT编译器（Just In Time Compiler）</h5>
+<blockquote>
+<p>当源代码转化为字节码之后，其实要运行程序，有两种选择。一种是使用 Java 解释器解释执行字节码，另一种则是使用 JIT 编译器将字节码转化为本地机器代码。</p>
+<p>这两种方式的区别在于，<code>前者启动速度快但运行速度慢，而后者启动速度慢但运行速度快</code>。至于为什么会这样，其原因很简单。因为解释器不需要像 JIT 编译器一样，将所有字节码都转化为机器码，自然就少去了优化的时间。而当 JIT 编译器完成第一次编译后，其会将字节码对应的机器码保存下来，下次可以直接使用。而我们知道，机器码的运行效率肯定是高于 Java 解释器的。所以在实际情况中，为了运行速度以及效率，我们通常采用两者相结合的方式进行 Java 代码的编译执行。</p>
+</blockquote>
+<p><img src="../../../../images/jvm/jvm.png" alt="jvm.png"></p>
+<blockquote>
+<p>在 JVM 中有三个非常重要的编译器，它们分别是：<code>前端编译器</code>、<code>JIT 编译器</code>、<code>AOT 编译器</code>。</p>
+<p>前端编译器，最常见的就是我们的 javac 编译器，其将 Java 源代码编译为 Java 字节码文件。JIT 即时编译器，最常见的是 HotSpot 虚拟机中的 Client Compiler 和 Server Compiler，其将 Java 字节码编译为本地机器代码。而 AOT 编译器则能将源代码直接编译为本地机器码。这三种编译器的编译速度和编译质量如下：</p>
+<p>编译速度上，<code>解释执行 &gt; AOT 编译器 &gt; JIT 编译器</code>。</p>
+<p>编译质量上，<code>JIT 编译器 &gt; AOT 编译器 &gt; 解释执行</code>。</p>
+<p>而在 JVM 中，通过这几种不同方式的配合，使得 JVM 的编译质量和运行速度达到最优的状态。</p>
+</blockquote>
+<h4 id="2字节码结构">2、字节码结构</h4>
+<p><a href="https://www.cnblogs.com/chanshuyi/p/jvm_serial_05_jvm_bytecode_analysis.html">https://www.cnblogs.com/chanshuyi/p/jvm_serial_05_jvm_bytecode_analysis.html</a></p>
+<p><img src="../../../../images/jvm/Class%E6%96%87%E4%BB%B6%E5%AD%97%E8%8A%82%E7%A0%81%E7%BB%93%E6%9E%84%E7%BB%84%E7%BB%87%E7%A4%BA%E6%84%8F%E5%9B%BE.png" alt="Class文件字节码结构组织示意图.png"></p>
+<h4 id="3类加载执行步骤">3、类加载执行步骤</h4>
+<blockquote>
+<p>JVM 虚拟机执行 class 字节码的过程可以分为七个阶段：加载、验证、准备、解析、初始化、使用、卸载。</p>
+</blockquote>
+<h4 id="4jvm参数设置">4、JVM参数设置</h4>
+<p><a href="https://blog.csdn.net/longgeqiaojie304/article/details/93851827">https://blog.csdn.net/longgeqiaojie304/article/details/93851827</a></p>
+<pre><code>    【1】Boolean类型XX参数
+        公式：-XX:+ 或者-XX:- 某个属性值（+表示开启，-表示关闭）
+        案例：   
+        1）是否打印GC收集细节
+               -XX:+PrintGCDetails
+               -XX:-PrintGCDetails
+        2）是否使用串行垃圾收集器
+               -XX:+UseSerialGC
+               -XX:-UserSerialGC
+
+    【2】KV设值类型
+           公式：-XX: key（属性）= value（属性值）
+           案例：
+           查看-XX:MetaspaceSize=默认值大小
+
+    【3】如何解释-Xms和-Xmx参数属于XX参数
+      -Xms和-Xmx两个经典参数看起既不像Boolean类型XX参数，也不像KV设值类型XX参数。那为什么-Xms和-Xmx又属于XX参数？
+       -Xms = -XX:InitialHeapSize
+       -Xmx = -XX:MaxHeapSize
+</code></pre><h3 id="5jvm堆内存分配">5、JVM堆内存分配</h3>
+<p><a href="https://my.oschina.net/u/2984281/blog/784027">https://my.oschina.net/u/2984281/blog/784027</a></p>
+<blockquote>
+<p>Jvm区域总体分两类，<code>heap区</code>和<code>非heap区</code>。heap区又分：Eden Space（伊甸园）、Survivor Space(幸存者区)、Tenured Gen（老年代-养老区）</p>
+<p><code>年轻代(Young Gen)</code>：年轻代主要存放新创建的对象，内存大小相对会比较小，垃圾回收会比较频繁，年轻代分成1个Eden Space和2个Suvivor Space</p>
+<p><code>年老代(Tenured Gen)</code>：年老代主要存放JVM认为生命周期比较长的对象（经过几次的Young Gen的垃圾回收后仍然存在），内存大小相对会比较大，垃圾回收也相对没有那么频繁（譬如可能几个小时一次）</p>
+<p><code>持久代(Perm Gen）</code>：持久代主要存放类定义、字节码和常量等很少会变更的信息</p>
+</blockquote>
+<h3 id="6重载"><em>6、重载</em>：</h3>
+<p>在Java语言中==字段是无法重载的==。两个字段的数据类型、修饰符不管是否相同，都必须使用不一样的名称；
+在Class文件中，如果两个字段的描述符不一致，那字段重名就是合法的。</p>
+<p>在<code>Java语言</code>中，要<code>重载</code>一个方法，除了要与原方法具有<code>相同的简单名称</code>之外，还要求必须拥有与原方法<code>不同的特征签名</code>。特征签名是指，一个方法中各个参数在常量池中的字段符号引用的集合。也就是因为<code>返回值不会包含在特征签名中</code>，因此Java语言里面是无法仅仅依靠返回值的不同来对一个已有方法进行重载的；
+而在<code>Class文件</code>中，特征签名的范围更大，只要描述符不是完全一致的两个方法也可以共存。也就是说，如果两个方法<code>有相同的名称和特征签名，但返回值不同</code>，那么也是可以合法共存于同一个Class文件中的。</p>
+<h3 id="7class文件中的code属性">7、Class文件中的Code属性</h3>
+<blockquote>
+<p>Java程序<code>方法体</code>中的代码经过Javac编译器处理之后，最终变为字节码指令存储在<code>Code属性</code>内。Code属性出现在方法表的属性集合中，但不是所有的方法表都必须存在这个属性，譬如接口或者抽象类中的方法。</p>
+</blockquote>
+<p>任何<code>实例方法</code>中（static方法除外），都可以通过“this”关键字访问到此方法所属的对象。其实现是：通过在javac编译器编译的时候把对this关键字的访问转变为<code>对一个普通方法参数的访问</code>，然后在虚拟机调用实例方法时自动传入此参数。因此在实例方法的局部变量表中至少会存在一个指向当前对象实例的局部变量，<code>局部变量表中也会预留出第一个Slot位来存放对象实例的引用</code>，方法参数值从1开始计算。</p>
+<h3 id="8full-gc和minor-gcmajor-gc">8、Full GC和Minor GC、Major GC</h3>
+<p><a href="https://www.cnblogs.com/chanshuyi/p/jvm_serial_10_gc_type.html">https://www.cnblogs.com/chanshuyi/p/jvm_serial_10_gc_type.html</a></p>
+<blockquote>
+<p>从年轻代空间回收内存被称为 <code>Minor GC</code>，有时候也称之为 Young GC。对于 Minor GC，你需要知道的一些点：</p>
+</blockquote>
+<p>(1)当 JVM 无法为一个新的对象分配空间时会触发 Minor GC，比如当 Eden 区满了。所以 Eden 区越小，越频繁执行 Minor GC。</p>
+<p>(2)当年轻代中的 Eden 区分配满的时候，年轻代中的部分对象会晋升到老年代，所以 Minor GC 后老年代的占用量通常会有所升高。
+质疑常规的认知，所有的 Minor GC 都会触发 Stop-The-World，停止应用程序的线程。对于大部分应用程序，停顿导致的延迟都是可以忽略不计的，因为大部分 Eden 区中的对象都能被认为是垃圾，永远也不会被复制到 Survivor 区或者老年代空间。如果情况相反，即 Eden 区大部分新生对象不符合 GC 条件（即他们不被垃圾回收器收集），那么 Minor GC 执行时暂停的时间将会长很多（因为JVM要将它们复制到 Survivor 区或老年代）。</p>
+<blockquote>
+<p>从老年代空间回收内存被称为 <code>Major GC</code>，有时候也称之为 Old GC。</p>
+<p>许多 Major GC 是由 Minor GC 触发的，所以很多情况下将这两种 GC 分离是不太可能的。</p>
+</blockquote>
+<p><code>Minor GC 作用于年轻代</code>，<code>Major GC 作用于老年代</code>。 分配对象内存时发现内存不够，触发 Minor GC。Minor GC 会将对象移到老年代中，如果此时老年代空间不够，那么触发 Major GC。因此才会说，许多 Major GC 是由 Minor GC 引起的。</p>
+<blockquote>
+<p><code>Full GC</code> 是清理整个堆空间 —— 包括年轻代、老年代和永久代（如果有的话）。因此 Full GC 可以说是 Minor GC 和 Major GC 的结合。</p>
+</blockquote>
+<p><em><strong>当准备要触发一次 Minor GC 时，如果发现年轻代的剩余空间比以往晋升的空间小，则不会触发 Minor GC 而是转为触发 Full GC。因为JVM此时认为：之前这么大空间的时候已经发生对象晋升了，那现在剩余空间更小了，那么很大概率上也会发生对象晋升。既然如此，那么我就直接帮你把事情给做了吧，直接来一次 Full GC，整理一下老年代和年轻代的空间。</strong></em></p>
+
+    </div>
+
+
+
+    <div class="post-copyright">
+                
+        
+
+
+        <section>
+            <p class="share-item">
+                <span>Share :</span>
+                
+                <span>
+
+      
+        <a href="//twitter.com/share?url=https%3a%2f%2frrrwx.github.io%2f2020%2fjvm%25E5%25AD%25A6%25E4%25B9%25A0%25E4%25B8%2580%25E4%25BA%259B%25E9%2587%258D%25E8%25A6%2581%25E7%259F%25A5%25E8%25AF%2586%25E7%2582%25B9%2f&amp;text=JVM%e5%ad%a6%e4%b9%a0%e4%b9%8b%e4%b8%80%e4%ba%9b%e9%87%8d%e8%a6%81%e7%9a%84%e7%9f%a5%e8%af%86%e7%82%b9&amp;via=" target="_blank" title="Share on Twitter">
+          <i class="iconfont icon-twitter"></i>
+        </a>
+        
+
+      
+      
+        <a href="//www.facebook.com/sharer/sharer.php?u=https%3a%2f%2frrrwx.github.io%2f2020%2fjvm%25E5%25AD%25A6%25E4%25B9%25A0%25E4%25B8%2580%25E4%25BA%259B%25E9%2587%258D%25E8%25A6%2581%25E7%259F%25A5%25E8%25AF%2586%25E7%2582%25B9%2f" target="_blank" title="Share on Facebook">
+          <i class="iconfont icon-facebook"></i>
+        </a>
+        
+      
+      
+      
+      
+      
+      
+        
+      
+        
+      
+
+          
+
+          
+
+          
+        <a href="//www.douban.com/recommend/?url=https%3a%2f%2frrrwx.github.io%2f2020%2fjvm%25E5%25AD%25A6%25E4%25B9%25A0%25E4%25B8%2580%25E4%25BA%259B%25E9%2587%258D%25E8%25A6%2581%25E7%259F%25A5%25E8%25AF%2586%25E7%2582%25B9%2f&amp;title=JVM%e5%ad%a6%e4%b9%a0%e4%b9%8b%e4%b8%80%e4%ba%9b%e9%87%8d%e8%a6%81%e7%9a%84%e7%9f%a5%e8%af%86%e7%82%b9" target="_blank" title="Share on Douban ">
+            <i class="iconfont icon-douban"></i>
+          </a>
+          
+
+          
+        <a href="//service.weibo.com/share/share.php?url=https%3a%2f%2frrrwx.github.io%2f2020%2fjvm%25E5%25AD%25A6%25E4%25B9%25A0%25E4%25B8%2580%25E4%25BA%259B%25E9%2587%258D%25E8%25A6%2581%25E7%259F%25A5%25E8%25AF%2586%25E7%2582%25B9%2f&amp;appkey=&amp;title=JVM%e5%ad%a6%e4%b9%a0%e4%b9%8b%e4%b8%80%e4%ba%9b%e9%87%8d%e8%a6%81%e7%9a%84%e7%9f%a5%e8%af%86%e7%82%b9" target="_blank" title="Share on Douban ">
+            <i class="iconfont icon-weibo"></i>
+          </a>
+          
+
+</span>
+                
+            </p>
+        </section>
+
+
+        <section>
+            <p class="copyright-item">
+                <span>Updated </span>
+                <span class="post-time">
+                on 
+                <time datetime=2020-03-17 itemprop="datePublished">March 17, 2020</time>
+                </span>
+
+            </p>
+        </section>
+    </div>
+
+  
+    <div class="post-tags">
+        
+            <section>
+            
+            <span class="tag"><a href="https://rrrwx.github.io/tags/jvm/">
+                    <i class="iconfont icon-tag"></i>jvm</a></span>
+            
+            <span class="tag"><a href="https://rrrwx.github.io/tags/java/">
+                    <i class="iconfont icon-tag"></i>java</a></span>
+            
+            <span class="tag"><a href="https://rrrwx.github.io/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">
+                    <i class="iconfont icon-tag"></i>学习笔记</a></span>
+            
+            </section>
+        
+        <section>
+                <a href="javascript:window.history.back();">back</a></span> · 
+                <span><a href="https://rrrwx.github.io">home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav">
+        
+        <a href="https://rrrwx.github.io/2020/%E7%BA%BF%E7%A8%8B/" class="prev" rel="prev" title="java基础学习笔记多线程之线程创建"><i class="iconfont icon-left"></i>&nbsp;java基础学习笔记多线程之线程创建</a>
+         
+        
+        <a href="https://rrrwx.github.io/2020/jvm%E5%AD%A6%E4%B9%A0%E4%B8%80%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA%E5%9F%9F/" class="next" rel="next" title="JVM学习一之运行时数据区域">JVM学习一之运行时数据区域&nbsp;<i class="iconfont icon-right"></i></a>
+        
+    </div>
+
+    <div class="post-comment">
+          
+                 
+          
+    </div>
+</article>
+          </div>
+		   </main>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="">
+                <i class="fas fa-arrow-up fa-fw"></i>
+            </a>
+        </div>
+
+      <footer class="footer">
+
+
+
+
+    <div class="copyright">
+
+            <div class="footer-line">
+                &copy;<i class="far fa-copyright fa-fw"></i>&nbsp;<span itemprop="copyrightYear">2020</span>&nbsp;&nbsp;<span class="author" itemprop="copyrightHolder"><a href="https://rrrwx.github.io">JadeRong</a></span>&nbsp;|&nbsp;<span class="license">Released under <a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span>
+                &nbsp;|&nbsp;<span>Powered by <a href="https://gohugo.io/" target="_blank" rel="external nofollow">Hugo</a> & <a href="https://github.com/liuzc/leaveit" target="_blank" rel="external nofollow">LeaveIt</a></span>
+            </div>
+
+
+    </div>
+</footer>
+
+
+
+
+
+
+
+
+
+
+
+
+    
+     <link href="//lib.baomitu.com/lightgallery/1.6.11/css/lightgallery.min.css" rel="stylesheet">  
+      
+     <script src="/js/vendor_gallery.min.js" async="" ></script>
+    
+  
+
+
+
+
+     </div>
+  </body>
+</html>

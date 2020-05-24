@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+  <meta http-equiv="content-type" content="text/html;charset=utf-8">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noodp"/>
+  <meta name="author" content="JadeRong">
+  <meta name="description" content="主要分享一些平时学习和开发中用到的知识">
+  
+  
+  
+  <link rel="next" href="https://rrrwx.github.io/2020/%E5%9F%BA%E7%A1%80%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E4%BA%8C/" />
+  <link rel="canonical" href="https://rrrwx.github.io/2020/%E5%9F%BA%E7%A1%80%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E4%B8%80/" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+  <meta name="msapplication-TileColor" content="#da532c">
+  <meta name="theme-color" content="#ffffff">
+  <title>
+       
+       
+           java基础学习笔记（一） | JadeRong
+       
+  </title>
+  <meta name="title" content="java基础学习笔记（一） | JadeRong">
+    
+  
+  <link rel="stylesheet" href="/font/iconfont.css">
+  <link rel="stylesheet" href="/css/main.min.css">
+
+
+  
+  
+ 
+
+<script type="application/ld+json">
+ "@context" : "http://schema.org",
+    "@type" : "BlogPosting",
+    "mainEntityOfPage": {
+         "@type": "WebPage",
+         "@id": "https:\/\/rrrwx.github.io"
+    },
+    "articleSection" : "posts",
+    "name" : "java基础学习笔记（一）",
+    "headline" : "java基础学习笔记（一）",
+    "description" : "1.方法可变参数： int \x26hellip; data (JDK1.5以后提供，相当于数组的变相应用)\nint sum(int ... data){} sum(1,2,3); sum(new int [] {1,2,3}); 方法中可变参数只能定义在最后，并且只能定义一个\n2.类在java中是一种引用数据类型； String类的实现都是通过数组的形式进行保存的，因此对于String内部的数据一定是无法改变的；另外在jdk1.8以前，使用char数组来保存，而jdk1.9以后都使用byte数组来保存 String类的比较应该使用equals (https:\/\/blog.csdn.net\/barryhappy\/article\/details\/6082823)； String.intern()可以将对象手动入池，但麻烦，因此直接赋值比构造方法更节省空间。\n3.override（覆写）和overloading（重载）    区别 overloading（重载） override（覆写）     定义 方法名称相同，参数类型和个数不同 方法名称、参数类型及个数、返回值类型全部相同   权限 无权限要求 被子类覆写的方法不能拥有比父类更严格的访问控制权限   范围 发生在同一个类中 发生在继承关系类中     构造方法不能被继承，因此不能被覆写，但可以被重载； 父类方法定义private时，子类无法覆写该方法\n4.this和super （1）this表示先从本类查找所需要的属性或者方法，弱国本类不存在则查找父类定义，而super表示不查找子类，直接查找父类； （2）this()调用的是本类构造，super调用的是父类构造，而且都必须放在构造方法的首行，所以不能同时出现； （3）this可以表示当前对象；\n5.volatile和synchronized的区别 （1）volatile主要使用于属性上，而synchronized应用于方法和代码块上； （2）volatile无法描述同步的处理，只是一种直接内存的处理，避免了副本的操作，节约了复制变量副本和同步的时间，而synchronized是实现同步操作的关键字（同步的时候使用volatile的同时还是要使用synchronized）。\n6.String和StringBuffer、StringBuilder  String类是字符串的首选类型，其最大特点是内容不允许修改，StringBuffer和StringBuilder类的内容允许修改\n在开发中，大部分情况都优先考虑String类，只有在频繁修改字符串的操作上才会考虑使用StringBuffer和StringBuilder类。\n （1）StringBuffer是线程安全的\n StringBuffer是在jdk1.0版本中提供的，但是jdk1.5之后又提供了StringBuilder类，两个类的唯一区别在于：StringBuffer类中的方法使用了synchronized关键字定义，适合多线程并发访问时的同步操作，因此属于线程安全的方法；而StringBuilder类没有这样做，属于非线程安全的方法\n （2）字符串静态常量池\nString str=\x26#34;hello \x26#34;\x2b\x26#34;java\x26#34;\x2b\x26#34; world\x26#34;; 这句程序的本质操作实际上是由StringBuffer来完成的，其中所有的“\x2b”操作都变成“append”",
+    "inLanguage" : "en-us",
+    "author" : "JadeRong",
+    "creator" : "JadeRong",
+    "publisher": "JadeRong",
+    "accountablePerson" : "JadeRong",
+    "copyrightHolder" : "JadeRong",
+    "copyrightYear" : "2020",
+    "datePublished": "2020-02-15 00:10:36 \x2b0800 CST",
+    "dateModified" : "2020-02-15 00:10:36 \x2b0800 CST",
+    "url" : "https:\/\/rrrwx.github.io\/2020\/%E5%9F%BA%E7%A1%80%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E4%B8%80\/",
+    "wordCount" : "270",
+    "keywords" : [ "java","学习笔记", "JadeRong"]
+}
+</script>
+
+</head>
+
+  
+
+
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  <body class="">
+    <div class="wrapper">
+        <nav class="navbar">
+    <div class="container">
+        <div class="navbar-header header-logo">
+            <a href="https://rrrwx.github.io">JadeRong</a>&nbsp;
+        	<a href="javascript:void(0);" class="theme-switch"><i class="iconfont icon-table-lamp"></i></a>
+
+        </div>
+        <div class="menu navbar-right">
+                
+                
+                <a class="menu-item" href="/posts/" title="">Blogs</a>
+                
+                <a class="menu-item" href="/categories/" title="">Categories</a>
+                
+                <a class="menu-item" href="/tags/" title="">Tags</a>
+                
+                <a class="menu-item" href="/about/" title="">About</a>
+                
+        </div>
+    </div>
+</nav>
+<nav class="navbar-mobile" id="nav-mobile" style="display: none">
+     <div class="container">
+        <div class="navbar-header">
+            <div>  <a href="javascript:void(0);" class="theme-switch"><i class="iconfont icon-table-lamp"></i></a>&nbsp;<a href="https://rrrwx.github.io">JadeRong</a></div>
+            <div class="menu-toggle">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+     
+          <div class="menu" id="mobile-menu">
+                
+                
+                <a class="menu-item" href="/posts/" title="">Blogs</a>
+                
+                <a class="menu-item" href="/categories/" title="">Categories</a>
+                
+                <a class="menu-item" href="/tags/" title="">Tags</a>
+                
+                <a class="menu-item" href="/about/" title="">About</a>
+                
+        </div>
+    </div>
+</nav>
+    	 <main class="main">
+          <div class="container">
+      		
+<article class="post-warp" itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">java基础学习笔记（一）</h1>
+
+
+
+                Written by <a itemprop="name" href="https://rrrwx.github.io" rel="author">JadeRong</a>, included in <i class="iconfont icon-folder"></i>
+
+                <span class="post-category">
+                            <a href="https://rrrwx.github.io/categories/java%E5%AD%A6%E4%B9%A0/"> java学习 </a>
+                            
+                    </span>
+
+        
+        <h1 id="wc" style="font-size: 0.75rem;text-align: left;">约 270 个字    |    预计阅读 2 分钟    |    本文总阅读量<span id="busuanzi_value_page_pv"></span>次</h1>
+    </header>
+    <div class="post-content">
+        
+
+        
+
+        
+        
+     
+          
+          
+          
+
+          
+          
+          
+
+          <h4 id="1方法可变参数">1.方法可变参数：</h4>
+<p>int &hellip; data (<em>JDK1.5以后提供，相当于数组的变相应用</em>)</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#66d9ef">int</span> <span style="color:#a6e22e">sum</span><span style="color:#f92672">(</span><span style="color:#66d9ef">int</span> <span style="color:#f92672">...</span> data<span style="color:#f92672">){}</span>
+sum<span style="color:#f92672">(</span>1<span style="color:#f92672">,</span>2<span style="color:#f92672">,</span>3<span style="color:#f92672">);</span>
+sum<span style="color:#f92672">(</span><span style="color:#66d9ef">new</span> <span style="color:#66d9ef">int</span> <span style="color:#f92672">[]</span> <span style="color:#f92672">{</span>1<span style="color:#f92672">,</span>2<span style="color:#f92672">,</span>3<span style="color:#f92672">});</span>
+</code></pre></div><p>方法中可变参数只能定义在最后，并且只能定义一个</p>
+<h4 id="2类在java中是一种引用数据类型">2.类在java中是一种引用数据类型；</h4>
+<p>String类的实现都是通过数组的形式进行保存的，因此对于String内部的数据一定是<em><strong>无法改变的</strong></em>；另外在jdk1.8以前，使用<strong>char</strong>数组来保存，而jdk1.9以后都使用<strong>byte</strong>数组来保存
+String类的比较应该使用equals <a href="https://blog.csdn.net/barryhappy/article/details/6082823">(https://blog.csdn.net/barryhappy/article/details/6082823)</a>；
+String.intern()可以将对象手动入池，但麻烦，因此直接赋值比构造方法更节省空间。</p>
+<h4 id="3override覆写和overloading重载">3.override（覆写）和overloading（重载）</h4>
+<table>
+<thead>
+<tr>
+<th>区别</th>
+<th align="left">overloading（重载）</th>
+<th align="left">override（覆写）</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>定义</td>
+<td align="left">方法名称相同，参数类型和个数不同</td>
+<td align="left">方法名称、参数类型及个数、返回值类型全部相同</td>
+</tr>
+<tr>
+<td>权限</td>
+<td align="left">无权限要求</td>
+<td align="left">被子类覆写的方法不能拥有比父类更严格的访问控制权限</td>
+</tr>
+<tr>
+<td>范围</td>
+<td align="left">发生在同一个类中</td>
+<td align="left">发生在继承关系类中</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<p><em><strong>构造方法不能被继承，因此不能被覆写，但可以被重载；</strong></em>
+<em><strong>父类方法定义private时，子类无法覆写该方法</strong></em></p>
+<h4 id="4this和super">4.this和super</h4>
+<p>（1）this表示先从本类查找所需要的属性或者方法，弱国本类不存在则查找父类定义，而super表示不查找子类，直接查找父类；
+（2）this()调用的是本类构造，super调用的是父类构造，而且都必须放在构造方法的首行，所以不能同时出现；
+（3）this可以表示当前对象；</p>
+<h4 id="5volatile和synchronized的区别">5.volatile和synchronized的区别</h4>
+<p>（1）volatile主要使用于属性上，而synchronized应用于方法和代码块上；
+（2）volatile无法描述同步的处理，只是一种直接内存的处理，避免了副本的操作，节约了复制变量副本和同步的时间，而synchronized是实现同步操作的关键字（同步的时候使用volatile的同时还是要使用synchronized）。</p>
+<h4 id="6string和stringbufferstringbuilder">6.String和StringBuffer、StringBuilder</h4>
+<blockquote>
+<p>String类是字符串的首选类型，其最大特点是内容不允许修改，StringBuffer和StringBuilder类的内容允许修改</p>
+<p>在开发中，大部分情况都优先考虑String类，只有在频繁修改字符串的操作上才会考虑使用StringBuffer和StringBuilder类。</p>
+</blockquote>
+<p>（1）StringBuffer是线程安全的</p>
+<blockquote>
+<p>StringBuffer是在jdk1.0版本中提供的，但是jdk1.5之后又提供了StringBuilder类，两个类的唯一区别在于：StringBuffer类中的方法使用了synchronized关键字定义，适合多线程并发访问时的同步操作，因此属于线程安全的方法；而StringBuilder类没有这样做，属于非线程安全的方法</p>
+</blockquote>
+<p>（2）字符串静态常量池</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java">String str<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;hello &#34;</span><span style="color:#f92672">+</span><span style="color:#e6db74">&#34;java&#34;</span><span style="color:#f92672">+</span><span style="color:#e6db74">&#34; world&#34;</span><span style="color:#f92672">;</span>
+</code></pre></div><p>这句程序的本质操作实际上是由StringBuffer来完成的，其中所有的“+”操作都变成“append”</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java">StringBuffer buf <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> StringBuffer<span style="color:#f92672">();</span> 
+buf<span style="color:#f92672">.</span><span style="color:#a6e22e">append</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;hello &#34;</span><span style="color:#f92672">).</span><span style="color:#a6e22e">append</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;java&#34;</span><span style="color:#f92672">)+.</span><span style="color:#a6e22e">append</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34; world&#34;</span><span style="color:#f92672">);</span>
+</code></pre></div><p>（这些可以从java字节码中看出）</p>
+<p>（3）StringBuilder类实现了一些Strin类没有的方法，比如插入数据insert、删除数据delete等，还有最具特点的方法字符串反转reverse</p>
+<h4 id="7runtime类"><em>7.Runtime类</em></h4>
+<p>Runtime类用来描述运行状态的信息对象，每一个JVM进程都会提供唯一的一个Runtime类实例化对象，因此在Runtime类中默认将其构造方法封装（单例设计模式），然后使用getRuntime()方法（static方法）来获取实例化对象。</p>
+<p><code>public static Runtime getRuntime()</code></p>
+<p>常用的几个方法：</p>
+<p>（1）获取本机的CPU处理器数量</p>
+<p><code>public int availableProcessors()</code></p>
+<p>（2）获取主机的内存信息</p>
+<p><code>public long maxMemory() //最大可用内存(本机内存的1/4)</code></p>
+<p><code>public long totalMemory() //可用内存(本机内存的1/64)</code></p>
+<p><code>public long freeMemory() //空闲内存</code></p>
+<p>（返回数据类型为long，一般在表示文件大小和日期时间上会使用long型）
+另外，对于java的垃圾回收机制，系统的GC线程可以不定期自动处理，也可以使用Runtime类的gc()方法手动内存释放。</p>
+<p><code>public void gc()</code></p>
+<h4 id="8system类"><em>8.System类</em></h4>
+<p>（1）数据拷贝：</p>
+<p><code>public static void arraycopy(Object src, int srcPos, Object dest, int destPos, int length)</code></p>
+<p>（2）获取当前的日期时间数值：</p>
+<p><code>public static long currentTimeMillis()</code></p>
+<p>（3）垃圾回收：</p>
+<p><code>public static void gc()</code>
+等价于调用<code>Runtime.getRuntime().gc()</code></p>
+<h4 id="9autocloseable接口"><em>9.AutoCloseable接口</em></h4>
+<p>AutoCloseable接口的主要功能是结合异常处理结构在资源操作完成后实现自动释放功能</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">interface</span> <span style="color:#a6e22e">AutoCloseable</span> <span style="color:#f92672">{</span>
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">close</span><span style="color:#f92672">()</span> <span style="color:#66d9ef">throws</span> Exception<span style="color:#f92672">;</span>
+<span style="color:#f92672">}</span>
+
+<span style="color:#75715e">//使用
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">interface</span> <span style="color:#a6e22e">IMessage</span> <span style="color:#66d9ef">implements</span> AutoCloseable <span style="color:#f92672">{</span>
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">send</span><span style="color:#f92672">();</span>
+<span style="color:#f92672">}</span>
+<span style="color:#66d9ef">class</span> <span style="color:#a6e22e">NetMessage</span> <span style="color:#66d9ef">implements</span> IMessage<span style="color:#f92672">{</span>
+    <span style="color:#f92672">...</span>
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">close</span><span style="color:#f92672">()</span> <span style="color:#66d9ef">throws</span> Exception<span style="color:#f92672">{...}</span>
+<span style="color:#f92672">}</span>
+<span style="color:#f92672">...</span>
+<span style="color:#75715e">//main方法里面
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">try</span> <span style="color:#f92672">(</span>IMessage nm <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> NetMessage<span style="color:#f92672">(</span><span style="color:#e6db74">&#34;...&#34;</span><span style="color:#f92672">)){</span>
+    <span style="color:#f92672">...</span>
+<span style="color:#f92672">}</span> <span style="color:#66d9ef">catch</span> <span style="color:#f92672">(</span>Exception e<span style="color:#f92672">){</span>
+    e<span style="color:#f92672">.</span><span style="color:#a6e22e">printStackTrace</span><span style="color:#f92672">();</span>
+<span style="color:#f92672">}</span>
+</code></pre></div><p>在使用try语句的时候，其后面括号中的语句获取实例化对象，然后再执行完try语句之后自动调用close()方法</p>
+<h4 id="10cleaner类"><em>10.Cleaner类</em></h4>
+<p>传统的对象回收前处理操作依靠finalize()方法，而从JDK1.9开始提供了新的替代者：java.lang.ref.Cleaner类，并且基于AutoCloseable接口实现资源释放。而且是以清理线程的形式来操作的。</p>
+<p><a href="https://docs.oracle.com/en/java/javase/13/docs/api/java.base/java/lang/ref/Cleaner.html#method.summary">Cleaner.html#method.summary</a></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"> <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">CleaningExample</span> <span style="color:#66d9ef">implements</span> AutoCloseable <span style="color:#f92672">{</span>
+        <span style="color:#75715e">// A cleaner, preferably one shared within a library
+</span><span style="color:#75715e"></span>        <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">final</span> Cleaner cleaner <span style="color:#f92672">=</span> <span style="color:#f92672">&lt;</span>cleaner<span style="color:#f92672">&gt;;</span>
+
+        <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">State</span> <span style="color:#66d9ef">implements</span> Runnable <span style="color:#f92672">{</span>
+
+            State<span style="color:#f92672">(...)</span> <span style="color:#f92672">{</span>
+                <span style="color:#75715e">// initialize State needed for cleaning action
+</span><span style="color:#75715e"></span>            <span style="color:#f92672">}</span>
+
+            <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">run</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+                <span style="color:#75715e">// cleanup action accessing State, executed at most once
+</span><span style="color:#75715e"></span>            <span style="color:#f92672">}</span>
+        <span style="color:#f92672">}</span>
+
+        <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">final</span> State state<span style="color:#f92672">;</span>
+        <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">final</span> Cleaner<span style="color:#f92672">.</span><span style="color:#a6e22e">Cleanable</span> cleanable<span style="color:#f92672">;</span>
+
+        <span style="color:#66d9ef">public</span> <span style="color:#a6e22e">CleaningExample</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+            <span style="color:#66d9ef">this</span><span style="color:#f92672">.</span><span style="color:#a6e22e">state</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> State<span style="color:#f92672">(...);</span>
+            <span style="color:#66d9ef">this</span><span style="color:#f92672">.</span><span style="color:#a6e22e">cleanable</span> <span style="color:#f92672">=</span> cleaner<span style="color:#f92672">.</span><span style="color:#a6e22e">register</span><span style="color:#f92672">(</span><span style="color:#66d9ef">this</span><span style="color:#f92672">,</span> state<span style="color:#f92672">);</span>
+        <span style="color:#f92672">}</span>
+
+        <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">close</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+            cleanable<span style="color:#f92672">.</span><span style="color:#a6e22e">clean</span><span style="color:#f92672">();</span>
+        <span style="color:#f92672">}</span>
+    <span style="color:#f92672">}</span>
+</code></pre></div><h4 id="11访问控制权限"><em>11.访问控制权限</em></h4>
+<table>
+<thead>
+<tr>
+<th>范围</th>
+<th>private</th>
+<th>default</th>
+<th>protected</th>
+<th>public</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>同一包的同一类</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+</tr>
+<tr>
+<td>同一包的不同类</td>
+<td></td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+</tr>
+<tr>
+<td>不同包的子类</td>
+<td></td>
+<td></td>
+<td>1</td>
+<td>1</td>
+</tr>
+<tr>
+<td>不同包的非子类</td>
+<td></td>
+<td></td>
+<td></td>
+<td>1</td>
+</tr>
+</tbody>
+</table>
+
+    </div>
+
+
+
+    <div class="post-copyright">
+                
+        
+
+
+        <section>
+            <p class="share-item">
+                <span>Share :</span>
+                
+                <span>
+
+      
+        <a href="//twitter.com/share?url=https%3a%2f%2frrrwx.github.io%2f2020%2f%25E5%259F%25BA%25E7%25A1%2580%25E5%25AD%25A6%25E4%25B9%25A0%25E7%25AC%2594%25E8%25AE%25B0%25E4%25B8%2580%2f&amp;text=java%e5%9f%ba%e7%a1%80%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0%ef%bc%88%e4%b8%80%ef%bc%89&amp;via=" target="_blank" title="Share on Twitter">
+          <i class="iconfont icon-twitter"></i>
+        </a>
+        
+
+      
+      
+        <a href="//www.facebook.com/sharer/sharer.php?u=https%3a%2f%2frrrwx.github.io%2f2020%2f%25E5%259F%25BA%25E7%25A1%2580%25E5%25AD%25A6%25E4%25B9%25A0%25E7%25AC%2594%25E8%25AE%25B0%25E4%25B8%2580%2f" target="_blank" title="Share on Facebook">
+          <i class="iconfont icon-facebook"></i>
+        </a>
+        
+      
+      
+      
+      
+      
+      
+        
+      
+        
+      
+
+          
+
+          
+
+          
+        <a href="//www.douban.com/recommend/?url=https%3a%2f%2frrrwx.github.io%2f2020%2f%25E5%259F%25BA%25E7%25A1%2580%25E5%25AD%25A6%25E4%25B9%25A0%25E7%25AC%2594%25E8%25AE%25B0%25E4%25B8%2580%2f&amp;title=java%e5%9f%ba%e7%a1%80%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0%ef%bc%88%e4%b8%80%ef%bc%89" target="_blank" title="Share on Douban ">
+            <i class="iconfont icon-douban"></i>
+          </a>
+          
+
+          
+        <a href="//service.weibo.com/share/share.php?url=https%3a%2f%2frrrwx.github.io%2f2020%2f%25E5%259F%25BA%25E7%25A1%2580%25E5%25AD%25A6%25E4%25B9%25A0%25E7%25AC%2594%25E8%25AE%25B0%25E4%25B8%2580%2f&amp;appkey=&amp;title=java%e5%9f%ba%e7%a1%80%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0%ef%bc%88%e4%b8%80%ef%bc%89" target="_blank" title="Share on Douban ">
+            <i class="iconfont icon-weibo"></i>
+          </a>
+          
+
+</span>
+                
+            </p>
+        </section>
+
+
+        <section>
+            <p class="copyright-item">
+                <span>Updated </span>
+                <span class="post-time">
+                on 
+                <time datetime=2020-02-15 itemprop="datePublished">February 15, 2020</time>
+                </span>
+
+            </p>
+        </section>
+    </div>
+
+  
+    <div class="post-tags">
+        
+            <section>
+            
+            <span class="tag"><a href="https://rrrwx.github.io/tags/java/">
+                    <i class="iconfont icon-tag"></i>java</a></span>
+            
+            <span class="tag"><a href="https://rrrwx.github.io/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">
+                    <i class="iconfont icon-tag"></i>学习笔记</a></span>
+            
+            </section>
+        
+        <section>
+                <a href="javascript:window.history.back();">back</a></span> · 
+                <span><a href="https://rrrwx.github.io">home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav">
+         
+        
+        <a href="https://rrrwx.github.io/2020/%E5%9F%BA%E7%A1%80%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E4%BA%8C/" class="next" rel="next" title="java基础学习笔记（二）">java基础学习笔记（二）&nbsp;<i class="iconfont icon-right"></i></a>
+        
+    </div>
+
+    <div class="post-comment">
+          
+                 
+          
+    </div>
+</article>
+          </div>
+		   </main>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="">
+                <i class="fas fa-arrow-up fa-fw"></i>
+            </a>
+        </div>
+
+      <footer class="footer">
+
+
+
+
+    <div class="copyright">
+
+            <div class="footer-line">
+                &copy;<i class="far fa-copyright fa-fw"></i>&nbsp;<span itemprop="copyrightYear">2020</span>&nbsp;&nbsp;<span class="author" itemprop="copyrightHolder"><a href="https://rrrwx.github.io">JadeRong</a></span>&nbsp;|&nbsp;<span class="license">Released under <a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span>
+                &nbsp;|&nbsp;<span>Powered by <a href="https://gohugo.io/" target="_blank" rel="external nofollow">Hugo</a> & <a href="https://github.com/liuzc/leaveit" target="_blank" rel="external nofollow">LeaveIt</a></span>
+            </div>
+
+
+    </div>
+</footer>
+
+
+
+
+
+
+
+
+
+
+
+
+    
+    
+    <script src="/js/vendor_no_gallery.min.js" async=""></script>
+    
+  
+
+
+
+
+     </div>
+  </body>
+</html>

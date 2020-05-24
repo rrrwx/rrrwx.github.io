@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+  <meta http-equiv="content-type" content="text/html;charset=utf-8">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noodp"/>
+  <meta name="author" content="JadeRong">
+  <meta name="description" content="主要分享一些平时学习和开发中用到的知识">
+  
+  
+  <link rel="prev" href="https://rrrwx.github.io/2020/python%E7%88%AC%E8%99%AB%E7%AC%94%E8%AE%B0%E4%BA%8C/" />
+  <link rel="next" href="https://rrrwx.github.io/2020/python%E7%88%AC%E8%99%AB%E7%AC%94%E8%AE%B0%E4%BA%94/" />
+  <link rel="canonical" href="https://rrrwx.github.io/2020/python%E7%88%AC%E8%99%AB%E7%AC%94%E8%AE%B0%E4%B8%89/" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+  <meta name="msapplication-TileColor" content="#da532c">
+  <meta name="theme-color" content="#ffffff">
+  <title>
+       
+       
+           python爬虫笔记（三） | JadeRong
+       
+  </title>
+  <meta name="title" content="python爬虫笔记（三） | JadeRong">
+    
+  
+  <link rel="stylesheet" href="/font/iconfont.css">
+  <link rel="stylesheet" href="/css/main.min.css">
+
+
+  
+  
+ 
+
+<script type="application/ld+json">
+ "@context" : "http://schema.org",
+    "@type" : "BlogPosting",
+    "mainEntityOfPage": {
+         "@type": "WebPage",
+         "@id": "https:\/\/rrrwx.github.io"
+    },
+    "articleSection" : "posts",
+    "name" : "python爬虫笔记（三）",
+    "headline" : "python爬虫笔记（三）",
+    "description" : "爬虫实例 （一）更换用户代理 爬取时默认user-agent是 * python-requests\/2.18.4 *\nimport requests def getHTMLText(url): try: r = requests.get(url, timeout=30) print(r.request.headers) r.raise_for_status() r.encoding = r.apparent_encoding return r.text[500:800] except: return \x26#34;wrong connection...\x26#34; if __name__ == \x26#34;__main__\x26#34;: this_url = \x26#34;http:\/\/www.amazon.cn\/gp\/product\/B01M8L5Z3Y\x26#34; print(getHTMLText(this_url)) {\x26#39;User-Agent\x26#39;: \x26#39;python-requests\/2.18.4\x26#39;, \x26#39;Accept-Encoding\x26#39;: \x26#39;gzip, deflate\x26#39;, \x26#39;Accept\x26#39;: \x26#39;*\/*\x26#39;, \x26#39;Connection\x26#39;: \x26#39;keep-alive\x26#39;} {\x26#39;user-agent\x26#39;: \x26#39;Mozilla\/5.0\x26#39;, \x26#39;Accept-Encoding\x26#39;: \x26#39;gzip, deflate\x26#39;, \x26#39;Accept\x26#39;: \x26#39;*\/*\x26#39;, \x26#39;Connection\x26#39;: \x26#39;keep-alive\x26#39;} ue = {}; (function(d){var e=d.ue=d.ue||{},f=Date.now||function(){return\x2bnew Date};e.d=function(b){return f()-(b?0:d.ue_t0)};e.stub=function(b,a){if(!b[a]){var c=[];b[a]=function(){c.push([c.slice.call(arguments),e.d(),d.ue_id])};b[a].replay=function(b){for(var a;a=c.shift();)b(a[0],a[1],a[2])};b[a]. 有可能会被网站根据user-agent识别出是爬虫而不是普通用户，然后可以通过更改user-agent来爬取\nkv = {\x26#39;user-agent\x26#39;:\x26#39;Mozilla\/5.0\x26#39;} r = requests.get(url, headers = kv) print(r.",
+    "inLanguage" : "en-us",
+    "author" : "JadeRong",
+    "creator" : "JadeRong",
+    "publisher": "JadeRong",
+    "accountablePerson" : "JadeRong",
+    "copyrightHolder" : "JadeRong",
+    "copyrightYear" : "2020",
+    "datePublished": "2020-05-03 00:21:18 \x2b0800 CST",
+    "dateModified" : "2020-05-03 00:21:18 \x2b0800 CST",
+    "url" : "https:\/\/rrrwx.github.io\/2020\/python%E7%88%AC%E8%99%AB%E7%AC%94%E8%AE%B0%E4%B8%89\/",
+    "wordCount" : "153",
+    "keywords" : [ "python爬虫","学习笔记", "JadeRong"]
+}
+</script>
+
+</head>
+
+  
+
+
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  <body class="">
+    <div class="wrapper">
+        <nav class="navbar">
+    <div class="container">
+        <div class="navbar-header header-logo">
+            <a href="https://rrrwx.github.io">JadeRong</a>&nbsp;
+        	<a href="javascript:void(0);" class="theme-switch"><i class="iconfont icon-table-lamp"></i></a>
+
+        </div>
+        <div class="menu navbar-right">
+                
+                
+                <a class="menu-item" href="/posts/" title="">Blogs</a>
+                
+                <a class="menu-item" href="/categories/" title="">Categories</a>
+                
+                <a class="menu-item" href="/tags/" title="">Tags</a>
+                
+                <a class="menu-item" href="/about/" title="">About</a>
+                
+        </div>
+    </div>
+</nav>
+<nav class="navbar-mobile" id="nav-mobile" style="display: none">
+     <div class="container">
+        <div class="navbar-header">
+            <div>  <a href="javascript:void(0);" class="theme-switch"><i class="iconfont icon-table-lamp"></i></a>&nbsp;<a href="https://rrrwx.github.io">JadeRong</a></div>
+            <div class="menu-toggle">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+     
+          <div class="menu" id="mobile-menu">
+                
+                
+                <a class="menu-item" href="/posts/" title="">Blogs</a>
+                
+                <a class="menu-item" href="/categories/" title="">Categories</a>
+                
+                <a class="menu-item" href="/tags/" title="">Tags</a>
+                
+                <a class="menu-item" href="/about/" title="">About</a>
+                
+        </div>
+    </div>
+</nav>
+    	 <main class="main">
+          <div class="container">
+      		
+<article class="post-warp" itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">python爬虫笔记（三）</h1>
+
+
+
+                Written by <a itemprop="name" href="https://rrrwx.github.io" rel="author">JadeRong</a>, included in <i class="iconfont icon-folder"></i>
+
+                <span class="post-category">
+                            <a href="https://rrrwx.github.io/categories/python%E7%88%AC%E8%99%AB%E7%AC%94%E8%AE%B0/"> python爬虫笔记 </a>
+                            
+                    </span>
+
+        
+        <h1 id="wc" style="font-size: 0.75rem;text-align: left;">约 153 个字    |    预计阅读 1 分钟    |    本文总阅读量<span id="busuanzi_value_page_pv"></span>次</h1>
+    </header>
+    <div class="post-content">
+        
+
+        
+
+        
+        
+     
+          
+          
+          
+
+          
+          
+          
+
+          <h2 id="爬虫实例">爬虫实例</h2>
+<h3 id="一更换用户代理">（一）更换用户代理</h3>
+<p>爬取时默认user-agent是 * python-requests/2.18.4 *</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> requests
+
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">getHTMLText</span>(url):
+    <span style="color:#66d9ef">try</span>:
+        r <span style="color:#f92672">=</span> requests<span style="color:#f92672">.</span>get(url, timeout<span style="color:#f92672">=</span><span style="color:#ae81ff">30</span>)
+        <span style="color:#66d9ef">print</span>(r<span style="color:#f92672">.</span>request<span style="color:#f92672">.</span>headers)
+        r<span style="color:#f92672">.</span>raise_for_status()
+        r<span style="color:#f92672">.</span>encoding <span style="color:#f92672">=</span> r<span style="color:#f92672">.</span>apparent_encoding
+        <span style="color:#66d9ef">return</span> r<span style="color:#f92672">.</span>text[<span style="color:#ae81ff">500</span>:<span style="color:#ae81ff">800</span>]
+    <span style="color:#66d9ef">except</span>:
+        <span style="color:#66d9ef">return</span> <span style="color:#e6db74">&#34;wrong connection...&#34;</span>
+
+<span style="color:#66d9ef">if</span> __name__ <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;__main__&#34;</span>:
+    this_url <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;http://www.amazon.cn/gp/product/B01M8L5Z3Y&#34;</span>
+    <span style="color:#66d9ef">print</span>(getHTMLText(this_url))
+
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#f92672">{</span><span style="color:#e6db74">&#39;User-Agent&#39;</span>: <span style="color:#e6db74">&#39;python-requests/2.18.4&#39;</span>, <span style="color:#e6db74">&#39;Accept-Encoding&#39;</span>: <span style="color:#e6db74">&#39;gzip, deflate&#39;</span>, <span style="color:#e6db74">&#39;Accept&#39;</span>: <span style="color:#e6db74">&#39;*/*&#39;</span>, <span style="color:#e6db74">&#39;Connection&#39;</span>: <span style="color:#e6db74">&#39;keep-alive&#39;</span><span style="color:#f92672">}</span>
+<span style="color:#f92672">{</span><span style="color:#e6db74">&#39;user-agent&#39;</span>: <span style="color:#e6db74">&#39;Mozilla/5.0&#39;</span>, <span style="color:#e6db74">&#39;Accept-Encoding&#39;</span>: <span style="color:#e6db74">&#39;gzip, deflate&#39;</span>, <span style="color:#e6db74">&#39;Accept&#39;</span>: <span style="color:#e6db74">&#39;*/*&#39;</span>, <span style="color:#e6db74">&#39;Connection&#39;</span>: <span style="color:#e6db74">&#39;keep-alive&#39;</span><span style="color:#f92672">}</span>
+ue <span style="color:#f92672">=</span> <span style="color:#f92672">{}</span>;
+<span style="color:#f92672">(</span><span style="color:#66d9ef">function</span><span style="color:#f92672">(</span>d<span style="color:#f92672">){</span>var e<span style="color:#f92672">=</span>d.ue<span style="color:#f92672">=</span>d.ue<span style="color:#f92672">||{}</span>,f<span style="color:#f92672">=</span>Date.now<span style="color:#f92672">||</span><span style="color:#66d9ef">function</span><span style="color:#f92672">(){</span><span style="color:#66d9ef">return</span>+new Date<span style="color:#f92672">}</span>;e.d<span style="color:#f92672">=</span><span style="color:#66d9ef">function</span><span style="color:#f92672">(</span>b<span style="color:#f92672">){</span><span style="color:#66d9ef">return</span> f<span style="color:#f92672">()</span>-<span style="color:#f92672">(</span>b?0:d.ue_t0<span style="color:#f92672">)}</span>;e.stub<span style="color:#f92672">=</span><span style="color:#66d9ef">function</span><span style="color:#f92672">(</span>b,a<span style="color:#f92672">){</span><span style="color:#66d9ef">if</span><span style="color:#f92672">(</span>!b<span style="color:#f92672">[</span>a<span style="color:#f92672">]){</span>var c<span style="color:#f92672">=[]</span>;b<span style="color:#f92672">[</span>a<span style="color:#f92672">]=</span><span style="color:#66d9ef">function</span><span style="color:#f92672">(){</span>c.push<span style="color:#f92672">([</span>c.slice.call<span style="color:#f92672">(</span>arguments<span style="color:#f92672">)</span>,e.d<span style="color:#f92672">()</span>,d.ue_id<span style="color:#f92672">])}</span>;b<span style="color:#f92672">[</span>a<span style="color:#f92672">]</span>.replay<span style="color:#f92672">=</span><span style="color:#66d9ef">function</span><span style="color:#f92672">(</span>b<span style="color:#f92672">){</span><span style="color:#66d9ef">for</span><span style="color:#f92672">(</span>var a;a<span style="color:#f92672">=</span>c.shift<span style="color:#f92672">()</span>;<span style="color:#f92672">)</span>b<span style="color:#f92672">(</span>a<span style="color:#f92672">[</span>0<span style="color:#f92672">]</span>,a<span style="color:#f92672">[</span>1<span style="color:#f92672">]</span>,a<span style="color:#f92672">[</span>2<span style="color:#f92672">])}</span>;b<span style="color:#f92672">[</span>a<span style="color:#f92672">]</span>.
+</code></pre></div><p>有可能会被网站根据user-agent识别出是爬虫而不是普通用户，然后可以通过更改user-agent来爬取</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">        kv <span style="color:#f92672">=</span> <span style="color:#f92672">{</span><span style="color:#e6db74">&#39;user-agent&#39;</span>:<span style="color:#e6db74">&#39;Mozilla/5.0&#39;</span><span style="color:#f92672">}</span>
+        r <span style="color:#f92672">=</span> requests.get<span style="color:#f92672">(</span>url, headers <span style="color:#f92672">=</span> kv<span style="color:#f92672">)</span>
+        print<span style="color:#f92672">(</span>r.request.headers<span style="color:#f92672">)</span>
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#f92672">{</span><span style="color:#e6db74">&#39;user-agent&#39;</span>: <span style="color:#e6db74">&#39;Mozilla/5.0&#39;</span>, <span style="color:#e6db74">&#39;Accept-Encoding&#39;</span>: <span style="color:#e6db74">&#39;gzip, deflate&#39;</span>, <span style="color:#e6db74">&#39;Accept&#39;</span>: <span style="color:#e6db74">&#39;*/*&#39;</span>, <span style="color:#e6db74">&#39;Connection&#39;</span>: <span style="color:#e6db74">&#39;keep-alive&#39;</span><span style="color:#f92672">}</span>
+</code></pre></div><p>这里user-agent替换成Mozilla/5.0（或者其他浏览器），而且是在get的头部headers里面进行替换</p>
+<h3 id="二根据关键词搜索">（二）根据关键词搜索</h3>
+<p>baidu的关键词接口：
+<a href="http://www.baidu.com/s?wd=keyword">http://www.baidu.com/s?wd=keyword</a>
+360的关键词接口：
+<a href="http://www.baidu.com/s?q=keyword">http://www.baidu.com/s?q=keyword</a></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">        kv <span style="color:#f92672">=</span> <span style="color:#f92672">{</span><span style="color:#e6db74">&#39;wd&#39;</span>:<span style="color:#e6db74">&#39;python&#39;</span><span style="color:#f92672">}</span>
+        r <span style="color:#f92672">=</span> requests.get<span style="color:#f92672">(</span>url, params <span style="color:#f92672">=</span> kv<span style="color:#f92672">)</span>
+</code></pre></div><p>注意这里是把params进行替换，同时打印结果的时候注意获取的数据长度，有时候可能太大，需要进一步筛选</p>
+<h3 id="三图片的爬取和存储">（三）图片的爬取和存储</h3>
+<p>网络图片链接格式：http://www.example.com/picture.jpg</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> requests
+<span style="color:#f92672">import</span> os
+
+url <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;http://i0.hdslb.com/bfs/article/7cdff66e4d44de434f7096fcda11f05505a8f831.jpg&#34;</span>
+root <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;.//pics//&#34;</span>
+kv <span style="color:#f92672">=</span> {<span style="color:#e6db74">&#39;user-agent&#39;</span>:<span style="color:#e6db74">&#39;Mozilla/5.0&#39;</span>}
+path <span style="color:#f92672">=</span> root <span style="color:#f92672">+</span> url<span style="color:#f92672">.</span>split(<span style="color:#e6db74">&#39;/&#39;</span>)[<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>]
+<span style="color:#66d9ef">print</span>(path)
+<span style="color:#66d9ef">try</span>:
+    <span style="color:#66d9ef">if</span> <span style="color:#f92672">not</span> os<span style="color:#f92672">.</span>path<span style="color:#f92672">.</span>exists(root):
+        os<span style="color:#f92672">.</span>mkdir(root)
+    <span style="color:#66d9ef">if</span> <span style="color:#f92672">not</span> os<span style="color:#f92672">.</span>path<span style="color:#f92672">.</span>exists(path):
+        r <span style="color:#f92672">=</span> requests<span style="color:#f92672">.</span>get(url, headers <span style="color:#f92672">=</span> kv)
+        <span style="color:#66d9ef">print</span>(r<span style="color:#f92672">.</span>status_code)
+        <span style="color:#66d9ef">with</span> open(path, <span style="color:#e6db74">&#39;wb&#39;</span>) <span style="color:#66d9ef">as</span> f:
+            f<span style="color:#f92672">.</span>write(r<span style="color:#f92672">.</span>content)
+            f<span style="color:#f92672">.</span>close()
+            <span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;File saved successfully.&#34;</span>)
+    <span style="color:#66d9ef">else</span>:
+        <span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;File saved.&#34;</span>)
+<span style="color:#66d9ef">except</span>:
+    <span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;Failed.&#34;</span>)
+</code></pre></div><h3 id="四ip地址归属地查询">(四)ip地址归属地查询</h3>
+<p>iP138可以用来查询ip地址归属地</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">url <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;http://m.ip138.com/ip.asp?ip=&#39;</span>+ipaddress
+</code></pre></div>
+    </div>
+
+
+
+    <div class="post-copyright">
+                
+        
+
+
+        <section>
+            <p class="share-item">
+                <span>Share :</span>
+                
+                <span>
+
+      
+        <a href="//twitter.com/share?url=https%3a%2f%2frrrwx.github.io%2f2020%2fpython%25E7%2588%25AC%25E8%2599%25AB%25E7%25AC%2594%25E8%25AE%25B0%25E4%25B8%2589%2f&amp;text=python%e7%88%ac%e8%99%ab%e7%ac%94%e8%ae%b0%ef%bc%88%e4%b8%89%ef%bc%89&amp;via=" target="_blank" title="Share on Twitter">
+          <i class="iconfont icon-twitter"></i>
+        </a>
+        
+
+      
+      
+        <a href="//www.facebook.com/sharer/sharer.php?u=https%3a%2f%2frrrwx.github.io%2f2020%2fpython%25E7%2588%25AC%25E8%2599%25AB%25E7%25AC%2594%25E8%25AE%25B0%25E4%25B8%2589%2f" target="_blank" title="Share on Facebook">
+          <i class="iconfont icon-facebook"></i>
+        </a>
+        
+      
+      
+      
+      
+      
+      
+        
+      
+        
+      
+
+          
+
+          
+
+          
+        <a href="//www.douban.com/recommend/?url=https%3a%2f%2frrrwx.github.io%2f2020%2fpython%25E7%2588%25AC%25E8%2599%25AB%25E7%25AC%2594%25E8%25AE%25B0%25E4%25B8%2589%2f&amp;title=python%e7%88%ac%e8%99%ab%e7%ac%94%e8%ae%b0%ef%bc%88%e4%b8%89%ef%bc%89" target="_blank" title="Share on Douban ">
+            <i class="iconfont icon-douban"></i>
+          </a>
+          
+
+          
+        <a href="//service.weibo.com/share/share.php?url=https%3a%2f%2frrrwx.github.io%2f2020%2fpython%25E7%2588%25AC%25E8%2599%25AB%25E7%25AC%2594%25E8%25AE%25B0%25E4%25B8%2589%2f&amp;appkey=&amp;title=python%e7%88%ac%e8%99%ab%e7%ac%94%e8%ae%b0%ef%bc%88%e4%b8%89%ef%bc%89" target="_blank" title="Share on Douban ">
+            <i class="iconfont icon-weibo"></i>
+          </a>
+          
+
+</span>
+                
+            </p>
+        </section>
+
+
+        <section>
+            <p class="copyright-item">
+                <span>Updated </span>
+                <span class="post-time">
+                on 
+                <time datetime=2020-05-03 itemprop="datePublished">May 3, 2020</time>
+                </span>
+
+            </p>
+        </section>
+    </div>
+
+  
+    <div class="post-tags">
+        
+            <section>
+            
+            <span class="tag"><a href="https://rrrwx.github.io/tags/python%E7%88%AC%E8%99%AB/">
+                    <i class="iconfont icon-tag"></i>python爬虫</a></span>
+            
+            <span class="tag"><a href="https://rrrwx.github.io/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">
+                    <i class="iconfont icon-tag"></i>学习笔记</a></span>
+            
+            </section>
+        
+        <section>
+                <a href="javascript:window.history.back();">back</a></span> · 
+                <span><a href="https://rrrwx.github.io">home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav">
+        
+        <a href="https://rrrwx.github.io/2020/python%E7%88%AC%E8%99%AB%E7%AC%94%E8%AE%B0%E4%BA%8C/" class="prev" rel="prev" title="python爬虫笔记（二）"><i class="iconfont icon-left"></i>&nbsp;python爬虫笔记（二）</a>
+         
+        
+        <a href="https://rrrwx.github.io/2020/python%E7%88%AC%E8%99%AB%E7%AC%94%E8%AE%B0%E4%BA%94/" class="next" rel="next" title="python爬虫笔记（五）">python爬虫笔记（五）&nbsp;<i class="iconfont icon-right"></i></a>
+        
+    </div>
+
+    <div class="post-comment">
+          
+                 
+          
+    </div>
+</article>
+          </div>
+		   </main>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="">
+                <i class="fas fa-arrow-up fa-fw"></i>
+            </a>
+        </div>
+
+      <footer class="footer">
+
+
+
+
+    <div class="copyright">
+
+            <div class="footer-line">
+                &copy;<i class="far fa-copyright fa-fw"></i>&nbsp;<span itemprop="copyrightYear">2020</span>&nbsp;&nbsp;<span class="author" itemprop="copyrightHolder"><a href="https://rrrwx.github.io">JadeRong</a></span>&nbsp;|&nbsp;<span class="license">Released under <a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span>
+                &nbsp;|&nbsp;<span>Powered by <a href="https://gohugo.io/" target="_blank" rel="external nofollow">Hugo</a> & <a href="https://github.com/liuzc/leaveit" target="_blank" rel="external nofollow">LeaveIt</a></span>
+            </div>
+
+
+    </div>
+</footer>
+
+
+
+
+
+
+
+
+
+
+
+
+    
+    
+    <script src="/js/vendor_no_gallery.min.js" async=""></script>
+    
+  
+
+
+
+
+     </div>
+  </body>
+</html>

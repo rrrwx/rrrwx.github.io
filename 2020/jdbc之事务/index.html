@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+  <meta http-equiv="content-type" content="text/html;charset=utf-8">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noodp"/>
+  <meta name="author" content="JadeRong">
+  <meta name="description" content="主要分享一些平时学习和开发中用到的知识">
+  
+  
+  <link rel="prev" href="https://rrrwx.github.io/2020/jdbc%E5%9F%BA%E7%A1%80%E4%BA%94jdbcutil%E5%B7%A5%E5%85%B7%E7%B1%BB%E7%A4%BA%E4%BE%8B/" />
+  <link rel="next" href="https://rrrwx.github.io/2020/jdbc%E4%B9%8B%E6%95%B0%E6%8D%AE%E5%BA%93%E8%BF%9E%E6%8E%A5%E6%B1%A0/" />
+  <link rel="canonical" href="https://rrrwx.github.io/2020/jdbc%E4%B9%8B%E4%BA%8B%E5%8A%A1/" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+  <meta name="msapplication-TileColor" content="#da532c">
+  <meta name="theme-color" content="#ffffff">
+  <title>
+       
+       
+           JDBC之事务 | JadeRong
+       
+  </title>
+  <meta name="title" content="JDBC之事务 | JadeRong">
+    
+  
+  <link rel="stylesheet" href="/font/iconfont.css">
+  <link rel="stylesheet" href="/css/main.min.css">
+
+
+  
+  
+ 
+
+<script type="application/ld+json">
+ "@context" : "http://schema.org",
+    "@type" : "BlogPosting",
+    "mainEntityOfPage": {
+         "@type": "WebPage",
+         "@id": "https:\/\/rrrwx.github.io"
+    },
+    "articleSection" : "posts",
+    "name" : "JDBC之事务",
+    "headline" : "JDBC之事务",
+    "description" : "https:\/\/www.runoob.com\/mysql\/mysql-transaction.html\nhttps:\/\/edu.aliyun.com\/roadmap\/java?spm=a2c6h.12999620.1371257.1.5a195738ZJjjex#part1\nhttp:\/\/blog.sina.com.cn\/s\/blog_4aefad88010092uc.html\nMySQL事务  MySQL 事务(transaction)主要用于处理操作量大，复杂度高的数据。比如说，在人员管理系统中，你删除一个人员，你既需要删除人员的基本资料，也要删除和该人员相关的信息，如信箱，文章等等，这样，这些数据库操作语句就构成一个事务！\n 在 MySQL 中只有使用了 Innodb 数据库引擎的数据库或表才支持事务。 事务处理可以用来维护数据库的完整性，保证成批的 SQL 语句要么全部执行，要么全部不执行。 事务用来管理 insert,update,delete 语句。   （一）事务的四大特性（ACID）  原子性(Atomicity)： 一个事务中的所有操作，要么全部完成，要么全部不完成，不会结束在中间某个环节。事务在执行过程中发生错误，会被回滚（Rollback）到事务开始前的状态，就像这个事务从来没有执行过一样； 一致性(Consistency)： 在事务开始之前和事务结束以后，数据库的完整性没有被破坏。这表示写入的资料必须完全符合所有的预设规则，这包含资料的精确度、串联性以及后续数据库可以自发性地完成预定的工作； 隔离性(Isolation)： 数据库允许多个并发事务同时对其数据进行读写和修改的能力，隔离性可以防止多个事务并发执行时由于交叉执行而导致数据的不一致。事务隔离分为不同级别，包括读未提交（Read uncommitted）、读提交（read committed）、可重复读（repeatable read）和串行化（Serializable）； 持久性(Durability)： 事务处理结束后，对数据的修改就是永久的，即便系统故障也不会丢失。  （二）并发问题 数据库肯定是要被广大客户所共享访问的，那么在数据库操作过程中很可能出现以下几种不确定情况。\n 更新丢失（Lost update）： 两个事务都同时更新一行数据，但是第二个事务却中途失败退出，导致对数据的两个修改都失效了。这是因为系统没有执行任何的锁操作，因此并发事务并没有被隔离开来。 脏读取（Dirty Reads）： 一个事务开始读取了某行数据，但是另外一个事务已经更新了此数据但没有能够及时提交。这是相当危险的，因为很可能所有的操作都被回滚。（最重要的） 不可重复读取（Non-repeatable Reads）： 一个事务对同一行数据重复读取两次，但是却得到了不同的结果。例如，在两次读取的中途，有另外一个事务对该行数据进行了修改，并提交。这里两个并发事务读写同一个行记录。 两次更新问题（Second lost updates problem）： 无法重复读取的特例。有两个并发事务同时读取同一行数据，然后其中一个对它进行修改提交，而另一个也进行了修改提交。这就会造成第一次写操作失效。 虚读（Phantom Reads）： 事务在操作过程中进行两次查询，第二次查询的结果包含了第一次查询中未出现的数据（这里并不要求两次查询的SQL语句相同）。这是因为在两次查询过程中有另外一个事务插入数据造成的。注意这里是两个并发事务操作的不是同一个行记录。  （三）事务隔离级别 为了避免上面出现的几种情况，在标准SQL规范中，定义了4个事务隔离级别，不同的隔离级别对事务的处理不同。\n 未授权读取（Read Uncommitted）： 允许脏读取，但不允许更新丢失。如果一个事务已经开始写数据，则另外一个数据则不允许同时进行写操作，但允许其他事务读此行数据。该隔离级别可以通过“排他写锁”实现。在多个事务之间使用它将会是非常危险的，事务的回滚操作或失败将会影响到其他并发事务。 授权读取（Read Committed）： 允许不可重复读取，但不允许脏读取。这可以通过“瞬间共享读锁”和“排他写锁”实现。读取数据的事务允许其他事务继续访问该行数据，但是未提交的写事务将会禁止其他事务访问该行。 可重复读取（Repeatable Read）： 禁止不可重复读取和脏读取，但是有时可能出现幻影数据。这可以通过“共享读锁”和“排他写锁”实现。读取数据的事务将会禁止写事务（但允许读事务），写事务则禁止任何其他事务。 序列化（Serializable）： 提供严格的事务隔离。它要求事务序列化执行，事务只能一个接着一个地执行，但不能并发执行。如果仅仅通过“行级锁”是无法实现事务序列化的，必须通过其他机制保证新插入的数据不会被刚执行查询操作的事务访问到。  从上到下隔离级别依次升高，完整性和一致性逐渐提高，但是并发性能逐渐降低。MySQL默认选择可重复读取，Oracle默认选择授权读取。由于脏读不可容忍而且需要一定的并发性能，因此一般不会选择未授权读取和序列化。",
+    "inLanguage" : "en-us",
+    "author" : "JadeRong",
+    "creator" : "JadeRong",
+    "publisher": "JadeRong",
+    "accountablePerson" : "JadeRong",
+    "copyrightHolder" : "JadeRong",
+    "copyrightYear" : "2020",
+    "datePublished": "2020-05-22 15:08:30 \x2b0800 CST",
+    "dateModified" : "2020-05-22 15:08:30 \x2b0800 CST",
+    "url" : "https:\/\/rrrwx.github.io\/2020\/jdbc%E4%B9%8B%E4%BA%8B%E5%8A%A1\/",
+    "wordCount" : "192",
+    "keywords" : [ "学习笔记","mysql","JDBC", "JadeRong"]
+}
+</script>
+
+</head>
+
+  
+
+
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  <body class="">
+    <div class="wrapper">
+        <nav class="navbar">
+    <div class="container">
+        <div class="navbar-header header-logo">
+            <a href="https://rrrwx.github.io">JadeRong</a>&nbsp;
+        	<a href="javascript:void(0);" class="theme-switch"><i class="iconfont icon-table-lamp"></i></a>
+
+        </div>
+        <div class="menu navbar-right">
+                
+                
+                <a class="menu-item" href="/posts/" title="">Blogs</a>
+                
+                <a class="menu-item" href="/categories/" title="">Categories</a>
+                
+                <a class="menu-item" href="/tags/" title="">Tags</a>
+                
+                <a class="menu-item" href="/about/" title="">About</a>
+                
+        </div>
+    </div>
+</nav>
+<nav class="navbar-mobile" id="nav-mobile" style="display: none">
+     <div class="container">
+        <div class="navbar-header">
+            <div>  <a href="javascript:void(0);" class="theme-switch"><i class="iconfont icon-table-lamp"></i></a>&nbsp;<a href="https://rrrwx.github.io">JadeRong</a></div>
+            <div class="menu-toggle">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+     
+          <div class="menu" id="mobile-menu">
+                
+                
+                <a class="menu-item" href="/posts/" title="">Blogs</a>
+                
+                <a class="menu-item" href="/categories/" title="">Categories</a>
+                
+                <a class="menu-item" href="/tags/" title="">Tags</a>
+                
+                <a class="menu-item" href="/about/" title="">About</a>
+                
+        </div>
+    </div>
+</nav>
+    	 <main class="main">
+          <div class="container">
+      		
+<article class="post-warp" itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">JDBC之事务</h1>
+
+
+
+                Written by <a itemprop="name" href="https://rrrwx.github.io" rel="author">JadeRong</a>, included in <i class="iconfont icon-folder"></i>
+
+                <span class="post-category">
+                            <a href="https://rrrwx.github.io/categories/mysql%E5%AD%A6%E4%B9%A0/"> mysql学习 </a>
+                            
+                    </span>
+
+        
+        <h1 id="wc" style="font-size: 0.75rem;text-align: left;">约 192 个字    |    预计阅读 1 分钟    |    本文总阅读量<span id="busuanzi_value_page_pv"></span>次</h1>
+    </header>
+    <div class="post-content">
+        
+
+        
+
+        
+        
+     
+          
+          
+          
+
+          
+          
+          
+
+          <p><a href="https://www.runoob.com/mysql/mysql-transaction.html">https://www.runoob.com/mysql/mysql-transaction.html</a></p>
+<p><a href="https://edu.aliyun.com/roadmap/java?spm=a2c6h.12999620.1371257.1.5a195738ZJjjex#part1">https://edu.aliyun.com/roadmap/java?spm=a2c6h.12999620.1371257.1.5a195738ZJjjex#part1</a></p>
+<p><a href="http://blog.sina.com.cn/s/blog_4aefad88010092uc.html">http://blog.sina.com.cn/s/blog_4aefad88010092uc.html</a></p>
+<h1 id="mysql事务">MySQL事务</h1>
+<blockquote>
+<p>MySQL 事务(<strong>transaction</strong>)主要用于处理操作量大，复杂度高的数据。比如说，在人员管理系统中，你删除一个人员，你既需要删除人员的基本资料，也要删除和该人员相关的信息，如信箱，文章等等，这样，这些数据库操作语句就构成一个事务！</p>
+<ul>
+<li>在 MySQL 中只有使用了 Innodb 数据库引擎的数据库或表才支持事务。</li>
+<li>事务处理可以用来维护数据库的完整性，保证成批的 SQL 语句要么全部执行，要么全部不执行。</li>
+<li>事务用来管理 insert,update,delete 语句。</li>
+</ul>
+</blockquote>
+<h2 id="一事务的四大特性acid">（一）事务的四大特性（ACID）</h2>
+<ul>
+<li><strong>原子性(Atomicity)：</strong> 一个事务中的所有操作，要么全部完成，要么全部不完成，不会结束在中间某个环节。事务在执行过程中发生错误，会被回滚（Rollback）到事务开始前的状态，就像这个事务从来没有执行过一样；</li>
+<li><strong>一致性(Consistency)：</strong> 在事务开始之前和事务结束以后，数据库的完整性没有被破坏。这表示写入的资料必须完全符合所有的预设规则，这包含资料的精确度、串联性以及后续数据库可以自发性地完成预定的工作；</li>
+<li><strong>隔离性(Isolation)：</strong> 数据库允许多个并发事务同时对其数据进行读写和修改的能力，隔离性可以防止多个事务并发执行时由于交叉执行而导致数据的不一致。事务隔离分为不同级别，包括读未提交（Read uncommitted）、读提交（read committed）、可重复读（repeatable read）和串行化（Serializable）；</li>
+<li><strong>持久性(Durability)：</strong> 事务处理结束后，对数据的修改就是永久的，即便系统故障也不会丢失。</li>
+</ul>
+<h2 id="二并发问题">（二）并发问题</h2>
+<p>数据库肯定是要被广大客户所共享访问的，那么在数据库操作过程中很可能出现以下几种不确定情况。</p>
+<ul>
+<li><strong>更新丢失（Lost update）：</strong> 两个事务都同时更新一行数据，但是第二个事务却中途失败退出，导致对数据的两个修改都失效了。这是因为系统没有执行任何的锁操作，因此并发事务并没有被隔离开来。</li>
+<li><strong>脏读取（Dirty Reads）：</strong> 一个事务开始读取了某行数据，但是另外一个事务已经更新了此数据但没有能够及时提交。这是相当危险的，因为很可能所有的操作都被回滚。<strong>（最重要的）</strong></li>
+<li><strong>不可重复读取（Non-repeatable Reads）：</strong> 一个事务对同一行数据重复读取两次，但是却得到了不同的结果。例如，在两次读取的中途，有另外一个事务对该行数据进行了修改，并提交。这里两个并发事务读写同一个行记录。</li>
+<li><strong>两次更新问题（Second lost updates problem）：</strong> 无法重复读取的特例。有两个并发事务同时读取同一行数据，然后其中一个对它进行修改提交，而另一个也进行了修改提交。这就会造成第一次写操作失效。</li>
+<li><strong>虚读（Phantom Reads）：</strong> 事务在操作过程中进行两次查询，第二次查询的结果包含了第一次查询中未出现的数据（这里并不要求两次查询的SQL语句相同）。这是因为在两次查询过程中有另外一个事务插入数据造成的。注意这里是两个并发事务操作的不是同一个行记录。</li>
+</ul>
+<h2 id="三事务隔离级别">（三）事务隔离级别</h2>
+<p>为了避免上面出现的几种情况，在标准SQL规范中，定义了4个事务隔离级别，不同的隔离级别对事务的处理不同。</p>
+<ul>
+<li><strong>未授权读取（Read Uncommitted）：</strong> 允许脏读取，但不允许更新丢失。如果一个事务已经开始写数据，则另外一个数据则不允许同时进行写操作，但允许其他事务读此行数据。该隔离级别可以通过“排他写锁”实现。<strong>在多个事务之间使用它将会是非常危险的，事务的回滚操作或失败将会影响到其他并发事务。</strong></li>
+<li><strong>授权读取（Read Committed）：</strong> 允许不可重复读取，但不允许脏读取。这可以通过“瞬间共享读锁”和“排他写锁”实现。读取数据的事务允许其他事务继续访问该行数据，但是未提交的写事务将会禁止其他事务访问该行。</li>
+<li><strong>可重复读取（Repeatable Read）：</strong> 禁止不可重复读取和脏读取，但是有时可能出现幻影数据。这可以通过“共享读锁”和“排他写锁”实现。读取数据的事务将会禁止写事务（但允许读事务），写事务则禁止任何其他事务。</li>
+<li><strong>序列化（Serializable）：</strong> 提供严格的事务隔离。它要求事务序列化执行，事务只能一个接着一个地执行，但不能并发执行。如果仅仅通过“行级锁”是无法实现事务序列化的，必须通过其他机制保证新插入的数据不会被刚执行查询操作的事务访问到。</li>
+</ul>
+<p><strong>从上到下隔离级别依次升高，完整性和一致性逐渐提高，但是并发性能逐渐降低。MySQL默认选择可重复读取，Oracle默认选择授权读取。由于脏读不可容忍而且需要一定的并发性能，因此一般不会选择未授权读取和序列化。</strong></p>
+<h2 id="四事务处理">（四）事务处理</h2>
+<h3 id="1-mysql的事务操作">1. MySQL的事务操作</h3>
+<ul>
+<li><strong>START TRANSACTION</strong>或<strong>BEGIN</strong> ：显示地开启事务</li>
+<li><strong>COMMIT</strong>和<strong>ROLLBACK</strong>
+<ul>
+<li>COMMIT表示提交事务，则这段事务会被执行，并使已对数据库进行的所有修改成为永久性的；</li>
+<li>ROLLBACK表示事务回滚，即这段事务不会被执行，并撤销正在进行的所有未提交的修改；</li>
+</ul>
+</li>
+</ul>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#66d9ef">CREATE</span> <span style="color:#66d9ef">TABLE</span> demo (id INT PRIMARYKEY, name VARCHAR(<span style="color:#ae81ff">30</span>), salary INT) ;
+<span style="color:#66d9ef">INSERT</span> <span style="color:#66d9ef">INTO</span> demo <span style="color:#66d9ef">VALUES</span> (<span style="color:#ae81ff">1</span>, <span style="color:#e6db74">&#39;zhangSan&#39;</span>, <span style="color:#ae81ff">1000</span>) ;
+<span style="color:#66d9ef">INSERT</span> <span style="color:#66d9ef">INTO</span> demo <span style="color:#66d9ef">VALUES</span> (<span style="color:#ae81ff">2</span>, <span style="color:#e6db74">&#39;liSi&#39;</span>, <span style="color:#ae81ff">1000</span>) ;
+<span style="color:#66d9ef">INSERT</span> <span style="color:#66d9ef">INTO</span> demo <span style="color:#66d9ef">VALUES</span> (<span style="color:#ae81ff">3</span>, <span style="color:#e6db74">&#39;wangWu&#39;</span>, <span style="color:#ae81ff">1000</span>) ;
+
+<span style="color:#75715e">--开启事务
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">BEGIN</span>
+<span style="color:#75715e">--或者使用 START TRANSACTION
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">UPDATE</span> <span style="color:#66d9ef">TABLE</span> dmeo <span style="color:#66d9ef">SET</span> salary<span style="color:#f92672">=</span>salary<span style="color:#f92672">+</span><span style="color:#ae81ff">100</span> <span style="color:#66d9ef">WHERE</span> id<span style="color:#f92672">=</span><span style="color:#ae81ff">2</span> ;
+<span style="color:#66d9ef">UPDATE</span> <span style="color:#66d9ef">TABLE</span> dmeo <span style="color:#66d9ef">SET</span> salary<span style="color:#f92672">=</span>salary<span style="color:#f92672">-</span><span style="color:#ae81ff">100</span> <span style="color:#66d9ef">WHERE</span> id<span style="color:#f92672">=</span><span style="color:#ae81ff">3</span> ;
+
+<span style="color:#75715e">--提交事务
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">COMMIT</span>
+
+<span style="color:#75715e">--如果是要回滚事务，就使用
+</span><span style="color:#75715e">--ROLLBACK
+</span></code></pre></div><ul>
+<li><strong>SAVEPOINT identifier</strong>：SAVEPOINT 允许在事务中创建一个保存点，一个事务中可以有多个 SAVEPOINT；</li>
+<li><strong>RELEASE SAVEPOINT identifier</strong>：删除一个事务的保存点，当没有指定的保存点时，执行该语句会抛出一个异常；</li>
+<li><strong>ROLLBACK TO identifier</strong>：把事务回滚到标记点；</li>
+<li><strong>SET TRANSACTION</strong>：用来设置事务的隔离级别。InnoDB 存储引擎提供事务的隔离级别有READ UNCOMMITTED、READ COMMITTED、REPEATABLE READ 和 SERIALIZABLE。</li>
+</ul>
+<h3 id="2-jdbc的事务操作">2. JDBC的事务操作</h3>
+<ul>
+<li>同一事务的所有操作，必须使用同一个Connection对象！</li>
+<li>con.setAutoCommit(boolean)：true表示自动提交事务，即每条SQL语句都是一个单独的事务；false相当于开启事务</li>
+<li>con.commit()</li>
+<li>con.rollback()</li>
+</ul>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java">Connection con <span style="color:#f92672">=</span> JDBCUtil<span style="color:#f92672">.</span><span style="color:#a6e22e">getConnection</span><span style="color:#f92672">()</span> <span style="color:#f92672">;</span>
+<span style="color:#66d9ef">try</span> <span style="color:#f92672">{</span>
+  	<span style="color:#75715e">//开启事务
+</span><span style="color:#75715e"></span>  	con<span style="color:#f92672">.</span><span style="color:#a6e22e">setAutoCommit</span><span style="color:#f92672">(</span><span style="color:#66d9ef">false</span><span style="color:#f92672">)</span> <span style="color:#f92672">;</span>
+  	<span style="color:#75715e">// ...
+</span><span style="color:#75715e"></span>  	<span style="color:#75715e">//提交事务
+</span><span style="color:#75715e"></span>  	con<span style="color:#f92672">.</span><span style="color:#a6e22e">commit</span><span style="color:#f92672">()</span> <span style="color:#f92672">;</span>
+<span style="color:#f92672">}</span> <span style="color:#66d9ef">catch</span> <span style="color:#f92672">(</span>Exception e<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+  	<span style="color:#66d9ef">throw</span> <span style="color:#66d9ef">new</span> RuntimeException<span style="color:#f92672">(</span>e<span style="color:#f92672">)</span> <span style="color:#f92672">;</span>
+  	<span style="color:#75715e">//出现异常就回滚事务
+</span><span style="color:#75715e"></span>  	<span style="color:#66d9ef">try</span> <span style="color:#f92672">{</span>
+      	con<span style="color:#f92672">.</span><span style="color:#a6e22e">rollback</span><span style="color:#f92672">()</span> <span style="color:#f92672">;</span>
+    <span style="color:#f92672">}</span> <span style="color:#66d9ef">catch</span> <span style="color:#f92672">(</span>Exception e<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+      	<span style="color:#75715e">//处理异常
+</span><span style="color:#75715e"></span>    <span style="color:#f92672">}</span>
+<span style="color:#f92672">}</span>
+</code></pre></div>
+    </div>
+
+
+
+    <div class="post-copyright">
+                
+        
+
+
+        <section>
+            <p class="share-item">
+                <span>Share :</span>
+                
+                <span>
+
+      
+        <a href="//twitter.com/share?url=https%3a%2f%2frrrwx.github.io%2f2020%2fjdbc%25E4%25B9%258B%25E4%25BA%258B%25E5%258A%25A1%2f&amp;text=JDBC%e4%b9%8b%e4%ba%8b%e5%8a%a1&amp;via=" target="_blank" title="Share on Twitter">
+          <i class="iconfont icon-twitter"></i>
+        </a>
+        
+
+      
+      
+        <a href="//www.facebook.com/sharer/sharer.php?u=https%3a%2f%2frrrwx.github.io%2f2020%2fjdbc%25E4%25B9%258B%25E4%25BA%258B%25E5%258A%25A1%2f" target="_blank" title="Share on Facebook">
+          <i class="iconfont icon-facebook"></i>
+        </a>
+        
+      
+      
+      
+      
+      
+      
+        
+      
+        
+      
+
+          
+
+          
+
+          
+        <a href="//www.douban.com/recommend/?url=https%3a%2f%2frrrwx.github.io%2f2020%2fjdbc%25E4%25B9%258B%25E4%25BA%258B%25E5%258A%25A1%2f&amp;title=JDBC%e4%b9%8b%e4%ba%8b%e5%8a%a1" target="_blank" title="Share on Douban ">
+            <i class="iconfont icon-douban"></i>
+          </a>
+          
+
+          
+        <a href="//service.weibo.com/share/share.php?url=https%3a%2f%2frrrwx.github.io%2f2020%2fjdbc%25E4%25B9%258B%25E4%25BA%258B%25E5%258A%25A1%2f&amp;appkey=&amp;title=JDBC%e4%b9%8b%e4%ba%8b%e5%8a%a1" target="_blank" title="Share on Douban ">
+            <i class="iconfont icon-weibo"></i>
+          </a>
+          
+
+</span>
+                
+            </p>
+        </section>
+
+
+        <section>
+            <p class="copyright-item">
+                <span>Updated </span>
+                <span class="post-time">
+                on 
+                <time datetime=2020-05-22 itemprop="datePublished">May 22, 2020</time>
+                </span>
+
+            </p>
+        </section>
+    </div>
+
+  
+    <div class="post-tags">
+        
+            <section>
+            
+            <span class="tag"><a href="https://rrrwx.github.io/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">
+                    <i class="iconfont icon-tag"></i>学习笔记</a></span>
+            
+            <span class="tag"><a href="https://rrrwx.github.io/tags/mysql/">
+                    <i class="iconfont icon-tag"></i>mysql</a></span>
+            
+            <span class="tag"><a href="https://rrrwx.github.io/tags/jdbc/">
+                    <i class="iconfont icon-tag"></i>JDBC</a></span>
+            
+            </section>
+        
+        <section>
+                <a href="javascript:window.history.back();">back</a></span> · 
+                <span><a href="https://rrrwx.github.io">home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav">
+        
+        <a href="https://rrrwx.github.io/2020/jdbc%E5%9F%BA%E7%A1%80%E4%BA%94jdbcutil%E5%B7%A5%E5%85%B7%E7%B1%BB%E7%A4%BA%E4%BE%8B/" class="prev" rel="prev" title="JDBC基础五之JDBCUtil工具类示例"><i class="iconfont icon-left"></i>&nbsp;JDBC基础五之JDBCUtil工具类示例</a>
+         
+        
+        <a href="https://rrrwx.github.io/2020/jdbc%E4%B9%8B%E6%95%B0%E6%8D%AE%E5%BA%93%E8%BF%9E%E6%8E%A5%E6%B1%A0/" class="next" rel="next" title="JDBC之连接池">JDBC之连接池&nbsp;<i class="iconfont icon-right"></i></a>
+        
+    </div>
+
+    <div class="post-comment">
+          
+                 
+          
+    </div>
+</article>
+          </div>
+		   </main>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="">
+                <i class="fas fa-arrow-up fa-fw"></i>
+            </a>
+        </div>
+
+      <footer class="footer">
+
+
+
+
+    <div class="copyright">
+
+            <div class="footer-line">
+                &copy;<i class="far fa-copyright fa-fw"></i>&nbsp;<span itemprop="copyrightYear">2020</span>&nbsp;&nbsp;<span class="author" itemprop="copyrightHolder"><a href="https://rrrwx.github.io">JadeRong</a></span>&nbsp;|&nbsp;<span class="license">Released under <a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span>
+                &nbsp;|&nbsp;<span>Powered by <a href="https://gohugo.io/" target="_blank" rel="external nofollow">Hugo</a> & <a href="https://github.com/liuzc/leaveit" target="_blank" rel="external nofollow">LeaveIt</a></span>
+            </div>
+
+
+    </div>
+</footer>
+
+
+
+
+
+
+
+
+
+
+
+
+    
+    
+    <script src="/js/vendor_no_gallery.min.js" async=""></script>
+    
+  
+
+
+
+
+     </div>
+  </body>
+</html>

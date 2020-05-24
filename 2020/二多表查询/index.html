@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+  <meta http-equiv="content-type" content="text/html;charset=utf-8">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noodp"/>
+  <meta name="author" content="JadeRong">
+  <meta name="description" content="主要分享一些平时学习和开发中用到的知识">
+  
+  
+  <link rel="prev" href="https://rrrwx.github.io/2020/%E4%B8%80%E7%BA%A6%E6%9D%9F/" />
+  <link rel="next" href="https://rrrwx.github.io/2020/%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C/" />
+  <link rel="canonical" href="https://rrrwx.github.io/2020/%E4%BA%8C%E5%A4%9A%E8%A1%A8%E6%9F%A5%E8%AF%A2/" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+  <meta name="msapplication-TileColor" content="#da532c">
+  <meta name="theme-color" content="#ffffff">
+  <title>
+       
+       
+           SQL语法之多表查询 | JadeRong
+       
+  </title>
+  <meta name="title" content="SQL语法之多表查询 | JadeRong">
+    
+  
+  <link rel="stylesheet" href="/font/iconfont.css">
+  <link rel="stylesheet" href="/css/main.min.css">
+
+
+  
+  
+ 
+
+<script type="application/ld+json">
+ "@context" : "http://schema.org",
+    "@type" : "BlogPosting",
+    "mainEntityOfPage": {
+         "@type": "WebPage",
+         "@id": "https:\/\/rrrwx.github.io"
+    },
+    "articleSection" : "posts",
+    "name" : "SQL语法之多表查询",
+    "headline" : "SQL语法之多表查询",
+    "description" : "https:\/\/edu.aliyun.com\/roadmap\/java?spm=a2c6h.12999620.1371257.1.5a195738ZJjjex#part1\n多表查询 分类 （一）合并结果集（了解）  要求被合并的表中，列的类型和列数相同 UNION：去重 UNION ALL：不去重  create table ab (a int, b varchar(50)); insert into ab values (1, \x26#39;1\x26#39;); insert into ab values (2, \x26#39;2\x26#39;); insert into ab values (3, \x26#39;3\x26#39;); create table cd (c int, d varchar(50)); insert into cd values (3, \x26#39;3\x26#39;); insert into cd values (4, \x26#39;4\x26#39;); insert into cd values (5, \x26#39;5\x26#39;); select * from ab union [all] select * from cd ; （二）连接查询 1.",
+    "inLanguage" : "en-us",
+    "author" : "JadeRong",
+    "creator" : "JadeRong",
+    "publisher": "JadeRong",
+    "accountablePerson" : "JadeRong",
+    "copyrightHolder" : "JadeRong",
+    "copyrightYear" : "2020",
+    "datePublished": "2020-05-16 10:30:48 \x2b0800 CST",
+    "dateModified" : "2020-05-16 10:30:48 \x2b0800 CST",
+    "url" : "https:\/\/rrrwx.github.io\/2020\/%E4%BA%8C%E5%A4%9A%E8%A1%A8%E6%9F%A5%E8%AF%A2\/",
+    "wordCount" : "323",
+    "keywords" : [ "学习笔记","mysql","SQL语法", "JadeRong"]
+}
+</script>
+
+</head>
+
+  
+
+
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  <body class="">
+    <div class="wrapper">
+        <nav class="navbar">
+    <div class="container">
+        <div class="navbar-header header-logo">
+            <a href="https://rrrwx.github.io">JadeRong</a>&nbsp;
+        	<a href="javascript:void(0);" class="theme-switch"><i class="iconfont icon-table-lamp"></i></a>
+
+        </div>
+        <div class="menu navbar-right">
+                
+                
+                <a class="menu-item" href="/posts/" title="">Blogs</a>
+                
+                <a class="menu-item" href="/categories/" title="">Categories</a>
+                
+                <a class="menu-item" href="/tags/" title="">Tags</a>
+                
+                <a class="menu-item" href="/about/" title="">About</a>
+                
+        </div>
+    </div>
+</nav>
+<nav class="navbar-mobile" id="nav-mobile" style="display: none">
+     <div class="container">
+        <div class="navbar-header">
+            <div>  <a href="javascript:void(0);" class="theme-switch"><i class="iconfont icon-table-lamp"></i></a>&nbsp;<a href="https://rrrwx.github.io">JadeRong</a></div>
+            <div class="menu-toggle">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+     
+          <div class="menu" id="mobile-menu">
+                
+                
+                <a class="menu-item" href="/posts/" title="">Blogs</a>
+                
+                <a class="menu-item" href="/categories/" title="">Categories</a>
+                
+                <a class="menu-item" href="/tags/" title="">Tags</a>
+                
+                <a class="menu-item" href="/about/" title="">About</a>
+                
+        </div>
+    </div>
+</nav>
+    	 <main class="main">
+          <div class="container">
+      		
+<article class="post-warp" itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">SQL语法之多表查询</h1>
+
+
+
+                Written by <a itemprop="name" href="https://rrrwx.github.io" rel="author">JadeRong</a>, included in <i class="iconfont icon-folder"></i>
+
+                <span class="post-category">
+                            <a href="https://rrrwx.github.io/categories/mysql%E5%AD%A6%E4%B9%A0/"> mysql学习 </a>
+                            <a href="https://rrrwx.github.io/categories/sql%E8%AF%AD%E6%B3%95/"> SQL语法 </a>
+                            
+                    </span>
+
+        
+        <h1 id="wc" style="font-size: 0.75rem;text-align: left;">约 323 个字    |    预计阅读 2 分钟    |    本文总阅读量<span id="busuanzi_value_page_pv"></span>次</h1>
+    </header>
+    <div class="post-content">
+        
+
+        
+
+        
+        
+     
+          
+          
+          
+
+          
+          
+          
+
+          <p><a href="https://edu.aliyun.com/roadmap/java?spm=a2c6h.12999620.1371257.1.5a195738ZJjjex#part1">https://edu.aliyun.com/roadmap/java?spm=a2c6h.12999620.1371257.1.5a195738ZJjjex#part1</a></p>
+<h1 id="多表查询">多表查询</h1>
+<h2 id="分类">分类</h2>
+<h3 id="一合并结果集了解">（一）合并结果集（了解）</h3>
+<ul>
+<li>要求被合并的表中，<strong>列的类型和列数相同</strong></li>
+<li>UNION：去重</li>
+<li>UNION ALL：不去重</li>
+</ul>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#66d9ef">create</span> <span style="color:#66d9ef">table</span> ab (a int, b varchar(<span style="color:#ae81ff">50</span>));
+<span style="color:#66d9ef">insert</span> <span style="color:#66d9ef">into</span> ab <span style="color:#66d9ef">values</span> (<span style="color:#ae81ff">1</span>, <span style="color:#e6db74">&#39;1&#39;</span>);
+<span style="color:#66d9ef">insert</span> <span style="color:#66d9ef">into</span> ab <span style="color:#66d9ef">values</span> (<span style="color:#ae81ff">2</span>, <span style="color:#e6db74">&#39;2&#39;</span>);
+<span style="color:#66d9ef">insert</span> <span style="color:#66d9ef">into</span> ab <span style="color:#66d9ef">values</span> (<span style="color:#ae81ff">3</span>, <span style="color:#e6db74">&#39;3&#39;</span>);
+
+<span style="color:#66d9ef">create</span> <span style="color:#66d9ef">table</span> cd (<span style="color:#66d9ef">c</span> int, d varchar(<span style="color:#ae81ff">50</span>));
+<span style="color:#66d9ef">insert</span> <span style="color:#66d9ef">into</span> cd <span style="color:#66d9ef">values</span> (<span style="color:#ae81ff">3</span>, <span style="color:#e6db74">&#39;3&#39;</span>);
+<span style="color:#66d9ef">insert</span> <span style="color:#66d9ef">into</span> cd <span style="color:#66d9ef">values</span> (<span style="color:#ae81ff">4</span>, <span style="color:#e6db74">&#39;4&#39;</span>);
+<span style="color:#66d9ef">insert</span> <span style="color:#66d9ef">into</span> cd <span style="color:#66d9ef">values</span> (<span style="color:#ae81ff">5</span>, <span style="color:#e6db74">&#39;5&#39;</span>);
+
+<span style="color:#66d9ef">select</span> <span style="color:#f92672">*</span> <span style="color:#66d9ef">from</span> ab
+<span style="color:#66d9ef">union</span> [<span style="color:#66d9ef">all</span>]
+<span style="color:#66d9ef">select</span> <span style="color:#f92672">*</span> <span style="color:#66d9ef">from</span> cd ;
+</code></pre></div><h3 id="二连接查询">（二）连接查询</h3>
+<h4 id="1-内连接">1. 内连接</h4>
+<ul>
+<li>需要<strong>去除笛卡尔积</strong>：表1和表2种所有的记录会两两互相组合，需要条件筛选所有结果；</li>
+</ul>
+<h5 id="1方言">（1）方言</h5>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#66d9ef">select</span> <span style="color:#f92672">*</span> <span style="color:#66d9ef">from</span> <span style="color:#960050;background-color:#1e0010">表</span><span style="color:#ae81ff">1</span> <span style="color:#960050;background-color:#1e0010">别名</span><span style="color:#ae81ff">1</span>, <span style="color:#960050;background-color:#1e0010">表</span><span style="color:#ae81ff">2</span> <span style="color:#960050;background-color:#1e0010">别名</span><span style="color:#ae81ff">2</span> <span style="color:#66d9ef">where</span> <span style="color:#960050;background-color:#1e0010">别名</span><span style="color:#ae81ff">1</span>.xx<span style="color:#f92672">=</span><span style="color:#960050;background-color:#1e0010">别名</span><span style="color:#ae81ff">2</span>.xx;
+</code></pre></div><h5 id="2标准">（2）标准</h5>
+<ul>
+<li>表1 inner join 表2 on 条件</li>
+</ul>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#66d9ef">select</span> <span style="color:#f92672">*</span> <span style="color:#66d9ef">from</span> <span style="color:#960050;background-color:#1e0010">表</span><span style="color:#ae81ff">1</span> <span style="color:#960050;background-color:#1e0010">别名</span><span style="color:#ae81ff">1</span> <span style="color:#66d9ef">inner</span> <span style="color:#66d9ef">join</span> <span style="color:#960050;background-color:#1e0010">表</span><span style="color:#ae81ff">2</span> <span style="color:#960050;background-color:#1e0010">别名</span><span style="color:#ae81ff">2</span> <span style="color:#66d9ef">on</span> <span style="color:#960050;background-color:#1e0010">别名</span><span style="color:#ae81ff">1</span>.xx<span style="color:#f92672">=</span><span style="color:#960050;background-color:#1e0010">别名</span><span style="color:#ae81ff">2</span>.xx;
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#66d9ef">select</span> e.name e.deptno d.name
+<span style="color:#66d9ef">from</span> emp e <span style="color:#66d9ef">inner</span> <span style="color:#66d9ef">join</span> dept d
+<span style="color:#66d9ef">on</span> e.deptno<span style="color:#f92672">=</span>d.deptno;
+</code></pre></div><h5 id="3自然自动匹配">（3）自然（自动匹配）</h5>
+<ul>
+<li>表1 natural join 表2</li>
+</ul>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#66d9ef">select</span> <span style="color:#f92672">*</span> <span style="color:#66d9ef">from</span> <span style="color:#960050;background-color:#1e0010">表</span><span style="color:#ae81ff">1</span> <span style="color:#960050;background-color:#1e0010">别名</span><span style="color:#ae81ff">1</span> <span style="color:#66d9ef">natural</span> <span style="color:#66d9ef">join</span> <span style="color:#960050;background-color:#1e0010">表</span><span style="color:#ae81ff">2</span> <span style="color:#960050;background-color:#1e0010">别名</span><span style="color:#ae81ff">2</span>;
+</code></pre></div><h4 id="2-外连接">2. 外连接</h4>
+<ul>
+<li><strong>join</strong>、<strong>left outer join</strong>、<strong>right outer join</strong></li>
+<li><strong>全外：full outer join（mysql不支持）</strong></li>
+</ul>
+<h5 id="1左外left-outer-join">（1）左外：left outer join</h5>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#66d9ef">select</span> <span style="color:#f92672">*</span> <span style="color:#66d9ef">from</span> <span style="color:#960050;background-color:#1e0010">表</span><span style="color:#ae81ff">1</span> <span style="color:#960050;background-color:#1e0010">别名</span><span style="color:#ae81ff">1</span> <span style="color:#66d9ef">left</span> <span style="color:#66d9ef">outer</span> <span style="color:#66d9ef">join</span> <span style="color:#960050;background-color:#1e0010">表</span><span style="color:#ae81ff">2</span> <span style="color:#960050;background-color:#1e0010">别名</span><span style="color:#ae81ff">2</span> <span style="color:#66d9ef">on</span> <span style="color:#960050;background-color:#1e0010">别名</span><span style="color:#ae81ff">1</span>.xx<span style="color:#f92672">=</span><span style="color:#960050;background-color:#1e0010">别名</span><span style="color:#ae81ff">2</span>.xx;
+<span style="color:#75715e">-- 左外以左边的表为主，右边的表为辅
+</span><span style="color:#75715e">-- 左表记录无论是否满足条件都会被查询出来，而右表只有当满足条件时才显示
+</span><span style="color:#75715e">-- 左表中不满足条件的记录会将右表中的值设置为null
+</span></code></pre></div><ul>
+<li><strong>左外自然：natural left outer join</strong></li>
+</ul>
+<h5 id="2右外right-outer-join">（2）右外：right outer join</h5>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#66d9ef">select</span> <span style="color:#f92672">*</span> <span style="color:#66d9ef">from</span> <span style="color:#960050;background-color:#1e0010">表</span><span style="color:#ae81ff">1</span> <span style="color:#960050;background-color:#1e0010">别名</span><span style="color:#ae81ff">1</span> <span style="color:#66d9ef">right</span> <span style="color:#66d9ef">outer</span> <span style="color:#66d9ef">join</span> <span style="color:#960050;background-color:#1e0010">表</span><span style="color:#ae81ff">2</span> <span style="color:#960050;background-color:#1e0010">别名</span><span style="color:#ae81ff">2</span> <span style="color:#66d9ef">on</span> <span style="color:#960050;background-color:#1e0010">别名</span><span style="color:#ae81ff">1</span>.xx<span style="color:#f92672">=</span><span style="color:#960050;background-color:#1e0010">别名</span><span style="color:#ae81ff">2</span>.xx;
+<span style="color:#75715e">-- 右外以右边的表为主，左表为辅
+</span></code></pre></div><ul>
+<li><strong>右外自然：natural right outer join</strong></li>
+</ul>
+<h5 id="3全外full-outer-joinmysql不支持">（3）全外：full outer join（mysql不支持）</h5>
+<ul>
+<li><strong>可以用union来实现</strong></li>
+</ul>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#66d9ef">select</span> <span style="color:#f92672">*</span> <span style="color:#66d9ef">from</span> <span style="color:#960050;background-color:#1e0010">表</span><span style="color:#ae81ff">1</span> <span style="color:#960050;background-color:#1e0010">别名</span><span style="color:#ae81ff">1</span> <span style="color:#66d9ef">left</span> <span style="color:#66d9ef">outer</span> <span style="color:#66d9ef">join</span> <span style="color:#960050;background-color:#1e0010">表</span><span style="color:#ae81ff">2</span> <span style="color:#960050;background-color:#1e0010">别名</span><span style="color:#ae81ff">2</span> <span style="color:#66d9ef">on</span> <span style="color:#960050;background-color:#1e0010">别名</span><span style="color:#ae81ff">1</span>.xx<span style="color:#f92672">=</span><span style="color:#960050;background-color:#1e0010">别名</span><span style="color:#ae81ff">2</span>.xx
+<span style="color:#66d9ef">union</span>
+<span style="color:#66d9ef">select</span> <span style="color:#f92672">*</span> <span style="color:#66d9ef">from</span> <span style="color:#960050;background-color:#1e0010">表</span><span style="color:#ae81ff">1</span> <span style="color:#960050;background-color:#1e0010">别名</span><span style="color:#ae81ff">1</span> <span style="color:#66d9ef">right</span> <span style="color:#66d9ef">outer</span> <span style="color:#66d9ef">join</span> <span style="color:#960050;background-color:#1e0010">表</span><span style="color:#ae81ff">2</span> <span style="color:#960050;background-color:#1e0010">别名</span><span style="color:#ae81ff">2</span> <span style="color:#66d9ef">on</span> <span style="color:#960050;background-color:#1e0010">别名</span><span style="color:#ae81ff">1</span>.xx<span style="color:#f92672">=</span><span style="color:#960050;background-color:#1e0010">别名</span><span style="color:#ae81ff">2</span>.xx;
+<span style="color:#75715e">-- 使用union将左外结果和右外结果做并集就能实现全外的效果
+</span></code></pre></div><h3 id="三子查询">（三）子查询</h3>
+<h4 id="1-出现位置">1. 出现位置</h4>
+<ul>
+<li>子查询可以在select后面（不标准）</li>
+<li>也可以在from后面作为表</li>
+<li>也可以在where后面作为条件（多行多列）</li>
+</ul>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#75715e">-- 查询本公司*工资最高的*员工的详细信息
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">select</span> <span style="color:#f92672">*</span> <span style="color:#66d9ef">from</span> emp <span style="color:#66d9ef">where</span> sal <span style="color:#f92672">=</span> (<span style="color:#66d9ef">select</span> <span style="color:#66d9ef">max</span>(sal) <span style="color:#66d9ef">from</span> emp) ;
+
+<span style="color:#75715e">-- 查询30部门中员工编号和名字
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">select</span> e.empno, e.ename <span style="color:#66d9ef">from</span> (<span style="color:#66d9ef">select</span> <span style="color:#f92672">*</span> <span style="color:#66d9ef">from</span> emp <span style="color:#66d9ef">where</span> deptno<span style="color:#f92672">=</span><span style="color:#ae81ff">30</span>) e ;
+</code></pre></div><h4 id="2-条件">2. 条件</h4>
+<h5 id="1单行单列">（1）单行单列</h5>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#66d9ef">select</span> <span style="color:#f92672">*</span> <span style="color:#66d9ef">from</span> <span style="color:#960050;background-color:#1e0010">表</span><span style="color:#ae81ff">1</span> <span style="color:#960050;background-color:#1e0010">别名</span><span style="color:#ae81ff">1</span> <span style="color:#66d9ef">where</span> <span style="color:#960050;background-color:#1e0010">列</span><span style="color:#ae81ff">1</span> [<span style="color:#f92672">=</span>, <span style="color:#f92672">&gt;</span>, <span style="color:#f92672">&lt;</span>, <span style="color:#f92672">&gt;=</span>, <span style="color:#f92672">&lt;=</span>, <span style="color:#f92672">!=</span>] (<span style="color:#66d9ef">select</span> <span style="color:#960050;background-color:#1e0010">列</span> <span style="color:#66d9ef">from</span> <span style="color:#960050;background-color:#1e0010">表</span><span style="color:#ae81ff">2</span> <span style="color:#960050;background-color:#1e0010">别名</span><span style="color:#ae81ff">2</span> <span style="color:#66d9ef">where</span> <span style="color:#960050;background-color:#1e0010">条件</span>) ;
+</code></pre></div><h5 id="2多行单列">（2）多行单列</h5>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#66d9ef">select</span> <span style="color:#f92672">*</span> <span style="color:#66d9ef">from</span> <span style="color:#960050;background-color:#1e0010">表</span><span style="color:#ae81ff">1</span> <span style="color:#960050;background-color:#1e0010">别名</span><span style="color:#ae81ff">1</span> <span style="color:#66d9ef">where</span> <span style="color:#960050;background-color:#1e0010">列</span><span style="color:#ae81ff">1</span> [<span style="color:#66d9ef">in</span>, <span style="color:#66d9ef">all</span>, <span style="color:#66d9ef">any</span>] (<span style="color:#66d9ef">select</span> <span style="color:#960050;background-color:#1e0010">列</span> <span style="color:#66d9ef">from</span> <span style="color:#960050;background-color:#1e0010">表</span><span style="color:#ae81ff">2</span> <span style="color:#960050;background-color:#1e0010">别名</span><span style="color:#ae81ff">2</span> <span style="color:#66d9ef">where</span> <span style="color:#960050;background-color:#1e0010">条件</span>) ;
+</code></pre></div><h5 id="3单行多列">（3）单行多列</h5>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#66d9ef">select</span> <span style="color:#f92672">*</span> <span style="color:#66d9ef">from</span> <span style="color:#960050;background-color:#1e0010">表</span><span style="color:#ae81ff">1</span> <span style="color:#960050;background-color:#1e0010">别名</span><span style="color:#ae81ff">1</span> <span style="color:#66d9ef">where</span> (<span style="color:#960050;background-color:#1e0010">列</span><span style="color:#ae81ff">1</span>, <span style="color:#960050;background-color:#1e0010">列</span><span style="color:#ae81ff">2</span>) <span style="color:#66d9ef">in</span> (<span style="color:#66d9ef">select</span> <span style="color:#960050;background-color:#1e0010">列</span><span style="color:#ae81ff">1</span>, <span style="color:#960050;background-color:#1e0010">列</span><span style="color:#ae81ff">2</span> <span style="color:#66d9ef">from</span> <span style="color:#960050;background-color:#1e0010">表</span><span style="color:#ae81ff">2</span> <span style="color:#960050;background-color:#1e0010">别名</span><span style="color:#ae81ff">2</span> <span style="color:#66d9ef">where</span> <span style="color:#960050;background-color:#1e0010">条件</span>) ;
+</code></pre></div><h5 id="4多行多列">（4）多行多列</h5>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#66d9ef">select</span> <span style="color:#f92672">*</span> <span style="color:#66d9ef">from</span> <span style="color:#960050;background-color:#1e0010">表</span><span style="color:#ae81ff">1</span> <span style="color:#960050;background-color:#1e0010">别名</span><span style="color:#ae81ff">1</span>, (<span style="color:#66d9ef">select</span> ....) <span style="color:#960050;background-color:#1e0010">别名</span><span style="color:#ae81ff">2</span> <span style="color:#66d9ef">where</span> <span style="color:#960050;background-color:#1e0010">条件</span> ;
+</code></pre></div>
+    </div>
+
+
+
+    <div class="post-copyright">
+                
+        
+
+
+        <section>
+            <p class="share-item">
+                <span>Share :</span>
+                
+                <span>
+
+      
+        <a href="//twitter.com/share?url=https%3a%2f%2frrrwx.github.io%2f2020%2f%25E4%25BA%258C%25E5%25A4%259A%25E8%25A1%25A8%25E6%259F%25A5%25E8%25AF%25A2%2f&amp;text=SQL%e8%af%ad%e6%b3%95%e4%b9%8b%e5%a4%9a%e8%a1%a8%e6%9f%a5%e8%af%a2&amp;via=" target="_blank" title="Share on Twitter">
+          <i class="iconfont icon-twitter"></i>
+        </a>
+        
+
+      
+      
+        <a href="//www.facebook.com/sharer/sharer.php?u=https%3a%2f%2frrrwx.github.io%2f2020%2f%25E4%25BA%258C%25E5%25A4%259A%25E8%25A1%25A8%25E6%259F%25A5%25E8%25AF%25A2%2f" target="_blank" title="Share on Facebook">
+          <i class="iconfont icon-facebook"></i>
+        </a>
+        
+      
+      
+      
+      
+      
+      
+        
+      
+        
+      
+
+          
+
+          
+
+          
+        <a href="//www.douban.com/recommend/?url=https%3a%2f%2frrrwx.github.io%2f2020%2f%25E4%25BA%258C%25E5%25A4%259A%25E8%25A1%25A8%25E6%259F%25A5%25E8%25AF%25A2%2f&amp;title=SQL%e8%af%ad%e6%b3%95%e4%b9%8b%e5%a4%9a%e8%a1%a8%e6%9f%a5%e8%af%a2" target="_blank" title="Share on Douban ">
+            <i class="iconfont icon-douban"></i>
+          </a>
+          
+
+          
+        <a href="//service.weibo.com/share/share.php?url=https%3a%2f%2frrrwx.github.io%2f2020%2f%25E4%25BA%258C%25E5%25A4%259A%25E8%25A1%25A8%25E6%259F%25A5%25E8%25AF%25A2%2f&amp;appkey=&amp;title=SQL%e8%af%ad%e6%b3%95%e4%b9%8b%e5%a4%9a%e8%a1%a8%e6%9f%a5%e8%af%a2" target="_blank" title="Share on Douban ">
+            <i class="iconfont icon-weibo"></i>
+          </a>
+          
+
+</span>
+                
+            </p>
+        </section>
+
+
+        <section>
+            <p class="copyright-item">
+                <span>Updated </span>
+                <span class="post-time">
+                on 
+                <time datetime=2020-05-16 itemprop="datePublished">May 16, 2020</time>
+                </span>
+
+            </p>
+        </section>
+    </div>
+
+  
+    <div class="post-tags">
+        
+            <section>
+            
+            <span class="tag"><a href="https://rrrwx.github.io/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">
+                    <i class="iconfont icon-tag"></i>学习笔记</a></span>
+            
+            <span class="tag"><a href="https://rrrwx.github.io/tags/mysql/">
+                    <i class="iconfont icon-tag"></i>mysql</a></span>
+            
+            <span class="tag"><a href="https://rrrwx.github.io/tags/sql%E8%AF%AD%E6%B3%95/">
+                    <i class="iconfont icon-tag"></i>SQL语法</a></span>
+            
+            </section>
+        
+        <section>
+                <a href="javascript:window.history.back();">back</a></span> · 
+                <span><a href="https://rrrwx.github.io">home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav">
+        
+        <a href="https://rrrwx.github.io/2020/%E4%B8%80%E7%BA%A6%E6%9D%9F/" class="prev" rel="prev" title="SQL语法之约束"><i class="iconfont icon-left"></i>&nbsp;SQL语法之约束</a>
+         
+        
+        <a href="https://rrrwx.github.io/2020/%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C/" class="next" rel="next" title="mysql基本操作">mysql基本操作&nbsp;<i class="iconfont icon-right"></i></a>
+        
+    </div>
+
+    <div class="post-comment">
+          
+                 
+          
+    </div>
+</article>
+          </div>
+		   </main>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="">
+                <i class="fas fa-arrow-up fa-fw"></i>
+            </a>
+        </div>
+
+      <footer class="footer">
+
+
+
+
+    <div class="copyright">
+
+            <div class="footer-line">
+                &copy;<i class="far fa-copyright fa-fw"></i>&nbsp;<span itemprop="copyrightYear">2020</span>&nbsp;&nbsp;<span class="author" itemprop="copyrightHolder"><a href="https://rrrwx.github.io">JadeRong</a></span>&nbsp;|&nbsp;<span class="license">Released under <a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span>
+                &nbsp;|&nbsp;<span>Powered by <a href="https://gohugo.io/" target="_blank" rel="external nofollow">Hugo</a> & <a href="https://github.com/liuzc/leaveit" target="_blank" rel="external nofollow">LeaveIt</a></span>
+            </div>
+
+
+    </div>
+</footer>
+
+
+
+
+
+
+
+
+
+
+
+
+    
+    
+    <script src="/js/vendor_no_gallery.min.js" async=""></script>
+    
+  
+
+
+
+
+     </div>
+  </body>
+</html>

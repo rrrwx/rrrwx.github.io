@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+  <meta http-equiv="content-type" content="text/html;charset=utf-8">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noodp"/>
+  <meta name="author" content="JadeRong">
+  <meta name="description" content="主要分享一些平时学习和开发中用到的知识">
+  
+  
+  <link rel="prev" href="https://rrrwx.github.io/2020/%E6%8E%92%E5%BA%8F/" />
+  <link rel="next" href="https://rrrwx.github.io/2020/jdbc%E5%9F%BA%E7%A1%80%E4%B8%80%E8%BF%9E%E6%8E%A5%E6%95%B0%E6%8D%AE%E5%BA%93/" />
+  <link rel="canonical" href="https://rrrwx.github.io/2020/%E5%BB%BA%E8%A1%A8%E8%84%9A%E6%9C%AC/" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+  <meta name="msapplication-TileColor" content="#da532c">
+  <meta name="theme-color" content="#ffffff">
+  <title>
+       
+       
+           mysql学习系列之建表脚本 | JadeRong
+       
+  </title>
+  <meta name="title" content="mysql学习系列之建表脚本 | JadeRong">
+    
+  
+  <link rel="stylesheet" href="/font/iconfont.css">
+  <link rel="stylesheet" href="/css/main.min.css">
+
+
+  
+  
+ 
+
+<script type="application/ld+json">
+ "@context" : "http://schema.org",
+    "@type" : "BlogPosting",
+    "mainEntityOfPage": {
+         "@type": "WebPage",
+         "@id": "https:\/\/rrrwx.github.io"
+    },
+    "articleSection" : "posts",
+    "name" : "mysql学习系列之建表脚本",
+    "headline" : "mysql学习系列之建表脚本",
+    "description" : "所有的mysql学习系列文章中的示例表格都是基于下面的建表脚本构造的\n建表 use mydb000; drop table if exists emp; create table if not exists dept( deptno int primary key, dname varchar(50), loc varchar(50) ); create table if not exists emp( empno int primary key, ename varchar(50), job varchar(50), mgr int, hiredate date, sal decimal(7,2), COMM decimal(7,2), deptno int, constraint fk_emp foreign key(mgr) references emp(empno), constraint fk_emp_dept foreign key(deptno) references dept(deptno) ); create table if not exists salgrade( grade int primary key, losal int, hisal int ) ; create table if not exists stu ( sid int primary key, sname varchar(50), age int, gender varchar(10), province varchar(50), tuition int ) ; 插入数据 insert into dept values ( 10, \x26#39;教研部\x26#39;, \x26#39;北京\x26#39; ), ( 20, \x26#39;学工部\x26#39;, \x26#39;上海\x26#39; ), ( 30, \x26#39;销售部\x26#39;, \x26#39;广州\x26#39; ), ( 40, \x26#39;财务部\x26#39;, \x26#39;武汉\x26#39; ) ; select * from dept ; insert into emp values( 1009, \x26#39;曾阿牛\x26#39;, \x26#39;董事长\x26#39;, null, \x26#39;2001-11-17\x26#39;, 50000, null, 10 ), ( 1004, \x26#39;刘备\x26#39;, \x26#39;经理\x26#39;, 1009, \x26#39;2001-04-02\x26#39;, 29750, null, 20 ), ( 1006, \x26#39;关羽\x26#39;, \x26#39;经理\x26#39;, 1009, \x26#39;2001-05-01\x26#39;, 28500, null, 30 ), ( 1007, \x26#39;张飞\x26#39;, \x26#39;经理\x26#39;, 1009, \x26#39;2001-09-01\x26#39;, 24500, null, 10 ), ( 1008, \x26#39;诸葛亮\x26#39;, \x26#39;分析师\x26#39;, 1009, \x26#39;2001-04-19\x26#39;, 30000, null, 20 ), ( 1013, \x26#39;庞统\x26#39;, \x26#39;分析师\x26#39;, 1004, \x26#39;2001-12-03\x26#39;, 30000, null, 20 ), ( 1002, \x26#39;黛绮丝\x26#39;, \x26#39;销售员\x26#39;, 1006, \x26#39;2001-02-20\x26#39;, 16000, 3000, 30 ), ( 1003, \x26#39;殷天正\x26#39;, \x26#39;销售员\x26#39;, 1006, \x26#39;2001-02-22\x26#39;, 12500, 5000, 30 ), ( 1005, \x26#39;谢逊\x26#39;, \x26#39;销售员\x26#39;, 1006, \x26#39;2001-09-28\x26#39;, 12500, 14000, 30 ), ( 1010, \x26#39;韦一笑\x26#39;, \x26#39;销售员\x26#39;, 1006, \x26#39;2001-09-08\x26#39;, 15000, 0, 30 ), ( 1012, \x26#39;程普\x26#39;, \x26#39;文员\x26#39;, 1006, \x26#39;2001-12-03\x26#39;, 9500, null, 30 ), ( 1014, \x26#39;黄盖\x26#39;, \x26#39;文员\x26#39;, 1007, \x26#39;2002-01-23\x26#39;, 13000, null, 10 ), ( 1011, \x26#39;周泰\x26#39;, \x26#39;文员\x26#39;, 1008, \x26#39;2007-05-23\x26#39;, 11000, null, 20 ), ( 1001, \x26#39;甘宁\x26#39;, \x26#39;文员\x26#39;, 1013, \x26#39;2000-12-17\x26#39;, 8000, null, 20 ), ( \x26#39;1015\x26#39;, \x26#39;张三\x26#39;,\x26#39;保洁员\x26#39;,\x26#39;1001\x26#39;,\x26#39;2008-03-04\x26#39;,80000,10000,10 ); select * from emp ; insert into salgrade values( 1, 7000, 12000 ), ( 2, 12010, 14000 ), ( 3, 14010, 20000 ), ( 4, 20010, 30000 ), ( 5, 30010, 99990 ) ; select * from salgrade ; ",
+    "inLanguage" : "en-us",
+    "author" : "JadeRong",
+    "creator" : "JadeRong",
+    "publisher": "JadeRong",
+    "accountablePerson" : "JadeRong",
+    "copyrightHolder" : "JadeRong",
+    "copyrightYear" : "2020",
+    "datePublished": "2020-05-20 00:18:36 \x2b0800 CST",
+    "dateModified" : "2020-05-20 00:18:36 \x2b0800 CST",
+    "url" : "https:\/\/rrrwx.github.io\/2020\/%E5%BB%BA%E8%A1%A8%E8%84%9A%E6%9C%AC\/",
+    "wordCount" : "317",
+    "keywords" : [ "学习笔记","mysql", "JadeRong"]
+}
+</script>
+
+</head>
+
+  
+
+
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  <body class="">
+    <div class="wrapper">
+        <nav class="navbar">
+    <div class="container">
+        <div class="navbar-header header-logo">
+            <a href="https://rrrwx.github.io">JadeRong</a>&nbsp;
+        	<a href="javascript:void(0);" class="theme-switch"><i class="iconfont icon-table-lamp"></i></a>
+
+        </div>
+        <div class="menu navbar-right">
+                
+                
+                <a class="menu-item" href="/posts/" title="">Blogs</a>
+                
+                <a class="menu-item" href="/categories/" title="">Categories</a>
+                
+                <a class="menu-item" href="/tags/" title="">Tags</a>
+                
+                <a class="menu-item" href="/about/" title="">About</a>
+                
+        </div>
+    </div>
+</nav>
+<nav class="navbar-mobile" id="nav-mobile" style="display: none">
+     <div class="container">
+        <div class="navbar-header">
+            <div>  <a href="javascript:void(0);" class="theme-switch"><i class="iconfont icon-table-lamp"></i></a>&nbsp;<a href="https://rrrwx.github.io">JadeRong</a></div>
+            <div class="menu-toggle">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+     
+          <div class="menu" id="mobile-menu">
+                
+                
+                <a class="menu-item" href="/posts/" title="">Blogs</a>
+                
+                <a class="menu-item" href="/categories/" title="">Categories</a>
+                
+                <a class="menu-item" href="/tags/" title="">Tags</a>
+                
+                <a class="menu-item" href="/about/" title="">About</a>
+                
+        </div>
+    </div>
+</nav>
+    	 <main class="main">
+          <div class="container">
+      		
+<article class="post-warp" itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">mysql学习系列之建表脚本</h1>
+
+
+
+                Written by <a itemprop="name" href="https://rrrwx.github.io" rel="author">JadeRong</a>, included in <i class="iconfont icon-folder"></i>
+
+                <span class="post-category">
+                            <a href="https://rrrwx.github.io/categories/mysql%E5%AD%A6%E4%B9%A0/"> mysql学习 </a>
+                            
+                    </span>
+
+        
+        <h1 id="wc" style="font-size: 0.75rem;text-align: left;">约 317 个字    |    预计阅读 2 分钟    |    本文总阅读量<span id="busuanzi_value_page_pv"></span>次</h1>
+    </header>
+    <div class="post-content">
+        
+
+        
+
+        
+        
+     
+          
+          
+          
+
+          
+          
+          
+
+          <p>所有的mysql学习系列文章中的示例表格都是基于下面的建表脚本构造的</p>
+<h2 id="建表">建表</h2>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql">use mydb000;
+<span style="color:#66d9ef">drop</span> <span style="color:#66d9ef">table</span> <span style="color:#66d9ef">if</span> <span style="color:#66d9ef">exists</span> emp;
+<span style="color:#66d9ef">create</span> <span style="color:#66d9ef">table</span> <span style="color:#66d9ef">if</span> <span style="color:#66d9ef">not</span> <span style="color:#66d9ef">exists</span> dept(
+	deptno int <span style="color:#66d9ef">primary</span> <span style="color:#66d9ef">key</span>,
+    dname varchar(<span style="color:#ae81ff">50</span>),
+    loc varchar(<span style="color:#ae81ff">50</span>)
+);
+
+<span style="color:#66d9ef">create</span> <span style="color:#66d9ef">table</span> <span style="color:#66d9ef">if</span> <span style="color:#66d9ef">not</span> <span style="color:#66d9ef">exists</span> emp(
+	empno int <span style="color:#66d9ef">primary</span> <span style="color:#66d9ef">key</span>,
+    ename varchar(<span style="color:#ae81ff">50</span>),
+    job varchar(<span style="color:#ae81ff">50</span>),
+    mgr int,
+    hiredate date,
+    sal decimal(<span style="color:#ae81ff">7</span>,<span style="color:#ae81ff">2</span>),
+    COMM decimal(<span style="color:#ae81ff">7</span>,<span style="color:#ae81ff">2</span>),
+    deptno int,
+    <span style="color:#66d9ef">constraint</span> fk_emp <span style="color:#66d9ef">foreign</span> <span style="color:#66d9ef">key</span>(mgr) <span style="color:#66d9ef">references</span> emp(empno),
+    <span style="color:#66d9ef">constraint</span> fk_emp_dept <span style="color:#66d9ef">foreign</span> <span style="color:#66d9ef">key</span>(deptno) <span style="color:#66d9ef">references</span> dept(deptno)
+);
+
+<span style="color:#66d9ef">create</span> <span style="color:#66d9ef">table</span> <span style="color:#66d9ef">if</span> <span style="color:#66d9ef">not</span> <span style="color:#66d9ef">exists</span> salgrade(
+	grade int <span style="color:#66d9ef">primary</span> <span style="color:#66d9ef">key</span>,
+    losal int,
+    hisal int
+) ;
+
+<span style="color:#66d9ef">create</span> <span style="color:#66d9ef">table</span> <span style="color:#66d9ef">if</span> <span style="color:#66d9ef">not</span> <span style="color:#66d9ef">exists</span> stu (
+	sid int <span style="color:#66d9ef">primary</span> <span style="color:#66d9ef">key</span>,
+    sname varchar(<span style="color:#ae81ff">50</span>),
+    age int,
+    gender varchar(<span style="color:#ae81ff">10</span>),
+    province varchar(<span style="color:#ae81ff">50</span>),
+    tuition int
+) ;
+</code></pre></div><h2 id="插入数据">插入数据</h2>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql">
+<span style="color:#66d9ef">insert</span> <span style="color:#66d9ef">into</span> dept <span style="color:#66d9ef">values</span> (
+	<span style="color:#ae81ff">10</span>, <span style="color:#e6db74">&#39;教研部&#39;</span>, <span style="color:#e6db74">&#39;北京&#39;</span>
+), (
+	<span style="color:#ae81ff">20</span>, <span style="color:#e6db74">&#39;学工部&#39;</span>, <span style="color:#e6db74">&#39;上海&#39;</span>
+), (
+	<span style="color:#ae81ff">30</span>, <span style="color:#e6db74">&#39;销售部&#39;</span>, <span style="color:#e6db74">&#39;广州&#39;</span>
+), (
+	<span style="color:#ae81ff">40</span>, <span style="color:#e6db74">&#39;财务部&#39;</span>, <span style="color:#e6db74">&#39;武汉&#39;</span>
+) ;
+
+<span style="color:#66d9ef">select</span> <span style="color:#f92672">*</span> <span style="color:#66d9ef">from</span> dept ;
+
+<span style="color:#66d9ef">insert</span> <span style="color:#66d9ef">into</span> emp <span style="color:#66d9ef">values</span>(
+	<span style="color:#ae81ff">1009</span>, <span style="color:#e6db74">&#39;曾阿牛&#39;</span>, <span style="color:#e6db74">&#39;董事长&#39;</span>, <span style="color:#66d9ef">null</span>, <span style="color:#e6db74">&#39;2001-11-17&#39;</span>, <span style="color:#ae81ff">50000</span>, <span style="color:#66d9ef">null</span>, <span style="color:#ae81ff">10</span>
+), (
+	<span style="color:#ae81ff">1004</span>, <span style="color:#e6db74">&#39;刘备&#39;</span>, <span style="color:#e6db74">&#39;经理&#39;</span>, <span style="color:#ae81ff">1009</span>, <span style="color:#e6db74">&#39;2001-04-02&#39;</span>, <span style="color:#ae81ff">29750</span>, <span style="color:#66d9ef">null</span>, <span style="color:#ae81ff">20</span>
+), (
+	<span style="color:#ae81ff">1006</span>, <span style="color:#e6db74">&#39;关羽&#39;</span>, <span style="color:#e6db74">&#39;经理&#39;</span>, <span style="color:#ae81ff">1009</span>, <span style="color:#e6db74">&#39;2001-05-01&#39;</span>, <span style="color:#ae81ff">28500</span>, <span style="color:#66d9ef">null</span>, <span style="color:#ae81ff">30</span>
+), (
+	<span style="color:#ae81ff">1007</span>, <span style="color:#e6db74">&#39;张飞&#39;</span>, <span style="color:#e6db74">&#39;经理&#39;</span>, <span style="color:#ae81ff">1009</span>, <span style="color:#e6db74">&#39;2001-09-01&#39;</span>, <span style="color:#ae81ff">24500</span>, <span style="color:#66d9ef">null</span>, <span style="color:#ae81ff">10</span>
+), (
+	<span style="color:#ae81ff">1008</span>, <span style="color:#e6db74">&#39;诸葛亮&#39;</span>, <span style="color:#e6db74">&#39;分析师&#39;</span>, <span style="color:#ae81ff">1009</span>, <span style="color:#e6db74">&#39;2001-04-19&#39;</span>, <span style="color:#ae81ff">30000</span>, <span style="color:#66d9ef">null</span>, <span style="color:#ae81ff">20</span>
+), (
+	<span style="color:#ae81ff">1013</span>, <span style="color:#e6db74">&#39;庞统&#39;</span>, <span style="color:#e6db74">&#39;分析师&#39;</span>, <span style="color:#ae81ff">1004</span>, <span style="color:#e6db74">&#39;2001-12-03&#39;</span>, <span style="color:#ae81ff">30000</span>, <span style="color:#66d9ef">null</span>, <span style="color:#ae81ff">20</span>
+), (
+	<span style="color:#ae81ff">1002</span>, <span style="color:#e6db74">&#39;黛绮丝&#39;</span>, <span style="color:#e6db74">&#39;销售员&#39;</span>, <span style="color:#ae81ff">1006</span>, <span style="color:#e6db74">&#39;2001-02-20&#39;</span>, <span style="color:#ae81ff">16000</span>, <span style="color:#ae81ff">3000</span>, <span style="color:#ae81ff">30</span>
+), (
+	<span style="color:#ae81ff">1003</span>, <span style="color:#e6db74">&#39;殷天正&#39;</span>, <span style="color:#e6db74">&#39;销售员&#39;</span>, <span style="color:#ae81ff">1006</span>, <span style="color:#e6db74">&#39;2001-02-22&#39;</span>, <span style="color:#ae81ff">12500</span>, <span style="color:#ae81ff">5000</span>, <span style="color:#ae81ff">30</span>
+), (
+	<span style="color:#ae81ff">1005</span>, <span style="color:#e6db74">&#39;谢逊&#39;</span>, <span style="color:#e6db74">&#39;销售员&#39;</span>, <span style="color:#ae81ff">1006</span>, <span style="color:#e6db74">&#39;2001-09-28&#39;</span>, <span style="color:#ae81ff">12500</span>, <span style="color:#ae81ff">14000</span>, <span style="color:#ae81ff">30</span>
+), (
+	<span style="color:#ae81ff">1010</span>, <span style="color:#e6db74">&#39;韦一笑&#39;</span>, <span style="color:#e6db74">&#39;销售员&#39;</span>, <span style="color:#ae81ff">1006</span>, <span style="color:#e6db74">&#39;2001-09-08&#39;</span>, <span style="color:#ae81ff">15000</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">30</span>
+), (
+	<span style="color:#ae81ff">1012</span>, <span style="color:#e6db74">&#39;程普&#39;</span>, <span style="color:#e6db74">&#39;文员&#39;</span>, <span style="color:#ae81ff">1006</span>, <span style="color:#e6db74">&#39;2001-12-03&#39;</span>, <span style="color:#ae81ff">9500</span>, <span style="color:#66d9ef">null</span>, <span style="color:#ae81ff">30</span>
+), (
+	<span style="color:#ae81ff">1014</span>, <span style="color:#e6db74">&#39;黄盖&#39;</span>, <span style="color:#e6db74">&#39;文员&#39;</span>, <span style="color:#ae81ff">1007</span>, <span style="color:#e6db74">&#39;2002-01-23&#39;</span>, <span style="color:#ae81ff">13000</span>, <span style="color:#66d9ef">null</span>, <span style="color:#ae81ff">10</span>
+), (
+	<span style="color:#ae81ff">1011</span>, <span style="color:#e6db74">&#39;周泰&#39;</span>, <span style="color:#e6db74">&#39;文员&#39;</span>, <span style="color:#ae81ff">1008</span>, <span style="color:#e6db74">&#39;2007-05-23&#39;</span>, <span style="color:#ae81ff">11000</span>, <span style="color:#66d9ef">null</span>, <span style="color:#ae81ff">20</span>
+), (
+	<span style="color:#ae81ff">1001</span>, <span style="color:#e6db74">&#39;甘宁&#39;</span>, <span style="color:#e6db74">&#39;文员&#39;</span>, <span style="color:#ae81ff">1013</span>, <span style="color:#e6db74">&#39;2000-12-17&#39;</span>, <span style="color:#ae81ff">8000</span>, <span style="color:#66d9ef">null</span>, <span style="color:#ae81ff">20</span>
+), (
+	<span style="color:#e6db74">&#39;1015&#39;</span>, <span style="color:#e6db74">&#39;张三&#39;</span>,<span style="color:#e6db74">&#39;保洁员&#39;</span>,<span style="color:#e6db74">&#39;1001&#39;</span>,<span style="color:#e6db74">&#39;2008-03-04&#39;</span>,<span style="color:#ae81ff">80000</span>,<span style="color:#ae81ff">10000</span>,<span style="color:#ae81ff">10</span>
+);
+
+<span style="color:#66d9ef">select</span> <span style="color:#f92672">*</span> <span style="color:#66d9ef">from</span> emp ;
+
+<span style="color:#66d9ef">insert</span> <span style="color:#66d9ef">into</span> salgrade <span style="color:#66d9ef">values</span>(
+	<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">7000</span>, <span style="color:#ae81ff">12000</span>
+), (
+	<span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">12010</span>, <span style="color:#ae81ff">14000</span>
+), (
+	<span style="color:#ae81ff">3</span>, <span style="color:#ae81ff">14010</span>, <span style="color:#ae81ff">20000</span>
+), (
+	<span style="color:#ae81ff">4</span>, <span style="color:#ae81ff">20010</span>, <span style="color:#ae81ff">30000</span>
+), (
+	<span style="color:#ae81ff">5</span>, <span style="color:#ae81ff">30010</span>, <span style="color:#ae81ff">99990</span>
+) ;
+
+<span style="color:#66d9ef">select</span> <span style="color:#f92672">*</span> <span style="color:#66d9ef">from</span> salgrade ;
+</code></pre></div>
+    </div>
+
+
+
+    <div class="post-copyright">
+                
+        
+
+
+        <section>
+            <p class="share-item">
+                <span>Share :</span>
+                
+                <span>
+
+      
+        <a href="//twitter.com/share?url=https%3a%2f%2frrrwx.github.io%2f2020%2f%25E5%25BB%25BA%25E8%25A1%25A8%25E8%2584%259A%25E6%259C%25AC%2f&amp;text=mysql%e5%ad%a6%e4%b9%a0%e7%b3%bb%e5%88%97%e4%b9%8b%e5%bb%ba%e8%a1%a8%e8%84%9a%e6%9c%ac&amp;via=" target="_blank" title="Share on Twitter">
+          <i class="iconfont icon-twitter"></i>
+        </a>
+        
+
+      
+      
+        <a href="//www.facebook.com/sharer/sharer.php?u=https%3a%2f%2frrrwx.github.io%2f2020%2f%25E5%25BB%25BA%25E8%25A1%25A8%25E8%2584%259A%25E6%259C%25AC%2f" target="_blank" title="Share on Facebook">
+          <i class="iconfont icon-facebook"></i>
+        </a>
+        
+      
+      
+      
+      
+      
+      
+        
+      
+        
+      
+
+          
+
+          
+
+          
+        <a href="//www.douban.com/recommend/?url=https%3a%2f%2frrrwx.github.io%2f2020%2f%25E5%25BB%25BA%25E8%25A1%25A8%25E8%2584%259A%25E6%259C%25AC%2f&amp;title=mysql%e5%ad%a6%e4%b9%a0%e7%b3%bb%e5%88%97%e4%b9%8b%e5%bb%ba%e8%a1%a8%e8%84%9a%e6%9c%ac" target="_blank" title="Share on Douban ">
+            <i class="iconfont icon-douban"></i>
+          </a>
+          
+
+          
+        <a href="//service.weibo.com/share/share.php?url=https%3a%2f%2frrrwx.github.io%2f2020%2f%25E5%25BB%25BA%25E8%25A1%25A8%25E8%2584%259A%25E6%259C%25AC%2f&amp;appkey=&amp;title=mysql%e5%ad%a6%e4%b9%a0%e7%b3%bb%e5%88%97%e4%b9%8b%e5%bb%ba%e8%a1%a8%e8%84%9a%e6%9c%ac" target="_blank" title="Share on Douban ">
+            <i class="iconfont icon-weibo"></i>
+          </a>
+          
+
+</span>
+                
+            </p>
+        </section>
+
+
+        <section>
+            <p class="copyright-item">
+                <span>Updated </span>
+                <span class="post-time">
+                on 
+                <time datetime=2020-05-20 itemprop="datePublished">May 20, 2020</time>
+                </span>
+
+            </p>
+        </section>
+    </div>
+
+  
+    <div class="post-tags">
+        
+            <section>
+            
+            <span class="tag"><a href="https://rrrwx.github.io/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">
+                    <i class="iconfont icon-tag"></i>学习笔记</a></span>
+            
+            <span class="tag"><a href="https://rrrwx.github.io/tags/mysql/">
+                    <i class="iconfont icon-tag"></i>mysql</a></span>
+            
+            </section>
+        
+        <section>
+                <a href="javascript:window.history.back();">back</a></span> · 
+                <span><a href="https://rrrwx.github.io">home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav">
+        
+        <a href="https://rrrwx.github.io/2020/%E6%8E%92%E5%BA%8F/" class="prev" rel="prev" title="排序"><i class="iconfont icon-left"></i>&nbsp;排序</a>
+         
+        
+        <a href="https://rrrwx.github.io/2020/jdbc%E5%9F%BA%E7%A1%80%E4%B8%80%E8%BF%9E%E6%8E%A5%E6%95%B0%E6%8D%AE%E5%BA%93/" class="next" rel="next" title="JDBC基础一之连接数据库">JDBC基础一之连接数据库&nbsp;<i class="iconfont icon-right"></i></a>
+        
+    </div>
+
+    <div class="post-comment">
+          
+                 
+          
+    </div>
+</article>
+          </div>
+		   </main>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="">
+                <i class="fas fa-arrow-up fa-fw"></i>
+            </a>
+        </div>
+
+      <footer class="footer">
+
+
+
+
+    <div class="copyright">
+
+            <div class="footer-line">
+                &copy;<i class="far fa-copyright fa-fw"></i>&nbsp;<span itemprop="copyrightYear">2020</span>&nbsp;&nbsp;<span class="author" itemprop="copyrightHolder"><a href="https://rrrwx.github.io">JadeRong</a></span>&nbsp;|&nbsp;<span class="license">Released under <a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span>
+                &nbsp;|&nbsp;<span>Powered by <a href="https://gohugo.io/" target="_blank" rel="external nofollow">Hugo</a> & <a href="https://github.com/liuzc/leaveit" target="_blank" rel="external nofollow">LeaveIt</a></span>
+            </div>
+
+
+    </div>
+</footer>
+
+
+
+
+
+
+
+
+
+
+
+
+    
+    
+    <script src="/js/vendor_no_gallery.min.js" async=""></script>
+    
+  
+
+
+
+
+     </div>
+  </body>
+</html>

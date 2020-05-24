@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>图像/视频处理 on JadeRong</title>
+    <link>https://rrrwx.github.io/categories/%E5%9B%BE%E5%83%8F/%E8%A7%86%E9%A2%91%E5%A4%84%E7%90%86/</link>
+    <description>Recent content in 图像/视频处理 on JadeRong</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    
+	<atom:link href="https://rrrwx.github.io/categories/%E5%9B%BE%E5%83%8F/%E8%A7%86%E9%A2%91%E5%A4%84%E7%90%86/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>ffmpeg常用命令</title>
+      <link>https://rrrwx.github.io/2020/ffmpeg%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/</link>
+      <pubDate>Tue, 19 May 2020 00:19:36 +0800</pubDate>
+      
+      <guid>https://rrrwx.github.io/2020/ffmpeg%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/</guid>
+      <description>记录一下经常用到的ffmpeg使用方法、hevc官方软件HM的使用，以及shell脚本的配套使用 另外，对于ffmpeg的参数设置可以参考 https://blog.csdn.net/hemingwang0902/article/details/4382205 https://www.jianshu.com/p/a035056cbbf9
+具体比较详细的应用可以参考 https://www.jianshu.com/p/b4f9f8c5e86a https://zhuanlan.zhihu.com/p/46903150
+（一） ffmpeg的常用操作 1. 使用ffmpeg把jpg格式的图片转换成yuv420p格式
+ffmpeg -i path/name.jpg -s 352x288 -pix_fmt yuv420p savepath/name.yuv -s 352x288是图片的width和height参数，可以省略 -pix_fmt yuv420p是指定要转换的yuv的格式，若想转换成yuv422p格式的话直接替换就行
+2. 使用ffmpeg把yuv格式的图片转换成jpg格式
+ffmpeg -s 352x288 -pix_fmt yuv420p -i path/name.yuv -pix_fmt rgb24 savepath/name.jpg 这里的格式是转换成rgb24位。若想要存成png格式，改变要保存的图片的后缀即可
+3. 使用ffmpeg把MP4格式的视频转换成yuv格式
+ffmpeg -i path/name.avi -c:v rawvideo -pix_fmt yuv420p path/name.yuv -video_size 320x480 这里-c:v和-vcodec是等价的
+4. 把yuv格式的视频转换成avi格式
+ffmpeg -s 320x480 -i path/name.yuv -vcodec copy path/name.avi -s设置视频的长宽参数，copy表示copy表示原始编解码数据必须被拷贝，转换前后视频的大小不变，也可以换成mpeg4等编码格式
+5. ffmpeg将一个视频切成多张图片
+ffmpeg -i path/name.avi savepath/Frame%3d.png 6. ffmpeg将多张图片合成一个视频
+ffmpeg -r 30 -i path/Frame%3d.</description>
+    </item>
+    
+  </channel>
+</rss>

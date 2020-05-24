@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+  <meta http-equiv="content-type" content="text/html;charset=utf-8">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noodp"/>
+  <meta name="author" content="JadeRong">
+  <meta name="description" content="主要分享一些平时学习和开发中用到的知识">
+  
+  
+  <link rel="prev" href="https://rrrwx.github.io/2020/jdbc%E4%B9%8B%E4%BA%8B%E5%8A%A1/" />
+  
+  <link rel="canonical" href="https://rrrwx.github.io/2020/jdbc%E4%B9%8B%E6%95%B0%E6%8D%AE%E5%BA%93%E8%BF%9E%E6%8E%A5%E6%B1%A0/" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+  <meta name="msapplication-TileColor" content="#da532c">
+  <meta name="theme-color" content="#ffffff">
+  <title>
+       
+       
+           JDBC之连接池 | JadeRong
+       
+  </title>
+  <meta name="title" content="JDBC之连接池 | JadeRong">
+    
+  
+  <link rel="stylesheet" href="/font/iconfont.css">
+  <link rel="stylesheet" href="/css/main.min.css">
+
+
+  
+  
+ 
+
+<script type="application/ld+json">
+ "@context" : "http://schema.org",
+    "@type" : "BlogPosting",
+    "mainEntityOfPage": {
+         "@type": "WebPage",
+         "@id": "https:\/\/rrrwx.github.io"
+    },
+    "articleSection" : "posts",
+    "name" : "JDBC之连接池",
+    "headline" : "JDBC之连接池",
+    "description" : "https:\/\/edu.aliyun.com\/roadmap\/java?spm=a2c6h.12999620.1371257.1.5a195738ZJjjex#part1\nhttps:\/\/www.cnblogs.com\/zzsuje\/articles\/10444032.html\n数据库连接池  数据库连接池负责分配、管理和释放数据库连接，它允许应用程序重复使用一个现有的数据库连接，而不是再重新建立一个；\n释放空闲时间超过最大空闲时间的数据库连接来避免因为没有释放数据库连接而引起的数据库连接遗漏。这项技术能明显提高对数据库操作的性能。\n   对于大多数应用程序，当它们正在处理事务时，仅需要能够访问JDBC连接的 1 个线程。当不处理事务时，这个连接就会闲置（造成资源的浪费）。相反，连接池允许闲置的连接被其它需要的线程使用。 当一个线程需要用 JDBC 对一个 数据库操作时，它从池中请求一个连接。当这个线程使用完了这个连接，将它返回到连接池中（连接池会自动收回连接，当然我们也可以在用完以后释放），这样这就可以被其它想使用它的线程使用，这样不会照成内存的浪费。 当连接被从池中调用出来，那么这个连接将被这个线程专有地使用。    数据库连接池的主要操作如下：\n（1）建立数据库连接池对象（服务器启动）；\n（2）按照事先指定的参数创建初始数量的数据库连接（即：空闲连接数）,我们在安装数据库的时候就可以指定；\n（3）对于一个数据库访问请求，直接从连接池中得到一个连接。如果数据库连接池对象中没有空闲的连接，且连接数没有达到最大（即：最大活跃连接数），创建一个新的数据库连接。而如果连接数达到最大，就会再创建事先定好的连接数；\n（4）对数据库进行存取操作；\n（5）关闭数据库，释放所有数据库连接（此时的关闭数据库连接，并非真正关闭，而是将其放入空闲队列中。如实际空闲连接 数大于初始空闲连接数则释放连接）；\n（6）释放数据库连接池对象（服务器停止、维护期间，释放数据库连接池对象，并释放所有连接）。\n 常见的数据库连接池有dbcp、c3p0\n注：连接池返回的Connection对象，它的close()方法不是关闭连接，而是把连接归还给连接池\ndbcp  DBCP（DataBase Connection Pool）数据库连接池，是java数据库连接池的一种，由Apache开发，通过数据库连接池，可以让程序自动管理数据库连接的释放和断开。 使用javax.sql.DateSource接口 也可以使用配置文件，把连接参数和连接池初始化参数都写进配置文件。  \/\/需要先导入apache的commons.dbcp包 import org.apache.commons.dbcp.BasicDateSource ; public class dbcpDemo { public void connect() throws Exception { \/* * 1. 创建来连接池对象 * 2. 配置四大参数 * 3. 配置连接池参数 * 4. 获取连接对象 *\/ \/\/BasicDataSource类实现了DataSource接口  BasicDataSource dataSource = new BasicDataSource() ; \/\/手动配置连接参数  dataSource.",
+    "inLanguage" : "en-us",
+    "author" : "JadeRong",
+    "creator" : "JadeRong",
+    "publisher": "JadeRong",
+    "accountablePerson" : "JadeRong",
+    "copyrightHolder" : "JadeRong",
+    "copyrightYear" : "2020",
+    "datePublished": "2020-05-22 18:19:52 \x2b0800 CST",
+    "dateModified" : "2020-05-22 18:19:52 \x2b0800 CST",
+    "url" : "https:\/\/rrrwx.github.io\/2020\/jdbc%E4%B9%8B%E6%95%B0%E6%8D%AE%E5%BA%93%E8%BF%9E%E6%8E%A5%E6%B1%A0\/",
+    "wordCount" : "154",
+    "keywords" : [ "学习笔记","mysql","JDBC", "JadeRong"]
+}
+</script>
+
+</head>
+
+  
+
+
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  <body class="">
+    <div class="wrapper">
+        <nav class="navbar">
+    <div class="container">
+        <div class="navbar-header header-logo">
+            <a href="https://rrrwx.github.io">JadeRong</a>&nbsp;
+        	<a href="javascript:void(0);" class="theme-switch"><i class="iconfont icon-table-lamp"></i></a>
+
+        </div>
+        <div class="menu navbar-right">
+                
+                
+                <a class="menu-item" href="/posts/" title="">Blogs</a>
+                
+                <a class="menu-item" href="/categories/" title="">Categories</a>
+                
+                <a class="menu-item" href="/tags/" title="">Tags</a>
+                
+                <a class="menu-item" href="/about/" title="">About</a>
+                
+        </div>
+    </div>
+</nav>
+<nav class="navbar-mobile" id="nav-mobile" style="display: none">
+     <div class="container">
+        <div class="navbar-header">
+            <div>  <a href="javascript:void(0);" class="theme-switch"><i class="iconfont icon-table-lamp"></i></a>&nbsp;<a href="https://rrrwx.github.io">JadeRong</a></div>
+            <div class="menu-toggle">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+     
+          <div class="menu" id="mobile-menu">
+                
+                
+                <a class="menu-item" href="/posts/" title="">Blogs</a>
+                
+                <a class="menu-item" href="/categories/" title="">Categories</a>
+                
+                <a class="menu-item" href="/tags/" title="">Tags</a>
+                
+                <a class="menu-item" href="/about/" title="">About</a>
+                
+        </div>
+    </div>
+</nav>
+    	 <main class="main">
+          <div class="container">
+      		
+<article class="post-warp" itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">JDBC之连接池</h1>
+
+
+
+                Written by <a itemprop="name" href="https://rrrwx.github.io" rel="author">JadeRong</a>, included in <i class="iconfont icon-folder"></i>
+
+                <span class="post-category">
+                            <a href="https://rrrwx.github.io/categories/mysql%E5%AD%A6%E4%B9%A0/"> mysql学习 </a>
+                            
+                    </span>
+
+        
+        <h1 id="wc" style="font-size: 0.75rem;text-align: left;">约 154 个字    |    预计阅读 1 分钟    |    本文总阅读量<span id="busuanzi_value_page_pv"></span>次</h1>
+    </header>
+    <div class="post-content">
+        
+
+        
+
+        
+        
+     
+          
+          
+          
+
+          
+          
+          
+
+          <p><a href="https://edu.aliyun.com/roadmap/java?spm=a2c6h.12999620.1371257.1.5a195738ZJjjex#part1">https://edu.aliyun.com/roadmap/java?spm=a2c6h.12999620.1371257.1.5a195738ZJjjex#part1</a></p>
+<p><a href="https://www.cnblogs.com/zzsuje/articles/10444032.html">https://www.cnblogs.com/zzsuje/articles/10444032.html</a></p>
+<h1 id="数据库连接池">数据库连接池</h1>
+<blockquote>
+<p>数据库连接池负责分配、管理和释放数据库连接，它允许应用程序重复使用一个现有的数据库连接，而不是再重新建立一个；</p>
+<p>释放空闲时间超过最大空闲时间的数据库连接来避免因为没有释放数据库连接而引起的数据库连接遗漏。这项技术能明显提高对数据库操作的性能。</p>
+</blockquote>
+<blockquote>
+<ul>
+<li>对于大多数应用程序，当它们正在处理事务时，仅需要能够访问JDBC连接的 1 个线程。当不处理事务时，这个连接就会闲置（造成资源的浪费）。相反，<strong>连接池允许闲置</strong>的连接被其它需要的线程使用。</li>
+<li>当一个线程需要用 JDBC 对一个 数据库操作时，它从池中请求一个连接。当这个线程使用完了这个连接，将它返回到连接池中（连接池会自动收回连接，当然我们也可以在用完以后释放），这样这就可以被其它想使用它的线程使用，这样不会照成内存的浪费。</li>
+<li>当连接被从池中调用出来，那么这个连接将被这个线程专有地使用。</li>
+</ul>
+</blockquote>
+<blockquote>
+<p>数据库连接池的主要操作如下：</p>
+<p>（1）建立数据库连接池对象（服务器启动）；</p>
+<p>（2）按照事先指定的参数创建初始数量的数据库连接（即：空闲连接数）,我们在安装数据库的时候就可以指定；</p>
+<p>（3）对于一个数据库访问请求，直接从连接池中得到一个连接。如果数据库连接池对象中没有空闲的连接，且连接数没有达到最大（即：最大活跃连接数），创建一个新的数据库连接。而如果连接数达到最大，就会再创建事先定好的连接数；</p>
+<p>（4）对数据库进行存取操作；</p>
+<p>（5）关闭数据库，释放所有数据库连接（此时的关闭数据库连接，并非真正关闭，而是将其放入空闲队列中。如实际空闲连接 数大于初始空闲连接数则释放连接）；</p>
+<p>（6）释放数据库连接池对象（服务器停止、维护期间，释放数据库连接池对象，并释放所有连接）。</p>
+</blockquote>
+<p><strong>常见的数据库连接池有dbcp、c3p0</strong></p>
+<p><strong>注：连接池返回的Connection对象，它的close()方法不是关闭连接，而是把连接归还给连接池</strong></p>
+<h2 id="dbcp">dbcp</h2>
+<ul>
+<li><strong>DBCP（DataBase Connection Pool）数据库连接池，是java数据库连接池的一种，由Apache开发，通过数据库连接池，可以让程序自动管理数据库连接的释放和断开。</strong></li>
+<li>使用<strong>javax.sql.DateSource</strong>接口</li>
+<li>也可以使用<strong>配置文件</strong>，把连接参数和连接池初始化参数都写进配置文件。</li>
+</ul>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#75715e">//需要先导入apache的commons.dbcp包
+</span><span style="color:#75715e"></span><span style="color:#f92672">import</span> org.apache.commons.dbcp.BasicDateSource <span style="color:#f92672">;</span>
+
+<span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">dbcpDemo</span> <span style="color:#f92672">{</span>
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">connect</span><span style="color:#f92672">()</span> <span style="color:#66d9ef">throws</span> Exception <span style="color:#f92672">{</span>
+        <span style="color:#75715e">/*
+</span><span style="color:#75715e">         * 1. 创建来连接池对象
+</span><span style="color:#75715e">         * 2. 配置四大参数
+</span><span style="color:#75715e">         * 3. 配置连接池参数
+</span><span style="color:#75715e">         * 4. 获取连接对象
+</span><span style="color:#75715e">         */</span>
+        
+        <span style="color:#75715e">//BasicDataSource类实现了DataSource接口
+</span><span style="color:#75715e"></span>        BasicDataSource dataSource <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> BasicDataSource<span style="color:#f92672">()</span> <span style="color:#f92672">;</span>
+        
+        <span style="color:#75715e">//手动配置连接参数
+</span><span style="color:#75715e"></span>        dataSource<span style="color:#f92672">.</span><span style="color:#a6e22e">setDriverClassName</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;com.mysql.jdbc.Driver&#34;</span><span style="color:#f92672">)</span> <span style="color:#f92672">;</span>
+        dataSource<span style="color:#f92672">.</span><span style="color:#a6e22e">setUrl</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;jdbc:mysql://localhost:3306/mydb000&#34;</span><span style="color:#f92672">)</span> <span style="color:#f92672">;</span>
+        dataSource<span style="color:#f92672">.</span><span style="color:#a6e22e">setUsername</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;root&#34;</span><span style="color:#f92672">)</span> <span style="color:#f92672">;</span>
+        dataSource<span style="color:#f92672">.</span><span style="color:#a6e22e">setPassword</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;123&#34;</span><span style="color:#f92672">)</span> <span style="color:#f92672">;</span>
+        
+        <span style="color:#75715e">//手动配置连接池参数（根据需要）
+</span><span style="color:#75715e"></span>        dataSource<span style="color:#f92672">.</span><span style="color:#a6e22e">setMaxActive</span><span style="color:#f92672">(</span>20<span style="color:#f92672">)</span> <span style="color:#f92672">;</span>
+        dataSource<span style="color:#f92672">.</span><span style="color:#a6e22e">setMinIdle</span><span style="color:#f92672">(</span>3<span style="color:#f92672">)</span> <span style="color:#f92672">;</span>
+        dataSource<span style="color:#f92672">.</span><span style="color:#a6e22e">setMaxWait</span><span style="color:#f92672">(</span>1000<span style="color:#f92672">)</span> <span style="color:#f92672">;</span>
+        
+        Connection con <span style="color:#f92672">=</span> dataSource<span style="color:#f92672">.</span><span style="color:#a6e22e">getConnection</span><span style="color:#f92672">()</span> <span style="color:#f92672">;</span>
+        <span style="color:#75715e">//这里把该连接还回数据库
+</span><span style="color:#75715e"></span>        con<span style="color:#f92672">.</span><span style="color:#a6e22e">close</span><span style="color:#f92672">()</span> <span style="color:#f92672">;</span>
+    <span style="color:#f92672">}</span>
+<span style="color:#f92672">}</span>
+</code></pre></div><h2 id="c3p0">c3p0</h2>
+<ul>
+<li><strong>C3P0是一个开源的JDBC连接池，它实现了数据源和JNDI绑定，支持JDBC3规范和JDBC2的标准扩展。目前使用它的开源项目有Hibernate，Spring等。</strong></li>
+<li>使用<strong>ComboPooledDataSource</strong>类；</li>
+<li>配置文件必须命名为c3p0-config.xml，并且必须放在类路径下；</li>
+</ul>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">connect</span><span style="color:#f92672">()</span> <span style="color:#66d9ef">throws</span> PropertyVetoException<span style="color:#f92672">,</span> SQLException <span style="color:#f92672">{</span>
+    ComboPooledDataSource ds <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> ComboPooledDataSource<span style="color:#f92672">()</span> <span style="color:#f92672">;</span>
+        
+    <span style="color:#75715e">// 手动配置连接参数
+</span><span style="color:#75715e"></span>    ds<span style="color:#f92672">.</span><span style="color:#a6e22e">setJdbcUrl</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;jdbc:mysql://local:3306/mydb000&#34;</span><span style="color:#f92672">)</span> <span style="color:#f92672">;</span>
+    ds<span style="color:#f92672">.</span><span style="color:#a6e22e">setUser</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;root&#34;</span><span style="color:#f92672">)</span> <span style="color:#f92672">;</span>
+    ds<span style="color:#f92672">.</span><span style="color:#a6e22e">setPassword</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;123&#34;</span><span style="color:#f92672">)</span> <span style="color:#f92672">;</span>
+    ds<span style="color:#f92672">.</span><span style="color:#a6e22e">setDriverClass</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;com.mysql.jdbc.Driver&#34;</span><span style="color:#f92672">)</span> <span style="color:#f92672">;</span>
+    
+    <span style="color:#75715e">// 手动配置连接池参数（根据需要）
+</span><span style="color:#75715e"></span>    ds<span style="color:#f92672">.</span><span style="color:#a6e22e">setAcquireIncrement</span><span style="color:#f92672">(</span>5<span style="color:#f92672">)</span> <span style="color:#f92672">;</span> <span style="color:#75715e">// 每次的线程增量
+</span><span style="color:#75715e"></span>    ds<span style="color:#f92672">.</span><span style="color:#a6e22e">setInitialPoolSize</span><span style="color:#f92672">(</span>20<span style="color:#f92672">)</span> <span style="color:#f92672">;</span>
+    ds<span style="color:#f92672">.</span><span style="color:#a6e22e">setMinPoolSize</span><span style="color:#f92672">(</span>2<span style="color:#f92672">)</span> <span style="color:#f92672">;</span>
+    ds<span style="color:#f92672">.</span><span style="color:#a6e22e">setMaxPoolSize</span><span style="color:#f92672">(</span>50<span style="color:#f92672">)</span> <span style="color:#f92672">;</span>
+    
+    Connection con <span style="color:#f92672">=</span> ds<span style="color:#f92672">.</span><span style="color:#a6e22e">getConnection</span><span style="color:#f92672">()</span> <span style="color:#f92672">;</span>
+    <span style="color:#75715e">//把连接还回连接池
+</span><span style="color:#75715e"></span>    con<span style="color:#f92672">.</span><span style="color:#a6e22e">close</span><span style="color:#f92672">()</span> <span style="color:#f92672">;</span>
+<span style="color:#f92672">}</span>
+</code></pre></div><table>
+<thead>
+<tr>
+<th></th>
+<th>dbcp</th>
+<th>c3p0</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>对数据连接的处理方式</td>
+<td>提供最大空闲时间</td>
+<td>提供最大连接数</td>
+</tr>
+<tr>
+<td>什么时候释放连接</td>
+<td>当连接超过最大空闲连接时间时</td>
+<td>当连接数超过最大连接数时</td>
+</tr>
+<tr>
+<td>连接资源是否自动释放</td>
+<td>自动回收连接</td>
+<td>需要自己手动释放资源</td>
+</tr>
+<tr>
+<td>推荐使用</td>
+<td>hibernate开发</td>
+<td>spring开发</td>
+</tr>
+</tbody>
+</table>
+<p>参考： <a href="https://blog.csdn.net/retry000/article/details/79494299">https://blog.csdn.net/retry000/article/details/79494299</a></p>
+
+    </div>
+
+
+
+    <div class="post-copyright">
+                
+        
+
+
+        <section>
+            <p class="share-item">
+                <span>Share :</span>
+                
+                <span>
+
+      
+        <a href="//twitter.com/share?url=https%3a%2f%2frrrwx.github.io%2f2020%2fjdbc%25E4%25B9%258B%25E6%2595%25B0%25E6%258D%25AE%25E5%25BA%2593%25E8%25BF%259E%25E6%258E%25A5%25E6%25B1%25A0%2f&amp;text=JDBC%e4%b9%8b%e8%bf%9e%e6%8e%a5%e6%b1%a0&amp;via=" target="_blank" title="Share on Twitter">
+          <i class="iconfont icon-twitter"></i>
+        </a>
+        
+
+      
+      
+        <a href="//www.facebook.com/sharer/sharer.php?u=https%3a%2f%2frrrwx.github.io%2f2020%2fjdbc%25E4%25B9%258B%25E6%2595%25B0%25E6%258D%25AE%25E5%25BA%2593%25E8%25BF%259E%25E6%258E%25A5%25E6%25B1%25A0%2f" target="_blank" title="Share on Facebook">
+          <i class="iconfont icon-facebook"></i>
+        </a>
+        
+      
+      
+      
+      
+      
+      
+        
+      
+        
+      
+
+          
+
+          
+
+          
+        <a href="//www.douban.com/recommend/?url=https%3a%2f%2frrrwx.github.io%2f2020%2fjdbc%25E4%25B9%258B%25E6%2595%25B0%25E6%258D%25AE%25E5%25BA%2593%25E8%25BF%259E%25E6%258E%25A5%25E6%25B1%25A0%2f&amp;title=JDBC%e4%b9%8b%e8%bf%9e%e6%8e%a5%e6%b1%a0" target="_blank" title="Share on Douban ">
+            <i class="iconfont icon-douban"></i>
+          </a>
+          
+
+          
+        <a href="//service.weibo.com/share/share.php?url=https%3a%2f%2frrrwx.github.io%2f2020%2fjdbc%25E4%25B9%258B%25E6%2595%25B0%25E6%258D%25AE%25E5%25BA%2593%25E8%25BF%259E%25E6%258E%25A5%25E6%25B1%25A0%2f&amp;appkey=&amp;title=JDBC%e4%b9%8b%e8%bf%9e%e6%8e%a5%e6%b1%a0" target="_blank" title="Share on Douban ">
+            <i class="iconfont icon-weibo"></i>
+          </a>
+          
+
+</span>
+                
+            </p>
+        </section>
+
+
+        <section>
+            <p class="copyright-item">
+                <span>Updated </span>
+                <span class="post-time">
+                on 
+                <time datetime=2020-05-22 itemprop="datePublished">May 22, 2020</time>
+                </span>
+
+            </p>
+        </section>
+    </div>
+
+  
+    <div class="post-tags">
+        
+            <section>
+            
+            <span class="tag"><a href="https://rrrwx.github.io/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">
+                    <i class="iconfont icon-tag"></i>学习笔记</a></span>
+            
+            <span class="tag"><a href="https://rrrwx.github.io/tags/mysql/">
+                    <i class="iconfont icon-tag"></i>mysql</a></span>
+            
+            <span class="tag"><a href="https://rrrwx.github.io/tags/jdbc/">
+                    <i class="iconfont icon-tag"></i>JDBC</a></span>
+            
+            </section>
+        
+        <section>
+                <a href="javascript:window.history.back();">back</a></span> · 
+                <span><a href="https://rrrwx.github.io">home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav">
+        
+        <a href="https://rrrwx.github.io/2020/jdbc%E4%B9%8B%E4%BA%8B%E5%8A%A1/" class="prev" rel="prev" title="JDBC之事务"><i class="iconfont icon-left"></i>&nbsp;JDBC之事务</a>
+         
+        
+    </div>
+
+    <div class="post-comment">
+          
+                 
+          
+    </div>
+</article>
+          </div>
+		   </main>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="">
+                <i class="fas fa-arrow-up fa-fw"></i>
+            </a>
+        </div>
+
+      <footer class="footer">
+
+
+
+
+    <div class="copyright">
+
+            <div class="footer-line">
+                &copy;<i class="far fa-copyright fa-fw"></i>&nbsp;<span itemprop="copyrightYear">2020</span>&nbsp;&nbsp;<span class="author" itemprop="copyrightHolder"><a href="https://rrrwx.github.io">JadeRong</a></span>&nbsp;|&nbsp;<span class="license">Released under <a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span>
+                &nbsp;|&nbsp;<span>Powered by <a href="https://gohugo.io/" target="_blank" rel="external nofollow">Hugo</a> & <a href="https://github.com/liuzc/leaveit" target="_blank" rel="external nofollow">LeaveIt</a></span>
+            </div>
+
+
+    </div>
+</footer>
+
+
+
+
+
+
+
+
+
+
+
+
+    
+    
+    <script src="/js/vendor_no_gallery.min.js" async=""></script>
+    
+  
+
+
+
+
+     </div>
+  </body>
+</html>

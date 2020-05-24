@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+  <meta http-equiv="content-type" content="text/html;charset=utf-8">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noodp"/>
+  <meta name="author" content="JadeRong">
+  <meta name="description" content="主要分享一些平时学习和开发中用到的知识">
+  
+  
+  <link rel="prev" href="https://rrrwx.github.io/2020/jdbc%E5%9F%BA%E7%A1%80%E4%B8%80%E8%BF%9E%E6%8E%A5%E6%95%B0%E6%8D%AE%E5%BA%93/" />
+  <link rel="next" href="https://rrrwx.github.io/2020/jdbc%E5%9F%BA%E7%A1%80%E4%B8%89preparedstatement/" />
+  <link rel="canonical" href="https://rrrwx.github.io/2020/jdbc%E5%9F%BA%E7%A1%80%E4%BA%8C%E7%BB%93%E6%9E%9C%E9%9B%86/" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+  <meta name="msapplication-TileColor" content="#da532c">
+  <meta name="theme-color" content="#ffffff">
+  <title>
+       
+       
+           JDBC基础二之结果集 | JadeRong
+       
+  </title>
+  <meta name="title" content="JDBC基础二之结果集 | JadeRong">
+    
+  
+  <link rel="stylesheet" href="/font/iconfont.css">
+  <link rel="stylesheet" href="/css/main.min.css">
+
+
+  
+  
+ 
+
+<script type="application/ld+json">
+ "@context" : "http://schema.org",
+    "@type" : "BlogPosting",
+    "mainEntityOfPage": {
+         "@type": "WebPage",
+         "@id": "https:\/\/rrrwx.github.io"
+    },
+    "articleSection" : "posts",
+    "name" : "JDBC基础二之结果集",
+    "headline" : "JDBC基础二之结果集",
+    "description" : "https:\/\/edu.aliyun.com\/roadmap\/java?spm=a2c6h.12999620.1371257.1.5a195738ZJjjex#part1\n结果集  1. ResultSet ResultSet表示结果集，它是一个二维表格。ResultSet内部维护一个行光标（游标Cursor），ResultSet提供了一系列的方法来移动游标（光标是**从1开始，mysql默认都能使用）：\n void beforeFirst(): 把光标放到第一行的上面，也是光标的默认位置； void afterLast(): 最后一行记录的下面； boolean first() boolean last() boolean isBeforeFirst() boolean isAfterLast() boolean isFirst() boolean isLast() boolean previous() boolean next() boolean relative(int row): 相对位移，当row为正数时，表示向下移动row行，负数则向上移动； boolean absolute(int row): 绝对位移，把光标移动到第row行； int getRow(): 返回当前光标所在行；  2. 获取结果集数据 如果已经知道当前列的数据类型就可以使用相应的get方法获取当前列数据，否则就用getObject()或者getString()\n可以通过列名或者列的索引来指定当前列，其中列索引是从1开始，而不是0\n String getString(String columnName) String getString(int columnIndex) int getInt(String columnName) double getDouble(String columnName) boolean getBoolean(String columnName) Object getObject(String columnName)  3. 获取结果集元数据  得到元数据：rs.getMetaData()，返回值ResultSetMetaData(); 获取结果集列数：int getColumnCount(); 获取指定列的列名：String getColumnName(int countIndex);  int count = rs.",
+    "inLanguage" : "en-us",
+    "author" : "JadeRong",
+    "creator" : "JadeRong",
+    "publisher": "JadeRong",
+    "accountablePerson" : "JadeRong",
+    "copyrightHolder" : "JadeRong",
+    "copyrightYear" : "2020",
+    "datePublished": "2020-05-21 12:18:36 \x2b0800 CST",
+    "dateModified" : "2020-05-21 12:18:36 \x2b0800 CST",
+    "url" : "https:\/\/rrrwx.github.io\/2020\/jdbc%E5%9F%BA%E7%A1%80%E4%BA%8C%E7%BB%93%E6%9E%9C%E9%9B%86\/",
+    "wordCount" : "321",
+    "keywords" : [ "学习笔记","mysql","JDBC", "JadeRong"]
+}
+</script>
+
+</head>
+
+  
+
+
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  <body class="">
+    <div class="wrapper">
+        <nav class="navbar">
+    <div class="container">
+        <div class="navbar-header header-logo">
+            <a href="https://rrrwx.github.io">JadeRong</a>&nbsp;
+        	<a href="javascript:void(0);" class="theme-switch"><i class="iconfont icon-table-lamp"></i></a>
+
+        </div>
+        <div class="menu navbar-right">
+                
+                
+                <a class="menu-item" href="/posts/" title="">Blogs</a>
+                
+                <a class="menu-item" href="/categories/" title="">Categories</a>
+                
+                <a class="menu-item" href="/tags/" title="">Tags</a>
+                
+                <a class="menu-item" href="/about/" title="">About</a>
+                
+        </div>
+    </div>
+</nav>
+<nav class="navbar-mobile" id="nav-mobile" style="display: none">
+     <div class="container">
+        <div class="navbar-header">
+            <div>  <a href="javascript:void(0);" class="theme-switch"><i class="iconfont icon-table-lamp"></i></a>&nbsp;<a href="https://rrrwx.github.io">JadeRong</a></div>
+            <div class="menu-toggle">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+     
+          <div class="menu" id="mobile-menu">
+                
+                
+                <a class="menu-item" href="/posts/" title="">Blogs</a>
+                
+                <a class="menu-item" href="/categories/" title="">Categories</a>
+                
+                <a class="menu-item" href="/tags/" title="">Tags</a>
+                
+                <a class="menu-item" href="/about/" title="">About</a>
+                
+        </div>
+    </div>
+</nav>
+    	 <main class="main">
+          <div class="container">
+      		
+<article class="post-warp" itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">JDBC基础二之结果集</h1>
+
+
+
+                Written by <a itemprop="name" href="https://rrrwx.github.io" rel="author">JadeRong</a>, included in <i class="iconfont icon-folder"></i>
+
+                <span class="post-category">
+                            <a href="https://rrrwx.github.io/categories/mysql%E5%AD%A6%E4%B9%A0/"> mysql学习 </a>
+                            
+                    </span>
+
+        
+        <h1 id="wc" style="font-size: 0.75rem;text-align: left;">约 321 个字    |    预计阅读 2 分钟    |    本文总阅读量<span id="busuanzi_value_page_pv"></span>次</h1>
+    </header>
+    <div class="post-content">
+        
+
+        
+
+        
+        
+     
+          
+          
+          
+
+          
+          
+          
+
+          <p><a href="https://edu.aliyun.com/roadmap/java?spm=a2c6h.12999620.1371257.1.5a195738ZJjjex#part1">https://edu.aliyun.com/roadmap/java?spm=a2c6h.12999620.1371257.1.5a195738ZJjjex#part1</a></p>
+<h1 id="结果集">结果集</h1>
+<h2 id="heading"></h2>
+<h2 id="1-resultset">1. ResultSet</h2>
+<p>ResultSet表示结果集，它是一个二维表格。ResultSet内部维护一个行光标（游标Cursor），ResultSet提供了一系列的方法来移动游标（光标是**从1开始，mysql默认都能使用）：</p>
+<ul>
+<li>void beforeFirst(): 把光标放到第一行的上面，也是光标的默认位置；</li>
+<li>void afterLast(): 最后一行记录的下面；</li>
+<li>boolean first()</li>
+<li>boolean last()</li>
+<li>boolean isBeforeFirst()</li>
+<li>boolean isAfterLast()</li>
+<li>boolean isFirst()</li>
+<li>boolean isLast()</li>
+<li>boolean previous()</li>
+<li><strong>boolean next()</strong></li>
+<li>boolean relative(int row): 相对位移，当row为正数时，表示向下移动row行，负数则向上移动；</li>
+<li>boolean absolute(int row): 绝对位移，把光标移动到第row行；</li>
+<li>int getRow(): 返回当前光标所在行；</li>
+</ul>
+<h2 id="2-获取结果集数据">2. 获取结果集数据</h2>
+<p>如果已经知道当前列的数据类型就可以使用相应的get方法获取当前列数据，否则就用getObject()或者getString()</p>
+<p>可以通过列名或者列的索引来指定当前列，<strong>其中列索引是从1开始，而不是0</strong></p>
+<ul>
+<li>String getString(<strong>String columnName</strong>)</li>
+<li>String getString(<strong>int columnIndex</strong>)</li>
+<li>int getInt(String columnName)</li>
+<li>double getDouble(String columnName)</li>
+<li>boolean getBoolean(String columnName)</li>
+<li>Object getObject(String columnName)</li>
+</ul>
+<h2 id="3-获取结果集元数据">3. 获取结果集元数据</h2>
+<ul>
+<li><strong>得到元数据</strong>：rs.getMetaData()，返回值ResultSetMetaData();</li>
+<li><strong>获取结果集列数</strong>：int getColumnCount();</li>
+<li><strong>获取指定列的列名</strong>：String getColumnName(int countIndex);</li>
+</ul>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#66d9ef">int</span> count <span style="color:#f92672">=</span> rs<span style="color:#f92672">.</span><span style="color:#a6e22e">getMetaData</span><span style="color:#f92672">().</span><span style="color:#a6e22e">getColumnCount</span><span style="color:#f92672">()</span> <span style="color:#f92672">;</span>
+<span style="color:#66d9ef">while</span> <span style="color:#f92672">(</span>rs<span style="color:#f92672">.</span><span style="color:#a6e22e">next</span><span style="color:#f92672">())</span> <span style="color:#f92672">{</span>
+  	<span style="color:#66d9ef">for</span> <span style="color:#f92672">(</span><span style="color:#66d9ef">int</span> i <span style="color:#f92672">=</span> 1 <span style="color:#f92672">;</span> i <span style="color:#f92672">&lt;=</span> count <span style="color:#f92672">;</span> i<span style="color:#f92672">++)</span> <span style="color:#f92672">{</span>
+      	System<span style="color:#f92672">.</span><span style="color:#a6e22e">out</span><span style="color:#f92672">.</span><span style="color:#a6e22e">print</span><span style="color:#f92672">(</span>rs<span style="color:#f92672">.</span><span style="color:#a6e22e">getString</span><span style="color:#f92672">(</span>i<span style="color:#f92672">))</span> <span style="color:#f92672">;</span>
+      	<span style="color:#66d9ef">if</span> <span style="color:#f92672">(</span>i <span style="color:#f92672">&lt;</span> count<span style="color:#f92672">)</span> System<span style="color:#f92672">.</span><span style="color:#a6e22e">out</span><span style="color:#f92672">.</span><span style="color:#a6e22e">print</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;, &#34;</span><span style="color:#f92672">)</span> <span style="color:#f92672">;</span>
+    <span style="color:#f92672">}</span>
+  	System<span style="color:#f92672">.</span><span style="color:#a6e22e">out</span><span style="color:#f92672">.</span><span style="color:#a6e22e">println</span><span style="color:#f92672">()</span> <span style="color:#f92672">;</span>
+<span style="color:#f92672">}</span>
+</code></pre></div><h2 id="4-特性">4. 特性</h2>
+<p>当使用Connection的<strong>createStatement</strong>时，已经确定了Statement生成的结果集是什么特性</p>
+<ul>
+<li><strong>是否可滚动</strong></li>
+<li><strong>是否敏感</strong></li>
+<li><strong>是否可更新</strong></li>
+</ul>
+<p><strong>mysql数据库默认是可滚动、且只读</strong></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java">Statement <span style="color:#a6e22e">createStatement</span><span style="color:#f92672">(</span><span style="color:#66d9ef">int</span> resultSetType<span style="color:#f92672">,</span> <span style="color:#66d9ef">int</span> resultSetConcurrency<span style="color:#f92672">)</span> <span style="color:#66d9ef">throws</span> SQLException
+<span style="color:#75715e">// resultSetType: 结果集类型 ---- mysql默认是滚动的，其他数据库默认
+</span><span style="color:#75715e">//                ResultSet.TYPE_FORWARD_ONLY:        结果集不滚动
+</span><span style="color:#75715e">//                ResultSet.TYPE_SCROLL_INSENSITIVE:  结果集滚动，迟钝，但结果集数据数据不随数据库而变化
+</span><span style="color:#75715e">//                ResultSet.TYPE_SCROLL_SENSITIVE:    结果集滚动，敏感，但结果集数据数据不随数据库而变化
+</span><span style="color:#75715e">// resultSetConcurrency: 并发类型
+</span><span style="color:#75715e">//                ResultSet.CONCUR_READ_ONLY:         结果集只读（默认）
+</span><span style="color:#75715e">//                ResultSet.CONCUR_READ_UPDATABLE:    结果集可更新，对结果集的更新可以反向影响数据库
+</span></code></pre></div><h2 id="5-时间类型转换">5. 时间类型转换</h2>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java">java<span style="color:#f92672">.</span><span style="color:#a6e22e">lang</span><span style="color:#f92672">.</span><span style="color:#a6e22e">Object</span>
+<span style="color:#f92672">|---</span>java<span style="color:#f92672">.</span><span style="color:#a6e22e">util</span><span style="color:#f92672">.</span><span style="color:#a6e22e">Date</span>
+    <span style="color:#f92672">|---</span>java<span style="color:#f92672">.</span><span style="color:#a6e22e">sql</span><span style="color:#f92672">.</span><span style="color:#a6e22e">Date</span>
+</code></pre></div><ul>
+<li>数据库类型与java中的类型对应关系：
+<ul>
+<li>DATE  &ndash;  java.sql.Date</li>
+<li>TIME  &ndash;  java.sql.Time</li>
+<li>TIMESTAMP  &ndash;  java.sql.Timestamp</li>
+</ul>
+</li>
+<li>领域对象（domain）中所有的属性不要出现java.sql包下的东西；</li>
+<li>ResultSet.getDate()返回的结果是java.sql.Date类型的；</li>
+<li>PreparedStatement.setDate(int, Date)里面用的也是java.sql.Date类型；</li>
+<li>在使用JDBC时，应注意时间类型的转换：<strong>java.util.Date与java.sql.Date等之间的相互转换</strong>；</li>
+</ul>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java">java<span style="color:#f92672">.</span><span style="color:#a6e22e">util</span><span style="color:#f92672">.</span><span style="color:#a6e22e">Date</span> date <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> java<span style="color:#f92672">.</span><span style="color:#a6e22e">sql</span><span style="color:#f92672">.</span><span style="color:#a6e22e">Date</span><span style="color:#f92672">()</span> <span style="color:#f92672">;</span>  <span style="color:#75715e">//子类可以直接封装成父类
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">long</span> t <span style="color:#f92672">=</span> date<span style="color:#f92672">.</span><span style="color:#a6e22e">getTime</span><span style="color:#f92672">()</span> <span style="color:#f92672">;</span>
+java<span style="color:#f92672">.</span><span style="color:#a6e22e">sql</span><span style="color:#f92672">.</span><span style="color:#a6e22e">Date</span> sqlDate <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> java<span style="color:#f92672">.</span><span style="color:#a6e22e">sql</span><span style="color:#f92672">.</span><span style="color:#a6e22e">Date</span><span style="color:#f92672">(</span>t<span style="color:#f92672">)</span> <span style="color:#f92672">;</span>
+</code></pre></div><h2 id="6-大型数据的使用">6. 大型数据的使用</h2>
+<ul>
+<li>例：mp3格式的转换</li>
+</ul>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-SQL" data-lang="SQL"><span style="color:#66d9ef">CREATE</span> <span style="color:#66d9ef">TABLE</span> tab_bin (
+		id INT <span style="color:#66d9ef">PRIMARY</span> <span style="color:#66d9ef">KEY</span> AUTO_INCREMENT, 
+  	filename VARCHAR(<span style="color:#ae81ff">100</span>),
+  	bin_data MEDIUMBLOB
+) ;
+<span style="color:#75715e">-- MEDIUMBLOB: 2^24-1B(16M)
+</span></code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#f92672">import</span> java.sql.* <span style="color:#f92672">;</span>
+
+<span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Demo</span> <span style="color:#f92672">{</span>
+		<span style="color:#75715e">//将mp3数据存储到数据库
+</span><span style="color:#75715e"></span>  	<span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">putData</span><span style="color:#f92672">()</span> <span style="color:#66d9ef">throws</span> Exception <span style="color:#f92672">{</span>
+      	Connection con <span style="color:#f92672">=</span> JDBCUtil<span style="color:#f92672">.</span><span style="color:#a6e22e">getConnection</span><span style="color:#f92672">()</span> <span style="color:#f92672">;</span>
+      	String sql <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;INSERT INTO tab_bin VALUES (?,?,?)&#34;</span> <span style="color:#f92672">;</span>
+      	PreparedStatement pstmt <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> PreparedStatement<span style="color:#f92672">(</span>sql<span style="color:#f92672">)</span> <span style="color:#f92672">;</span>
+      
+      	pstmt<span style="color:#f92672">.</span><span style="color:#a6e22e">setInt</span><span style="color:#f92672">(</span>1<span style="color:#f92672">,</span> 1<span style="color:#f92672">)</span> <span style="color:#f92672">;</span>
+      	pstmt<span style="color:#f92672">.</span><span style="color:#a6e22e">setString</span><span style="color:#f92672">(</span>2<span style="color:#f92672">,</span> <span style="color:#e6db74">&#34;demo.mp3&#34;</span><span style="color:#f92672">)</span> <span style="color:#f92672">;</span>
+      
+        <span style="color:#75715e">//首先将MP3文件读取成byte[]
+</span><span style="color:#75715e"></span>      	<span style="color:#75715e">//然后利用byte[]创建Blob
+</span><span style="color:#75715e"></span>      	<span style="color:#75715e">//IOUtil工具类没有，但是可以自己通过IO流实现
+</span><span style="color:#75715e"></span>      	<span style="color:#66d9ef">byte</span><span style="color:#f92672">[]</span> bytes <span style="color:#f92672">=</span> IOUtils<span style="color:#f92672">.</span><span style="color:#a6e22e">toByteArray</span><span style="color:#f92672">(</span><span style="color:#66d9ef">new</span> FileInputStream<span style="color:#f92672">(</span><span style="color:#e6db74">&#34;D:/demo.mp3&#34;</span><span style="color:#f92672">))</span> <span style="color:#f92672">;</span>
+      	Blob blob <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> SerialBlob<span style="color:#f92672">(</span>bytes<span style="color:#f92672">)</span> <span style="color:#f92672">;</span>
+      	pstmt<span style="color:#f92672">.</span><span style="color:#a6e22e">setBlob</span><span style="color:#f92672">(</span>3<span style="color:#f92672">,</span> blob<span style="color:#f92672">)</span> <span style="color:#f92672">;</span>
+      
+      	pstmt<span style="color:#f92672">.</span><span style="color:#a6e22e">executeUpdate</span><span style="color:#f92672">()</span> <span style="color:#f92672">;</span>
+    <span style="color:#f92672">}</span>
+  
+  	<span style="color:#75715e">//从数据库中读取MP3文件
+</span><span style="color:#75715e"></span>  	<span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">getDate</span><span style="color:#f92672">()</span> <span style="color:#66d9ef">throws</span> <span style="color:#a6e22e">Exception</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+      	Connection con <span style="color:#f92672">=</span> JDBCUtil<span style="color:#f92672">.</span><span style="color:#a6e22e">getConnection</span><span style="color:#f92672">()</span> <span style="color:#f92672">;</span>
+      	String sql <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;SELECT * FROM tab_bin&#34;</span> <span style="color:#f92672">;</span>
+      	PreparedStatement pstmt <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> PreparedStatement<span style="color:#f92672">(</span>sql<span style="color:#f92672">)</span> <span style="color:#f92672">;</span>
+      
+      	ResultSet rs <span style="color:#f92672">=</span> pstmt<span style="color:#f92672">.</span><span style="color:#a6e22e">executeQuery</span><span style="color:#f92672">()</span> <span style="color:#f92672">;</span>
+      
+      	<span style="color:#66d9ef">if</span> <span style="color:#f92672">(</span>rs<span style="color:#f92672">.</span><span style="color:#a6e22e">next</span><span style="color:#f92672">())</span> <span style="color:#f92672">{</span>
+          	Blob blob <span style="color:#f92672">=</span> rs<span style="color:#f92672">.</span><span style="color:#a6e22e">getBlob</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;bin_data&#34;</span><span style="color:#f92672">)</span> <span style="color:#f92672">;</span>
+          	
+          	InputStream in <span style="color:#f92672">=</span> blob<span style="color:#f92672">.</span><span style="color:#a6e22e">getBinaryStream</span><span style="color:#f92672">()</span> <span style="color:#f92672">;</span>
+          	OutputStream out <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> FileOutputStream<span style="color:#f92672">(</span><span style="color:#e6db74">&#34;D:/newDemo.mp3&#34;</span><span style="color:#f92672">)</span> <span style="color:#f92672">;</span>
+          	IOUtils<span style="color:#f92672">.</span><span style="color:#a6e22e">copy</span><span style="color:#f92672">(</span>in<span style="color:#f92672">,</span> out<span style="color:#f92672">)</span> <span style="color:#f92672">;</span>
+        <span style="color:#f92672">}</span>
+    <span style="color:#f92672">}</span>
+<span style="color:#f92672">}</span>
+
+<span style="color:#75715e">// *注意：需要在mysql安装路径下的my.ini文件中添加如下配置
+</span><span style="color:#75715e">// max_allowed_packet=10485760 (10M)
+</span><span style="color:#75715e">// 这是因为默认不允许传输过大的文件，需要自行配置最大允许包大小
+</span></code></pre></div>
+    </div>
+
+
+
+    <div class="post-copyright">
+                
+        
+
+
+        <section>
+            <p class="share-item">
+                <span>Share :</span>
+                
+                <span>
+
+      
+        <a href="//twitter.com/share?url=https%3a%2f%2frrrwx.github.io%2f2020%2fjdbc%25E5%259F%25BA%25E7%25A1%2580%25E4%25BA%258C%25E7%25BB%2593%25E6%259E%259C%25E9%259B%2586%2f&amp;text=JDBC%e5%9f%ba%e7%a1%80%e4%ba%8c%e4%b9%8b%e7%bb%93%e6%9e%9c%e9%9b%86&amp;via=" target="_blank" title="Share on Twitter">
+          <i class="iconfont icon-twitter"></i>
+        </a>
+        
+
+      
+      
+        <a href="//www.facebook.com/sharer/sharer.php?u=https%3a%2f%2frrrwx.github.io%2f2020%2fjdbc%25E5%259F%25BA%25E7%25A1%2580%25E4%25BA%258C%25E7%25BB%2593%25E6%259E%259C%25E9%259B%2586%2f" target="_blank" title="Share on Facebook">
+          <i class="iconfont icon-facebook"></i>
+        </a>
+        
+      
+      
+      
+      
+      
+      
+        
+      
+        
+      
+
+          
+
+          
+
+          
+        <a href="//www.douban.com/recommend/?url=https%3a%2f%2frrrwx.github.io%2f2020%2fjdbc%25E5%259F%25BA%25E7%25A1%2580%25E4%25BA%258C%25E7%25BB%2593%25E6%259E%259C%25E9%259B%2586%2f&amp;title=JDBC%e5%9f%ba%e7%a1%80%e4%ba%8c%e4%b9%8b%e7%bb%93%e6%9e%9c%e9%9b%86" target="_blank" title="Share on Douban ">
+            <i class="iconfont icon-douban"></i>
+          </a>
+          
+
+          
+        <a href="//service.weibo.com/share/share.php?url=https%3a%2f%2frrrwx.github.io%2f2020%2fjdbc%25E5%259F%25BA%25E7%25A1%2580%25E4%25BA%258C%25E7%25BB%2593%25E6%259E%259C%25E9%259B%2586%2f&amp;appkey=&amp;title=JDBC%e5%9f%ba%e7%a1%80%e4%ba%8c%e4%b9%8b%e7%bb%93%e6%9e%9c%e9%9b%86" target="_blank" title="Share on Douban ">
+            <i class="iconfont icon-weibo"></i>
+          </a>
+          
+
+</span>
+                
+            </p>
+        </section>
+
+
+        <section>
+            <p class="copyright-item">
+                <span>Updated </span>
+                <span class="post-time">
+                on 
+                <time datetime=2020-05-21 itemprop="datePublished">May 21, 2020</time>
+                </span>
+
+            </p>
+        </section>
+    </div>
+
+  
+    <div class="post-tags">
+        
+            <section>
+            
+            <span class="tag"><a href="https://rrrwx.github.io/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">
+                    <i class="iconfont icon-tag"></i>学习笔记</a></span>
+            
+            <span class="tag"><a href="https://rrrwx.github.io/tags/mysql/">
+                    <i class="iconfont icon-tag"></i>mysql</a></span>
+            
+            <span class="tag"><a href="https://rrrwx.github.io/tags/jdbc/">
+                    <i class="iconfont icon-tag"></i>JDBC</a></span>
+            
+            </section>
+        
+        <section>
+                <a href="javascript:window.history.back();">back</a></span> · 
+                <span><a href="https://rrrwx.github.io">home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav">
+        
+        <a href="https://rrrwx.github.io/2020/jdbc%E5%9F%BA%E7%A1%80%E4%B8%80%E8%BF%9E%E6%8E%A5%E6%95%B0%E6%8D%AE%E5%BA%93/" class="prev" rel="prev" title="JDBC基础一之连接数据库"><i class="iconfont icon-left"></i>&nbsp;JDBC基础一之连接数据库</a>
+         
+        
+        <a href="https://rrrwx.github.io/2020/jdbc%E5%9F%BA%E7%A1%80%E4%B8%89preparedstatement/" class="next" rel="next" title="JDBC基础三之PreparedStatement">JDBC基础三之PreparedStatement&nbsp;<i class="iconfont icon-right"></i></a>
+        
+    </div>
+
+    <div class="post-comment">
+          
+                 
+          
+    </div>
+</article>
+          </div>
+		   </main>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="">
+                <i class="fas fa-arrow-up fa-fw"></i>
+            </a>
+        </div>
+
+      <footer class="footer">
+
+
+
+
+    <div class="copyright">
+
+            <div class="footer-line">
+                &copy;<i class="far fa-copyright fa-fw"></i>&nbsp;<span itemprop="copyrightYear">2020</span>&nbsp;&nbsp;<span class="author" itemprop="copyrightHolder"><a href="https://rrrwx.github.io">JadeRong</a></span>&nbsp;|&nbsp;<span class="license">Released under <a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span>
+                &nbsp;|&nbsp;<span>Powered by <a href="https://gohugo.io/" target="_blank" rel="external nofollow">Hugo</a> & <a href="https://github.com/liuzc/leaveit" target="_blank" rel="external nofollow">LeaveIt</a></span>
+            </div>
+
+
+    </div>
+</footer>
+
+
+
+
+
+
+
+
+
+
+
+
+    
+    
+    <script src="/js/vendor_no_gallery.min.js" async=""></script>
+    
+  
+
+
+
+
+     </div>
+  </body>
+</html>

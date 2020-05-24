@@ -1,0 +1,291 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>mysql学习 on JadeRong</title>
+    <link>https://rrrwx.github.io/categories/mysql%E5%AD%A6%E4%B9%A0/</link>
+    <description>Recent content in mysql学习 on JadeRong</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Fri, 22 May 2020 18:19:52 +0800</lastBuildDate>
+    
+	<atom:link href="https://rrrwx.github.io/categories/mysql%E5%AD%A6%E4%B9%A0/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>JDBC之连接池</title>
+      <link>https://rrrwx.github.io/2020/jdbc%E4%B9%8B%E6%95%B0%E6%8D%AE%E5%BA%93%E8%BF%9E%E6%8E%A5%E6%B1%A0/</link>
+      <pubDate>Fri, 22 May 2020 18:19:52 +0800</pubDate>
+      
+      <guid>https://rrrwx.github.io/2020/jdbc%E4%B9%8B%E6%95%B0%E6%8D%AE%E5%BA%93%E8%BF%9E%E6%8E%A5%E6%B1%A0/</guid>
+      <description>https://edu.aliyun.com/roadmap/java?spm=a2c6h.12999620.1371257.1.5a195738ZJjjex#part1
+https://www.cnblogs.com/zzsuje/articles/10444032.html
+数据库连接池  数据库连接池负责分配、管理和释放数据库连接，它允许应用程序重复使用一个现有的数据库连接，而不是再重新建立一个；
+释放空闲时间超过最大空闲时间的数据库连接来避免因为没有释放数据库连接而引起的数据库连接遗漏。这项技术能明显提高对数据库操作的性能。
+   对于大多数应用程序，当它们正在处理事务时，仅需要能够访问JDBC连接的 1 个线程。当不处理事务时，这个连接就会闲置（造成资源的浪费）。相反，连接池允许闲置的连接被其它需要的线程使用。 当一个线程需要用 JDBC 对一个 数据库操作时，它从池中请求一个连接。当这个线程使用完了这个连接，将它返回到连接池中（连接池会自动收回连接，当然我们也可以在用完以后释放），这样这就可以被其它想使用它的线程使用，这样不会照成内存的浪费。 当连接被从池中调用出来，那么这个连接将被这个线程专有地使用。    数据库连接池的主要操作如下：
+（1）建立数据库连接池对象（服务器启动）；
+（2）按照事先指定的参数创建初始数量的数据库连接（即：空闲连接数）,我们在安装数据库的时候就可以指定；
+（3）对于一个数据库访问请求，直接从连接池中得到一个连接。如果数据库连接池对象中没有空闲的连接，且连接数没有达到最大（即：最大活跃连接数），创建一个新的数据库连接。而如果连接数达到最大，就会再创建事先定好的连接数；
+（4）对数据库进行存取操作；
+（5）关闭数据库，释放所有数据库连接（此时的关闭数据库连接，并非真正关闭，而是将其放入空闲队列中。如实际空闲连接 数大于初始空闲连接数则释放连接）；
+（6）释放数据库连接池对象（服务器停止、维护期间，释放数据库连接池对象，并释放所有连接）。
+ 常见的数据库连接池有dbcp、c3p0
+注：连接池返回的Connection对象，它的close()方法不是关闭连接，而是把连接归还给连接池
+dbcp  DBCP（DataBase Connection Pool）数据库连接池，是java数据库连接池的一种，由Apache开发，通过数据库连接池，可以让程序自动管理数据库连接的释放和断开。 使用javax.sql.DateSource接口 也可以使用配置文件，把连接参数和连接池初始化参数都写进配置文件。  //需要先导入apache的commons.dbcp包 import org.apache.commons.dbcp.BasicDateSource ; public class dbcpDemo { public void connect() throws Exception { /* * 1. 创建来连接池对象 * 2. 配置四大参数 * 3. 配置连接池参数 * 4. 获取连接对象 */ //BasicDataSource类实现了DataSource接口  BasicDataSource dataSource = new BasicDataSource() ; //手动配置连接参数  dataSource.</description>
+    </item>
+    
+    <item>
+      <title>JDBC之事务</title>
+      <link>https://rrrwx.github.io/2020/jdbc%E4%B9%8B%E4%BA%8B%E5%8A%A1/</link>
+      <pubDate>Fri, 22 May 2020 15:08:30 +0800</pubDate>
+      
+      <guid>https://rrrwx.github.io/2020/jdbc%E4%B9%8B%E4%BA%8B%E5%8A%A1/</guid>
+      <description>https://www.runoob.com/mysql/mysql-transaction.html
+https://edu.aliyun.com/roadmap/java?spm=a2c6h.12999620.1371257.1.5a195738ZJjjex#part1
+http://blog.sina.com.cn/s/blog_4aefad88010092uc.html
+MySQL事务  MySQL 事务(transaction)主要用于处理操作量大，复杂度高的数据。比如说，在人员管理系统中，你删除一个人员，你既需要删除人员的基本资料，也要删除和该人员相关的信息，如信箱，文章等等，这样，这些数据库操作语句就构成一个事务！
+ 在 MySQL 中只有使用了 Innodb 数据库引擎的数据库或表才支持事务。 事务处理可以用来维护数据库的完整性，保证成批的 SQL 语句要么全部执行，要么全部不执行。 事务用来管理 insert,update,delete 语句。   （一）事务的四大特性（ACID）  原子性(Atomicity)： 一个事务中的所有操作，要么全部完成，要么全部不完成，不会结束在中间某个环节。事务在执行过程中发生错误，会被回滚（Rollback）到事务开始前的状态，就像这个事务从来没有执行过一样； 一致性(Consistency)： 在事务开始之前和事务结束以后，数据库的完整性没有被破坏。这表示写入的资料必须完全符合所有的预设规则，这包含资料的精确度、串联性以及后续数据库可以自发性地完成预定的工作； 隔离性(Isolation)： 数据库允许多个并发事务同时对其数据进行读写和修改的能力，隔离性可以防止多个事务并发执行时由于交叉执行而导致数据的不一致。事务隔离分为不同级别，包括读未提交（Read uncommitted）、读提交（read committed）、可重复读（repeatable read）和串行化（Serializable）； 持久性(Durability)： 事务处理结束后，对数据的修改就是永久的，即便系统故障也不会丢失。  （二）并发问题 数据库肯定是要被广大客户所共享访问的，那么在数据库操作过程中很可能出现以下几种不确定情况。
+ 更新丢失（Lost update）： 两个事务都同时更新一行数据，但是第二个事务却中途失败退出，导致对数据的两个修改都失效了。这是因为系统没有执行任何的锁操作，因此并发事务并没有被隔离开来。 脏读取（Dirty Reads）： 一个事务开始读取了某行数据，但是另外一个事务已经更新了此数据但没有能够及时提交。这是相当危险的，因为很可能所有的操作都被回滚。（最重要的） 不可重复读取（Non-repeatable Reads）： 一个事务对同一行数据重复读取两次，但是却得到了不同的结果。例如，在两次读取的中途，有另外一个事务对该行数据进行了修改，并提交。这里两个并发事务读写同一个行记录。 两次更新问题（Second lost updates problem）： 无法重复读取的特例。有两个并发事务同时读取同一行数据，然后其中一个对它进行修改提交，而另一个也进行了修改提交。这就会造成第一次写操作失效。 虚读（Phantom Reads）： 事务在操作过程中进行两次查询，第二次查询的结果包含了第一次查询中未出现的数据（这里并不要求两次查询的SQL语句相同）。这是因为在两次查询过程中有另外一个事务插入数据造成的。注意这里是两个并发事务操作的不是同一个行记录。  （三）事务隔离级别 为了避免上面出现的几种情况，在标准SQL规范中，定义了4个事务隔离级别，不同的隔离级别对事务的处理不同。
+ 未授权读取（Read Uncommitted）： 允许脏读取，但不允许更新丢失。如果一个事务已经开始写数据，则另外一个数据则不允许同时进行写操作，但允许其他事务读此行数据。该隔离级别可以通过“排他写锁”实现。在多个事务之间使用它将会是非常危险的，事务的回滚操作或失败将会影响到其他并发事务。 授权读取（Read Committed）： 允许不可重复读取，但不允许脏读取。这可以通过“瞬间共享读锁”和“排他写锁”实现。读取数据的事务允许其他事务继续访问该行数据，但是未提交的写事务将会禁止其他事务访问该行。 可重复读取（Repeatable Read）： 禁止不可重复读取和脏读取，但是有时可能出现幻影数据。这可以通过“共享读锁”和“排他写锁”实现。读取数据的事务将会禁止写事务（但允许读事务），写事务则禁止任何其他事务。 序列化（Serializable）： 提供严格的事务隔离。它要求事务序列化执行，事务只能一个接着一个地执行，但不能并发执行。如果仅仅通过“行级锁”是无法实现事务序列化的，必须通过其他机制保证新插入的数据不会被刚执行查询操作的事务访问到。  从上到下隔离级别依次升高，完整性和一致性逐渐提高，但是并发性能逐渐降低。MySQL默认选择可重复读取，Oracle默认选择授权读取。由于脏读不可容忍而且需要一定的并发性能，因此一般不会选择未授权读取和序列化。</description>
+    </item>
+    
+    <item>
+      <title>JDBC基础五之JDBCUtil工具类示例</title>
+      <link>https://rrrwx.github.io/2020/jdbc%E5%9F%BA%E7%A1%80%E4%BA%94jdbcutil%E5%B7%A5%E5%85%B7%E7%B1%BB%E7%A4%BA%E4%BE%8B/</link>
+      <pubDate>Thu, 21 May 2020 19:57:24 +0800</pubDate>
+      
+      <guid>https://rrrwx.github.io/2020/jdbc%E5%9F%BA%E7%A1%80%E4%BA%94jdbcutil%E5%B7%A5%E5%85%B7%E7%B1%BB%E7%A4%BA%E4%BE%8B/</guid>
+      <description>https://edu.aliyun.com/roadmap/java?spm=a2c6h.12999620.1371257.1.5a195738ZJjjex#part1
+为了更方便地使用JDBC来连接各种数据库，可以将数据库的连接与释放操作封装成一个工具类
+import java.sql.Connection ; import java.sql.DriverManager ; public class JDBCUtil { //加载JDBCUtil类的时候只执行一次，不用每次连接的时候都加载配置文件和驱动类  public static Properties props = null ; static { try { //加载配置文件（不同的数据库有不同的配置文件）  //dbconfig.properties文件通常放在src目录下，也即ClassPath下  InputStream in = JDBCUtil.class.getClassLoader() .getResourceAsStream(&amp;#34;dbconfig.properties&amp;#34;) ; Properties props = new Properties() ; props.load(in) ; } catch (IOException e) { throw new RuntimeException(e) ; } try { //加载驱动类  Class.forName(props.getProperty(&amp;#34;driverClassName&amp;#34;)) ; } catch (ClassNotFoundException e) { throw new RuntimeException(e) ; } } public static Connection getConnection() throws SQLException { //获取Connection  return DriverManager.</description>
+    </item>
+    
+    <item>
+      <title>JDBC基础三之PreparedStatement</title>
+      <link>https://rrrwx.github.io/2020/jdbc%E5%9F%BA%E7%A1%80%E4%B8%89preparedstatement/</link>
+      <pubDate>Thu, 21 May 2020 16:12:49 +0800</pubDate>
+      
+      <guid>https://rrrwx.github.io/2020/jdbc%E5%9F%BA%E7%A1%80%E4%B8%89preparedstatement/</guid>
+      <description>https://edu.aliyun.com/roadmap/java?spm=a2c6h.12999620.1371257.1.5a195738ZJjjex#part1
+PreparedStatement接口  Statement接口的子接口 防SQL攻击 提高代码可读性、可维护性 提高效率  SQL攻击  在需要用户输入的地方，用户输入的是SQL语句的片段，最终用户输入的SQL片段与DAO中所写的SQL语句合成一个完整的SQL语句！
+ 演示 （1）首先创建一张用户表，用来存储用户的信息 CREATE TABLE user ( uid CHAR(32) PRIMARY KEY, username VARCHAR(30) UNIQUE KEY NOT NULL, PASSWORD VARCHAR(30) ); -- 这里的PASSWORD和mysql的关键词重名了，因此需要大写，也可以写成`password`  INSERT INTO user VALUES(&amp;#39;zhangSan&amp;#39;, &amp;#39;123&amp;#39;) ; INSERT INTO user VALUES(&amp;#39;liSi&amp;#39;, &amp;#39;123&amp;#39;) ; INSERT INTO user VALUES(&amp;#39;wangWu&amp;#39;, &amp;#39;123&amp;#39;) ; （2）使用username和password去查询数据 import java.sql.Connection ; import java.sql.DriverManager ; public class Demo { /** * 使用username和password去查询数据 * 若查到结果集，说明正确，返回true * 若查不到结果，则说明用户名或密码错误，返回false */ public boolean login throws Exception (String username, String password) { //准备四大参数  String driverClassName = &amp;#34;com.</description>
+    </item>
+    
+    <item>
+      <title>JDBC基础二之结果集</title>
+      <link>https://rrrwx.github.io/2020/jdbc%E5%9F%BA%E7%A1%80%E4%BA%8C%E7%BB%93%E6%9E%9C%E9%9B%86/</link>
+      <pubDate>Thu, 21 May 2020 12:18:36 +0800</pubDate>
+      
+      <guid>https://rrrwx.github.io/2020/jdbc%E5%9F%BA%E7%A1%80%E4%BA%8C%E7%BB%93%E6%9E%9C%E9%9B%86/</guid>
+      <description>https://edu.aliyun.com/roadmap/java?spm=a2c6h.12999620.1371257.1.5a195738ZJjjex#part1
+结果集  1. ResultSet ResultSet表示结果集，它是一个二维表格。ResultSet内部维护一个行光标（游标Cursor），ResultSet提供了一系列的方法来移动游标（光标是**从1开始，mysql默认都能使用）：
+ void beforeFirst(): 把光标放到第一行的上面，也是光标的默认位置； void afterLast(): 最后一行记录的下面； boolean first() boolean last() boolean isBeforeFirst() boolean isAfterLast() boolean isFirst() boolean isLast() boolean previous() boolean next() boolean relative(int row): 相对位移，当row为正数时，表示向下移动row行，负数则向上移动； boolean absolute(int row): 绝对位移，把光标移动到第row行； int getRow(): 返回当前光标所在行；  2. 获取结果集数据 如果已经知道当前列的数据类型就可以使用相应的get方法获取当前列数据，否则就用getObject()或者getString()
+可以通过列名或者列的索引来指定当前列，其中列索引是从1开始，而不是0
+ String getString(String columnName) String getString(int columnIndex) int getInt(String columnName) double getDouble(String columnName) boolean getBoolean(String columnName) Object getObject(String columnName)  3. 获取结果集元数据  得到元数据：rs.getMetaData()，返回值ResultSetMetaData(); 获取结果集列数：int getColumnCount(); 获取指定列的列名：String getColumnName(int countIndex);  int count = rs.</description>
+    </item>
+    
+    <item>
+      <title>JDBC基础一之连接数据库</title>
+      <link>https://rrrwx.github.io/2020/jdbc%E5%9F%BA%E7%A1%80%E4%B8%80%E8%BF%9E%E6%8E%A5%E6%95%B0%E6%8D%AE%E5%BA%93/</link>
+      <pubDate>Thu, 21 May 2020 10:37:36 +0800</pubDate>
+      
+      <guid>https://rrrwx.github.io/2020/jdbc%E5%9F%BA%E7%A1%80%E4%B8%80%E8%BF%9E%E6%8E%A5%E6%95%B0%E6%8D%AE%E5%BA%93/</guid>
+      <description>https://edu.aliyun.com/roadmap/java?spm=a2c6h.12999620.1371257.1.5a195738ZJjjex#part1
+什么是JDBC？ CRUD（C-create, R-read, U-update, D-delete）
+参考： https://blog.csdn.net/jungle_rao/article/details/81274720
+https://blog.csdn.net/jungle_rao/article/details/81274720
+ JDBC（Java DataBase Connectivity）是Java和数据库之间的一个桥梁，是一个规范而不是一个实现，能够执行SQL语句。它由一组用Java语言编写的类和接口组成。各种不同类型的数据库都有相应的实现。
+  Java数据库连接，（Java Database Connectivity，简称JDBC）是Java语言中用来规范客户端程序如何来访问数据库的应用程序接口，提供了诸如查询和更新数据库中数据的方法。JDBC也是Sun Microsystems的商标。我们通常说的JDBC是面向关系型数据库的。
+ JDBC连接数据库 1. 连接的四大参数 driverName、url、username、password import java.sql.Connection ; import java.sql.DriverManager ; public class DBUtil { // jdbc协议的格式：jdbc:厂商的名称:子协议(有厂商自己来规定)  // mysql子协议：//主机:端口号/数据库名称 	public static final String URL = &amp;#34;jdbc:mysql://localhost:3306/mydb000&amp;#34; ; public static final String USERNAME = &amp;#34;root&amp;#34; ; public static final String PASSWORD = &amp;#34;123&amp;#34; ; public void fun1() throws ClassNotFoundException, SQLException { /* * jdbc的四大配置参数（例） * &amp;gt; driverClassName: com.</description>
+    </item>
+    
+    <item>
+      <title>mysql学习系列之建表脚本</title>
+      <link>https://rrrwx.github.io/2020/%E5%BB%BA%E8%A1%A8%E8%84%9A%E6%9C%AC/</link>
+      <pubDate>Wed, 20 May 2020 00:18:36 +0800</pubDate>
+      
+      <guid>https://rrrwx.github.io/2020/%E5%BB%BA%E8%A1%A8%E8%84%9A%E6%9C%AC/</guid>
+      <description>所有的mysql学习系列文章中的示例表格都是基于下面的建表脚本构造的
+建表 use mydb000; drop table if exists emp; create table if not exists dept( deptno int primary key, dname varchar(50), loc varchar(50) ); create table if not exists emp( empno int primary key, ename varchar(50), job varchar(50), mgr int, hiredate date, sal decimal(7,2), COMM decimal(7,2), deptno int, constraint fk_emp foreign key(mgr) references emp(empno), constraint fk_emp_dept foreign key(deptno) references dept(deptno) ); create table if not exists salgrade( grade int primary key, losal int, hisal int ) ; create table if not exists stu ( sid int primary key, sname varchar(50), age int, gender varchar(10), province varchar(50), tuition int ) ; 插入数据 insert into dept values ( 10, &amp;#39;教研部&amp;#39;, &amp;#39;北京&amp;#39; ), ( 20, &amp;#39;学工部&amp;#39;, &amp;#39;上海&amp;#39; ), ( 30, &amp;#39;销售部&amp;#39;, &amp;#39;广州&amp;#39; ), ( 40, &amp;#39;财务部&amp;#39;, &amp;#39;武汉&amp;#39; ) ; select * from dept ; insert into emp values( 1009, &amp;#39;曾阿牛&amp;#39;, &amp;#39;董事长&amp;#39;, null, &amp;#39;2001-11-17&amp;#39;, 50000, null, 10 ), ( 1004, &amp;#39;刘备&amp;#39;, &amp;#39;经理&amp;#39;, 1009, &amp;#39;2001-04-02&amp;#39;, 29750, null, 20 ), ( 1006, &amp;#39;关羽&amp;#39;, &amp;#39;经理&amp;#39;, 1009, &amp;#39;2001-05-01&amp;#39;, 28500, null, 30 ), ( 1007, &amp;#39;张飞&amp;#39;, &amp;#39;经理&amp;#39;, 1009, &amp;#39;2001-09-01&amp;#39;, 24500, null, 10 ), ( 1008, &amp;#39;诸葛亮&amp;#39;, &amp;#39;分析师&amp;#39;, 1009, &amp;#39;2001-04-19&amp;#39;, 30000, null, 20 ), ( 1013, &amp;#39;庞统&amp;#39;, &amp;#39;分析师&amp;#39;, 1004, &amp;#39;2001-12-03&amp;#39;, 30000, null, 20 ), ( 1002, &amp;#39;黛绮丝&amp;#39;, &amp;#39;销售员&amp;#39;, 1006, &amp;#39;2001-02-20&amp;#39;, 16000, 3000, 30 ), ( 1003, &amp;#39;殷天正&amp;#39;, &amp;#39;销售员&amp;#39;, 1006, &amp;#39;2001-02-22&amp;#39;, 12500, 5000, 30 ), ( 1005, &amp;#39;谢逊&amp;#39;, &amp;#39;销售员&amp;#39;, 1006, &amp;#39;2001-09-28&amp;#39;, 12500, 14000, 30 ), ( 1010, &amp;#39;韦一笑&amp;#39;, &amp;#39;销售员&amp;#39;, 1006, &amp;#39;2001-09-08&amp;#39;, 15000, 0, 30 ), ( 1012, &amp;#39;程普&amp;#39;, &amp;#39;文员&amp;#39;, 1006, &amp;#39;2001-12-03&amp;#39;, 9500, null, 30 ), ( 1014, &amp;#39;黄盖&amp;#39;, &amp;#39;文员&amp;#39;, 1007, &amp;#39;2002-01-23&amp;#39;, 13000, null, 10 ), ( 1011, &amp;#39;周泰&amp;#39;, &amp;#39;文员&amp;#39;, 1008, &amp;#39;2007-05-23&amp;#39;, 11000, null, 20 ), ( 1001, &amp;#39;甘宁&amp;#39;, &amp;#39;文员&amp;#39;, 1013, &amp;#39;2000-12-17&amp;#39;, 8000, null, 20 ), ( &amp;#39;1015&amp;#39;, &amp;#39;张三&amp;#39;,&amp;#39;保洁员&amp;#39;,&amp;#39;1001&amp;#39;,&amp;#39;2008-03-04&amp;#39;,80000,10000,10 ); select * from emp ; insert into salgrade values( 1, 7000, 12000 ), ( 2, 12010, 14000 ), ( 3, 14010, 20000 ), ( 4, 20010, 30000 ), ( 5, 30010, 99990 ) ; select * from salgrade ; </description>
+    </item>
+    
+    <item>
+      <title>常见字符编码方式比较</title>
+      <link>https://rrrwx.github.io/2020/%E5%B8%B8%E8%A7%81%E5%AD%97%E7%AC%A6%E7%BC%96%E7%A0%81%E6%96%B9%E5%BC%8F%E6%AF%94%E8%BE%83/</link>
+      <pubDate>Mon, 18 May 2020 13:30:48 +0800</pubDate>
+      
+      <guid>https://rrrwx.github.io/2020/%E5%B8%B8%E8%A7%81%E5%AD%97%E7%AC%A6%E7%BC%96%E7%A0%81%E6%96%B9%E5%BC%8F%E6%AF%94%E8%BE%83/</guid>
+      <description>1. ASCII编码 作用：表语英语及西欧语言。
+位数：ASCII是用7位表示的，能表示128个字符；其扩展使用8位表示，表示256个字符。
+范围：ASCII从00到7F，扩展从00到FF。
+2. Iso8859-1编码 属于单字节编码，最多能表示的字符范围是0-255，应用于英文系列。
+作用：扩展ASCII，表示西欧、希腊语等。
+位数：8位，
+范围：从00到FF，兼容ASCII字符集。
+3. GB码字符集 （1）GB码字符集
+ 全称是GB2312-80《信息交换用汉字编码字符集基本集》，1980年发布，是中文信息处理的国家标准，在大陆及海外使用简体中文的地区（如新加坡 等）是强制使用的唯一中文编码。P-Windows3.2和苹果OS就是以GB2312为基本汉字编码， Windows 95/98则以GBK为基本汉字编码、但兼容支持GB2312。
+  双字节编码
+范围：A1A1~FEFE
+A1-A9：符号区，包含682个符号
+B0-F7：汉字区，包含6763个汉字
+ （2）GB2312字符集
+ GB2312(1980年)一共收录了7445个字符，包括6763个汉字和682个其它符号。汉字区的内码范围高字节从B0-F7，低字节从 A1-FE，占用的码位是72*94=6768。其中有5个空位是D7FA-D7FE。GB2312-80中共收录了7545个字符，用两个字节编码一个 字符。每个字符最高位为0。GB2312-80编码简称国标码 。
+GB2312支持的汉字太少。1995年的汉字扩展规范GBK1.0收录了21886个符号，它分为汉字区和图形符号区。汉字区包括21003个字符。
+ 作用：国家简体中文字符集，兼容ASCII。
+位数：使用2个字节表示，能表示7445个符号，包括6763个汉字，几乎覆盖所有高频率汉字。
+范围：高字节从A1到F7, 低字节从A1到FE。将高字节和低字节分别加上0XA0即可得到编码。
+（3）GB12345-90字符集
+ 1990年制定了繁体字的编码标准GB12345-90《信息交换用汉字编码字符集第一辅助集》，目的在于规范必须使用繁体字的各种场合，以及古籍整理 等。该标准共收录6866个汉字（比GB2312多103个字，其它厂商的字库大多不包括这些字），纯繁体的字大概有2200余个。
+  双字节编码
+范围：A1A1~FEFE
+A1-A9：符号区，增加竖排符号
+B0-F9：汉字区，包含6866个汉字
+ （4）GBK
+ GBK编码(Chinese Internal Code Specification)是中国大陆制订的、等同于UCS的新的中文编码扩展国家标准。gbk编码能够用来同时表示==繁体字和简体字==，而gb2312只 能表示简体字，gbk是兼容gb2312编码的。GBK工作小组于1995年10月，同年12月完成GBK规范。该编码标准兼容GB2312，共收录汉字 21003个、符号883个，并提供1894个造字码位，简、繁体字融于一库。Windows95/98简体中文版的字库表层编码就采用的是GBK，通过 GBK与UCS之间一一对应的码表与底层字库联系。
+  英文名：Chinese Internal Code Specification
+中文名：汉字内码扩展规范1.0版
+双字节编码，GB2312-80的扩充，在码位上和GB2312-80兼容
+范围：8140~FEFE（剔除xx7F）共23940个码位。包含21003个汉字，包含了ISO/IEC 10646-1中的全部中日韩汉字
+ ​	作用：它是GB2312的扩展，加入对繁体字的支持，兼容GB2312。</description>
+    </item>
+    
+    <item>
+      <title>数据库介绍</title>
+      <link>https://rrrwx.github.io/2020/%E6%95%B0%E6%8D%AE%E5%BA%93/</link>
+      <pubDate>Sat, 16 May 2020 21:10:41 +0800</pubDate>
+      
+      <guid>https://rrrwx.github.io/2020/%E6%95%B0%E6%8D%AE%E5%BA%93/</guid>
+      <description>源自：https://www.runoob.com/mysql/mysql-tutorial.html
+https://my.oschina.net/u/3647687/blog/1534979
+MySQL是最流行的关系型数据库管理系统，在 WEB 应用方面 MySQL 是最好的 RDBMS(Relational Database Management System：关系数据库管理系统)应用软件之一。
+什么是数据库？ 数据库（Database）是按照数据结构来组织、存储和管理数据的仓库。
+每个数据库都有一个或多个不同的 API 用于创建，访问，管理，搜索和复制所保存的数据。
+我们也可以将数据存储在文件中，但是在文件中读写数据速度相对较慢。
+所以，现在我们使用关系型数据库管理系统（RDBMS）来存储和管理大数据量。所谓的关系型数据库，是建立在关系模型基础上的数据库，借助于集合代数等数学概念和方法来处理数据库中的数据。
+RDBMS 即关系数据库管理系统(Relational Database Management System)的特点：
+ 1.数据以表格的形式出现 2.每行为各种记录名称 3.每列为记录名称所对应的数据域 4.许多的行和列组成一张表单 5.若干的表单组成database   RDBMS 术语 在我们开始学习MySQL 数据库前，让我们先了解下RDBMS的一些术语：
+ 数据库： 数据库是一些关联表的集合。 数据表： 表是数据的矩阵。在一个数据库中的表看起来像一个简单的电子表格。 列： 一列(数据元素) 包含了相同类型的数据, 例如邮政编码的数据。 行： 一行（=元组，或记录）是一组相关的数据，例如一条用户订阅的数据。 冗余： 存储两倍数据，冗余降低了性能，但提高了数据的安全性。 主键： 主键是唯一的。一个数据表中只能包含一个主键。你可以使用主键来查询数据。 外键： 外键用于关联两个表。 复合键： 复合键（组合键）将多个列作为一个索引键，一般用于复合索引。 索引： 使用索引可快速访问数据库表中的特定信息。索引是对数据库表中一列或多列的值进行排序的一种结构。类似于书籍的目录。 参照完整性： 参照的完整性要求关系中不允许引用不存在的实体。与实体完整性是关系模型必须满足的完整性约束条件，目的是保证数据的一致性。  MySQL 为关系型数据库(Relational Database Management System), 这种所谓的&amp;quot;关系型&amp;quot;可以理解为&amp;quot;表格&amp;quot;的概念, 一个关系型数据库由一个或数个表格组成, 如图所示的一个表格:
+ 表头(header)： 每一列的名称; 列(col)： 具有相同数据类型的数据的集合; 行(row)： 每一行用来描述某条记录的具体信息; 值(value)： 行的具体信息, 每个值必须与该列的数据类型相同; 键(key)： 键的值在当前列中具有唯一性。   MySQL数据库 MySQL 是一个关系型数据库管理系统，由瑞典 MySQL AB 公司开发，目前属于 Oracle 公司。MySQL 是一种关联数据库管理系统，关联数据库将数据保存在不同的表中，而不是将所有数据放在一个大仓库内，这样就增加了速度并提高了灵活性。</description>
+    </item>
+    
+    <item>
+      <title>mysql基本操作</title>
+      <link>https://rrrwx.github.io/2020/%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C/</link>
+      <pubDate>Sat, 16 May 2020 20:00:48 +0800</pubDate>
+      
+      <guid>https://rrrwx.github.io/2020/%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C/</guid>
+      <description>https://edu.aliyun.com/roadmap/java?spm=a2c6h.12999620.1371257.1.5a195738ZJjjex#part1
+（一）服务器操作  开启服务器： net start mysql 关闭服务器： net stop mysql  （二）客户端操作   登录服务器：mysql -uroot -p123 -hlocalhost
+ -u: 用户名 -p: 密码 -h: ip地址    退出服务器：exit或quit
+  （三）备份与恢复数据库   数据库 &amp;lt;====&amp;gt; SQL语句
+  数据库导出SQL副本（备份数据库内容而不是整个数据库）：
+ mysqldump -u 用户名 -p 密码 数据库名&amp;gt;脚本存储路径 注意： 这里没有登录mysql，是在cmd环境下执行的，因此不用加分号； 生成的脚本文件里面是不包含create database语句的，因此这里备份的是数据库内容而非整个数据库；    执行SQL脚本
+ 方法一  mysql -u 用户名 -p 密码 数据库名&amp;lt;脚本存储路径 这里同样没有登录mysql，而且是在cmd环境下执行的，因此不用加分号；   方法二  source SQL脚本存储路径; 注意 ：这里需要先登录mysql，进入需要的数据库之后再执行；      --例： --首先导出SQL脚本文件（在cmd环境下执行） mysqldump -u root -p 000 mydb0&amp;gt;/usrs/name/mydb0.</description>
+    </item>
+    
+    <item>
+      <title>SQL语法之多表查询</title>
+      <link>https://rrrwx.github.io/2020/%E4%BA%8C%E5%A4%9A%E8%A1%A8%E6%9F%A5%E8%AF%A2/</link>
+      <pubDate>Sat, 16 May 2020 10:30:48 +0800</pubDate>
+      
+      <guid>https://rrrwx.github.io/2020/%E4%BA%8C%E5%A4%9A%E8%A1%A8%E6%9F%A5%E8%AF%A2/</guid>
+      <description>https://edu.aliyun.com/roadmap/java?spm=a2c6h.12999620.1371257.1.5a195738ZJjjex#part1
+多表查询 分类 （一）合并结果集（了解）  要求被合并的表中，列的类型和列数相同 UNION：去重 UNION ALL：不去重  create table ab (a int, b varchar(50)); insert into ab values (1, &amp;#39;1&amp;#39;); insert into ab values (2, &amp;#39;2&amp;#39;); insert into ab values (3, &amp;#39;3&amp;#39;); create table cd (c int, d varchar(50)); insert into cd values (3, &amp;#39;3&amp;#39;); insert into cd values (4, &amp;#39;4&amp;#39;); insert into cd values (5, &amp;#39;5&amp;#39;); select * from ab union [all] select * from cd ; （二）连接查询 1.</description>
+    </item>
+    
+    <item>
+      <title>SQL语法之约束</title>
+      <link>https://rrrwx.github.io/2020/%E4%B8%80%E7%BA%A6%E6%9D%9F/</link>
+      <pubDate>Sat, 16 May 2020 08:30:48 +0800</pubDate>
+      
+      <guid>https://rrrwx.github.io/2020/%E4%B8%80%E7%BA%A6%E6%9D%9F/</guid>
+      <description>https://edu.aliyun.com/roadmap/java?spm=a2c6h.12999620.1371257.1.5a195738ZJjjex#part1
+约束 约束是使用在列上，用于约束列的
+参考 https://blog.csdn.net/f45056231p/article/details/81070437
+主键、外键和索引的区别？
+    主键 外键 索引     定义： 唯一标识一条记录，不能有重复的，不允许为空 表的外键是另一表的主键, 外键可以有重复的, 可以是空值 该字段没有重复值，但可以有一个空值   作用： 用来保证数据完整性 用来和其他表建立联系用的 是提高查询排序的速度   个数： 主键只能有一个 一个表可以有多个外键 一个表可以有多个惟一索引    1. 主键约束（唯一标识）  关系型数据库中的一条记录中有若干个属性，若其中某一个属性组(注意是组)能唯一标识一条记录，该属性组就可以成为一个主键
+  特点：唯一、非空、可引用  -- 设置主键 -- 方法一 create table stu ( sid int primary key, name varchar(50), age int ) ; -- 方法二 create table stu ( sid int, name varchar(50), age int, primary key (sid) ); -- 方法三 alter table stu add primary key(sid); -- 删除主键 alter table stu drop primary key; 2.</description>
+    </item>
+    
+    <item>
+      <title>SQL语法之DQL</title>
+      <link>https://rrrwx.github.io/2020/dql%E6%95%B0%E6%8D%AE%E6%9F%A5%E8%AF%A2%E8%AF%AD%E8%A8%80/</link>
+      <pubDate>Fri, 15 May 2020 19:30:48 +0800</pubDate>
+      
+      <guid>https://rrrwx.github.io/2020/dql%E6%95%B0%E6%8D%AE%E6%9F%A5%E8%AF%A2%E8%AF%AD%E8%A8%80/</guid>
+      <description>https://edu.aliyun.com/roadmap/java?spm=a2c6h.12999620.1371257.1.5a195738ZJjjex#part1
+DQL（Data Query Language） 数据查询语言，用来查询数据。
+一、基本查询 1. 字段（列）查询 1）查询所有列  SELECT * FROM 表名；  2）查询指定列  SELECT 列名1 [, 列名2, &amp;hellip;] FROM 表名；  3）查询不重复记录  当查询结果中有多行记录一模一样时，只显示一行。一般在只查询一列或数列时会出现这种情况； SELECT DISTINCT* | 列名1 [, 列名2, &amp;hellip;] FROM 表名；  4) 列运算   I 数量类型的列可以做加、减、乘、除运算：
+ SELECT sal*1.5 FROM emp ; SELECT sal+comm FROM emp ;    II 字符串类型可以做连续运算：
+ SELECT CONCAT(&amp;lsquo;$&amp;rsquo;, sal) FROM emp ; 只能使用CONCAT来连接字符串；    III 转换NULL值：</description>
+    </item>
+    
+    <item>
+      <title>SQL语法之DML</title>
+      <link>https://rrrwx.github.io/2020/dml%E6%95%B0%E6%8D%AE%E6%93%8D%E4%BD%9C%E8%AF%AD%E8%A8%80/</link>
+      <pubDate>Fri, 15 May 2020 17:30:48 +0800</pubDate>
+      
+      <guid>https://rrrwx.github.io/2020/dml%E6%95%B0%E6%8D%AE%E6%93%8D%E4%BD%9C%E8%AF%AD%E8%A8%80/</guid>
+      <description>https://edu.aliyun.com/roadmap/java?spm=a2c6h.12999620.1371257.1.5a195738ZJjjex#part1
+DML（Data Manipulation Language） 数据操作语言，用来定义数据库记录（数据）
+增删改：表记录；
+1. 插入数据   INSERT INTO 表名 (列名1, 列名2, &amp;hellip;) VALUES (列值1, 列值2, &amp;hellip;) [, (列值1, 列值2, &amp;hellip;), &amp;hellip;]；
+ 在表名后面给出要插入的列名，其他没有指定的列等同于插入null值； 在VALUES后面给出列值，值得顺序和个数与前面指定的列名对应； 例：INSERT INTO stu (number, name, age, gender) VALUES (&amp;lsquo;ITCAST_0001&amp;rsquo;, &amp;lsquo;jade&amp;rsquo;, 22, &amp;lsquo;m&amp;rsquo;);    INSERT INTO 表名 VALUES(列值1, 列值2)
+ 没有给出列名则说明要插入所有列； 列值的顺序与个数与表创建时给出的列顺序相同；    2. 修改数据  UPDATE 表名 SET 列名1=列值1, 列名2=列值2, 。。。 [WHERE 条件]；  条件（可选）：  条件必须是boolean类型的值或表达式； 运算符：=, !</description>
+    </item>
+    
+    <item>
+      <title>SQL语法之DDL</title>
+      <link>https://rrrwx.github.io/2020/ddl%E6%95%B0%E6%8D%AE%E5%AE%9A%E4%B9%89%E8%AF%AD%E8%A8%80/</link>
+      <pubDate>Fri, 15 May 2020 14:30:48 +0800</pubDate>
+      
+      <guid>https://rrrwx.github.io/2020/ddl%E6%95%B0%E6%8D%AE%E5%AE%9A%E4%B9%89%E8%AF%AD%E8%A8%80/</guid>
+      <description>https://edu.aliyun.com/roadmap/java?spm=a2c6h.12999620.1371257.1.5a195738ZJjjex#part1
+DDL （Data Definition Language） 数据定义语言，用于定义数据库对象：库、表、列等
+创建、删除、修改：库、表的结构；
+1. 操作数据库  查看所有数据库：SHOW DATABASES 切换（选择要操作的）数据库：USE 数据库名 创建数据库：CREATE DATABASE [IF NOT EXISTS] 数据库名 [CHARSET=utf8] 删除数据库：DROP DATABASE [IF EXISTS] 数据库名 修改数据库编码：ALTER DATABASE 数据库名 CHARACTER SET utf8  2. 常用数据类型（列）   int：整型；
+  double：浮点型，如double(5,2)表示最多5位，其中必须有2位小数，即最大值999.99；
+  decimal：浮点型，在表达钱方面使用，不会出现精度确实问题；
+  char：固定长度字符串类型，如char(255)，数据长度不足指定长度会补足到制定长度；
+  varchar：可变长度字符串类型（需要至少1B来记录长度），如varchar(65535)：zhangSan；
+  text(clob&amp;ndash;官方)：字符串类型 &amp;mdash; mysql方言；
+分4种大小的；
+  blob：字节类型；
+也是分4种大小；
+  date：日期类型，格式为：yyyy-MM-dd；
+  time：时间类型，格式为：hh: mm: ss；
+  timestamp：时间戳类型（日期+时间）；</description>
+    </item>
+    
+    <item>
+      <title>SQL语法之DCL</title>
+      <link>https://rrrwx.github.io/2020/dcl%E6%95%B0%E6%8D%AE%E6%8E%A7%E5%88%B6%E8%AF%AD%E8%A8%80/</link>
+      <pubDate>Fri, 15 May 2020 13:30:48 +0800</pubDate>
+      
+      <guid>https://rrrwx.github.io/2020/dcl%E6%95%B0%E6%8D%AE%E6%8E%A7%E5%88%B6%E8%AF%AD%E8%A8%80/</guid>
+      <description>https://edu.aliyun.com/roadmap/java?spm=a2c6h.12999620.1371257.1.5a195738ZJjjex#part1
+DCL（Data Control Language） 数据控制语言，用来定义用户的创建以及访问权限和安全级别；
+  一个项目创建一个用户，一个项目对应的数据库只有一个;
+  这个用户只对这个数据库有权限，其他数据库操作不了；
+  1. 创建用户  CREATE USER 用户名@IP地址IDENTIFIED BY &amp;lsquo;密码&amp;rsquo;；  为用户指定登录的IP地址，则该用户只能在该IP上登录；   CREATE USER 用户名@&amp;rsquo;%&amp;lsquo;IDENTIFIED BY &amp;lsquo;密码&amp;rsquo;；  用户可以在任意IP地址登录；    2. 给用户授权  GRANT权限1, 权限2, &amp;hellip; ON 数据库.* TO用户名@IP地址  权限、用户、数据库； 给用户分派在指定的数据库上的指定权限； 例如：GRANT CREATE, ALTER, DROP, INSERT UPDATE, DELETE, SELECT ON mydb000.* TO user@localhost；   GRANT ALL ON mydb000.* TO user@localhost;  给指定用户分派该数据库上的所有权限；    3.</description>
+    </item>
+    
+    <item>
+      <title>SQL语法</title>
+      <link>https://rrrwx.github.io/2020/sql%E8%AF%AD%E6%B3%95/</link>
+      <pubDate>Fri, 15 May 2020 08:30:48 +0800</pubDate>
+      
+      <guid>https://rrrwx.github.io/2020/sql%E8%AF%AD%E6%B3%95/</guid>
+      <description>https://edu.aliyun.com/roadmap/java?spm=a2c6h.12999620.1371257.1.5a195738ZJjjex#part1
+SQL语法 SQL（Structured Query Language）结构化查询语言
+作用 客户端使用SQL来控制服务器
+标准  可以单行或多行写，以分号结尾； 可使用空格和tab来增强语句的可读性； 不区分大小写，但建议大写； 由国际标准化组织（ISO）制定，对DBMS的统一操作方式（还有SQL方言：使用limit语句）  分类   DDL （Data Definition Language）：数据定义语言，用于定义数据库对象：库、表、列等
+创建、删除、修改：库、表的结构 ；
+  DML（Data Manipulation Language）：数据操作语言，用来定义数据库记录（数据）
+增删改：表记录；
+  DCL（Data Control Language）：数据控制语言，用来定义用户的创建以及访问权限和安全级别；
+  DQL（Data Query Language）：数据查询语言，用来查询数据。
+  </description>
+    </item>
+    
+  </channel>
+</rss>

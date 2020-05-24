@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+  <meta http-equiv="content-type" content="text/html;charset=utf-8">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noodp"/>
+  <meta name="author" content="JadeRong">
+  <meta name="description" content="主要分享一些平时学习和开发中用到的知识">
+  
+  
+  <link rel="prev" href="https://rrrwx.github.io/2020/jvm%E5%AD%A6%E4%B9%A0%E4%B8%80%E4%BA%9B%E9%87%8D%E8%A6%81%E7%9F%A5%E8%AF%86%E7%82%B9/" />
+  <link rel="next" href="https://rrrwx.github.io/2020/jvm%E5%AD%A6%E4%B9%A0%E4%BA%8Cjava%E5%86%85%E5%AD%98%E5%8C%BA%E5%9F%9F%E4%B8%8E%E5%86%85%E5%AD%98%E6%BA%A2%E5%87%BA%E5%BC%82%E5%B8%B8/" />
+  <link rel="canonical" href="https://rrrwx.github.io/2020/jvm%E5%AD%A6%E4%B9%A0%E4%B8%80%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA%E5%9F%9F/" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+  <meta name="msapplication-TileColor" content="#da532c">
+  <meta name="theme-color" content="#ffffff">
+  <title>
+       
+       
+           JVM学习一之运行时数据区域 | JadeRong
+       
+  </title>
+  <meta name="title" content="JVM学习一之运行时数据区域 | JadeRong">
+    
+  
+  <link rel="stylesheet" href="/font/iconfont.css">
+  <link rel="stylesheet" href="/css/main.min.css">
+
+
+  
+  
+ 
+
+<script type="application/ld+json">
+ "@context" : "http://schema.org",
+    "@type" : "BlogPosting",
+    "mainEntityOfPage": {
+         "@type": "WebPage",
+         "@id": "https:\/\/rrrwx.github.io"
+    },
+    "articleSection" : "posts",
+    "name" : "JVM学习一之运行时数据区域",
+    "headline" : "JVM学习一之运行时数据区域",
+    "description" : "Java内存区域与内存溢出异常 （一）运行时数据区域 可参考\nhttps:\/\/www.zhihu.com\/question\/20097631 https:\/\/blog.csdn.net\/TJtulong\/article\/details\/89598598 https:\/\/www.cnblogs.com\/chanshuyi\/p\/jvm_serial_00_why_learn_jvm.html\n1、程序计数器（Program Counter Register）  （1）程序计数器是一块较小的内存空间，它可以看作是当前线程所执行的字节码的行号指示器；\n（2）程序计数器处于线程独占区；\n（3）如果线程执行的是java方法，这个计数器记录的是正在执行的虚拟机字节码指令的地址。而如果是native方法，这个计数器的值则为空（Undefined）；\n（4）此内存区域是唯一一个在java虚拟机规范中没有规定任何OutOfMemoryError情况的区域；\n 2、Java虚拟机栈（Java Virtual Machine Stack） 虚拟机栈描述的是java方法执行的动态内存模型。 栈帧（方法运行时的基本数据结构）\n 每个方法执行，都会创建一个栈帧，伴随着方法从创建到执行完成。用于存储局部变量表，操作数栈，动态链接，方法出口等；\n 局部变量表\n 1）存放编译器可知的各种基本数据类型，引用类型，returnAddress类型。\n2）局部变量表的内存空间在编译器完成分配，当进入一个方法时，这个方法需要在帧分配多少内存是固定的，在方法运行期间是不会改变局部变量表的大小。\n3）大小：\nStackOverflowError：线程请求的栈深度大于虚拟机所允许的深度； OutOfMemoryError：如果蓄奴籍栈可以动态扩展（大部分都可以），而扩展时无法申请到足够的内存；\n 3、本地方法栈（Native Method Stack） 本地方法栈于虚拟方法栈所发挥的作用时非常相似的\n区别：本地方法栈为虚拟机执行native方法服务； 虚拟机栈为悉尼及执行Java方法服务；\n4、Java堆（Java Heap） Java堆是Java虚拟机所管理的内存中最大的一块，被所有线程共享，在虚拟机启动时创建\n （1）目的：存放对象实例 ；\n（2）垃圾收集器管理的主要区域（GC堆，Garbage Collected Heap）：新生代（Eden空间、From Survivor空间、To Survivor空间等）、老年代；另外，还可能划分出多个线程私有的分配缓冲区（Thread Local Allocation Buffer，TLAB）；\n（3）OutOfMemoryError：堆中没有内存完成实例分配，并且堆也无法再扩展时抛出；\n（4）不需要连续的内存空间，逻辑连续就行。\n 5、方法区（Method Area）  （1）方法区是线程共享的内存区域，用于存储已被虚拟机加载的类信息（类的版本、字段、方法、接口）、常量、静态变量、即时编译器编译后的代码等数据；\n（2）HotSpot虚拟机上吧方法区成为“永久代”（Permanent Generation），本质上两者并不等价，只是能省去专门为方法区编写内存管理代码的工作；\n（3）方法区的垃圾回收效率很低；\n（4）OutOfMemoryError：和堆类似。\n  （上面说到，jdk1.8 中，已经不存在永久代（方法区），替代它的一块空间叫做 “ 元空间 ”，和永久代类似，都是 JVM 规范对方法区的实现，但是元空间并不在虚拟机中，而是使用本地内存，元空间的大小仅受本地内存限制，但可以通过 -XX:MetaspaceSize 和 -XX:MaxMetaspaceSize 来指定元空间的大小。）",
+    "inLanguage" : "en-us",
+    "author" : "JadeRong",
+    "creator" : "JadeRong",
+    "publisher": "JadeRong",
+    "accountablePerson" : "JadeRong",
+    "copyrightHolder" : "JadeRong",
+    "copyrightYear" : "2020",
+    "datePublished": "2020-03-17 00:10:36 \x2b0800 CST",
+    "dateModified" : "2020-03-17 00:10:36 \x2b0800 CST",
+    "url" : "https:\/\/rrrwx.github.io\/2020\/jvm%E5%AD%A6%E4%B9%A0%E4%B8%80%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA%E5%9F%9F\/",
+    "wordCount" : "75",
+    "keywords" : [ "jvm","java","学习笔记", "JadeRong"]
+}
+</script>
+
+</head>
+
+  
+
+
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  <body class="">
+    <div class="wrapper">
+        <nav class="navbar">
+    <div class="container">
+        <div class="navbar-header header-logo">
+            <a href="https://rrrwx.github.io">JadeRong</a>&nbsp;
+        	<a href="javascript:void(0);" class="theme-switch"><i class="iconfont icon-table-lamp"></i></a>
+
+        </div>
+        <div class="menu navbar-right">
+                
+                
+                <a class="menu-item" href="/posts/" title="">Blogs</a>
+                
+                <a class="menu-item" href="/categories/" title="">Categories</a>
+                
+                <a class="menu-item" href="/tags/" title="">Tags</a>
+                
+                <a class="menu-item" href="/about/" title="">About</a>
+                
+        </div>
+    </div>
+</nav>
+<nav class="navbar-mobile" id="nav-mobile" style="display: none">
+     <div class="container">
+        <div class="navbar-header">
+            <div>  <a href="javascript:void(0);" class="theme-switch"><i class="iconfont icon-table-lamp"></i></a>&nbsp;<a href="https://rrrwx.github.io">JadeRong</a></div>
+            <div class="menu-toggle">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+     
+          <div class="menu" id="mobile-menu">
+                
+                
+                <a class="menu-item" href="/posts/" title="">Blogs</a>
+                
+                <a class="menu-item" href="/categories/" title="">Categories</a>
+                
+                <a class="menu-item" href="/tags/" title="">Tags</a>
+                
+                <a class="menu-item" href="/about/" title="">About</a>
+                
+        </div>
+    </div>
+</nav>
+    	 <main class="main">
+          <div class="container">
+      		
+<article class="post-warp" itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">JVM学习一之运行时数据区域</h1>
+
+
+
+                Written by <a itemprop="name" href="https://rrrwx.github.io" rel="author">JadeRong</a>, included in <i class="iconfont icon-folder"></i>
+
+                <span class="post-category">
+                            <a href="https://rrrwx.github.io/categories/jvm%E5%AD%A6%E4%B9%A0/"> jvm学习 </a>
+                            
+                    </span>
+
+        
+        <h1 id="wc" style="font-size: 0.75rem;text-align: left;">约 75 个字    |    预计阅读 1 分钟    |    本文总阅读量<span id="busuanzi_value_page_pv"></span>次</h1>
+    </header>
+    <div class="post-content">
+        
+
+        
+            
+        
+
+        
+        
+     
+          
+          
+          
+
+          
+          
+          
+
+          <h1 id="java内存区域与内存溢出异常">Java内存区域与内存溢出异常</h1>
+<h2 id="一运行时数据区域">（一）运行时数据区域</h2>
+<p>可参考</p>
+<p><a href="https://www.zhihu.com/question/20097631">https://www.zhihu.com/question/20097631</a>
+<a href="https://blog.csdn.net/TJtulong/article/details/89598598">https://blog.csdn.net/TJtulong/article/details/89598598</a>
+<a href="https://www.cnblogs.com/chanshuyi/p/jvm_serial_00_why_learn_jvm.html">https://www.cnblogs.com/chanshuyi/p/jvm_serial_00_why_learn_jvm.html</a></p>
+<p><img src="../../../../images/jvm/%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA.png" alt="运行时数据区.png"></p>
+<h3 id="1程序计数器program-counter-register">1、程序计数器（Program Counter Register）</h3>
+<blockquote>
+<p>（1）程序计数器是一块较小的内存空间，它可以看作是当前线程所执行的字节码的行号指示器；</p>
+<p>（2）程序计数器处于线程独占区；</p>
+<p>（3）如果线程执行的是java方法，这个计数器记录的是正在执行的虚拟机字节码指令的地址。而如果是native方法，这个计数器的值则为空（Undefined）；</p>
+<p>（4）此内存区域是唯一一个在java虚拟机规范中没有规定任何OutOfMemoryError情况的区域；</p>
+</blockquote>
+<h3 id="2java虚拟机栈java-virtual-machine-stack">2、Java虚拟机栈（Java Virtual Machine Stack）</h3>
+<h5 id="虚拟机栈描述的是java方法执行的动态内存模型">虚拟机栈描述的是<code>java方法</code>执行的动态内存模型。</h5>
+<p>栈帧（方法运行时的基本数据结构）</p>
+<blockquote>
+<p>每个方法执行，都会创建一个栈帧，<code>伴随着方法从创建到执行完成</code>。用于<code>存储局部变量表</code>，操作数栈，动态链接，方法出口等；</p>
+</blockquote>
+<p><em><strong>局部变量表</strong></em></p>
+<blockquote>
+<p>1）存放编译器可知的各种基本数据类型，引用类型，returnAddress类型。</p>
+<p>2）局部变量表的内存空间在编译器完成分配，当进入一个方法时，这个方法需要在帧分配多少<code>内存是固定</code>的，在方法运行期间是不会改变局部变量表的大小。</p>
+<p>3）大小：</p>
+<p><code>StackOverflowError</code>：线程请求的栈深度大于虚拟机所允许的深度；
+<code>OutOfMemoryError</code>：如果蓄奴籍栈可以动态扩展（大部分都可以），而扩展时无法申请到足够的内存；</p>
+</blockquote>
+<h3 id="3本地方法栈native-method-stack">3、本地方法栈（Native Method Stack）</h3>
+<p><em><strong>本地方法栈于虚拟方法栈所发挥的作用时非常相似的</strong></em></p>
+<p>区别：本地方法栈为虚拟机执行native方法服务；
+虚拟机栈为悉尼及执行Java方法服务；</p>
+<h3 id="4java堆java-heap">4、Java堆（Java Heap）</h3>
+<p>Java堆是Java虚拟机所管理的内存中最大的一块，被<code>所有线程共享</code>，在<code>虚拟机启动时创建</code></p>
+<blockquote>
+<p>（1）目的：存放对象实例 ；</p>
+<p>（2）垃圾收集器管理的主要区域（GC堆，Garbage Collected Heap）：新生代（Eden空间、From Survivor空间、To Survivor空间等）、老年代；另外，还可能划分出多个线程私有的分配缓冲区（Thread Local Allocation Buffer，TLAB）；</p>
+<p>（3）<code>OutOfMemoryError</code>：堆中没有内存完成实例分配，并且堆也无法再扩展时抛出；</p>
+<p>（4）不需要连续的内存空间，逻辑连续就行。</p>
+</blockquote>
+<h3 id="5方法区method-area">5、方法区（Method Area）</h3>
+<blockquote>
+<p><strong>（1）方法区是线程共享的内存区域，用于存储已被虚拟机加载的类信息（类的版本、字段、方法、接口）、常量、静态变量、即时编译器编译后的代码等数据；</strong></p>
+<p>（2）HotSpot虚拟机上吧方法区成为“永久代”（Permanent Generation），本质上两者并不等价，只是能省去专门为方法区编写内存管理代码的工作；</p>
+<p>（3）方法区的垃圾回收效率很低；</p>
+<p>（4）<code>OutOfMemoryError</code>：和堆类似。</p>
+</blockquote>
+<p><img src="../../../../images/jvm/%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA2.png" alt="方法区.png"></p>
+<blockquote>
+<p>（上面说到，jdk1.8 中，已经不存在永久代（方法区），替代它的一块空间叫做 “ 元空间 ”，和永久代类似，都是 JVM 规范对方法区的实现，但是元空间并不在虚拟机中，而是使用本地内存，元空间的大小仅受本地内存限制，但可以通过 <code>-XX:MetaspaceSize</code> 和 <code>-XX:MaxMetaspaceSize</code> 来指定元空间的大小。）</p>
+</blockquote>
+<h3 id="6运行时常量池runtime-constant-pool">6、运行时常量池（Runtime Constant Pool）</h3>
+<blockquote>
+<p>上面提到的类文件中除了有类的版本、字段、方法、接口等描述信息外，还有一项信息是<code>常量池</code>，用于存放编译期生成的各种字面量和符号引用，这部分内容会在类加载之后进入运行常量池。</p>
+<p>（1）运行时常量池具有<code>动态性</code>，运行期间也可以讲常量放入池中，比如String类的intern()方法；</p>
+<p><a href="https://blog.csdn.net/tyyking/article/details/82496901">https://blog.csdn.net/tyyking/article/details/82496901</a></p>
+<p>（2）<code>OutOfMemoryError</code></p>
+</blockquote>
+<h3 id="7直接内存direct-memory">7、直接内存（Direct Memory）</h3>
+<blockquote>
+<p>直接内存并<code>不是</code>虚拟机运行时数据区的一部分，也<code>不是</code>javca虚拟机规范中定义的内存区域；而且也会出现<code>OutOfMemoryError</code>异常。</p>
+</blockquote>
+
+    </div>
+
+
+
+    <div class="post-copyright">
+                
+        
+
+
+        <section>
+            <p class="share-item">
+                <span>Share :</span>
+                
+                <span>
+
+      
+        <a href="//twitter.com/share?url=https%3a%2f%2frrrwx.github.io%2f2020%2fjvm%25E5%25AD%25A6%25E4%25B9%25A0%25E4%25B8%2580%25E8%25BF%2590%25E8%25A1%258C%25E6%2597%25B6%25E6%2595%25B0%25E6%258D%25AE%25E5%258C%25BA%25E5%259F%259F%2f&amp;text=JVM%e5%ad%a6%e4%b9%a0%e4%b8%80%e4%b9%8b%e8%bf%90%e8%a1%8c%e6%97%b6%e6%95%b0%e6%8d%ae%e5%8c%ba%e5%9f%9f&amp;via=" target="_blank" title="Share on Twitter">
+          <i class="iconfont icon-twitter"></i>
+        </a>
+        
+
+      
+      
+        <a href="//www.facebook.com/sharer/sharer.php?u=https%3a%2f%2frrrwx.github.io%2f2020%2fjvm%25E5%25AD%25A6%25E4%25B9%25A0%25E4%25B8%2580%25E8%25BF%2590%25E8%25A1%258C%25E6%2597%25B6%25E6%2595%25B0%25E6%258D%25AE%25E5%258C%25BA%25E5%259F%259F%2f" target="_blank" title="Share on Facebook">
+          <i class="iconfont icon-facebook"></i>
+        </a>
+        
+      
+      
+      
+      
+      
+      
+        
+      
+        
+      
+
+          
+
+          
+
+          
+        <a href="//www.douban.com/recommend/?url=https%3a%2f%2frrrwx.github.io%2f2020%2fjvm%25E5%25AD%25A6%25E4%25B9%25A0%25E4%25B8%2580%25E8%25BF%2590%25E8%25A1%258C%25E6%2597%25B6%25E6%2595%25B0%25E6%258D%25AE%25E5%258C%25BA%25E5%259F%259F%2f&amp;title=JVM%e5%ad%a6%e4%b9%a0%e4%b8%80%e4%b9%8b%e8%bf%90%e8%a1%8c%e6%97%b6%e6%95%b0%e6%8d%ae%e5%8c%ba%e5%9f%9f" target="_blank" title="Share on Douban ">
+            <i class="iconfont icon-douban"></i>
+          </a>
+          
+
+          
+        <a href="//service.weibo.com/share/share.php?url=https%3a%2f%2frrrwx.github.io%2f2020%2fjvm%25E5%25AD%25A6%25E4%25B9%25A0%25E4%25B8%2580%25E8%25BF%2590%25E8%25A1%258C%25E6%2597%25B6%25E6%2595%25B0%25E6%258D%25AE%25E5%258C%25BA%25E5%259F%259F%2f&amp;appkey=&amp;title=JVM%e5%ad%a6%e4%b9%a0%e4%b8%80%e4%b9%8b%e8%bf%90%e8%a1%8c%e6%97%b6%e6%95%b0%e6%8d%ae%e5%8c%ba%e5%9f%9f" target="_blank" title="Share on Douban ">
+            <i class="iconfont icon-weibo"></i>
+          </a>
+          
+
+</span>
+                
+            </p>
+        </section>
+
+
+        <section>
+            <p class="copyright-item">
+                <span>Updated </span>
+                <span class="post-time">
+                on 
+                <time datetime=2020-03-17 itemprop="datePublished">March 17, 2020</time>
+                </span>
+
+            </p>
+        </section>
+    </div>
+
+  
+    <div class="post-tags">
+        
+            <section>
+            
+            <span class="tag"><a href="https://rrrwx.github.io/tags/jvm/">
+                    <i class="iconfont icon-tag"></i>jvm</a></span>
+            
+            <span class="tag"><a href="https://rrrwx.github.io/tags/java/">
+                    <i class="iconfont icon-tag"></i>java</a></span>
+            
+            <span class="tag"><a href="https://rrrwx.github.io/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">
+                    <i class="iconfont icon-tag"></i>学习笔记</a></span>
+            
+            </section>
+        
+        <section>
+                <a href="javascript:window.history.back();">back</a></span> · 
+                <span><a href="https://rrrwx.github.io">home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav">
+        
+        <a href="https://rrrwx.github.io/2020/jvm%E5%AD%A6%E4%B9%A0%E4%B8%80%E4%BA%9B%E9%87%8D%E8%A6%81%E7%9F%A5%E8%AF%86%E7%82%B9/" class="prev" rel="prev" title="JVM学习之一些重要的知识点"><i class="iconfont icon-left"></i>&nbsp;JVM学习之一些重要的知识点</a>
+         
+        
+        <a href="https://rrrwx.github.io/2020/jvm%E5%AD%A6%E4%B9%A0%E4%BA%8Cjava%E5%86%85%E5%AD%98%E5%8C%BA%E5%9F%9F%E4%B8%8E%E5%86%85%E5%AD%98%E6%BA%A2%E5%87%BA%E5%BC%82%E5%B8%B8/" class="next" rel="next" title="JVM学习二之JMM与内存溢出异常">JVM学习二之JMM与内存溢出异常&nbsp;<i class="iconfont icon-right"></i></a>
+        
+    </div>
+
+    <div class="post-comment">
+          
+                 
+          
+    </div>
+</article>
+          </div>
+		   </main>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="">
+                <i class="fas fa-arrow-up fa-fw"></i>
+            </a>
+        </div>
+
+      <footer class="footer">
+
+
+
+
+    <div class="copyright">
+
+            <div class="footer-line">
+                &copy;<i class="far fa-copyright fa-fw"></i>&nbsp;<span itemprop="copyrightYear">2020</span>&nbsp;&nbsp;<span class="author" itemprop="copyrightHolder"><a href="https://rrrwx.github.io">JadeRong</a></span>&nbsp;|&nbsp;<span class="license">Released under <a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span>
+                &nbsp;|&nbsp;<span>Powered by <a href="https://gohugo.io/" target="_blank" rel="external nofollow">Hugo</a> & <a href="https://github.com/liuzc/leaveit" target="_blank" rel="external nofollow">LeaveIt</a></span>
+            </div>
+
+
+    </div>
+</footer>
+
+
+
+
+
+
+
+
+
+
+
+
+    
+     <link href="//lib.baomitu.com/lightgallery/1.6.11/css/lightgallery.min.css" rel="stylesheet">  
+      
+     <script src="/js/vendor_gallery.min.js" async="" ></script>
+    
+  
+
+
+
+
+     </div>
+  </body>
+</html>

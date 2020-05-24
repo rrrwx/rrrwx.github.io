@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+  <meta http-equiv="content-type" content="text/html;charset=utf-8">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noodp"/>
+  <meta name="author" content="JadeRong">
+  <meta name="description" content="主要分享一些平时学习和开发中用到的知识">
+  
+  
+  <link rel="prev" href="https://rrrwx.github.io/2020/%E5%B8%B8%E8%A7%81%E5%AD%97%E7%AC%A6%E7%BC%96%E7%A0%81%E6%96%B9%E5%BC%8F%E6%AF%94%E8%BE%83/" />
+  <link rel="next" href="https://rrrwx.github.io/2020/%E7%BA%A2%E9%BB%91%E6%A0%91/" />
+  <link rel="canonical" href="https://rrrwx.github.io/2020/ffmpeg%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+  <meta name="msapplication-TileColor" content="#da532c">
+  <meta name="theme-color" content="#ffffff">
+  <title>
+       
+       
+           ffmpeg常用命令 | JadeRong
+       
+  </title>
+  <meta name="title" content="ffmpeg常用命令 | JadeRong">
+    
+  
+  <link rel="stylesheet" href="/font/iconfont.css">
+  <link rel="stylesheet" href="/css/main.min.css">
+
+
+  
+  
+ 
+
+<script type="application/ld+json">
+ "@context" : "http://schema.org",
+    "@type" : "BlogPosting",
+    "mainEntityOfPage": {
+         "@type": "WebPage",
+         "@id": "https:\/\/rrrwx.github.io"
+    },
+    "articleSection" : "posts",
+    "name" : "ffmpeg常用命令",
+    "headline" : "ffmpeg常用命令",
+    "description" : "记录一下经常用到的ffmpeg使用方法、hevc官方软件HM的使用，以及shell脚本的配套使用 另外，对于ffmpeg的参数设置可以参考 https:\/\/blog.csdn.net\/hemingwang0902\/article\/details\/4382205 https:\/\/www.jianshu.com\/p\/a035056cbbf9\n具体比较详细的应用可以参考 https:\/\/www.jianshu.com\/p\/b4f9f8c5e86a https:\/\/zhuanlan.zhihu.com\/p\/46903150\n（一） ffmpeg的常用操作 1. 使用ffmpeg把jpg格式的图片转换成yuv420p格式\nffmpeg -i path\/name.jpg -s 352x288 -pix_fmt yuv420p savepath\/name.yuv -s 352x288是图片的width和height参数，可以省略 -pix_fmt yuv420p是指定要转换的yuv的格式，若想转换成yuv422p格式的话直接替换就行\n2. 使用ffmpeg把yuv格式的图片转换成jpg格式\nffmpeg -s 352x288 -pix_fmt yuv420p -i path\/name.yuv -pix_fmt rgb24 savepath\/name.jpg 这里的格式是转换成rgb24位。若想要存成png格式，改变要保存的图片的后缀即可\n3. 使用ffmpeg把MP4格式的视频转换成yuv格式\nffmpeg -i path\/name.avi -c:v rawvideo -pix_fmt yuv420p path\/name.yuv -video_size 320x480 这里-c:v和-vcodec是等价的\n4. 把yuv格式的视频转换成avi格式\nffmpeg -s 320x480 -i path\/name.yuv -vcodec copy path\/name.avi -s设置视频的长宽参数，copy表示copy表示原始编解码数据必须被拷贝，转换前后视频的大小不变，也可以换成mpeg4等编码格式\n5. ffmpeg将一个视频切成多张图片\nffmpeg -i path\/name.avi savepath\/Frame%3d.png 6. ffmpeg将多张图片合成一个视频\nffmpeg -r 30 -i path\/Frame%3d.",
+    "inLanguage" : "en-us",
+    "author" : "JadeRong",
+    "creator" : "JadeRong",
+    "publisher": "JadeRong",
+    "accountablePerson" : "JadeRong",
+    "copyrightHolder" : "JadeRong",
+    "copyrightYear" : "2020",
+    "datePublished": "2020-05-19 00:19:36 \x2b0800 CST",
+    "dateModified" : "2020-05-19 00:19:36 \x2b0800 CST",
+    "url" : "https:\/\/rrrwx.github.io\/2020\/ffmpeg%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4\/",
+    "wordCount" : "281",
+    "keywords" : [ "学习笔记","图像\/视频", "JadeRong"]
+}
+</script>
+
+</head>
+
+  
+
+
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  <body class="">
+    <div class="wrapper">
+        <nav class="navbar">
+    <div class="container">
+        <div class="navbar-header header-logo">
+            <a href="https://rrrwx.github.io">JadeRong</a>&nbsp;
+        	<a href="javascript:void(0);" class="theme-switch"><i class="iconfont icon-table-lamp"></i></a>
+
+        </div>
+        <div class="menu navbar-right">
+                
+                
+                <a class="menu-item" href="/posts/" title="">Blogs</a>
+                
+                <a class="menu-item" href="/categories/" title="">Categories</a>
+                
+                <a class="menu-item" href="/tags/" title="">Tags</a>
+                
+                <a class="menu-item" href="/about/" title="">About</a>
+                
+        </div>
+    </div>
+</nav>
+<nav class="navbar-mobile" id="nav-mobile" style="display: none">
+     <div class="container">
+        <div class="navbar-header">
+            <div>  <a href="javascript:void(0);" class="theme-switch"><i class="iconfont icon-table-lamp"></i></a>&nbsp;<a href="https://rrrwx.github.io">JadeRong</a></div>
+            <div class="menu-toggle">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+     
+          <div class="menu" id="mobile-menu">
+                
+                
+                <a class="menu-item" href="/posts/" title="">Blogs</a>
+                
+                <a class="menu-item" href="/categories/" title="">Categories</a>
+                
+                <a class="menu-item" href="/tags/" title="">Tags</a>
+                
+                <a class="menu-item" href="/about/" title="">About</a>
+                
+        </div>
+    </div>
+</nav>
+    	 <main class="main">
+          <div class="container">
+      		
+<article class="post-warp" itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">ffmpeg常用命令</h1>
+
+
+
+                Written by <a itemprop="name" href="https://rrrwx.github.io" rel="author">JadeRong</a>, included in <i class="iconfont icon-folder"></i>
+
+                <span class="post-category">
+                            <a href="https://rrrwx.github.io/categories/%E5%9B%BE%E5%83%8F/%E8%A7%86%E9%A2%91%E5%A4%84%E7%90%86/"> 图像/视频处理 </a>
+                            
+                    </span>
+
+        
+        <h1 id="wc" style="font-size: 0.75rem;text-align: left;">约 281 个字    |    预计阅读 2 分钟    |    本文总阅读量<span id="busuanzi_value_page_pv"></span>次</h1>
+    </header>
+    <div class="post-content">
+        
+
+        
+
+        
+        
+     
+          
+          
+          
+
+          
+          
+          
+
+          <p>记录一下经常用到的ffmpeg使用方法、hevc官方软件HM的使用，以及shell脚本的配套使用
+另外，对于ffmpeg的参数设置可以参考
+<a href="https://blog.csdn.net/hemingwang0902/article/details/4382205">https://blog.csdn.net/hemingwang0902/article/details/4382205</a>
+<a href="https://www.jianshu.com/p/a035056cbbf9">https://www.jianshu.com/p/a035056cbbf9</a></p>
+<p>具体比较详细的应用可以参考
+<a href="https://www.jianshu.com/p/b4f9f8c5e86a">https://www.jianshu.com/p/b4f9f8c5e86a</a>
+<a href="https://zhuanlan.zhihu.com/p/46903150">https://zhuanlan.zhihu.com/p/46903150</a></p>
+<h4 id="一-ffmpeg的常用操作">（一） ffmpeg的常用操作</h4>
+<p><strong>1.  使用ffmpeg把jpg格式的图片转换成yuv420p格式</strong></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">ffmpeg -i path/name.jpg -s 352x288 -pix_fmt yuv420p savepath/name.yuv
+</code></pre></div><p>-s 352x288是图片的width和height参数，可以省略
+-pix_fmt yuv420p是指定要转换的yuv的格式，若想转换成yuv422p格式的话直接替换就行</p>
+<p><strong>2.  使用ffmpeg把yuv格式的图片转换成jpg格式</strong></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">ffmpeg -s 352x288 -pix_fmt yuv420p -i path/name.yuv -pix_fmt rgb24 savepath/name.jpg
+</code></pre></div><p>这里的格式是转换成rgb24位。若想要存成png格式，改变要保存的图片的后缀即可</p>
+<p><strong>3.  使用ffmpeg把MP4格式的视频转换成yuv格式</strong></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">ffmpeg -i path/name.avi -c:v rawvideo -pix_fmt yuv420p path/name.yuv -video_size 320x480
+</code></pre></div><p>这里-c:v和-vcodec是等价的</p>
+<p><strong>4.  把yuv格式的视频转换成avi格式</strong></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">ffmpeg -s 320x480 -i path/name.yuv -vcodec copy path/name.avi
+</code></pre></div><p>-s设置视频的长宽参数，copy表示copy表示原始编解码数据必须被拷贝，转换前后视频的大小不变，也可以换成mpeg4等编码格式</p>
+<p><strong>5.  ffmpeg将一个视频切成多张图片</strong></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">ffmpeg -i path/name.avi savepath/Frame%3d.png
+</code></pre></div><p><strong>6.  ffmpeg将多张图片合成一个视频</strong></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">ffmpeg -r <span style="color:#ae81ff">30</span> -i path/Frame%3d.png -vcodec libx264 name.avi
+</code></pre></div><p>-r设置帧率，-vcodec可以选择要合成的视频的编码格式，如果是copy的话合成的视频就会比较大，其他很多都是带压缩的比如libx264，mpeg4等，有些在linux下可以打开，而在win下却不能直接用系统自带视频播放器查看，但是可以自己下载适合的视频播放器。
+这里的图片名字需要不间断的%3d的格式，因为合成的时候需要一个顺序</p>
+<p><strong>7.  使用ffplay播放yuv格式的视频或图片</strong></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">ffplay -i name.yuv -video_size 352x288
+</code></pre></div><p>-video_size设置窗口格式，不能省略，也可以使用-s</p>
+<p>如果是只想查看yuv视频的Y通道</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">ffplay -s 352x288 -vf extractplanes<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;y&#39;</span> 1.yuv
+</code></pre></div><hr>
+<h4 id="二使用tappencoder来得到h265压缩编码格式">（二）使用TAppEncoder来得到h.265压缩编码格式</h4>
+<blockquote>
+<p>HEVC/H.265相较于H.264来说，编码更加自由，压缩效率会更好，并且能在有限的带宽下传输更高质量的网络视频，只需原先H.264编码的一半带宽即可传输相同质量的视频，并且编码效率也是H.264的两倍，压缩率更高。</p>
+</blockquote>
+<p>对于HEVC的官方软件HM的使用方法以及使用工具TAppEncoder等的安装可参考
+<a href="https://blog.csdn.net/leixiaohua1020/article/details/49912113">https://blog.csdn.net/leixiaohua1020/article/details/49912113</a>
+<a href="https://blog.csdn.net/liangjiubujiu/article/details/80573548">https://blog.csdn.net/liangjiubujiu/article/details/80573548</a></p>
+<p>这些教程主要是介绍windows下的使用方法，如果想在linux（如ubuntu）环境下使用的话，可以参考
+<a href="https://www.cnblogs.com/gjianw217/p/3505295.html">https://www.cnblogs.com/gjianw217/p/3505295.html</a></p>
+<p>使用HEVC编码格式对视频进行压缩时，需要把视频先转换成yuv格式
+如果原视频是mp4、avi等格式可以参考上面的ffmpeg转换方法，如果是y4m格式的视频可以用下面的方法</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">mencoder **.y4m -ovc raw -of rawvideo -vf format<span style="color:#f92672">=</span>i420 -o **.yuv
+</code></pre></div><p>而且需要对配置文件cfg根据实际需要进行个性化编写（有很多参考的cfg文件）</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">./TAppEncoderStatic -c encoder_intra_main37.cfg -i path/name.yuv -wdt <span style="color:#ae81ff">352</span> -hgt <span style="color:#ae81ff">288</span> -b binpath/name-37.bin -o savepath/name-37.yuv
+</code></pre></div><p>-b保存压缩的比特流，-o为解压后的有损视频
+这里的关键是-c参数，指定cfg配置文件，intra_main表示全i帧，lowdelay表示i帧和b帧，lowdelay_P表示i帧和p帧，具体区别可参考
+<a href="https://blog.csdn.net/snowsnowsnow1991/article/details/48491099">https://blog.csdn.net/snowsnowsnow1991/article/details/48491099</a>
+<a href="https://blog.csdn.net/liangjiubujiu/article/details/80576873">https://blog.csdn.net/liangjiubujiu/article/details/80576873</a>
+<a href="https://blog.csdn.net/tianzhaixing2013/article/details/8773635">https://blog.csdn.net/tianzhaixing2013/article/details/8773635</a></p>
+<hr>
+<h4 id="三shell常用语法">（三）shell常用语法</h4>
+<p>如果是在linux里面想同时处理多个任务的时候可以使用脚本语言来操作
+这里用一些例子记录一些平时用的比较多的语法</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e"># 对于for循环的使用</span>
+<span style="color:#66d9ef">for</span> num in <span style="color:#f92672">{</span>1..8<span style="color:#f92672">}</span>
+<span style="color:#66d9ef">do</span>
+    cp 321x481/15004.jpg ceshi/$num.jpg
+    echo $num
+<span style="color:#66d9ef">done</span>
+ffmpeg -i ceshi/%d.jpg ceshi/15004.avi
+rm ceshi/*.jpg
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e"># 读取文件夹下的文件列表、对if语句的使用、提取文件名、批量压缩视频</span>
+path<span style="color:#f92672">=</span>./yuvs/tntsvc/
+files<span style="color:#f92672">=</span><span style="color:#66d9ef">$(</span>ls $path<span style="color:#66d9ef">)</span>
+<span style="color:#66d9ef">for</span> filename in $files
+<span style="color:#66d9ef">do</span>
+    name<span style="color:#f92672">=</span><span style="color:#e6db74">${</span>filename%%.*<span style="color:#e6db74">}</span>
+    namea<span style="color:#f92672">=</span><span style="color:#e6db74">${</span>name%%_*<span style="color:#e6db74">}</span>
+    nameb<span style="color:#f92672">=</span><span style="color:#e6db74">${</span>name##*_<span style="color:#e6db74">}</span>
+    <span style="color:#66d9ef">if</span> <span style="color:#f92672">[</span> $nameb <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;cif&#34;</span> <span style="color:#f92672">]</span>; <span style="color:#66d9ef">then</span>
+        ./TAppEncoderStatic -c encoder_intra_main37.cfg -i yuvs/tntsvc/$name.yuv -wdt <span style="color:#ae81ff">352</span> -hgt <span style="color:#ae81ff">288</span> -b dataset/37/bins/$name-37.bin -o dataset/37/yuvs/$name-37.yuv
+        ./TAppEncoderStatic -c encoder_intra_main42.cfg -i yuvs/tntsvc/$name.yuv -wdt <span style="color:#ae81ff">352</span> -hgt <span style="color:#ae81ff">288</span> -b dataset/42/bins/$name-42.bin -o dataset/42/yuvs/$name-42.yuv
+    <span style="color:#66d9ef">elif</span> <span style="color:#f92672">[</span> $nameb <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;4cif&#34;</span> <span style="color:#f92672">]</span>; <span style="color:#66d9ef">then</span>
+        ./TAppEncoderStatic -c encoder_intra_main37.cfg -i yuvs/tntsvc/$name.yuv -wdt <span style="color:#ae81ff">704</span> -hgt <span style="color:#ae81ff">576</span> -b dataset/37/bins/$name-37.bin -o dataset/37/yuvs/$name-37.yuv
+        ./TAppEncoderStatic -c encoder_intra_main42.cfg -i yuvs/tntsvc/$name.yuv -wdt <span style="color:#ae81ff">704</span> -hgt <span style="color:#ae81ff">576</span> -b dataset/42/bins/$name-42.bin -o dataset/42/yuvs/$name-42.yuv
+    <span style="color:#66d9ef">fi</span>
+<span style="color:#66d9ef">done</span>
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e"># 变量num实现自加、整数转换成string以及ffmpeg的批量操作</span>
+path<span style="color:#f92672">=</span>tennis
+files<span style="color:#f92672">=</span><span style="color:#66d9ef">$(</span>ls $path<span style="color:#66d9ef">)</span>
+num<span style="color:#f92672">=</span>-1
+<span style="color:#66d9ef">for</span> filename in $files
+<span style="color:#66d9ef">do</span>
+    num<span style="color:#f92672">=</span><span style="color:#e6db74">`</span>expr $num + 1<span style="color:#e6db74">`</span>;
+    var<span style="color:#f92672">=</span><span style="color:#66d9ef">$(</span>printf <span style="color:#e6db74">&#34;%03d&#34;</span> <span style="color:#e6db74">&#34;</span>$num<span style="color:#e6db74">&#34;</span><span style="color:#66d9ef">)</span>
+    name<span style="color:#f92672">=</span><span style="color:#e6db74">${</span>filename%%.*<span style="color:#e6db74">}</span>
+    geshi<span style="color:#f92672">=</span><span style="color:#e6db74">${</span>filename%%*.<span style="color:#e6db74">}</span>
+    nameb<span style="color:#f92672">=</span><span style="color:#e6db74">${</span>filename##*.<span style="color:#e6db74">}</span>
+    echo $filename, $name , $geshi , $nameb
+    <span style="color:#66d9ef">if</span> <span style="color:#f92672">[</span> $nameb <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;png&#34;</span> <span style="color:#f92672">]</span>; <span style="color:#66d9ef">then</span>
+        rm $path/$filename
+    <span style="color:#66d9ef">fi</span>
+    ffmpeg -s 352x240 -i $path/$filename -vcodec copy imgs/Frame$var.png
+<span style="color:#66d9ef">done</span>
+</code></pre></div>
+    </div>
+
+
+
+    <div class="post-copyright">
+                
+        
+
+
+        <section>
+            <p class="share-item">
+                <span>Share :</span>
+                
+                <span>
+
+      
+        <a href="//twitter.com/share?url=https%3a%2f%2frrrwx.github.io%2f2020%2fffmpeg%25E5%25B8%25B8%25E7%2594%25A8%25E5%2591%25BD%25E4%25BB%25A4%2f&amp;text=ffmpeg%e5%b8%b8%e7%94%a8%e5%91%bd%e4%bb%a4&amp;via=" target="_blank" title="Share on Twitter">
+          <i class="iconfont icon-twitter"></i>
+        </a>
+        
+
+      
+      
+        <a href="//www.facebook.com/sharer/sharer.php?u=https%3a%2f%2frrrwx.github.io%2f2020%2fffmpeg%25E5%25B8%25B8%25E7%2594%25A8%25E5%2591%25BD%25E4%25BB%25A4%2f" target="_blank" title="Share on Facebook">
+          <i class="iconfont icon-facebook"></i>
+        </a>
+        
+      
+      
+      
+      
+      
+      
+        
+      
+        
+      
+
+          
+
+          
+
+          
+        <a href="//www.douban.com/recommend/?url=https%3a%2f%2frrrwx.github.io%2f2020%2fffmpeg%25E5%25B8%25B8%25E7%2594%25A8%25E5%2591%25BD%25E4%25BB%25A4%2f&amp;title=ffmpeg%e5%b8%b8%e7%94%a8%e5%91%bd%e4%bb%a4" target="_blank" title="Share on Douban ">
+            <i class="iconfont icon-douban"></i>
+          </a>
+          
+
+          
+        <a href="//service.weibo.com/share/share.php?url=https%3a%2f%2frrrwx.github.io%2f2020%2fffmpeg%25E5%25B8%25B8%25E7%2594%25A8%25E5%2591%25BD%25E4%25BB%25A4%2f&amp;appkey=&amp;title=ffmpeg%e5%b8%b8%e7%94%a8%e5%91%bd%e4%bb%a4" target="_blank" title="Share on Douban ">
+            <i class="iconfont icon-weibo"></i>
+          </a>
+          
+
+</span>
+                
+            </p>
+        </section>
+
+
+        <section>
+            <p class="copyright-item">
+                <span>Updated </span>
+                <span class="post-time">
+                on 
+                <time datetime=2020-05-19 itemprop="datePublished">May 19, 2020</time>
+                </span>
+
+            </p>
+        </section>
+    </div>
+
+  
+    <div class="post-tags">
+        
+            <section>
+            
+            <span class="tag"><a href="https://rrrwx.github.io/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">
+                    <i class="iconfont icon-tag"></i>学习笔记</a></span>
+            
+            <span class="tag"><a href="https://rrrwx.github.io/tags/%E5%9B%BE%E5%83%8F/%E8%A7%86%E9%A2%91/">
+                    <i class="iconfont icon-tag"></i>图像/视频</a></span>
+            
+            </section>
+        
+        <section>
+                <a href="javascript:window.history.back();">back</a></span> · 
+                <span><a href="https://rrrwx.github.io">home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav">
+        
+        <a href="https://rrrwx.github.io/2020/%E5%B8%B8%E8%A7%81%E5%AD%97%E7%AC%A6%E7%BC%96%E7%A0%81%E6%96%B9%E5%BC%8F%E6%AF%94%E8%BE%83/" class="prev" rel="prev" title="常见字符编码方式比较"><i class="iconfont icon-left"></i>&nbsp;常见字符编码方式比较</a>
+         
+        
+        <a href="https://rrrwx.github.io/2020/%E7%BA%A2%E9%BB%91%E6%A0%91/" class="next" rel="next" title="红黑树">红黑树&nbsp;<i class="iconfont icon-right"></i></a>
+        
+    </div>
+
+    <div class="post-comment">
+          
+                 
+          
+    </div>
+</article>
+          </div>
+		   </main>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="">
+                <i class="fas fa-arrow-up fa-fw"></i>
+            </a>
+        </div>
+
+      <footer class="footer">
+
+
+
+
+    <div class="copyright">
+
+            <div class="footer-line">
+                &copy;<i class="far fa-copyright fa-fw"></i>&nbsp;<span itemprop="copyrightYear">2020</span>&nbsp;&nbsp;<span class="author" itemprop="copyrightHolder"><a href="https://rrrwx.github.io">JadeRong</a></span>&nbsp;|&nbsp;<span class="license">Released under <a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span>
+                &nbsp;|&nbsp;<span>Powered by <a href="https://gohugo.io/" target="_blank" rel="external nofollow">Hugo</a> & <a href="https://github.com/liuzc/leaveit" target="_blank" rel="external nofollow">LeaveIt</a></span>
+            </div>
+
+
+    </div>
+</footer>
+
+
+
+
+
+
+
+
+
+
+
+
+    
+    
+    <script src="/js/vendor_no_gallery.min.js" async=""></script>
+    
+  
+
+
+
+
+     </div>
+  </body>
+</html>

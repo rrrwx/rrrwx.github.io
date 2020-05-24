@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+  <meta http-equiv="content-type" content="text/html;charset=utf-8">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noodp"/>
+  <meta name="author" content="JadeRong">
+  <meta name="description" content="主要分享一些平时学习和开发中用到的知识">
+  
+  
+  <link rel="prev" href="https://rrrwx.github.io/2020/dcl%E6%95%B0%E6%8D%AE%E6%8E%A7%E5%88%B6%E8%AF%AD%E8%A8%80/" />
+  <link rel="next" href="https://rrrwx.github.io/2020/dml%E6%95%B0%E6%8D%AE%E6%93%8D%E4%BD%9C%E8%AF%AD%E8%A8%80/" />
+  <link rel="canonical" href="https://rrrwx.github.io/2020/ddl%E6%95%B0%E6%8D%AE%E5%AE%9A%E4%B9%89%E8%AF%AD%E8%A8%80/" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+  <meta name="msapplication-TileColor" content="#da532c">
+  <meta name="theme-color" content="#ffffff">
+  <title>
+       
+       
+           SQL语法之DDL | JadeRong
+       
+  </title>
+  <meta name="title" content="SQL语法之DDL | JadeRong">
+    
+  
+  <link rel="stylesheet" href="/font/iconfont.css">
+  <link rel="stylesheet" href="/css/main.min.css">
+
+
+  
+  
+ 
+
+<script type="application/ld+json">
+ "@context" : "http://schema.org",
+    "@type" : "BlogPosting",
+    "mainEntityOfPage": {
+         "@type": "WebPage",
+         "@id": "https:\/\/rrrwx.github.io"
+    },
+    "articleSection" : "posts",
+    "name" : "SQL语法之DDL",
+    "headline" : "SQL语法之DDL",
+    "description" : "https:\/\/edu.aliyun.com\/roadmap\/java?spm=a2c6h.12999620.1371257.1.5a195738ZJjjex#part1\nDDL （Data Definition Language） 数据定义语言，用于定义数据库对象：库、表、列等\n创建、删除、修改：库、表的结构；\n1. 操作数据库  查看所有数据库：SHOW DATABASES 切换（选择要操作的）数据库：USE 数据库名 创建数据库：CREATE DATABASE [IF NOT EXISTS] 数据库名 [CHARSET=utf8] 删除数据库：DROP DATABASE [IF EXISTS] 数据库名 修改数据库编码：ALTER DATABASE 数据库名 CHARACTER SET utf8  2. 常用数据类型（列）   int：整型；\n  double：浮点型，如double(5,2)表示最多5位，其中必须有2位小数，即最大值999.99；\n  decimal：浮点型，在表达钱方面使用，不会出现精度确实问题；\n  char：固定长度字符串类型，如char(255)，数据长度不足指定长度会补足到制定长度；\n  varchar：可变长度字符串类型（需要至少1B来记录长度），如varchar(65535)：zhangSan；\n  text(clob\x26ndash;官方)：字符串类型 \x26mdash; mysql方言；\n分4种大小的；\n  blob：字节类型；\n也是分4种大小；\n  date：日期类型，格式为：yyyy-MM-dd；\n  time：时间类型，格式为：hh: mm: ss；\n  timestamp：时间戳类型（日期\x2b时间）；",
+    "inLanguage" : "en-us",
+    "author" : "JadeRong",
+    "creator" : "JadeRong",
+    "publisher": "JadeRong",
+    "accountablePerson" : "JadeRong",
+    "copyrightHolder" : "JadeRong",
+    "copyrightYear" : "2020",
+    "datePublished": "2020-05-15 14:30:48 \x2b0800 CST",
+    "dateModified" : "2020-05-15 14:30:48 \x2b0800 CST",
+    "url" : "https:\/\/rrrwx.github.io\/2020\/ddl%E6%95%B0%E6%8D%AE%E5%AE%9A%E4%B9%89%E8%AF%AD%E8%A8%80\/",
+    "wordCount" : "137",
+    "keywords" : [ "学习笔记","mysql","SQL语法", "JadeRong"]
+}
+</script>
+
+</head>
+
+  
+
+
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  <body class="">
+    <div class="wrapper">
+        <nav class="navbar">
+    <div class="container">
+        <div class="navbar-header header-logo">
+            <a href="https://rrrwx.github.io">JadeRong</a>&nbsp;
+        	<a href="javascript:void(0);" class="theme-switch"><i class="iconfont icon-table-lamp"></i></a>
+
+        </div>
+        <div class="menu navbar-right">
+                
+                
+                <a class="menu-item" href="/posts/" title="">Blogs</a>
+                
+                <a class="menu-item" href="/categories/" title="">Categories</a>
+                
+                <a class="menu-item" href="/tags/" title="">Tags</a>
+                
+                <a class="menu-item" href="/about/" title="">About</a>
+                
+        </div>
+    </div>
+</nav>
+<nav class="navbar-mobile" id="nav-mobile" style="display: none">
+     <div class="container">
+        <div class="navbar-header">
+            <div>  <a href="javascript:void(0);" class="theme-switch"><i class="iconfont icon-table-lamp"></i></a>&nbsp;<a href="https://rrrwx.github.io">JadeRong</a></div>
+            <div class="menu-toggle">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+     
+          <div class="menu" id="mobile-menu">
+                
+                
+                <a class="menu-item" href="/posts/" title="">Blogs</a>
+                
+                <a class="menu-item" href="/categories/" title="">Categories</a>
+                
+                <a class="menu-item" href="/tags/" title="">Tags</a>
+                
+                <a class="menu-item" href="/about/" title="">About</a>
+                
+        </div>
+    </div>
+</nav>
+    	 <main class="main">
+          <div class="container">
+      		
+<article class="post-warp" itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">SQL语法之DDL</h1>
+
+
+
+                Written by <a itemprop="name" href="https://rrrwx.github.io" rel="author">JadeRong</a>, included in <i class="iconfont icon-folder"></i>
+
+                <span class="post-category">
+                            <a href="https://rrrwx.github.io/categories/mysql%E5%AD%A6%E4%B9%A0/"> mysql学习 </a>
+                            <a href="https://rrrwx.github.io/categories/sql%E8%AF%AD%E6%B3%95/"> SQL语法 </a>
+                            
+                    </span>
+
+        
+        <h1 id="wc" style="font-size: 0.75rem;text-align: left;">约 137 个字    |    预计阅读 1 分钟    |    本文总阅读量<span id="busuanzi_value_page_pv"></span>次</h1>
+    </header>
+    <div class="post-content">
+        
+
+        
+
+        
+        
+     
+          
+          
+          
+
+          
+          
+          
+
+          <p><a href="https://edu.aliyun.com/roadmap/java?spm=a2c6h.12999620.1371257.1.5a195738ZJjjex#part1">https://edu.aliyun.com/roadmap/java?spm=a2c6h.12999620.1371257.1.5a195738ZJjjex#part1</a></p>
+<h2 id="ddl-data-definition-language">DDL （Data Definition Language）</h2>
+<p>数据定义语言，用于定义数据库对象：库、表、列等</p>
+<p>创建、删除、修改：库、表的<!-- raw HTML omitted --><strong>结构</strong><!-- raw HTML omitted --> ；</p>
+<h4 id="1--操作数据库">1.  操作数据库</h4>
+<ul>
+<li>查看所有数据库：SHOW DATABASES</li>
+<li>切换（选择要操作的）数据库：USE 数据库名</li>
+<li>创建数据库：CREATE DATABASE [IF NOT EXISTS] 数据库名 [CHARSET=utf8]</li>
+<li>删除数据库：DROP DATABASE [IF EXISTS] 数据库名</li>
+<li>修改数据库编码：ALTER DATABASE 数据库名 CHARACTER SET utf8</li>
+</ul>
+<h4 id="2--常用数据类型列">2.  常用数据类型（列）</h4>
+<ul>
+<li>
+<p>int：整型；</p>
+</li>
+<li>
+<p>double：浮点型，如double(5,2)表示最多5位，其中必须有2位小数，即最大值999.99；</p>
+</li>
+<li>
+<p>decimal：浮点型，在表达钱方面使用，不会出现精度确实问题；</p>
+</li>
+<li>
+<p>char：固定长度字符串类型，如char(255)，数据长度不足指定长度会补足到制定长度；</p>
+</li>
+<li>
+<p>varchar：可变长度字符串类型（需要至少1B来记录长度），如varchar(65535)：zhangSan；</p>
+</li>
+<li>
+<p>text(clob&ndash;官方)：字符串类型 &mdash; mysql方言；</p>
+<p>分4种大小的；</p>
+</li>
+<li>
+<p>blob：字节类型；</p>
+<p>也是分4种大小；</p>
+</li>
+<li>
+<p>date：日期类型，格式为：yyyy-MM-dd；</p>
+</li>
+<li>
+<p>time：时间类型，格式为：hh: mm: ss；</p>
+</li>
+<li>
+<p>timestamp：时间戳类型（日期+时间）；</p>
+</li>
+</ul>
+<h4 id="3--常用数据类型的选择">3.  常用数据类型的选择</h4>
+<blockquote>
+<p>整型：根据要显示的最大值决定；</p>
+<p>浮点型：要显示小数。如果要精确到小数点后10位，就选择DOUBLE，而不应该选择FLOAT。DECIMAL精度较高，浮点数会出现误差，如果精度较高，则应选择定点数DECIMAL；</p>
+<p>字符串型：定长与变长的区别，CHAR类型占用空间比较大，但是处理速度比VARCHAR快，如果长度变化不大，如身份证号码那种，最好选择CHAR类型。而对于评论字符串，最好选择VARCHAR；</p>
+<p>时间：根据需要显示的类型咯，特别是TIMESTAMP,如果需要显示的时间与时区对应，就应该选择TIMESTAMP；</p>
+<p>ENUM类型和SET类型：长度不同，ENUM类型最多可以由65535个成员，而SET类型最多只能包含64个成员。且ENUM只能单选，而SET类型可以多选；</p>
+<p>TEXT类型和BLOB类型：TEXT只能存储字符数据，而BLOB可以存储二进制数据。如果是纯文本，适合TEXT。如果是图片等适合存二进制；</p>
+</blockquote>
+<h4 id="4--常用表操作">4.  常用表操作</h4>
+<ul>
+<li>
+<p><!-- raw HTML omitted -->创建表<!-- raw HTML omitted -->：CREATE TABLE [IF NOT EXISTS] 表名 (</p>
+<p>​	列名 列类型,</p>
+<p>​	&hellip;</p>
+<p>​	列名 列类型</p>
+<p>);</p>
+<p>例：CREATE TABLE tb_stu(number char(11), name varchar(50), age int, gender char(1));</p>
+</li>
+<li>
+<p><!-- raw HTML omitted -->查看当前数据库所有表名称<!-- raw HTML omitted -->：SHOW TABLES；</p>
+</li>
+<li>
+<p><!-- raw HTML omitted -->查看指定表的创建语句<!-- raw HTML omitted -->：SHOW CREATE TABLE 表名（了解即可）；</p>
+</li>
+<li>
+<p><!-- raw HTML omitted -->查看表结构<!-- raw HTML omitted -->：DESC 表名；</p>
+</li>
+<li>
+<p><!-- raw HTML omitted -->删除表<!-- raw HTML omitted -->：DROP TABLE 表名；</p>
+</li>
+<li>
+<p><!-- raw HTML omitted -->修改表<!-- raw HTML omitted -->：前缀：ALTER TABLE 表名</p>
+<ul>
+<li>
+<p><!-- raw HTML omitted -->修改之添加列<!-- raw HTML omitted -->：ALTER TABLE 表名 ADD (</p>
+<p>​	列名 列类型，</p>
+<p>​	&hellip;</p>
+<p>​	列名 列类型</p>
+<p>);</p>
+</li>
+<li>
+<p><!-- raw HTML omitted -->修改之修改列类型<!-- raw HTML omitted -->（如果被修改的列已存在数据，那么新的类型可能会影响到已存在的数据）：ALTER TABLE 表名 MODIFY 列名 列类型；</p>
+</li>
+<li>
+<p><!-- raw HTML omitted -->修改之修改列名<!-- raw HTML omitted -->：ALTER TABLE 表名 CHANGE 原列名 新列名 列类型；</p>
+</li>
+<li>
+<p><!-- raw HTML omitted -->修改之删除列<!-- raw HTML omitted -->：ALTER TABLE 表名 DROP 列名；</p>
+</li>
+<li>
+<p><!-- raw HTML omitted -->修改表名<!-- raw HTML omitted -->：ALTER TABLE 原表名 RENAME TO 新表名；</p>
+</li>
+</ul>
+</li>
+</ul>
+
+    </div>
+
+
+
+    <div class="post-copyright">
+                
+        
+
+
+        <section>
+            <p class="share-item">
+                <span>Share :</span>
+                
+                <span>
+
+      
+        <a href="//twitter.com/share?url=https%3a%2f%2frrrwx.github.io%2f2020%2fddl%25E6%2595%25B0%25E6%258D%25AE%25E5%25AE%259A%25E4%25B9%2589%25E8%25AF%25AD%25E8%25A8%2580%2f&amp;text=SQL%e8%af%ad%e6%b3%95%e4%b9%8bDDL&amp;via=" target="_blank" title="Share on Twitter">
+          <i class="iconfont icon-twitter"></i>
+        </a>
+        
+
+      
+      
+        <a href="//www.facebook.com/sharer/sharer.php?u=https%3a%2f%2frrrwx.github.io%2f2020%2fddl%25E6%2595%25B0%25E6%258D%25AE%25E5%25AE%259A%25E4%25B9%2589%25E8%25AF%25AD%25E8%25A8%2580%2f" target="_blank" title="Share on Facebook">
+          <i class="iconfont icon-facebook"></i>
+        </a>
+        
+      
+      
+      
+      
+      
+      
+        
+      
+        
+      
+
+          
+
+          
+
+          
+        <a href="//www.douban.com/recommend/?url=https%3a%2f%2frrrwx.github.io%2f2020%2fddl%25E6%2595%25B0%25E6%258D%25AE%25E5%25AE%259A%25E4%25B9%2589%25E8%25AF%25AD%25E8%25A8%2580%2f&amp;title=SQL%e8%af%ad%e6%b3%95%e4%b9%8bDDL" target="_blank" title="Share on Douban ">
+            <i class="iconfont icon-douban"></i>
+          </a>
+          
+
+          
+        <a href="//service.weibo.com/share/share.php?url=https%3a%2f%2frrrwx.github.io%2f2020%2fddl%25E6%2595%25B0%25E6%258D%25AE%25E5%25AE%259A%25E4%25B9%2589%25E8%25AF%25AD%25E8%25A8%2580%2f&amp;appkey=&amp;title=SQL%e8%af%ad%e6%b3%95%e4%b9%8bDDL" target="_blank" title="Share on Douban ">
+            <i class="iconfont icon-weibo"></i>
+          </a>
+          
+
+</span>
+                
+            </p>
+        </section>
+
+
+        <section>
+            <p class="copyright-item">
+                <span>Updated </span>
+                <span class="post-time">
+                on 
+                <time datetime=2020-05-15 itemprop="datePublished">May 15, 2020</time>
+                </span>
+
+            </p>
+        </section>
+    </div>
+
+  
+    <div class="post-tags">
+        
+            <section>
+            
+            <span class="tag"><a href="https://rrrwx.github.io/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">
+                    <i class="iconfont icon-tag"></i>学习笔记</a></span>
+            
+            <span class="tag"><a href="https://rrrwx.github.io/tags/mysql/">
+                    <i class="iconfont icon-tag"></i>mysql</a></span>
+            
+            <span class="tag"><a href="https://rrrwx.github.io/tags/sql%E8%AF%AD%E6%B3%95/">
+                    <i class="iconfont icon-tag"></i>SQL语法</a></span>
+            
+            </section>
+        
+        <section>
+                <a href="javascript:window.history.back();">back</a></span> · 
+                <span><a href="https://rrrwx.github.io">home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav">
+        
+        <a href="https://rrrwx.github.io/2020/dcl%E6%95%B0%E6%8D%AE%E6%8E%A7%E5%88%B6%E8%AF%AD%E8%A8%80/" class="prev" rel="prev" title="SQL语法之DCL"><i class="iconfont icon-left"></i>&nbsp;SQL语法之DCL</a>
+         
+        
+        <a href="https://rrrwx.github.io/2020/dml%E6%95%B0%E6%8D%AE%E6%93%8D%E4%BD%9C%E8%AF%AD%E8%A8%80/" class="next" rel="next" title="SQL语法之DML">SQL语法之DML&nbsp;<i class="iconfont icon-right"></i></a>
+        
+    </div>
+
+    <div class="post-comment">
+          
+                 
+          
+    </div>
+</article>
+          </div>
+		   </main>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="">
+                <i class="fas fa-arrow-up fa-fw"></i>
+            </a>
+        </div>
+
+      <footer class="footer">
+
+
+
+
+    <div class="copyright">
+
+            <div class="footer-line">
+                &copy;<i class="far fa-copyright fa-fw"></i>&nbsp;<span itemprop="copyrightYear">2020</span>&nbsp;&nbsp;<span class="author" itemprop="copyrightHolder"><a href="https://rrrwx.github.io">JadeRong</a></span>&nbsp;|&nbsp;<span class="license">Released under <a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span>
+                &nbsp;|&nbsp;<span>Powered by <a href="https://gohugo.io/" target="_blank" rel="external nofollow">Hugo</a> & <a href="https://github.com/liuzc/leaveit" target="_blank" rel="external nofollow">LeaveIt</a></span>
+            </div>
+
+
+    </div>
+</footer>
+
+
+
+
+
+
+
+
+
+
+
+
+    
+    
+    <script src="/js/vendor_no_gallery.min.js" async=""></script>
+    
+  
+
+
+
+
+     </div>
+  </body>
+</html>

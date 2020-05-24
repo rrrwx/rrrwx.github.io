@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>JDBC on JadeRong</title>
+    <link>https://rrrwx.github.io/tags/jdbc/</link>
+    <description>Recent content in JDBC on JadeRong</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Fri, 22 May 2020 18:19:52 +0800</lastBuildDate>
+    
+	<atom:link href="https://rrrwx.github.io/tags/jdbc/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>JDBC之连接池</title>
+      <link>https://rrrwx.github.io/2020/jdbc%E4%B9%8B%E6%95%B0%E6%8D%AE%E5%BA%93%E8%BF%9E%E6%8E%A5%E6%B1%A0/</link>
+      <pubDate>Fri, 22 May 2020 18:19:52 +0800</pubDate>
+      
+      <guid>https://rrrwx.github.io/2020/jdbc%E4%B9%8B%E6%95%B0%E6%8D%AE%E5%BA%93%E8%BF%9E%E6%8E%A5%E6%B1%A0/</guid>
+      <description>https://edu.aliyun.com/roadmap/java?spm=a2c6h.12999620.1371257.1.5a195738ZJjjex#part1
+https://www.cnblogs.com/zzsuje/articles/10444032.html
+数据库连接池  数据库连接池负责分配、管理和释放数据库连接，它允许应用程序重复使用一个现有的数据库连接，而不是再重新建立一个；
+释放空闲时间超过最大空闲时间的数据库连接来避免因为没有释放数据库连接而引起的数据库连接遗漏。这项技术能明显提高对数据库操作的性能。
+   对于大多数应用程序，当它们正在处理事务时，仅需要能够访问JDBC连接的 1 个线程。当不处理事务时，这个连接就会闲置（造成资源的浪费）。相反，连接池允许闲置的连接被其它需要的线程使用。 当一个线程需要用 JDBC 对一个 数据库操作时，它从池中请求一个连接。当这个线程使用完了这个连接，将它返回到连接池中（连接池会自动收回连接，当然我们也可以在用完以后释放），这样这就可以被其它想使用它的线程使用，这样不会照成内存的浪费。 当连接被从池中调用出来，那么这个连接将被这个线程专有地使用。    数据库连接池的主要操作如下：
+（1）建立数据库连接池对象（服务器启动）；
+（2）按照事先指定的参数创建初始数量的数据库连接（即：空闲连接数）,我们在安装数据库的时候就可以指定；
+（3）对于一个数据库访问请求，直接从连接池中得到一个连接。如果数据库连接池对象中没有空闲的连接，且连接数没有达到最大（即：最大活跃连接数），创建一个新的数据库连接。而如果连接数达到最大，就会再创建事先定好的连接数；
+（4）对数据库进行存取操作；
+（5）关闭数据库，释放所有数据库连接（此时的关闭数据库连接，并非真正关闭，而是将其放入空闲队列中。如实际空闲连接 数大于初始空闲连接数则释放连接）；
+（6）释放数据库连接池对象（服务器停止、维护期间，释放数据库连接池对象，并释放所有连接）。
+ 常见的数据库连接池有dbcp、c3p0
+注：连接池返回的Connection对象，它的close()方法不是关闭连接，而是把连接归还给连接池
+dbcp  DBCP（DataBase Connection Pool）数据库连接池，是java数据库连接池的一种，由Apache开发，通过数据库连接池，可以让程序自动管理数据库连接的释放和断开。 使用javax.sql.DateSource接口 也可以使用配置文件，把连接参数和连接池初始化参数都写进配置文件。  //需要先导入apache的commons.dbcp包 import org.apache.commons.dbcp.BasicDateSource ; public class dbcpDemo { public void connect() throws Exception { /* * 1. 创建来连接池对象 * 2. 配置四大参数 * 3. 配置连接池参数 * 4. 获取连接对象 */ //BasicDataSource类实现了DataSource接口  BasicDataSource dataSource = new BasicDataSource() ; //手动配置连接参数  dataSource.</description>
+    </item>
+    
+    <item>
+      <title>JDBC之事务</title>
+      <link>https://rrrwx.github.io/2020/jdbc%E4%B9%8B%E4%BA%8B%E5%8A%A1/</link>
+      <pubDate>Fri, 22 May 2020 15:08:30 +0800</pubDate>
+      
+      <guid>https://rrrwx.github.io/2020/jdbc%E4%B9%8B%E4%BA%8B%E5%8A%A1/</guid>
+      <description>https://www.runoob.com/mysql/mysql-transaction.html
+https://edu.aliyun.com/roadmap/java?spm=a2c6h.12999620.1371257.1.5a195738ZJjjex#part1
+http://blog.sina.com.cn/s/blog_4aefad88010092uc.html
+MySQL事务  MySQL 事务(transaction)主要用于处理操作量大，复杂度高的数据。比如说，在人员管理系统中，你删除一个人员，你既需要删除人员的基本资料，也要删除和该人员相关的信息，如信箱，文章等等，这样，这些数据库操作语句就构成一个事务！
+ 在 MySQL 中只有使用了 Innodb 数据库引擎的数据库或表才支持事务。 事务处理可以用来维护数据库的完整性，保证成批的 SQL 语句要么全部执行，要么全部不执行。 事务用来管理 insert,update,delete 语句。   （一）事务的四大特性（ACID）  原子性(Atomicity)： 一个事务中的所有操作，要么全部完成，要么全部不完成，不会结束在中间某个环节。事务在执行过程中发生错误，会被回滚（Rollback）到事务开始前的状态，就像这个事务从来没有执行过一样； 一致性(Consistency)： 在事务开始之前和事务结束以后，数据库的完整性没有被破坏。这表示写入的资料必须完全符合所有的预设规则，这包含资料的精确度、串联性以及后续数据库可以自发性地完成预定的工作； 隔离性(Isolation)： 数据库允许多个并发事务同时对其数据进行读写和修改的能力，隔离性可以防止多个事务并发执行时由于交叉执行而导致数据的不一致。事务隔离分为不同级别，包括读未提交（Read uncommitted）、读提交（read committed）、可重复读（repeatable read）和串行化（Serializable）； 持久性(Durability)： 事务处理结束后，对数据的修改就是永久的，即便系统故障也不会丢失。  （二）并发问题 数据库肯定是要被广大客户所共享访问的，那么在数据库操作过程中很可能出现以下几种不确定情况。
+ 更新丢失（Lost update）： 两个事务都同时更新一行数据，但是第二个事务却中途失败退出，导致对数据的两个修改都失效了。这是因为系统没有执行任何的锁操作，因此并发事务并没有被隔离开来。 脏读取（Dirty Reads）： 一个事务开始读取了某行数据，但是另外一个事务已经更新了此数据但没有能够及时提交。这是相当危险的，因为很可能所有的操作都被回滚。（最重要的） 不可重复读取（Non-repeatable Reads）： 一个事务对同一行数据重复读取两次，但是却得到了不同的结果。例如，在两次读取的中途，有另外一个事务对该行数据进行了修改，并提交。这里两个并发事务读写同一个行记录。 两次更新问题（Second lost updates problem）： 无法重复读取的特例。有两个并发事务同时读取同一行数据，然后其中一个对它进行修改提交，而另一个也进行了修改提交。这就会造成第一次写操作失效。 虚读（Phantom Reads）： 事务在操作过程中进行两次查询，第二次查询的结果包含了第一次查询中未出现的数据（这里并不要求两次查询的SQL语句相同）。这是因为在两次查询过程中有另外一个事务插入数据造成的。注意这里是两个并发事务操作的不是同一个行记录。  （三）事务隔离级别 为了避免上面出现的几种情况，在标准SQL规范中，定义了4个事务隔离级别，不同的隔离级别对事务的处理不同。
+ 未授权读取（Read Uncommitted）： 允许脏读取，但不允许更新丢失。如果一个事务已经开始写数据，则另外一个数据则不允许同时进行写操作，但允许其他事务读此行数据。该隔离级别可以通过“排他写锁”实现。在多个事务之间使用它将会是非常危险的，事务的回滚操作或失败将会影响到其他并发事务。 授权读取（Read Committed）： 允许不可重复读取，但不允许脏读取。这可以通过“瞬间共享读锁”和“排他写锁”实现。读取数据的事务允许其他事务继续访问该行数据，但是未提交的写事务将会禁止其他事务访问该行。 可重复读取（Repeatable Read）： 禁止不可重复读取和脏读取，但是有时可能出现幻影数据。这可以通过“共享读锁”和“排他写锁”实现。读取数据的事务将会禁止写事务（但允许读事务），写事务则禁止任何其他事务。 序列化（Serializable）： 提供严格的事务隔离。它要求事务序列化执行，事务只能一个接着一个地执行，但不能并发执行。如果仅仅通过“行级锁”是无法实现事务序列化的，必须通过其他机制保证新插入的数据不会被刚执行查询操作的事务访问到。  从上到下隔离级别依次升高，完整性和一致性逐渐提高，但是并发性能逐渐降低。MySQL默认选择可重复读取，Oracle默认选择授权读取。由于脏读不可容忍而且需要一定的并发性能，因此一般不会选择未授权读取和序列化。</description>
+    </item>
+    
+    <item>
+      <title>JDBC基础五之JDBCUtil工具类示例</title>
+      <link>https://rrrwx.github.io/2020/jdbc%E5%9F%BA%E7%A1%80%E4%BA%94jdbcutil%E5%B7%A5%E5%85%B7%E7%B1%BB%E7%A4%BA%E4%BE%8B/</link>
+      <pubDate>Thu, 21 May 2020 19:57:24 +0800</pubDate>
+      
+      <guid>https://rrrwx.github.io/2020/jdbc%E5%9F%BA%E7%A1%80%E4%BA%94jdbcutil%E5%B7%A5%E5%85%B7%E7%B1%BB%E7%A4%BA%E4%BE%8B/</guid>
+      <description>https://edu.aliyun.com/roadmap/java?spm=a2c6h.12999620.1371257.1.5a195738ZJjjex#part1
+为了更方便地使用JDBC来连接各种数据库，可以将数据库的连接与释放操作封装成一个工具类
+import java.sql.Connection ; import java.sql.DriverManager ; public class JDBCUtil { //加载JDBCUtil类的时候只执行一次，不用每次连接的时候都加载配置文件和驱动类  public static Properties props = null ; static { try { //加载配置文件（不同的数据库有不同的配置文件）  //dbconfig.properties文件通常放在src目录下，也即ClassPath下  InputStream in = JDBCUtil.class.getClassLoader() .getResourceAsStream(&amp;#34;dbconfig.properties&amp;#34;) ; Properties props = new Properties() ; props.load(in) ; } catch (IOException e) { throw new RuntimeException(e) ; } try { //加载驱动类  Class.forName(props.getProperty(&amp;#34;driverClassName&amp;#34;)) ; } catch (ClassNotFoundException e) { throw new RuntimeException(e) ; } } public static Connection getConnection() throws SQLException { //获取Connection  return DriverManager.</description>
+    </item>
+    
+    <item>
+      <title>JDBC基础三之PreparedStatement</title>
+      <link>https://rrrwx.github.io/2020/jdbc%E5%9F%BA%E7%A1%80%E4%B8%89preparedstatement/</link>
+      <pubDate>Thu, 21 May 2020 16:12:49 +0800</pubDate>
+      
+      <guid>https://rrrwx.github.io/2020/jdbc%E5%9F%BA%E7%A1%80%E4%B8%89preparedstatement/</guid>
+      <description>https://edu.aliyun.com/roadmap/java?spm=a2c6h.12999620.1371257.1.5a195738ZJjjex#part1
+PreparedStatement接口  Statement接口的子接口 防SQL攻击 提高代码可读性、可维护性 提高效率  SQL攻击  在需要用户输入的地方，用户输入的是SQL语句的片段，最终用户输入的SQL片段与DAO中所写的SQL语句合成一个完整的SQL语句！
+ 演示 （1）首先创建一张用户表，用来存储用户的信息 CREATE TABLE user ( uid CHAR(32) PRIMARY KEY, username VARCHAR(30) UNIQUE KEY NOT NULL, PASSWORD VARCHAR(30) ); -- 这里的PASSWORD和mysql的关键词重名了，因此需要大写，也可以写成`password`  INSERT INTO user VALUES(&amp;#39;zhangSan&amp;#39;, &amp;#39;123&amp;#39;) ; INSERT INTO user VALUES(&amp;#39;liSi&amp;#39;, &amp;#39;123&amp;#39;) ; INSERT INTO user VALUES(&amp;#39;wangWu&amp;#39;, &amp;#39;123&amp;#39;) ; （2）使用username和password去查询数据 import java.sql.Connection ; import java.sql.DriverManager ; public class Demo { /** * 使用username和password去查询数据 * 若查到结果集，说明正确，返回true * 若查不到结果，则说明用户名或密码错误，返回false */ public boolean login throws Exception (String username, String password) { //准备四大参数  String driverClassName = &amp;#34;com.</description>
+    </item>
+    
+    <item>
+      <title>JDBC基础二之结果集</title>
+      <link>https://rrrwx.github.io/2020/jdbc%E5%9F%BA%E7%A1%80%E4%BA%8C%E7%BB%93%E6%9E%9C%E9%9B%86/</link>
+      <pubDate>Thu, 21 May 2020 12:18:36 +0800</pubDate>
+      
+      <guid>https://rrrwx.github.io/2020/jdbc%E5%9F%BA%E7%A1%80%E4%BA%8C%E7%BB%93%E6%9E%9C%E9%9B%86/</guid>
+      <description>https://edu.aliyun.com/roadmap/java?spm=a2c6h.12999620.1371257.1.5a195738ZJjjex#part1
+结果集  1. ResultSet ResultSet表示结果集，它是一个二维表格。ResultSet内部维护一个行光标（游标Cursor），ResultSet提供了一系列的方法来移动游标（光标是**从1开始，mysql默认都能使用）：
+ void beforeFirst(): 把光标放到第一行的上面，也是光标的默认位置； void afterLast(): 最后一行记录的下面； boolean first() boolean last() boolean isBeforeFirst() boolean isAfterLast() boolean isFirst() boolean isLast() boolean previous() boolean next() boolean relative(int row): 相对位移，当row为正数时，表示向下移动row行，负数则向上移动； boolean absolute(int row): 绝对位移，把光标移动到第row行； int getRow(): 返回当前光标所在行；  2. 获取结果集数据 如果已经知道当前列的数据类型就可以使用相应的get方法获取当前列数据，否则就用getObject()或者getString()
+可以通过列名或者列的索引来指定当前列，其中列索引是从1开始，而不是0
+ String getString(String columnName) String getString(int columnIndex) int getInt(String columnName) double getDouble(String columnName) boolean getBoolean(String columnName) Object getObject(String columnName)  3. 获取结果集元数据  得到元数据：rs.getMetaData()，返回值ResultSetMetaData(); 获取结果集列数：int getColumnCount(); 获取指定列的列名：String getColumnName(int countIndex);  int count = rs.</description>
+    </item>
+    
+    <item>
+      <title>JDBC基础一之连接数据库</title>
+      <link>https://rrrwx.github.io/2020/jdbc%E5%9F%BA%E7%A1%80%E4%B8%80%E8%BF%9E%E6%8E%A5%E6%95%B0%E6%8D%AE%E5%BA%93/</link>
+      <pubDate>Thu, 21 May 2020 10:37:36 +0800</pubDate>
+      
+      <guid>https://rrrwx.github.io/2020/jdbc%E5%9F%BA%E7%A1%80%E4%B8%80%E8%BF%9E%E6%8E%A5%E6%95%B0%E6%8D%AE%E5%BA%93/</guid>
+      <description>https://edu.aliyun.com/roadmap/java?spm=a2c6h.12999620.1371257.1.5a195738ZJjjex#part1
+什么是JDBC？ CRUD（C-create, R-read, U-update, D-delete）
+参考： https://blog.csdn.net/jungle_rao/article/details/81274720
+https://blog.csdn.net/jungle_rao/article/details/81274720
+ JDBC（Java DataBase Connectivity）是Java和数据库之间的一个桥梁，是一个规范而不是一个实现，能够执行SQL语句。它由一组用Java语言编写的类和接口组成。各种不同类型的数据库都有相应的实现。
+  Java数据库连接，（Java Database Connectivity，简称JDBC）是Java语言中用来规范客户端程序如何来访问数据库的应用程序接口，提供了诸如查询和更新数据库中数据的方法。JDBC也是Sun Microsystems的商标。我们通常说的JDBC是面向关系型数据库的。
+ JDBC连接数据库 1. 连接的四大参数 driverName、url、username、password import java.sql.Connection ; import java.sql.DriverManager ; public class DBUtil { // jdbc协议的格式：jdbc:厂商的名称:子协议(有厂商自己来规定)  // mysql子协议：//主机:端口号/数据库名称 	public static final String URL = &amp;#34;jdbc:mysql://localhost:3306/mydb000&amp;#34; ; public static final String USERNAME = &amp;#34;root&amp;#34; ; public static final String PASSWORD = &amp;#34;123&amp;#34; ; public void fun1() throws ClassNotFoundException, SQLException { /* * jdbc的四大配置参数（例） * &amp;gt; driverClassName: com.</description>
+    </item>
+    
+  </channel>
+</rss>

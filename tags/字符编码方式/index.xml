@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>字符编码方式 on JadeRong</title>
+    <link>https://rrrwx.github.io/tags/%E5%AD%97%E7%AC%A6%E7%BC%96%E7%A0%81%E6%96%B9%E5%BC%8F/</link>
+    <description>Recent content in 字符编码方式 on JadeRong</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Mon, 18 May 2020 13:30:48 +0800</lastBuildDate>
+    
+	<atom:link href="https://rrrwx.github.io/tags/%E5%AD%97%E7%AC%A6%E7%BC%96%E7%A0%81%E6%96%B9%E5%BC%8F/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>常见字符编码方式比较</title>
+      <link>https://rrrwx.github.io/2020/%E5%B8%B8%E8%A7%81%E5%AD%97%E7%AC%A6%E7%BC%96%E7%A0%81%E6%96%B9%E5%BC%8F%E6%AF%94%E8%BE%83/</link>
+      <pubDate>Mon, 18 May 2020 13:30:48 +0800</pubDate>
+      
+      <guid>https://rrrwx.github.io/2020/%E5%B8%B8%E8%A7%81%E5%AD%97%E7%AC%A6%E7%BC%96%E7%A0%81%E6%96%B9%E5%BC%8F%E6%AF%94%E8%BE%83/</guid>
+      <description>1. ASCII编码 作用：表语英语及西欧语言。
+位数：ASCII是用7位表示的，能表示128个字符；其扩展使用8位表示，表示256个字符。
+范围：ASCII从00到7F，扩展从00到FF。
+2. Iso8859-1编码 属于单字节编码，最多能表示的字符范围是0-255，应用于英文系列。
+作用：扩展ASCII，表示西欧、希腊语等。
+位数：8位，
+范围：从00到FF，兼容ASCII字符集。
+3. GB码字符集 （1）GB码字符集
+ 全称是GB2312-80《信息交换用汉字编码字符集基本集》，1980年发布，是中文信息处理的国家标准，在大陆及海外使用简体中文的地区（如新加坡 等）是强制使用的唯一中文编码。P-Windows3.2和苹果OS就是以GB2312为基本汉字编码， Windows 95/98则以GBK为基本汉字编码、但兼容支持GB2312。
+  双字节编码
+范围：A1A1~FEFE
+A1-A9：符号区，包含682个符号
+B0-F7：汉字区，包含6763个汉字
+ （2）GB2312字符集
+ GB2312(1980年)一共收录了7445个字符，包括6763个汉字和682个其它符号。汉字区的内码范围高字节从B0-F7，低字节从 A1-FE，占用的码位是72*94=6768。其中有5个空位是D7FA-D7FE。GB2312-80中共收录了7545个字符，用两个字节编码一个 字符。每个字符最高位为0。GB2312-80编码简称国标码 。
+GB2312支持的汉字太少。1995年的汉字扩展规范GBK1.0收录了21886个符号，它分为汉字区和图形符号区。汉字区包括21003个字符。
+ 作用：国家简体中文字符集，兼容ASCII。
+位数：使用2个字节表示，能表示7445个符号，包括6763个汉字，几乎覆盖所有高频率汉字。
+范围：高字节从A1到F7, 低字节从A1到FE。将高字节和低字节分别加上0XA0即可得到编码。
+（3）GB12345-90字符集
+ 1990年制定了繁体字的编码标准GB12345-90《信息交换用汉字编码字符集第一辅助集》，目的在于规范必须使用繁体字的各种场合，以及古籍整理 等。该标准共收录6866个汉字（比GB2312多103个字，其它厂商的字库大多不包括这些字），纯繁体的字大概有2200余个。
+  双字节编码
+范围：A1A1~FEFE
+A1-A9：符号区，增加竖排符号
+B0-F9：汉字区，包含6866个汉字
+ （4）GBK
+ GBK编码(Chinese Internal Code Specification)是中国大陆制订的、等同于UCS的新的中文编码扩展国家标准。gbk编码能够用来同时表示==繁体字和简体字==，而gb2312只 能表示简体字，gbk是兼容gb2312编码的。GBK工作小组于1995年10月，同年12月完成GBK规范。该编码标准兼容GB2312，共收录汉字 21003个、符号883个，并提供1894个造字码位，简、繁体字融于一库。Windows95/98简体中文版的字库表层编码就采用的是GBK，通过 GBK与UCS之间一一对应的码表与底层字库联系。
+  英文名：Chinese Internal Code Specification
+中文名：汉字内码扩展规范1.0版
+双字节编码，GB2312-80的扩充，在码位上和GB2312-80兼容
+范围：8140~FEFE（剔除xx7F）共23940个码位。包含21003个汉字，包含了ISO/IEC 10646-1中的全部中日韩汉字
+ ​	作用：它是GB2312的扩展，加入对繁体字的支持，兼容GB2312。</description>
+    </item>
+    
+  </channel>
+</rss>

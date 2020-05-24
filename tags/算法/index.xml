@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>算法 on JadeRong</title>
+    <link>https://rrrwx.github.io/tags/%E7%AE%97%E6%B3%95/</link>
+    <description>Recent content in 算法 on JadeRong</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Tue, 19 May 2020 00:20:18 +0800</lastBuildDate>
+    
+	<atom:link href="https://rrrwx.github.io/tags/%E7%AE%97%E6%B3%95/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>排序</title>
+      <link>https://rrrwx.github.io/2020/%E6%8E%92%E5%BA%8F/</link>
+      <pubDate>Tue, 19 May 2020 00:20:18 +0800</pubDate>
+      
+      <guid>https://rrrwx.github.io/2020/%E6%8E%92%E5%BA%8F/</guid>
+      <description>复杂度比较    排序方法 最好时间复杂度 平均时间复杂度 最坏时间复杂度 空间复杂度 是否稳定     直接插入排序 O(n) O(n2) O(n2) O(1) 是   冒泡排序 O(n) O(n2) O(n2) O(1) 是   简单选择排序 O(n2) O(n2) O(n2) O(1) 否   希尔排序    O(1) 否   快速排序 O(nlogn) O(nlogn) O(n2) O(logn) 否   堆排序 O(nlogn) O(nlogn) O(nlogn) O(1) 否   二路归并排序 O(nlogn) O(nlogn) O(nlogn) O(n) 是   基数排序  O(d(n+r))  O(n) 是     适用条件 n&amp;lt;100: 直插、冒泡、简单选择</description>
+    </item>
+    
+    <item>
+      <title>红黑树</title>
+      <link>https://rrrwx.github.io/2020/%E7%BA%A2%E9%BB%91%E6%A0%91/</link>
+      <pubDate>Tue, 19 May 2020 00:20:12 +0800</pubDate>
+      
+      <guid>https://rrrwx.github.io/2020/%E7%BA%A2%E9%BB%91%E6%A0%91/</guid>
+      <description>红黑树 https://blog.csdn.net/v_JULY_v/article/details/6105630
+ 红黑树，一种二叉查找树，但在每个结点上增加一个存储位表示结点的颜色，可以是Red或Black。 通过对任何一条从根到叶子的路径上各个结点着色方式的限制，红黑树确保没有一条路径会比其他路径长出俩倍，因而是接近平衡的。
+ （1）红黑树的5条基本性质：  1）每个结点要么是红的，要么是黑的。
+2）根结点是黑的。
+3）每个叶结点（叶结点即指树尾端NIL指针或NULL结点）是黑的。
+4）如果一个结点是红的，那么它的俩个儿子都是黑的。
+5）对于任一结点而言，其到叶结点树尾端NIL指针的每一条路径都包含相同数目的黑结点。
+  红黑树只是保持相对平衡： 若H(left)&amp;gt;=H(right)，则：H(left)&amp;lt;=2*H(right)+1，但BH(left)===BH(right)，H(left)&amp;lt;H(right)同理
+ （2）红黑树的插入平衡调整 https://zhuanlan.zhihu.com/p/52706646 https://www.bilibili.com/video/av23890827?p=11
+插入原则：
+插入例图：
+插入的结点是x（初始化为红色），或者说是上一步刚调整完的子树是x
+这里case1调整完之后，结点G的黑高是改变了的，而且颜色也变成了红色，因此还需要进一步向上回溯，知道最终的平衡。
+AVL树和红黑树的性能比较：
+（3）红黑树的删除调整 删除原则：
+删除例图：
+无需进行删除调整的情况是：
+ 若需删除的结点X是红色的，直接删除X
+另外，1）当前结点X为根节点，直接染黑，rootOver； 2）当前结点为红色，直接染黑，redOver；
+ 删除设定：
+删除的几种情况的转换：
+AVL树和RBT树的删除性能比较：</description>
+    </item>
+    
+  </channel>
+</rss>

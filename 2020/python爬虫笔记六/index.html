@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+  <meta http-equiv="content-type" content="text/html;charset=utf-8">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noodp"/>
+  <meta name="author" content="JadeRong">
+  <meta name="description" content="主要分享一些平时学习和开发中用到的知识">
+  
+  
+  <link rel="prev" href="https://rrrwx.github.io/2020/python%E7%88%AC%E8%99%AB%E7%AC%94%E8%AE%B0%E4%BA%94/" />
+  <link rel="next" href="https://rrrwx.github.io/2020/sql%E8%AF%AD%E6%B3%95/" />
+  <link rel="canonical" href="https://rrrwx.github.io/2020/python%E7%88%AC%E8%99%AB%E7%AC%94%E8%AE%B0%E5%85%AD/" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+  <meta name="msapplication-TileColor" content="#da532c">
+  <meta name="theme-color" content="#ffffff">
+  <title>
+       
+       
+           python爬虫笔记（六） | JadeRong
+       
+  </title>
+  <meta name="title" content="python爬虫笔记（六） | JadeRong">
+    
+  
+  <link rel="stylesheet" href="/font/iconfont.css">
+  <link rel="stylesheet" href="/css/main.min.css">
+
+
+  
+  
+ 
+
+<script type="application/ld+json">
+ "@context" : "http://schema.org",
+    "@type" : "BlogPosting",
+    "mainEntityOfPage": {
+         "@type": "WebPage",
+         "@id": "https:\/\/rrrwx.github.io"
+    },
+    "articleSection" : "posts",
+    "name" : "python爬虫笔记（六）",
+    "headline" : "python爬虫笔记（六）",
+    "description" : "（一）正则式表达 可参考 http:\/\/www.runoob.com\/regexp\/regexp-syntax.html\nimport re match = re.search(r\x26#39;[1-9]\\d{5}\x26#39;, \x26#39;BIT 200300\x26#39;) # regex = re.compile(r\x26#39;[1-9]\\d{5}\x26#39;) # match = regex.search(\x26#39;BIT 200300\x26#39;) if match: print(match.group(0)) for match in re.finditer(r\x26#39;[1-9]\\d{5}\x26#39;, \x26#39;BIT100081, TSU100084\x26#39;): if match: print(match.group(0)) 200300 100081 100084 Re库默认使用贪婪匹配，即输出匹配长度最长的字符串\n(二)Scrapy爬虫框架  Scrapy 是用 Python 实现的一个为了爬取网站数据、提取结构性数据而编写的应用框架。\nScrapy 常应用在包括数据挖掘，信息处理或存储历史数据等一系列的程序中。\n通常我们可以很简单的通过 Scrapy 框架实现一个爬虫，抓取指定网站的内容或图片。\n scrapy是使用命令行来爬取网站数据。首先建立一个工程项目，然后在spider目录下编写爬虫代码\n$ scrapy startproject spiderdemo $ cd spiderdemo $ scrapy genspider demo python123.io 这样就可以在spider目录下看到demo.py，然后往里面添加爬虫需求即可。\n# -*- coding: utf-8 -*- import scrapy class DemoSpider(scrapy.Spider): name = \x26#34;demo\x26#34; #allowed_domains = [\x26#34;python123.",
+    "inLanguage" : "en-us",
+    "author" : "JadeRong",
+    "creator" : "JadeRong",
+    "publisher": "JadeRong",
+    "accountablePerson" : "JadeRong",
+    "copyrightHolder" : "JadeRong",
+    "copyrightYear" : "2020",
+    "datePublished": "2020-05-06 00:23:18 \x2b0800 CST",
+    "dateModified" : "2020-05-06 00:23:18 \x2b0800 CST",
+    "url" : "https:\/\/rrrwx.github.io\/2020\/python%E7%88%AC%E8%99%AB%E7%AC%94%E8%AE%B0%E5%85%AD\/",
+    "wordCount" : "117",
+    "keywords" : [ "python爬虫","学习笔记", "JadeRong"]
+}
+</script>
+
+</head>
+
+  
+
+
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  <body class="">
+    <div class="wrapper">
+        <nav class="navbar">
+    <div class="container">
+        <div class="navbar-header header-logo">
+            <a href="https://rrrwx.github.io">JadeRong</a>&nbsp;
+        	<a href="javascript:void(0);" class="theme-switch"><i class="iconfont icon-table-lamp"></i></a>
+
+        </div>
+        <div class="menu navbar-right">
+                
+                
+                <a class="menu-item" href="/posts/" title="">Blogs</a>
+                
+                <a class="menu-item" href="/categories/" title="">Categories</a>
+                
+                <a class="menu-item" href="/tags/" title="">Tags</a>
+                
+                <a class="menu-item" href="/about/" title="">About</a>
+                
+        </div>
+    </div>
+</nav>
+<nav class="navbar-mobile" id="nav-mobile" style="display: none">
+     <div class="container">
+        <div class="navbar-header">
+            <div>  <a href="javascript:void(0);" class="theme-switch"><i class="iconfont icon-table-lamp"></i></a>&nbsp;<a href="https://rrrwx.github.io">JadeRong</a></div>
+            <div class="menu-toggle">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+     
+          <div class="menu" id="mobile-menu">
+                
+                
+                <a class="menu-item" href="/posts/" title="">Blogs</a>
+                
+                <a class="menu-item" href="/categories/" title="">Categories</a>
+                
+                <a class="menu-item" href="/tags/" title="">Tags</a>
+                
+                <a class="menu-item" href="/about/" title="">About</a>
+                
+        </div>
+    </div>
+</nav>
+    	 <main class="main">
+          <div class="container">
+      		
+<article class="post-warp" itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">python爬虫笔记（六）</h1>
+
+
+
+                Written by <a itemprop="name" href="https://rrrwx.github.io" rel="author">JadeRong</a>, included in <i class="iconfont icon-folder"></i>
+
+                <span class="post-category">
+                            <a href="https://rrrwx.github.io/categories/python%E7%88%AC%E8%99%AB%E7%AC%94%E8%AE%B0/"> python爬虫笔记 </a>
+                            
+                    </span>
+
+        
+        <h1 id="wc" style="font-size: 0.75rem;text-align: left;">约 117 个字    |    预计阅读 1 分钟    |    本文总阅读量<span id="busuanzi_value_page_pv"></span>次</h1>
+    </header>
+    <div class="post-content">
+        
+
+        
+            
+        
+
+        
+        
+     
+          
+          
+          
+
+          
+          
+          
+
+          <h3 id="一正则式表达">（一）正则式表达</h3>
+<p>可参考
+<a href="http://www.runoob.com/regexp/regexp-syntax.html">http://www.runoob.com/regexp/regexp-syntax.html</a></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> re
+match <span style="color:#f92672">=</span> re<span style="color:#f92672">.</span>search(<span style="color:#e6db74">r</span><span style="color:#e6db74">&#39;[1-9]\d{5}&#39;</span>, <span style="color:#e6db74">&#39;BIT 200300&#39;</span>)
+<span style="color:#75715e"># regex = re.compile(r&#39;[1-9]\d{5}&#39;)</span>
+<span style="color:#75715e"># match = regex.search(&#39;BIT 200300&#39;)</span>
+<span style="color:#66d9ef">if</span> match:
+    <span style="color:#66d9ef">print</span>(match<span style="color:#f92672">.</span>group(<span style="color:#ae81ff">0</span>))
+
+<span style="color:#66d9ef">for</span> match <span style="color:#f92672">in</span> re<span style="color:#f92672">.</span>finditer(<span style="color:#e6db74">r</span><span style="color:#e6db74">&#39;[1-9]\d{5}&#39;</span>, <span style="color:#e6db74">&#39;BIT100081, TSU100084&#39;</span>):
+    <span style="color:#66d9ef">if</span> match:
+        <span style="color:#66d9ef">print</span>(match<span style="color:#f92672">.</span>group(<span style="color:#ae81ff">0</span>))
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#ae81ff">200300</span>
+<span style="color:#ae81ff">100081</span>
+<span style="color:#ae81ff">100084</span>
+</code></pre></div><p>Re库默认使用贪婪匹配，即输出匹配长度最长的字符串</p>
+<h3 id="二scrapy爬虫框架">(二)Scrapy爬虫框架</h3>
+<blockquote>
+<p>Scrapy 是用 Python 实现的一个为了爬取网站数据、提取结构性数据而编写的应用框架。</p>
+<p>Scrapy 常应用在包括数据挖掘，信息处理或存储历史数据等一系列的程序中。</p>
+<p>通常我们可以很简单的通过 Scrapy 框架实现一个爬虫，抓取指定网站的内容或图片。</p>
+</blockquote>
+<p><img src="../../../images/scrapy.png" alt="scrapy.png"></p>
+<p>scrapy是使用命令行来爬取网站数据。首先建立一个工程项目，然后在spider目录下编写爬虫代码</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">$ scrapy startproject spiderdemo
+$ cd spiderdemo
+$ scrapy genspider demo python123.io
+</code></pre></div><p>这样就可以在spider目录下看到demo.py，然后往里面添加爬虫需求即可。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># -*- coding: utf-8 -*-</span>
+<span style="color:#f92672">import</span> scrapy
+<span style="color:#66d9ef">class</span> <span style="color:#a6e22e">DemoSpider</span>(scrapy<span style="color:#f92672">.</span>Spider):
+    name <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;demo&#34;</span>
+    <span style="color:#75715e">#allowed_domains = [&#34;python123.io&#34;]</span>
+    start_urls <span style="color:#f92672">=</span> (
+        <span style="color:#e6db74">&#39;http://www.python123.io/ws/demo.html&#39;</span>,
+    )
+
+    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">start_request</span>(self):
+        urls <span style="color:#f92672">=</span> (
+            <span style="color:#e6db74">&#39;http://www.python123.io/ws/demo.html&#39;</span>,
+        )
+        <span style="color:#66d9ef">for</span> url <span style="color:#f92672">in</span> urls:
+            <span style="color:#66d9ef">yield</span> scrapy<span style="color:#f92672">.</span>Request(url<span style="color:#f92672">=</span>url, callback<span style="color:#f92672">=</span>self<span style="color:#f92672">.</span>parse)
+
+    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">parse</span>(self, response):
+        fname <span style="color:#f92672">=</span> response<span style="color:#f92672">.</span>url<span style="color:#f92672">.</span>split(<span style="color:#e6db74">&#39;/&#39;</span>)[<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>]
+        <span style="color:#66d9ef">with</span> open(fname, <span style="color:#e6db74">&#39;wb&#39;</span>) <span style="color:#66d9ef">as</span> f:
+            f<span style="color:#f92672">.</span>write(response<span style="color:#f92672">.</span>body)
+        self<span style="color:#f92672">.</span>log(<span style="color:#e6db74">&#39;Saved file </span><span style="color:#e6db74">%s</span><span style="color:#e6db74">.&#39;</span> <span style="color:#f92672">%</span> fname)
+        <span style="color:#66d9ef">pass</span>
+</code></pre></div><p>可以看到工程目录下出现一个demo.html，这样就把网页<a href="http://www.python123.io/ws/demo.html">http://www.python123.io/ws/demo.html</a>中的内容保存到了demo.html中。值得注意的是这里的yield操作。</p>
+<blockquote>
+<p>yield可以看作是一个不断产生值的生成器，包含yield语句的函数每次产生一个值，然后函数被冻结，被唤醒后再产生一个值。</p>
+</blockquote>
+<p>yield操作能更加节省存储空间，而且使用更灵活，很适合爬取大量网页的情况。
+可参考
+<a href="https://www.jianshu.com/p/d09778f4e055">https://www.jianshu.com/p/d09778f4e055</a>
+<a href="https://blog.csdn.net/dcrmg/article/details/78128041">https://blog.csdn.net/dcrmg/article/details/78128041</a></p>
+
+    </div>
+
+
+
+    <div class="post-copyright">
+                
+        
+
+
+        <section>
+            <p class="share-item">
+                <span>Share :</span>
+                
+                <span>
+
+      
+        <a href="//twitter.com/share?url=https%3a%2f%2frrrwx.github.io%2f2020%2fpython%25E7%2588%25AC%25E8%2599%25AB%25E7%25AC%2594%25E8%25AE%25B0%25E5%2585%25AD%2f&amp;text=python%e7%88%ac%e8%99%ab%e7%ac%94%e8%ae%b0%ef%bc%88%e5%85%ad%ef%bc%89&amp;via=" target="_blank" title="Share on Twitter">
+          <i class="iconfont icon-twitter"></i>
+        </a>
+        
+
+      
+      
+        <a href="//www.facebook.com/sharer/sharer.php?u=https%3a%2f%2frrrwx.github.io%2f2020%2fpython%25E7%2588%25AC%25E8%2599%25AB%25E7%25AC%2594%25E8%25AE%25B0%25E5%2585%25AD%2f" target="_blank" title="Share on Facebook">
+          <i class="iconfont icon-facebook"></i>
+        </a>
+        
+      
+      
+      
+      
+      
+      
+        
+      
+        
+      
+
+          
+
+          
+
+          
+        <a href="//www.douban.com/recommend/?url=https%3a%2f%2frrrwx.github.io%2f2020%2fpython%25E7%2588%25AC%25E8%2599%25AB%25E7%25AC%2594%25E8%25AE%25B0%25E5%2585%25AD%2f&amp;title=python%e7%88%ac%e8%99%ab%e7%ac%94%e8%ae%b0%ef%bc%88%e5%85%ad%ef%bc%89" target="_blank" title="Share on Douban ">
+            <i class="iconfont icon-douban"></i>
+          </a>
+          
+
+          
+        <a href="//service.weibo.com/share/share.php?url=https%3a%2f%2frrrwx.github.io%2f2020%2fpython%25E7%2588%25AC%25E8%2599%25AB%25E7%25AC%2594%25E8%25AE%25B0%25E5%2585%25AD%2f&amp;appkey=&amp;title=python%e7%88%ac%e8%99%ab%e7%ac%94%e8%ae%b0%ef%bc%88%e5%85%ad%ef%bc%89" target="_blank" title="Share on Douban ">
+            <i class="iconfont icon-weibo"></i>
+          </a>
+          
+
+</span>
+                
+            </p>
+        </section>
+
+
+        <section>
+            <p class="copyright-item">
+                <span>Updated </span>
+                <span class="post-time">
+                on 
+                <time datetime=2020-05-06 itemprop="datePublished">May 6, 2020</time>
+                </span>
+
+            </p>
+        </section>
+    </div>
+
+  
+    <div class="post-tags">
+        
+            <section>
+            
+            <span class="tag"><a href="https://rrrwx.github.io/tags/python%E7%88%AC%E8%99%AB/">
+                    <i class="iconfont icon-tag"></i>python爬虫</a></span>
+            
+            <span class="tag"><a href="https://rrrwx.github.io/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">
+                    <i class="iconfont icon-tag"></i>学习笔记</a></span>
+            
+            </section>
+        
+        <section>
+                <a href="javascript:window.history.back();">back</a></span> · 
+                <span><a href="https://rrrwx.github.io">home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav">
+        
+        <a href="https://rrrwx.github.io/2020/python%E7%88%AC%E8%99%AB%E7%AC%94%E8%AE%B0%E4%BA%94/" class="prev" rel="prev" title="python爬虫笔记（五）"><i class="iconfont icon-left"></i>&nbsp;python爬虫笔记（五）</a>
+         
+        
+        <a href="https://rrrwx.github.io/2020/sql%E8%AF%AD%E6%B3%95/" class="next" rel="next" title="SQL语法">SQL语法&nbsp;<i class="iconfont icon-right"></i></a>
+        
+    </div>
+
+    <div class="post-comment">
+          
+                 
+          
+    </div>
+</article>
+          </div>
+		   </main>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="">
+                <i class="fas fa-arrow-up fa-fw"></i>
+            </a>
+        </div>
+
+      <footer class="footer">
+
+
+
+
+    <div class="copyright">
+
+            <div class="footer-line">
+                &copy;<i class="far fa-copyright fa-fw"></i>&nbsp;<span itemprop="copyrightYear">2020</span>&nbsp;&nbsp;<span class="author" itemprop="copyrightHolder"><a href="https://rrrwx.github.io">JadeRong</a></span>&nbsp;|&nbsp;<span class="license">Released under <a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span>
+                &nbsp;|&nbsp;<span>Powered by <a href="https://gohugo.io/" target="_blank" rel="external nofollow">Hugo</a> & <a href="https://github.com/liuzc/leaveit" target="_blank" rel="external nofollow">LeaveIt</a></span>
+            </div>
+
+
+    </div>
+</footer>
+
+
+
+
+
+
+
+
+
+
+
+
+    
+     <link href="//lib.baomitu.com/lightgallery/1.6.11/css/lightgallery.min.css" rel="stylesheet">  
+      
+     <script src="/js/vendor_gallery.min.js" async="" ></script>
+    
+  
+
+
+
+
+     </div>
+  </body>
+</html>

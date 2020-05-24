@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+  <meta http-equiv="content-type" content="text/html;charset=utf-8">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noodp"/>
+  <meta name="author" content="JadeRong">
+  <meta name="description" content="主要分享一些平时学习和开发中用到的知识">
+  
+  
+  <link rel="prev" href="https://rrrwx.github.io/2020/%E5%BB%BA%E8%A1%A8%E8%84%9A%E6%9C%AC/" />
+  <link rel="next" href="https://rrrwx.github.io/2020/jdbc%E5%9F%BA%E7%A1%80%E4%BA%8C%E7%BB%93%E6%9E%9C%E9%9B%86/" />
+  <link rel="canonical" href="https://rrrwx.github.io/2020/jdbc%E5%9F%BA%E7%A1%80%E4%B8%80%E8%BF%9E%E6%8E%A5%E6%95%B0%E6%8D%AE%E5%BA%93/" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+  <meta name="msapplication-TileColor" content="#da532c">
+  <meta name="theme-color" content="#ffffff">
+  <title>
+       
+       
+           JDBC基础一之连接数据库 | JadeRong
+       
+  </title>
+  <meta name="title" content="JDBC基础一之连接数据库 | JadeRong">
+    
+  
+  <link rel="stylesheet" href="/font/iconfont.css">
+  <link rel="stylesheet" href="/css/main.min.css">
+
+
+  
+  
+ 
+
+<script type="application/ld+json">
+ "@context" : "http://schema.org",
+    "@type" : "BlogPosting",
+    "mainEntityOfPage": {
+         "@type": "WebPage",
+         "@id": "https:\/\/rrrwx.github.io"
+    },
+    "articleSection" : "posts",
+    "name" : "JDBC基础一之连接数据库",
+    "headline" : "JDBC基础一之连接数据库",
+    "description" : "https:\/\/edu.aliyun.com\/roadmap\/java?spm=a2c6h.12999620.1371257.1.5a195738ZJjjex#part1\n什么是JDBC？ CRUD（C-create, R-read, U-update, D-delete）\n参考： https:\/\/blog.csdn.net\/jungle_rao\/article\/details\/81274720\nhttps:\/\/blog.csdn.net\/jungle_rao\/article\/details\/81274720\n JDBC（Java DataBase Connectivity）是Java和数据库之间的一个桥梁，是一个规范而不是一个实现，能够执行SQL语句。它由一组用Java语言编写的类和接口组成。各种不同类型的数据库都有相应的实现。\n  Java数据库连接，（Java Database Connectivity，简称JDBC）是Java语言中用来规范客户端程序如何来访问数据库的应用程序接口，提供了诸如查询和更新数据库中数据的方法。JDBC也是Sun Microsystems的商标。我们通常说的JDBC是面向关系型数据库的。\n JDBC连接数据库 1. 连接的四大参数 driverName、url、username、password import java.sql.Connection ; import java.sql.DriverManager ; public class DBUtil { \/\/ jdbc协议的格式：jdbc:厂商的名称:子协议(有厂商自己来规定)  \/\/ mysql子协议：\/\/主机:端口号\/数据库名称 \tpublic static final String URL = \x26#34;jdbc:mysql:\/\/localhost:3306\/mydb000\x26#34; ; public static final String USERNAME = \x26#34;root\x26#34; ; public static final String PASSWORD = \x26#34;123\x26#34; ; public void fun1() throws ClassNotFoundException, SQLException { \/* * jdbc的四大配置参数（例） * \x26gt; driverClassName: com.",
+    "inLanguage" : "en-us",
+    "author" : "JadeRong",
+    "creator" : "JadeRong",
+    "publisher": "JadeRong",
+    "accountablePerson" : "JadeRong",
+    "copyrightHolder" : "JadeRong",
+    "copyrightYear" : "2020",
+    "datePublished": "2020-05-21 10:37:36 \x2b0800 CST",
+    "dateModified" : "2020-05-21 10:37:36 \x2b0800 CST",
+    "url" : "https:\/\/rrrwx.github.io\/2020\/jdbc%E5%9F%BA%E7%A1%80%E4%B8%80%E8%BF%9E%E6%8E%A5%E6%95%B0%E6%8D%AE%E5%BA%93\/",
+    "wordCount" : "476",
+    "keywords" : [ "学习笔记","mysql","JDBC", "JadeRong"]
+}
+</script>
+
+</head>
+
+  
+
+
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  <body class="">
+    <div class="wrapper">
+        <nav class="navbar">
+    <div class="container">
+        <div class="navbar-header header-logo">
+            <a href="https://rrrwx.github.io">JadeRong</a>&nbsp;
+        	<a href="javascript:void(0);" class="theme-switch"><i class="iconfont icon-table-lamp"></i></a>
+
+        </div>
+        <div class="menu navbar-right">
+                
+                
+                <a class="menu-item" href="/posts/" title="">Blogs</a>
+                
+                <a class="menu-item" href="/categories/" title="">Categories</a>
+                
+                <a class="menu-item" href="/tags/" title="">Tags</a>
+                
+                <a class="menu-item" href="/about/" title="">About</a>
+                
+        </div>
+    </div>
+</nav>
+<nav class="navbar-mobile" id="nav-mobile" style="display: none">
+     <div class="container">
+        <div class="navbar-header">
+            <div>  <a href="javascript:void(0);" class="theme-switch"><i class="iconfont icon-table-lamp"></i></a>&nbsp;<a href="https://rrrwx.github.io">JadeRong</a></div>
+            <div class="menu-toggle">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+     
+          <div class="menu" id="mobile-menu">
+                
+                
+                <a class="menu-item" href="/posts/" title="">Blogs</a>
+                
+                <a class="menu-item" href="/categories/" title="">Categories</a>
+                
+                <a class="menu-item" href="/tags/" title="">Tags</a>
+                
+                <a class="menu-item" href="/about/" title="">About</a>
+                
+        </div>
+    </div>
+</nav>
+    	 <main class="main">
+          <div class="container">
+      		
+<article class="post-warp" itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">JDBC基础一之连接数据库</h1>
+
+
+
+                Written by <a itemprop="name" href="https://rrrwx.github.io" rel="author">JadeRong</a>, included in <i class="iconfont icon-folder"></i>
+
+                <span class="post-category">
+                            <a href="https://rrrwx.github.io/categories/mysql%E5%AD%A6%E4%B9%A0/"> mysql学习 </a>
+                            
+                    </span>
+
+        
+        <h1 id="wc" style="font-size: 0.75rem;text-align: left;">约 476 个字    |    预计阅读 3 分钟    |    本文总阅读量<span id="busuanzi_value_page_pv"></span>次</h1>
+    </header>
+    <div class="post-content">
+        
+
+        
+            
+        
+
+        
+        
+     
+          
+          
+          
+
+          
+          
+          
+
+          <p><a href="https://edu.aliyun.com/roadmap/java?spm=a2c6h.12999620.1371257.1.5a195738ZJjjex#part1">https://edu.aliyun.com/roadmap/java?spm=a2c6h.12999620.1371257.1.5a195738ZJjjex#part1</a></p>
+<h1 id="什么是jdbc">什么是JDBC？</h1>
+<p><strong>CRUD（C-create, R-read, U-update, D-delete）</strong></p>
+<p>参考： <a href="https://blog.csdn.net/jungle_rao/article/details/81274720">https://blog.csdn.net/jungle_rao/article/details/81274720</a></p>
+<p><a href="https://blog.csdn.net/jungle_rao/article/details/81274720">https://blog.csdn.net/jungle_rao/article/details/81274720</a></p>
+<blockquote>
+<p>JDBC（<strong>J</strong>ava <strong>D</strong>ata<strong>B</strong>ase <strong>C</strong>onnectivity）是Java和数据库之间的一个桥梁，是一个规范而不是一个实现，能够执行SQL语句。它由一组用<a href="https://baike.baidu.com/item/Java%E8%AF%AD%E8%A8%80">Java语言</a>编写的类和接口组成。各种不同类型的数据库都有相应的实现。</p>
+</blockquote>
+<p><img src="../../../../images/JDBC/jdbc.png" alt="img"></p>
+<blockquote>
+<p>Java数据库连接，（Java Database Connectivity，简称JDBC）是<a href="https://baike.baidu.com/item/Java%E8%AF%AD%E8%A8%80">Java语言</a>中用来规范客户端程序如何来访问数据库的<a href="https://baike.baidu.com/item/%E5%BA%94%E7%94%A8%E7%A8%8B%E5%BA%8F%E6%8E%A5%E5%8F%A3/10418844">应用程序接口</a>，提供了诸如查询和更新数据库中数据的方法。JDBC也是Sun Microsystems的商标。我们通常说的JDBC是面向关系型数据库的。</p>
+</blockquote>
+<h1 id="jdbc连接数据库">JDBC连接数据库</h1>
+<h3 id="1-连接的四大参数">1. 连接的四大参数</h3>
+<h5 id="drivernameurlusernamepassword">driverName、url、username、password</h5>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java">
+<span style="color:#f92672">import</span> java.sql.Connection <span style="color:#f92672">;</span>
+<span style="color:#f92672">import</span> java.sql.DriverManager <span style="color:#f92672">;</span>
+
+<span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">DBUtil</span> <span style="color:#f92672">{</span>
+  <span style="color:#75715e">// jdbc协议的格式：jdbc:厂商的名称:子协议(有厂商自己来规定)
+</span><span style="color:#75715e"></span>  <span style="color:#75715e">// mysql子协议：//主机:端口号/数据库名称
+</span><span style="color:#75715e"></span>	<span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">final</span> String URL <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;jdbc:mysql://localhost:3306/mydb000&#34;</span> <span style="color:#f92672">;</span>
+	<span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">final</span> String USERNAME <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;root&#34;</span> <span style="color:#f92672">;</span>
+	<span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">final</span> String PASSWORD <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;123&#34;</span> <span style="color:#f92672">;</span>
+	
+	<span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">fun1</span><span style="color:#f92672">()</span> <span style="color:#66d9ef">throws</span> ClassNotFoundException<span style="color:#f92672">,</span> SQLException <span style="color:#f92672">{</span>
+		<span style="color:#75715e">/*
+</span><span style="color:#75715e">		 * jdbc的四大配置参数（例）
+</span><span style="color:#75715e">		 * &gt; driverClassName: com.mysql.jdbc.Driver
+</span><span style="color:#75715e">		 * &gt; url: jdbc:mysql://localhost:3306/mydb000
+</span><span style="color:#75715e">		 * &gt; username: root
+</span><span style="color:#75715e">		 * &gt; password: 123
+</span><span style="color:#75715e">		 */</span>
+		<span style="color:#75715e">//加载驱动类（注册驱动）
+</span><span style="color:#75715e"></span>		Class<span style="color:#f92672">.</span><span style="color:#a6e22e">forName</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;com.mysql.jdbc.Driver&#34;</span><span style="color:#f92672">)</span> <span style="color:#f92672">;</span>  
+		<span style="color:#75715e">//使用url、username、password得到连接对象
+</span><span style="color:#75715e"></span>		Connection con <span style="color:#f92672">=</span> DriverManager<span style="color:#f92672">.</span><span style="color:#a6e22e">getConnection</span><span style="color:#f92672">(</span>URL<span style="color:#f92672">,</span> USERNAME<span style="color:#f92672">,</span> PASSWORD<span style="color:#f92672">)</span> <span style="color:#f92672">;</span>
+		<span style="color:#75715e">/**
+</span><span style="color:#75715e">		 * 所有的java.sql.Driver实现类，都提供了static块，块内的代码就是把自己注册到
+</span><span style="color:#75715e">		 * DriverManager中！
+</span><span style="color:#75715e">		 * 
+</span><span style="color:#75715e">		 * Class.forName(&#34;com.mysql.jdbc.Driver&#34;) ;
+</span><span style="color:#75715e">		 * 作用和下面的两步等价
+</span><span style="color:#75715e">		 * com.mysql.jdbc.Driver driver = new com.mysql.jdbc.Driver() ;
+</span><span style="color:#75715e">		 * DriverManager.registerDriver(driver) ;
+</span><span style="color:#75715e">		 */</span>
+		<span style="color:#75715e">/**
+</span><span style="color:#75715e">		 * jdbc4.0之后，每个驱动jar包中，在META-INF/sources目录下提供了一个名为
+</span><span style="color:#75715e">		 * java.sql.Driver的文件
+</span><span style="color:#75715e">		 * 文件的内容就是该接口的实现类名称
+</span><span style="color:#75715e">		 * 如：com.mysql.jdbs.Driver
+</span><span style="color:#75715e">		 * 因此4.0之后如果不手动加载驱动类也是可以连接的
+</span><span style="color:#75715e">		 * 但是，为了代码的通用性，连接的两个步骤不可省略
+</span><span style="color:#75715e">		 */</span>
+    
+     <span style="color:#75715e">//关闭连接
+</span><span style="color:#75715e"></span>     con<span style="color:#f92672">.</span><span style="color:#a6e22e">close</span><span style="color:#f92672">()</span> <span style="color:#f92672">;</span> <span style="color:#75715e">//必须要关
+</span><span style="color:#75715e"></span>	<span style="color:#f92672">}</span>
+<span style="color:#f92672">}</span>
+</code></pre></div><blockquote>
+<p>Connection是与特定数据库连接回话的接口，使用的时候需要导包，而且必须在程序结束的时候将其关闭。getConnection方法也需要捕获SQLException异常。</p>
+</blockquote>
+<p><strong>因为在进行数据库的增删改查的时候都需要与数据库建立连接，所以可以在项目中将建立连接写成一个工具方法，用的时候直接调用即可：</strong></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#75715e">/**
+</span><span style="color:#75715e"> * 取得数据库的连接
+</span><span style="color:#75715e"> * @return 一个数据库的连接
+</span><span style="color:#75715e"> */</span>
+<span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> Connection <span style="color:#a6e22e">getConnection</span><span style="color:#f92672">(){</span>
+		Connection con <span style="color:#f92672">=</span> <span style="color:#66d9ef">null</span><span style="color:#f92672">;</span>
+		<span style="color:#66d9ef">try</span> <span style="color:#f92672">{</span>
+				<span style="color:#75715e">//初始化驱动类com.mysql.jdbc.Driver
+</span><span style="color:#75715e"></span>	      Class<span style="color:#f92672">.</span><span style="color:#a6e22e">forName</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;com.mysql.jdbc.Driver&#34;</span><span style="color:#f92672">);</span>
+	      con <span style="color:#f92672">=</span> DriverManager<span style="color:#f92672">.</span><span style="color:#a6e22e">getConnection</span><span style="color:#f92672">(</span>
+           <span style="color:#e6db74">&#34;jdbc:mysql://127.0.0.1:3306/exam?characterEncoding=UTF-8&#34;</span><span style="color:#f92672">,</span><span style="color:#e6db74">&#34;root&#34;</span><span style="color:#f92672">,</span> <span style="color:#e6db74">&#34;admin&#34;</span><span style="color:#f92672">);</span>
+	      <span style="color:#75715e">//该类就在 mysql-connector-java-5.0.8-bin.jar中
+</span><span style="color:#75715e"></span>        <span style="color:#75715e">//如果忘记了第一个步骤的导包，就会抛出ClassNotFoundException
+</span><span style="color:#75715e"></span>	  <span style="color:#f92672">}</span> <span style="color:#66d9ef">catch</span> <span style="color:#f92672">(</span>ClassNotFoundException e<span style="color:#f92672">)</span> <span style="color:#f92672">{</span> 				
+	      e<span style="color:#f92672">.</span><span style="color:#a6e22e">printStackTrace</span><span style="color:#f92672">();</span>
+	  <span style="color:#f92672">}</span><span style="color:#66d9ef">catch</span> <span style="color:#f92672">(</span>SQLException e<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>							
+	      e<span style="color:#f92672">.</span><span style="color:#a6e22e">printStackTrace</span><span style="color:#f92672">();</span>
+	  <span style="color:#f92672">}</span>
+		<span style="color:#66d9ef">return</span> con<span style="color:#f92672">;</span>
+<span style="color:#f92672">}</span>
+</code></pre></div><h3 id="2-各种数据库连接的url">2. 各种数据库连接的url</h3>
+<p><a href="https://blog.csdn.net/celebrity_senior/article/details/52759685">https://blog.csdn.net/celebrity_senior/article/details/52759685</a></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#75715e">/*1.Oracle数据库(thin模式)*/</span>
+Class<span style="color:#f92672">.</span><span style="color:#a6e22e">forName</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;oracle.jdbc.driver.OracleDriver&#34;</span><span style="color:#f92672">);</span><span style="color:#75715e">//数据库驱动字符串
+</span><span style="color:#75715e"></span>String url<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;jdbc:oracle:thin:@localhost:1521:orcl&#34;</span><span style="color:#f92672">;</span><span style="color:#75715e">//连接URL字符串   orcl为数据库的SID
+</span><span style="color:#75715e"></span>
+<span style="color:#75715e">/*2.DB2数据库*/</span>
+Class<span style="color:#f92672">.</span><span style="color:#a6e22e">forName</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;com.ibm.db2.jdbc.app.DB2Driver&#34;</span><span style="color:#f92672">);</span><span style="color:#75715e">//数据库驱动字符串
+</span><span style="color:#75715e"></span>String url<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;jdbc:db2://localhost:5000/sample&#34;</span><span style="color:#f92672">;</span><span style="color:#75715e">//连接URL字符串    sample为数据库的名字
+</span><span style="color:#75715e"></span>
+<span style="color:#75715e">/*3.MySQL数据库*/</span>
+Class<span style="color:#f92672">.</span><span style="color:#a6e22e">forName</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;com.mysql.Driver&#34;</span><span style="color:#f92672">);</span><span style="color:#75715e">//数据库驱动字符串
+</span><span style="color:#75715e"></span>String url<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;jdbc:mysql://localhost:3306/myDB&#34;</span><span style="color:#f92672">;</span><span style="color:#75715e">//连接URL字符串    myDB为数据库的名字
+</span><span style="color:#75715e"></span>
+<span style="color:#75715e">/*4.SQL Server数据库*/</span>
+Class<span style="color:#f92672">.</span><span style="color:#a6e22e">forName</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;com.microsoft.sqlserver.jdbc.SQLServerDriver&#34;</span><span style="color:#f92672">);</span><span style="color:#75715e">//数据库驱动字符串
+</span><span style="color:#75715e"></span>String url<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;jdbc:sqlserver://localhost:1433;DatabaseName=epet&#34;</span><span style="color:#f92672">;</span><span style="color:#75715e">//连接URL字符串   epet为数据库的名字
+</span><span style="color:#75715e"></span>
+<span style="color:#75715e">/*5.H2数据库*/</span>
+Class<span style="color:#f92672">.</span><span style="color:#a6e22e">forName</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;org.h2.Driver&#34;</span><span style="color:#f92672">);</span><span style="color:#75715e">//数据库驱动字符串
+</span><span style="color:#75715e"></span>String url<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;jdbc:h2:~/test&#34;</span><span style="color:#f92672">;</span><span style="color:#75715e">//连接URL字符串   test为数据库的名字
+</span><span style="color:#75715e"></span>
+<span style="color:#75715e">/*6.PostgreSQL数据库*/</span>
+Class<span style="color:#f92672">.</span><span style="color:#a6e22e">forName</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;org.postgresql.Driver&#34;</span><span style="color:#f92672">);</span><span style="color:#75715e">//数据库驱动字符串
+</span><span style="color:#75715e"></span>String url<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;jdbc:postgresql://localhost:5432/testdb&#34;</span><span style="color:#f92672">;</span><span style="color:#75715e">//连接URL字符串   testdb为数据库的名字
+</span></code></pre></div><h1 id="jdbc增删改查">JDBC增删改查</h1>
+<h3 id="1-通过connection对象创建statement">1. 通过Connection对象创建Statement</h3>
+<p><strong>Statement语句是发送器，它的功能是想数据库发送sql语句！</strong></p>
+<blockquote>
+<p>Statement接口创建之后，可以执行SQL语句，完成对数据库的增删改查。其中 ，增删改只需要改变SQL语句的内容就能完成，然而查询略显复杂。在Statement中使用字符串拼接的方式，该方式存在句法复杂，容易犯错等缺点。因此可以使用PreparedStatement。</p>
+</blockquote>
+<h3 id="2-增删改">2. 增删改</h3>
+<p><strong>调用它的int executeUpdate(String sql)，就可以发送DML、DDL语句</strong></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#75715e">// 通过Connection得到Statement对象
+</span><span style="color:#75715e"></span>Statement stmt <span style="color:#f92672">=</span> con<span style="color:#f92672">.</span><span style="color:#a6e22e">createStatement</span><span style="color:#f92672">()</span> <span style="color:#f92672">;</span>
+<span style="color:#75715e">// 使用Statement发送sql语句
+</span><span style="color:#75715e">// String sql = &#34;INSERT INTO stu VALUES (&#39;ITCAST0001&#39;, &#39;zhangSan&#39;, 18, &#39;m&#39;)&#34; ;
+</span><span style="color:#75715e">// String sql = &#34;UPDATE stu SET name=&#39;zhaoLiu&#39;, age=20, gender=&#39;f&#39; WHERE id=&#39;ITCAST0003&#39;&#34; ;
+</span><span style="color:#75715e"></span>String sql <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;DELETE FROM stu&#34;</span> <span style="color:#f92672">;</span>
+<span style="color:#75715e">// excuteUpdate方法返回值表示该sql语句执行后影响的行数
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">int</span> r <span style="color:#f92672">=</span> stmt<span style="color:#f92672">.</span><span style="color:#a6e22e">excuteUpdate</span><span style="color:#f92672">(</span>sql<span style="color:#f92672">)</span> <span style="color:#f92672">;</span>
+System<span style="color:#f92672">.</span><span style="color:#a6e22e">out</span><span style="color:#f92672">.</span><span style="color:#a6e22e">println</span><span style="color:#f92672">(</span>r<span style="color:#f92672">)</span> <span style="color:#f92672">;</span>
+<span style="color:#66d9ef">if</span> <span style="color:#f92672">(</span>stmt <span style="color:#f92672">!=</span> <span style="color:#66d9ef">null</span><span style="color:#f92672">)</span> stmt<span style="color:#f92672">.</span><span style="color:#a6e22e">close</span><span style="color:#f92672">()</span> <span style="color:#f92672">;</span>
+</code></pre></div><h3 id="3-查询">3. 查询</h3>
+<p><strong>调用ResultSet excuteQuery(String sql)来发送查询语句DQL</strong></p>
+<p>得到的结果是一个ResultSet类对象，根据其next()方法移动“行光标”，从而读取每一行记录。然后使用getXxx(i)方法读取改行记录中每一列数据。</p>
+<p><strong>返回的结果对象中，第一行是记录每一列的列名，称为“beforeFirst”，因此读取第一行记录就应该先执行next()方法；当读取完所有记时，此时行光标指向null，称为“afterLast”，此时next()返回结果就位空。</strong></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#75715e">// 通过Connection得到Statement对象
+</span><span style="color:#75715e"></span>Statement stmt <span style="color:#f92672">=</span> con<span style="color:#f92672">.</span><span style="color:#a6e22e">createStatement</span><span style="color:#f92672">()</span> <span style="color:#f92672">;</span>
+<span style="color:#75715e">// 使用Statement发送sql查询语句
+</span><span style="color:#75715e"></span>String sql <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;SELECT * FROM stu&#34;</span> <span style="color:#f92672">;</span>
+ResultSet rs <span style="color:#f92672">=</span> stmt<span style="color:#f92672">.</span><span style="color:#a6e22e">excuteQuery</span><span style="color:#f92672">(</span>sql<span style="color:#f92672">)</span> <span style="color:#f92672">;</span>
+<span style="color:#66d9ef">if</span> <span style="color:#f92672">(</span>rs<span style="color:#f92672">.</span><span style="color:#a6e22e">next</span><span style="color:#f92672">())</span> <span style="color:#f92672">{</span> <span style="color:#75715e">//把行光标移至下一行，并判断下一行是否存在
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">int</span> empno <span style="color:#f92672">=</span> rs<span style="color:#f92672">.</span><span style="color:#a6e22e">getInt</span><span style="color:#f92672">(</span>1<span style="color:#f92672">)</span> <span style="color:#f92672">;</span> <span style="color:#75715e">//通过列编号来获取该列的值
+</span><span style="color:#75715e"></span>  	String ename <span style="color:#f92672">=</span> rs<span style="color:#f92672">.</span><span style="color:#a6e22e">getString</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;ename&#34;</span><span style="color:#f92672">)</span> <span style="color:#f92672">;</span> <span style="color:#75715e">//通过列名称来获取该列的值
+</span><span style="color:#75715e"></span>  	<span style="color:#66d9ef">double</span> sal <span style="color:#f92672">=</span> rs<span style="color:#f92672">.</span><span style="color:#a6e22e">getDouble</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;sal&#34;</span><span style="color:#f92672">)</span> <span style="color:#f92672">;</span>
+  	System<span style="color:#f92672">.</span><span style="color:#a6e22e">out</span><span style="color:#f92672">.</span><span style="color:#a6e22e">println</span><span style="color:#f92672">(</span>empno<span style="color:#f92672">+</span><span style="color:#e6db74">&#34;, &#34;</span><span style="color:#f92672">+</span>ename<span style="color:#f92672">+</span><span style="color:#e6db74">&#34;, &#34;</span><span style="color:#f92672">+</span>sal<span style="color:#f92672">)</span> <span style="color:#f92672">;</span>
+<span style="color:#f92672">}</span>
+<span style="color:#66d9ef">if</span> <span style="color:#f92672">(</span>rs <span style="color:#f92672">!=</span> <span style="color:#66d9ef">null</span><span style="color:#f92672">)</span> rs<span style="color:#f92672">.</span><span style="color:#a6e22e">close</span><span style="color:#f92672">()</span> <span style="color:#f92672">;</span>
+<span style="color:#66d9ef">if</span> <span style="color:#f92672">(</span>stmt <span style="color:#f92672">!=</span> <span style="color:#66d9ef">null</span><span style="color:#f92672">)</span> stmt<span style="color:#f92672">.</span><span style="color:#a6e22e">close</span><span style="color:#f92672">()</span> <span style="color:#f92672">;</span>
+</code></pre></div><p><strong>另外，==boolean excute()==方法也可以用来执行所有sql语句，但是只返回boolean类型，表示该sql语句是否能返回结果集</strong></p>
+<h3 id="4-preparedstatement接口">4. PreparedStatement接口</h3>
+<p>Statement接口的子接口</p>
+<blockquote>
+<p>与 Statement一样，PreparedStatement也是用来执行sql语句的与创建Statement不同的是，需要根据sql语句创建PreparedStatement。除此之外，还能够通过设置参数，指定相应的值，而不是Statement那样使用字符串拼接。</p>
+</blockquote>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java">String sql <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;insert into t_course(course_name) values(?)&#34;</span><span style="color:#f92672">;</span>
+<span style="color:#75715e">//该语句为每个 IN 参数保留一个问号（“？”）作为占位符
+</span><span style="color:#75715e"></span>PreparedStatement pstmt <span style="color:#f92672">=</span> <span style="color:#66d9ef">null</span><span style="color:#f92672">;</span>		<span style="color:#75715e">//创建statement
+</span><span style="color:#75715e"></span>pstmt <span style="color:#f92672">=</span> <span style="color:#f92672">(</span>PreparedStatement<span style="color:#f92672">)</span> con<span style="color:#f92672">.</span><span style="color:#a6e22e">prepareStatement</span><span style="color:#f92672">(</span>sql<span style="color:#f92672">);</span>
+pstmt<span style="color:#f92672">.</span><span style="color:#a6e22e">setString</span><span style="color:#f92672">(</span>1<span style="color:#f92672">,</span> courseName<span style="color:#f92672">);</span> <span style="color:#75715e">//给占位符赋值
+</span><span style="color:#75715e"></span>pstmt<span style="color:#f92672">.</span><span style="color:#a6e22e">executeUpdate</span><span style="color:#f92672">();</span>			<span style="color:#75715e">//执行
+</span></code></pre></div><h1 id="jdbc关闭连接">JDBC关闭连接</h1>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#66d9ef">if</span> <span style="color:#f92672">(</span>rs <span style="color:#f92672">!=</span> <span style="color:#66d9ef">null</span><span style="color:#f92672">)</span> rs<span style="color:#f92672">.</span><span style="color:#a6e22e">close</span><span style="color:#f92672">()</span> <span style="color:#f92672">;</span>
+<span style="color:#66d9ef">if</span> <span style="color:#f92672">(</span>stmt <span style="color:#f92672">!=</span> <span style="color:#66d9ef">null</span><span style="color:#f92672">)</span> stmt<span style="color:#f92672">.</span><span style="color:#a6e22e">close</span><span style="color:#f92672">()</span> <span style="color:#f92672">;</span>
+<span style="color:#66d9ef">if</span> <span style="color:#f92672">(</span>con <span style="color:#f92672">!=</span> <span style="color:#66d9ef">null</span><span style="color:#f92672">)</span> con<span style="color:#f92672">.</span><span style="color:#a6e22e">close</span><span style="color:#f92672">()</span> <span style="color:#f92672">;</span>
+</code></pre></div><blockquote>
+<p>在JDBC编码的过程中我们创建了Connection、ResultSet等资源，这些资源在使用完毕之后是一定要进行关闭的。关闭的过程中遵循<strong>从里到外</strong>的原则。因为在增删改查的操作中都要用到这样的关闭操作，为了使代码简单，增加其复用性，可以将关闭的操作写成一个方法和建立连接的方法一起放到一份工具类中。</p>
+</blockquote>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java">    <span style="color:#75715e">/**
+</span><span style="color:#75715e">     * 封装三个关闭方法
+</span><span style="color:#75715e">     * @param stmt
+</span><span style="color:#75715e">     */</span>
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">close</span><span style="color:#f92672">(</span>Statement stmt<span style="color:#f92672">){</span>
+        <span style="color:#66d9ef">if</span><span style="color:#f92672">(</span>stmt <span style="color:#f92672">!=</span> <span style="color:#66d9ef">null</span><span style="color:#f92672">){</span>						<span style="color:#75715e">//避免出现空指针异常
+</span><span style="color:#75715e"></span>            <span style="color:#66d9ef">try</span><span style="color:#f92672">{</span>
+                stmt<span style="color:#f92672">.</span><span style="color:#a6e22e">close</span><span style="color:#f92672">();</span>
+            <span style="color:#f92672">}</span><span style="color:#66d9ef">catch</span><span style="color:#f92672">(</span>SQLException e<span style="color:#f92672">){</span>
+                e<span style="color:#f92672">.</span><span style="color:#a6e22e">printStackTrace</span><span style="color:#f92672">();</span>
+            <span style="color:#f92672">}</span>
+
+        <span style="color:#f92672">}</span>
+    <span style="color:#f92672">}</span>
+
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">close</span><span style="color:#f92672">(</span>Connection con<span style="color:#f92672">){</span>
+        <span style="color:#66d9ef">if</span><span style="color:#f92672">(</span>con <span style="color:#f92672">!=</span> <span style="color:#66d9ef">null</span><span style="color:#f92672">){</span>
+            <span style="color:#66d9ef">try</span> <span style="color:#f92672">{</span>
+                con<span style="color:#f92672">.</span><span style="color:#a6e22e">close</span><span style="color:#f92672">();</span>
+            <span style="color:#f92672">}</span> <span style="color:#66d9ef">catch</span> <span style="color:#f92672">(</span>SQLException e<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+                <span style="color:#75715e">// TODO: handle exception
+</span><span style="color:#75715e"></span>                e<span style="color:#f92672">.</span><span style="color:#a6e22e">printStackTrace</span><span style="color:#f92672">();</span>
+            <span style="color:#f92672">}</span>
+        <span style="color:#f92672">}</span>
+    <span style="color:#f92672">}</span>
+
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">close</span><span style="color:#f92672">(</span>ResultSet rs<span style="color:#f92672">){</span>
+        <span style="color:#66d9ef">if</span> <span style="color:#f92672">(</span>rs <span style="color:#f92672">!=</span> <span style="color:#66d9ef">null</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+            <span style="color:#66d9ef">try</span> <span style="color:#f92672">{</span>
+                rs<span style="color:#f92672">.</span><span style="color:#a6e22e">close</span><span style="color:#f92672">();</span>
+            <span style="color:#f92672">}</span> <span style="color:#66d9ef">catch</span> <span style="color:#f92672">(</span>SQLException e<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+                <span style="color:#75715e">// TODO: handle exception
+</span><span style="color:#75715e"></span>                e<span style="color:#f92672">.</span><span style="color:#a6e22e">printStackTrace</span><span style="color:#f92672">();</span>
+            <span style="color:#f92672">}</span>
+        <span style="color:#f92672">}</span>
+    <span style="color:#f92672">}</span>
+</code></pre></div>
+    </div>
+
+
+
+    <div class="post-copyright">
+                
+        
+
+
+        <section>
+            <p class="share-item">
+                <span>Share :</span>
+                
+                <span>
+
+      
+        <a href="//twitter.com/share?url=https%3a%2f%2frrrwx.github.io%2f2020%2fjdbc%25E5%259F%25BA%25E7%25A1%2580%25E4%25B8%2580%25E8%25BF%259E%25E6%258E%25A5%25E6%2595%25B0%25E6%258D%25AE%25E5%25BA%2593%2f&amp;text=JDBC%e5%9f%ba%e7%a1%80%e4%b8%80%e4%b9%8b%e8%bf%9e%e6%8e%a5%e6%95%b0%e6%8d%ae%e5%ba%93&amp;via=" target="_blank" title="Share on Twitter">
+          <i class="iconfont icon-twitter"></i>
+        </a>
+        
+
+      
+      
+        <a href="//www.facebook.com/sharer/sharer.php?u=https%3a%2f%2frrrwx.github.io%2f2020%2fjdbc%25E5%259F%25BA%25E7%25A1%2580%25E4%25B8%2580%25E8%25BF%259E%25E6%258E%25A5%25E6%2595%25B0%25E6%258D%25AE%25E5%25BA%2593%2f" target="_blank" title="Share on Facebook">
+          <i class="iconfont icon-facebook"></i>
+        </a>
+        
+      
+      
+      
+      
+      
+      
+        
+      
+        
+      
+
+          
+
+          
+
+          
+        <a href="//www.douban.com/recommend/?url=https%3a%2f%2frrrwx.github.io%2f2020%2fjdbc%25E5%259F%25BA%25E7%25A1%2580%25E4%25B8%2580%25E8%25BF%259E%25E6%258E%25A5%25E6%2595%25B0%25E6%258D%25AE%25E5%25BA%2593%2f&amp;title=JDBC%e5%9f%ba%e7%a1%80%e4%b8%80%e4%b9%8b%e8%bf%9e%e6%8e%a5%e6%95%b0%e6%8d%ae%e5%ba%93" target="_blank" title="Share on Douban ">
+            <i class="iconfont icon-douban"></i>
+          </a>
+          
+
+          
+        <a href="//service.weibo.com/share/share.php?url=https%3a%2f%2frrrwx.github.io%2f2020%2fjdbc%25E5%259F%25BA%25E7%25A1%2580%25E4%25B8%2580%25E8%25BF%259E%25E6%258E%25A5%25E6%2595%25B0%25E6%258D%25AE%25E5%25BA%2593%2f&amp;appkey=&amp;title=JDBC%e5%9f%ba%e7%a1%80%e4%b8%80%e4%b9%8b%e8%bf%9e%e6%8e%a5%e6%95%b0%e6%8d%ae%e5%ba%93" target="_blank" title="Share on Douban ">
+            <i class="iconfont icon-weibo"></i>
+          </a>
+          
+
+</span>
+                
+            </p>
+        </section>
+
+
+        <section>
+            <p class="copyright-item">
+                <span>Updated </span>
+                <span class="post-time">
+                on 
+                <time datetime=2020-05-21 itemprop="datePublished">May 21, 2020</time>
+                </span>
+
+            </p>
+        </section>
+    </div>
+
+  
+    <div class="post-tags">
+        
+            <section>
+            
+            <span class="tag"><a href="https://rrrwx.github.io/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">
+                    <i class="iconfont icon-tag"></i>学习笔记</a></span>
+            
+            <span class="tag"><a href="https://rrrwx.github.io/tags/mysql/">
+                    <i class="iconfont icon-tag"></i>mysql</a></span>
+            
+            <span class="tag"><a href="https://rrrwx.github.io/tags/jdbc/">
+                    <i class="iconfont icon-tag"></i>JDBC</a></span>
+            
+            </section>
+        
+        <section>
+                <a href="javascript:window.history.back();">back</a></span> · 
+                <span><a href="https://rrrwx.github.io">home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav">
+        
+        <a href="https://rrrwx.github.io/2020/%E5%BB%BA%E8%A1%A8%E8%84%9A%E6%9C%AC/" class="prev" rel="prev" title="mysql学习系列之建表脚本"><i class="iconfont icon-left"></i>&nbsp;mysql学习系列之建表脚本</a>
+         
+        
+        <a href="https://rrrwx.github.io/2020/jdbc%E5%9F%BA%E7%A1%80%E4%BA%8C%E7%BB%93%E6%9E%9C%E9%9B%86/" class="next" rel="next" title="JDBC基础二之结果集">JDBC基础二之结果集&nbsp;<i class="iconfont icon-right"></i></a>
+        
+    </div>
+
+    <div class="post-comment">
+          
+                 
+          
+    </div>
+</article>
+          </div>
+		   </main>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="">
+                <i class="fas fa-arrow-up fa-fw"></i>
+            </a>
+        </div>
+
+      <footer class="footer">
+
+
+
+
+    <div class="copyright">
+
+            <div class="footer-line">
+                &copy;<i class="far fa-copyright fa-fw"></i>&nbsp;<span itemprop="copyrightYear">2020</span>&nbsp;&nbsp;<span class="author" itemprop="copyrightHolder"><a href="https://rrrwx.github.io">JadeRong</a></span>&nbsp;|&nbsp;<span class="license">Released under <a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span>
+                &nbsp;|&nbsp;<span>Powered by <a href="https://gohugo.io/" target="_blank" rel="external nofollow">Hugo</a> & <a href="https://github.com/liuzc/leaveit" target="_blank" rel="external nofollow">LeaveIt</a></span>
+            </div>
+
+
+    </div>
+</footer>
+
+
+
+
+
+
+
+
+
+
+
+
+    
+     <link href="//lib.baomitu.com/lightgallery/1.6.11/css/lightgallery.min.css" rel="stylesheet">  
+      
+     <script src="/js/vendor_gallery.min.js" async="" ></script>
+    
+  
+
+
+
+
+     </div>
+  </body>
+</html>

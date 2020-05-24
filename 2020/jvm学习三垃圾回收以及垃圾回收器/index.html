@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+  <meta http-equiv="content-type" content="text/html;charset=utf-8">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noodp"/>
+  <meta name="author" content="JadeRong">
+  <meta name="description" content="主要分享一些平时学习和开发中用到的知识">
+  
+  
+  <link rel="prev" href="https://rrrwx.github.io/2020/jvm%E5%AD%A6%E4%B9%A0%E4%BA%8Cjava%E5%86%85%E5%AD%98%E5%8C%BA%E5%9F%9F%E4%B8%8E%E5%86%85%E5%AD%98%E6%BA%A2%E5%87%BA%E5%BC%82%E5%B8%B8/" />
+  <link rel="next" href="https://rrrwx.github.io/2020/jvm%E5%AD%A6%E4%B9%A0%E4%BA%94%E5%86%85%E5%AD%98%E5%88%86%E9%85%8D%E4%B8%8E%E5%9B%9E%E6%94%B6%E7%AD%96%E7%95%A5/" />
+  <link rel="canonical" href="https://rrrwx.github.io/2020/jvm%E5%AD%A6%E4%B9%A0%E4%B8%89%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6%E4%BB%A5%E5%8F%8A%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6%E5%99%A8/" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+  <meta name="msapplication-TileColor" content="#da532c">
+  <meta name="theme-color" content="#ffffff">
+  <title>
+       
+       
+           JVM学习三之垃圾回收 | JadeRong
+       
+  </title>
+  <meta name="title" content="JVM学习三之垃圾回收 | JadeRong">
+    
+  
+  <link rel="stylesheet" href="/font/iconfont.css">
+  <link rel="stylesheet" href="/css/main.min.css">
+
+
+  
+  
+ 
+
+<script type="application/ld+json">
+ "@context" : "http://schema.org",
+    "@type" : "BlogPosting",
+    "mainEntityOfPage": {
+         "@type": "WebPage",
+         "@id": "https:\/\/rrrwx.github.io"
+    },
+    "articleSection" : "posts",
+    "name" : "JVM学习三之垃圾回收",
+    "headline" : "JVM学习三之垃圾回收",
+    "description" : "参考：https:\/\/www.jianshu.com\/p\/23f8249886c6\n垃圾回收 （一）垃圾判断算法 1、引用计数法  引用计数算法是将垃圾回收分摊到整个应用程序的运行当中了，而不是在进行垃圾收集时，要挂起整个应用的运行，直到对堆中所有对象的处理都结束。因此，采用引用计数的垃圾收集不属于严格意义上的Stop-The-World的垃圾收集机制\n 2、可达性分析算法  通过GC ROOT的对象作为搜索起始点，通过引用向下搜索，所走过的路径称为引用链。通过对象是否有到达引用链的路径来判断对象是否可被回收（可作为GC ROOT的对象：虚拟机栈中引用的对象，方法区中类静态属性引用的对象，方法区中常量引用的对象，本地方法栈中JNI引用的对象）\n （二）垃圾回收算法 1、标记-清除算法  标记-清除算法（Mark-Sweep）是最基础的一种垃圾回收算法，它分为2部分，先把内存区域中的这些对象进行标记，哪些属于可回收标记出来，然后把这些垃圾拎出来清理掉。清理掉的垃圾就变成未使用的内存区域，等待被再次使用。\n问题：内存碎片、标记清除效率不高\n 2、复制算法  复制算法（Copying）是在标记清除算法基础上演化而来，解决标记清除算法的内存碎片问题。它将可用内存按容量划分为大小相等的两块，每次只使用其中的一块。当这一块的内存用完了，就将还存活着的对象复制到另外一块上面，然后再把已使用过的内存空间一次清理掉。保证了内存的连续可用，内存分配时也就不用考虑内存碎片等复杂情况。\n问题：每次可用内存缩小一半\n 3、标记-整理算法  标记-整理算法（Mark-Compact）标记过程仍然与标记-清除算法一样，但后续步骤不是直接对可回收对象进行清理，而是让所有存活的对象都向一端移动，再清理掉端边界以外的内存区域。\n问题：对内存变动更频繁，需要整理所有存活对象的引用地址，效率低于复制算法\n 4、分代收集算法  分代收集算法（Generational Collection）融合了上述3种基础的算法思想，根据对象存活周期的不同将内存划分为几块。\n（1）在新生代中，每次垃圾收集时都发现有大批对象死去，只有少量存活，那就选用复制算法，只需要付出少量存活对象的复制成本就可以完成收集。\n（2）在老年代中，因为对象存活率高、没有额外空间对它进行分配担保，就必须使用标记-清理算法或者标记-整理算法来进行回收。\n （三）垃圾收集器 1、Serial收集器  最基本，发展最悠久； 单线程垃圾收集器（“Stop The World”）； 桌面应用场景（因为虚拟机分配到的内存空间不大，用户停顿时间在毫秒级）；  2、ParNew收集器 实际上就是Serial收集器的多线程版本，使用多线程进行垃圾收集（多个垃圾GC线程）； 可与CMS收集器（Concurrent Mark Sweep）配合工作；\n 这里引入“并行”和“并发”的区别：\n“并行”：指多条垃圾收集进程并行工作，但此时用户线程仍处于等待状态；\n“并发”：指用户进程和垃圾收集进程同时执行（但不一定是并行的，可能会交替执行），用户程序继续执行，垃圾收集进程运行于另一个CPU上。\n 3、Paraller Scavenge收集器 （1）复制算法（新生代收集器） （2）多线程收集器 （3）达到可控制的吞吐量： -XX:MaxGCPauseMillis垃圾收集器最大停顿时间\n-XX:GCTimeRatio吞吐量（倒数）大小：如果值设置为19，那允许的最大GC时间就占总时间的5%\x26mdash;1\/(1\x2b19)\n 吞吐量（Throughput）：CPU用于运行用户代码的时间与CPU总消耗时间的比值，即\n吞吐量 = 运行用户代码时间 \/ （运行用户代码时间 \x2b 垃圾收集时间）。",
+    "inLanguage" : "en-us",
+    "author" : "JadeRong",
+    "creator" : "JadeRong",
+    "publisher": "JadeRong",
+    "accountablePerson" : "JadeRong",
+    "copyrightHolder" : "JadeRong",
+    "copyrightYear" : "2020",
+    "datePublished": "2020-03-19 00:10:36 \x2b0800 CST",
+    "dateModified" : "2020-03-19 00:10:36 \x2b0800 CST",
+    "url" : "https:\/\/rrrwx.github.io\/2020\/jvm%E5%AD%A6%E4%B9%A0%E4%B8%89%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6%E4%BB%A5%E5%8F%8A%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6%E5%99%A8\/",
+    "wordCount" : "140",
+    "keywords" : [ "jvm","java","学习笔记", "JadeRong"]
+}
+</script>
+
+</head>
+
+  
+
+
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  <body class="">
+    <div class="wrapper">
+        <nav class="navbar">
+    <div class="container">
+        <div class="navbar-header header-logo">
+            <a href="https://rrrwx.github.io">JadeRong</a>&nbsp;
+        	<a href="javascript:void(0);" class="theme-switch"><i class="iconfont icon-table-lamp"></i></a>
+
+        </div>
+        <div class="menu navbar-right">
+                
+                
+                <a class="menu-item" href="/posts/" title="">Blogs</a>
+                
+                <a class="menu-item" href="/categories/" title="">Categories</a>
+                
+                <a class="menu-item" href="/tags/" title="">Tags</a>
+                
+                <a class="menu-item" href="/about/" title="">About</a>
+                
+        </div>
+    </div>
+</nav>
+<nav class="navbar-mobile" id="nav-mobile" style="display: none">
+     <div class="container">
+        <div class="navbar-header">
+            <div>  <a href="javascript:void(0);" class="theme-switch"><i class="iconfont icon-table-lamp"></i></a>&nbsp;<a href="https://rrrwx.github.io">JadeRong</a></div>
+            <div class="menu-toggle">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+     
+          <div class="menu" id="mobile-menu">
+                
+                
+                <a class="menu-item" href="/posts/" title="">Blogs</a>
+                
+                <a class="menu-item" href="/categories/" title="">Categories</a>
+                
+                <a class="menu-item" href="/tags/" title="">Tags</a>
+                
+                <a class="menu-item" href="/about/" title="">About</a>
+                
+        </div>
+    </div>
+</nav>
+    	 <main class="main">
+          <div class="container">
+      		
+<article class="post-warp" itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">JVM学习三之垃圾回收</h1>
+
+
+
+                Written by <a itemprop="name" href="https://rrrwx.github.io" rel="author">JadeRong</a>, included in <i class="iconfont icon-folder"></i>
+
+                <span class="post-category">
+                            <a href="https://rrrwx.github.io/categories/jvm%E5%AD%A6%E4%B9%A0/"> jvm学习 </a>
+                            
+                    </span>
+
+        
+        <h1 id="wc" style="font-size: 0.75rem;text-align: left;">约 140 个字    |    预计阅读 1 分钟    |    本文总阅读量<span id="busuanzi_value_page_pv"></span>次</h1>
+    </header>
+    <div class="post-content">
+        
+
+        
+            
+        
+
+        
+        
+     
+          
+          
+          
+
+          
+          
+          
+
+          <p>参考：<a href="https://www.jianshu.com/p/23f8249886c6">https://www.jianshu.com/p/23f8249886c6</a></p>
+<h1 id="垃圾回收">垃圾回收</h1>
+<h2 id="一垃圾判断算法">（一）垃圾判断算法</h2>
+<h3 id="1引用计数法">1、引用计数法</h3>
+<blockquote>
+<p>引用计数算法是将垃圾回收分摊到整个应用程序的运行当中了，而不是在进行垃圾收集时，要挂起整个应用的运行，直到对堆中所有对象的处理都结束。因此，采用引用计数的垃圾收集不属于严格意义上的Stop-The-World的垃圾收集机制</p>
+</blockquote>
+<h3 id="2可达性分析算法">2、可达性分析算法</h3>
+<blockquote>
+<p>通过<code>GC ROOT</code>的对象作为搜索起始点，通过引用向下搜索，所走过的路径称为<code>引用链</code>。通过对象是否有到达引用链的路径来判断对象是否可被回收（<code>可作为GC ROOT的对象：</code>虚拟机栈中引用的对象，方法区中类静态属性引用的对象，方法区中常量引用的对象，本地方法栈中JNI引用的对象）</p>
+</blockquote>
+<h2 id="二垃圾回收算法">（二）垃圾回收算法</h2>
+<h3 id="1标记-清除算法">1、标记-清除算法</h3>
+<blockquote>
+<p>标记-清除算法（Mark-Sweep）是最基础的一种垃圾回收算法，它分为2部分，先把内存区域中的这些对象进行标记，哪些属于可回收标记出来，然后把这些垃圾拎出来清理掉。清理掉的垃圾就变成未使用的内存区域，等待被再次使用。</p>
+<p>问题：内存碎片、标记清除效率不高</p>
+</blockquote>
+<h3 id="2复制算法">2、复制算法</h3>
+<blockquote>
+<p>复制算法（Copying）是在标记清除算法基础上演化而来，解决标记清除算法的内存碎片问题。它将可用内存按容量划分为大小相等的两块，每次只使用其中的一块。当这一块的内存用完了，就将还存活着的对象复制到另外一块上面，然后再把已使用过的内存空间一次清理掉。保证了内存的连续可用，内存分配时也就不用考虑内存碎片等复杂情况。</p>
+<p>问题：每次可用内存缩小一半</p>
+</blockquote>
+<h3 id="3标记-整理算法">3、标记-整理算法</h3>
+<blockquote>
+<p>标记-整理算法（Mark-Compact）标记过程仍然与标记-清除算法一样，但后续步骤不是直接对可回收对象进行清理，而是让所有存活的对象都向一端移动，再清理掉端边界以外的内存区域。</p>
+<p>问题：对内存变动更频繁，需要整理所有存活对象的引用地址，效率低于复制算法</p>
+</blockquote>
+<h3 id="4分代收集算法">4、分代收集算法</h3>
+<blockquote>
+<p>分代收集算法（Generational Collection）融合了上述3种基础的算法思想，根据对象存活周期的不同将内存划分为几块。</p>
+<p>（1）在<code>新生代</code>中，每次垃圾收集时都发现有大批对象死去，只有少量存活，那就选用复制算法，只需要付出少量存活对象的复制成本就可以完成收集。</p>
+<p>（2）在<code>老年代</code>中，因为对象存活率高、没有额外空间对它进行分配担保，就必须使用标记-清理算法或者标记-整理算法来进行回收。</p>
+</blockquote>
+<h2 id="三垃圾收集器">（三）垃圾收集器</h2>
+<p><img src="../../../../images/jvm/GCer.jpg" alt="GCer.jpg"></p>
+<h3 id="1serial收集器">1、Serial收集器</h3>
+<ul>
+<li>最基本，发展最悠久；</li>
+<li>单线程垃圾收集器（“Stop The World”）；</li>
+<li>桌面应用场景（因为虚拟机分配到的内存空间不大，用户停顿时间在毫秒级）；</li>
+</ul>
+<h3 id="2parnew收集器">2、ParNew收集器</h3>
+<p>实际上就是Serial收集器的多线程版本，使用多线程进行垃圾收集（多个垃圾GC线程）；
+可与CMS收集器（Concurrent Mark Sweep）配合工作；</p>
+<blockquote>
+<p>这里引入“并行”和“并发”的区别：</p>
+<p><code>“并行”</code>：指多条垃圾收集进程并行工作，但此时用户线程仍处于等待状态；</p>
+<p><code>“并发”</code>：指用户进程和垃圾收集进程同时执行（但不一定是并行的，可能会交替执行），用户程序继续执行，垃圾收集进程运行于另一个CPU上。</p>
+</blockquote>
+<h3 id="3paraller-scavenge收集器">3、Paraller Scavenge收集器</h3>
+<h5 id="1复制算法新生代收集器">（1）复制算法（新生代收集器）</h5>
+<h5 id="2多线程收集器">（2）多线程收集器</h5>
+<h5 id="3达到可控制的吞吐量">（3）达到可控制的吞吐量：</h5>
+<p><code>-XX:MaxGCPauseMillis</code>垃圾收集器最大停顿时间</p>
+<p><code>-XX:GCTimeRatio</code>吞吐量（倒数）大小：如果值设置为19，那允许的最大GC时间就占总时间的5%&mdash;1/(1+19)</p>
+<blockquote>
+<p>吞吐量（Throughput）：CPU用于运行用户代码的时间与CPU总消耗时间的比值，即</p>
+<p>吞吐量 = 运行用户代码时间 / （运行用户代码时间 + 垃圾收集时间）。</p>
+</blockquote>
+<blockquote>
+<p><code>停顿时间</code>越短就月适合需要与用户交互的程序，良好的相应速度能提升用户体验；另外，GC停顿时间缩短是以牺牲吞吐量和新生代空间来换取的，相应的是垃圾收集频率的提升</p>
+<p><code>高吞吐量</code>则能高效率地利用CPU时间，尽快完成程序运算任务，主要适合在后台运算而不需要太多交互的任务</p>
+</blockquote>
+<h5 id="4重要特性">（4）重要特性：</h5>
+<p><code>-XX:+UseAdaptiveSizePolicy</code>(开关参数)，这个参数打开之后，就不需要手工指定一些细节参数，只需设置基本的内存数据设置等以及停顿时间、吞吐量，虚拟机能根据当前系统的运行情况收集性能监控信息，<code>动态调整</code>这些参数以提供最合适的停顿时间或者最大的吞吐量，这叫做<code>GC的自适应调节策略</code>（GC Ergonomics）。</p>
+<h5 id="5适用于服务器端">（5）适用于服务器端；</h5>
+<h5 id="6无法与cms收集器配合工作">（6）无法与CMS收集器配合工作。</h5>
+<h3 id="4cms收集器concurrent-mark-sweep">4、CMS收集器（Concurrent Mark Sweep）</h3>
+<p>CMS收集器以获取<code>最短回收停顿时间</code>为目标
+其工作过程分为4个步骤：</p>
+<h5 id="1初始标记cms-initial-mark">（1）初始标记（CMS initial mark）</h5>
+<h5 id="2并发标记cms-concurrent-mark">（2）并发标记（CMS concurrent mark）</h5>
+<h5 id="3重新标记cms-remark">（3）重新标记（CMS remark）</h5>
+<h5 id="4并发清除cms-concurrent-sweep">（4）并发清除（CMS concurrent sweep）</h5>
+<p>其中步骤1、3需要“Stop The World”，步骤1、2、4是单线程，步骤3是多线程；另外步骤2、4耗时最长，并能和用户程序并行执行。</p>
+<p><strong>优点</strong>：<code>低停顿</code>，<code>并发收集</code></p>
+<p><strong>缺点</strong>：</p>
+<pre><code>    1）`占用大量CPU资源`；
+    2）`无法处理浮动垃圾（Floating Garbage）`；
+    浮动垃圾是指每次并发清除时，用户线程所产生未能标记的新垃圾，待下一次GC时才会被清除。因此CMS会预留一部分空间提供并发收集时的用户程序使用，可以通过`-XX:CMSInitiatingOccupancyFration`，如果设置的太小会出现“Concurrent Mode Failure”失败，在JDK1.6以后，此时会临时启用Serial Old收集器。 
+    3）`空间碎片`，给大对象的分配带来很大麻烦。
+</code></pre>
+<p>注意：当出现“Concurrent Mode Failure”失败、或者存在大量空间碎片时，会触发Full GC。</p>
+<h3 id="5g1收集器">5、G1收集器</h3>
+<h4 id="g1garbage-first收集器是当前最前沿的垃圾收集器">G1（Garbage-First）收集器是当前最前沿的垃圾收集器</h4>
+<p>（面向服务端应用）</p>
+<h5 id="1步骤">（1）步骤：</h5>
+<blockquote>
+<p>1）<code>初始标记</code>（Initial Marking）</p>
+<p>2）<code>并发标记</code>（Concurrent Marking）：将这个阶段对象变化记录在线程Remembered Set Log中；</p>
+<p>3）<code>最终标记</code>（Final Marking）：将前一阶段的记录数据合并到Remember Set中，此时要停顿线程，而且可以并行执行；</p>
+<p>4）<code>筛选回收</code>（Live Data Counting and Evacuation）：首先对各个Region的回收价值和成本进行排序，根据用户所期望的GC停顿时间来制定回收计划。</p>
+</blockquote>
+<h5 id="2优点">（2）优点：</h5>
+<blockquote>
+<p>1）<code>并行与并发</code>：充分利用多CPU、多核环境的硬件优势，缩短Stop-The-World停顿的时间；</p>
+<p>2）<code>分代收集</code>：将整个Java堆划分成多个<strong>大小相等</strong>的独立区域（Region），仍保留新生代、老年代的概念；</p>
+<p>3）<code>空间整合</code>：基于“标记-整理”的算法，不会产生空间碎片，有利于程序长时间运行；</p>
+<p>4）<code>可预测的停顿</code>（重要优势）：除了降低停顿时间外，还能建立可预测的停顿时间模型，即明确指定M毫秒的时间片段内，消耗在垃圾收集上的时间不超过N毫秒。</p>
+</blockquote>
+<blockquote>
+<p>G1会跟踪每个Region里面的<code>垃圾堆积的价值</code>大小（回收所获得的空间大小以及回收所需时间的经验值），在后台维护一个优先列表，根据允许的收集时间，优先回收价值最大的Region；</p>
+</blockquote>
+<blockquote>
+<p>另外有一个重要的问题：怎么解决垃圾回收时两个Regoin之间或者老年代与新生代之间的引用问题？</p>
+<p>虚拟机使用<code>Remembered Set</code>来避免全堆扫描。程序在堆Reference类型的数据进行写操作时，会产生一个<code>Write Barrier</code>暂时中断写操作，检查其引用对象是否处于不同区域，如果是，则通过<code>CardTable </code>把相关引用信息记录到被引用对象所属的Region的Remembered Set之中。这样在垃圾回收时，在GC Root的枚举范围中加入Remembered Set即可保证不对全堆扫描也不会有遗漏。</p>
+</blockquote>
+<h3 id="6serial-old收集器">6、Serial Old收集器</h3>
+<p>Serial收集器的老年代版本，同样是一个单线程收集器，使用<code>“标记-整理”</code>算法；</p>
+<p>主要在Client模式下的虚拟机使用；</p>
+<p>jdk8已放弃使用</p>
+<h3 id="7parallel-old收集器">7、Parallel Old收集器</h3>
+<p>Parallel Scavenge收集器的老年代版本，使用多线程，以及“标记-整理”算法；</p>
+<blockquote>
+<p>在注重吞吐量以及CPU资源敏感的场合，都可以优先考虑Parallel Scavenge / Parallel Old组合</p>
+</blockquote>
+
+    </div>
+
+
+
+    <div class="post-copyright">
+                
+        
+
+
+        <section>
+            <p class="share-item">
+                <span>Share :</span>
+                
+                <span>
+
+      
+        <a href="//twitter.com/share?url=https%3a%2f%2frrrwx.github.io%2f2020%2fjvm%25E5%25AD%25A6%25E4%25B9%25A0%25E4%25B8%2589%25E5%259E%2583%25E5%259C%25BE%25E5%259B%259E%25E6%2594%25B6%25E4%25BB%25A5%25E5%258F%258A%25E5%259E%2583%25E5%259C%25BE%25E5%259B%259E%25E6%2594%25B6%25E5%2599%25A8%2f&amp;text=JVM%e5%ad%a6%e4%b9%a0%e4%b8%89%e4%b9%8b%e5%9e%83%e5%9c%be%e5%9b%9e%e6%94%b6&amp;via=" target="_blank" title="Share on Twitter">
+          <i class="iconfont icon-twitter"></i>
+        </a>
+        
+
+      
+      
+        <a href="//www.facebook.com/sharer/sharer.php?u=https%3a%2f%2frrrwx.github.io%2f2020%2fjvm%25E5%25AD%25A6%25E4%25B9%25A0%25E4%25B8%2589%25E5%259E%2583%25E5%259C%25BE%25E5%259B%259E%25E6%2594%25B6%25E4%25BB%25A5%25E5%258F%258A%25E5%259E%2583%25E5%259C%25BE%25E5%259B%259E%25E6%2594%25B6%25E5%2599%25A8%2f" target="_blank" title="Share on Facebook">
+          <i class="iconfont icon-facebook"></i>
+        </a>
+        
+      
+      
+      
+      
+      
+      
+        
+      
+        
+      
+
+          
+
+          
+
+          
+        <a href="//www.douban.com/recommend/?url=https%3a%2f%2frrrwx.github.io%2f2020%2fjvm%25E5%25AD%25A6%25E4%25B9%25A0%25E4%25B8%2589%25E5%259E%2583%25E5%259C%25BE%25E5%259B%259E%25E6%2594%25B6%25E4%25BB%25A5%25E5%258F%258A%25E5%259E%2583%25E5%259C%25BE%25E5%259B%259E%25E6%2594%25B6%25E5%2599%25A8%2f&amp;title=JVM%e5%ad%a6%e4%b9%a0%e4%b8%89%e4%b9%8b%e5%9e%83%e5%9c%be%e5%9b%9e%e6%94%b6" target="_blank" title="Share on Douban ">
+            <i class="iconfont icon-douban"></i>
+          </a>
+          
+
+          
+        <a href="//service.weibo.com/share/share.php?url=https%3a%2f%2frrrwx.github.io%2f2020%2fjvm%25E5%25AD%25A6%25E4%25B9%25A0%25E4%25B8%2589%25E5%259E%2583%25E5%259C%25BE%25E5%259B%259E%25E6%2594%25B6%25E4%25BB%25A5%25E5%258F%258A%25E5%259E%2583%25E5%259C%25BE%25E5%259B%259E%25E6%2594%25B6%25E5%2599%25A8%2f&amp;appkey=&amp;title=JVM%e5%ad%a6%e4%b9%a0%e4%b8%89%e4%b9%8b%e5%9e%83%e5%9c%be%e5%9b%9e%e6%94%b6" target="_blank" title="Share on Douban ">
+            <i class="iconfont icon-weibo"></i>
+          </a>
+          
+
+</span>
+                
+            </p>
+        </section>
+
+
+        <section>
+            <p class="copyright-item">
+                <span>Updated </span>
+                <span class="post-time">
+                on 
+                <time datetime=2020-03-19 itemprop="datePublished">March 19, 2020</time>
+                </span>
+
+            </p>
+        </section>
+    </div>
+
+  
+    <div class="post-tags">
+        
+            <section>
+            
+            <span class="tag"><a href="https://rrrwx.github.io/tags/jvm/">
+                    <i class="iconfont icon-tag"></i>jvm</a></span>
+            
+            <span class="tag"><a href="https://rrrwx.github.io/tags/java/">
+                    <i class="iconfont icon-tag"></i>java</a></span>
+            
+            <span class="tag"><a href="https://rrrwx.github.io/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">
+                    <i class="iconfont icon-tag"></i>学习笔记</a></span>
+            
+            </section>
+        
+        <section>
+                <a href="javascript:window.history.back();">back</a></span> · 
+                <span><a href="https://rrrwx.github.io">home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav">
+        
+        <a href="https://rrrwx.github.io/2020/jvm%E5%AD%A6%E4%B9%A0%E4%BA%8Cjava%E5%86%85%E5%AD%98%E5%8C%BA%E5%9F%9F%E4%B8%8E%E5%86%85%E5%AD%98%E6%BA%A2%E5%87%BA%E5%BC%82%E5%B8%B8/" class="prev" rel="prev" title="JVM学习二之JMM与内存溢出异常"><i class="iconfont icon-left"></i>&nbsp;JVM学习二之JMM与内存溢出异常</a>
+         
+        
+        <a href="https://rrrwx.github.io/2020/jvm%E5%AD%A6%E4%B9%A0%E4%BA%94%E5%86%85%E5%AD%98%E5%88%86%E9%85%8D%E4%B8%8E%E5%9B%9E%E6%94%B6%E7%AD%96%E7%95%A5/" class="next" rel="next" title="JVM学习五之内存分配与回收策略">JVM学习五之内存分配与回收策略&nbsp;<i class="iconfont icon-right"></i></a>
+        
+    </div>
+
+    <div class="post-comment">
+          
+                 
+          
+    </div>
+</article>
+          </div>
+		   </main>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="">
+                <i class="fas fa-arrow-up fa-fw"></i>
+            </a>
+        </div>
+
+      <footer class="footer">
+
+
+
+
+    <div class="copyright">
+
+            <div class="footer-line">
+                &copy;<i class="far fa-copyright fa-fw"></i>&nbsp;<span itemprop="copyrightYear">2020</span>&nbsp;&nbsp;<span class="author" itemprop="copyrightHolder"><a href="https://rrrwx.github.io">JadeRong</a></span>&nbsp;|&nbsp;<span class="license">Released under <a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span>
+                &nbsp;|&nbsp;<span>Powered by <a href="https://gohugo.io/" target="_blank" rel="external nofollow">Hugo</a> & <a href="https://github.com/liuzc/leaveit" target="_blank" rel="external nofollow">LeaveIt</a></span>
+            </div>
+
+
+    </div>
+</footer>
+
+
+
+
+
+
+
+
+
+
+
+
+    
+     <link href="//lib.baomitu.com/lightgallery/1.6.11/css/lightgallery.min.css" rel="stylesheet">  
+      
+     <script src="/js/vendor_gallery.min.js" async="" ></script>
+    
+  
+
+
+
+
+     </div>
+  </body>
+</html>

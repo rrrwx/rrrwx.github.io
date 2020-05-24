@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+  <meta http-equiv="content-type" content="text/html;charset=utf-8">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noodp"/>
+  <meta name="author" content="JadeRong">
+  <meta name="description" content="主要分享一些平时学习和开发中用到的知识">
+  
+  
+  <link rel="prev" href="https://rrrwx.github.io/2020/%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C/" />
+  <link rel="next" href="https://rrrwx.github.io/2020/%E5%B8%B8%E8%A7%81%E5%AD%97%E7%AC%A6%E7%BC%96%E7%A0%81%E6%96%B9%E5%BC%8F%E6%AF%94%E8%BE%83/" />
+  <link rel="canonical" href="https://rrrwx.github.io/2020/%E6%95%B0%E6%8D%AE%E5%BA%93/" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+  <meta name="msapplication-TileColor" content="#da532c">
+  <meta name="theme-color" content="#ffffff">
+  <title>
+       
+       
+           数据库介绍 | JadeRong
+       
+  </title>
+  <meta name="title" content="数据库介绍 | JadeRong">
+    
+  
+  <link rel="stylesheet" href="/font/iconfont.css">
+  <link rel="stylesheet" href="/css/main.min.css">
+
+
+  
+  
+ 
+
+<script type="application/ld+json">
+ "@context" : "http://schema.org",
+    "@type" : "BlogPosting",
+    "mainEntityOfPage": {
+         "@type": "WebPage",
+         "@id": "https:\/\/rrrwx.github.io"
+    },
+    "articleSection" : "posts",
+    "name" : "数据库介绍",
+    "headline" : "数据库介绍",
+    "description" : "源自：https:\/\/www.runoob.com\/mysql\/mysql-tutorial.html\nhttps:\/\/my.oschina.net\/u\/3647687\/blog\/1534979\nMySQL是最流行的关系型数据库管理系统，在 WEB 应用方面 MySQL 是最好的 RDBMS(Relational Database Management System：关系数据库管理系统)应用软件之一。\n什么是数据库？ 数据库（Database）是按照数据结构来组织、存储和管理数据的仓库。\n每个数据库都有一个或多个不同的 API 用于创建，访问，管理，搜索和复制所保存的数据。\n我们也可以将数据存储在文件中，但是在文件中读写数据速度相对较慢。\n所以，现在我们使用关系型数据库管理系统（RDBMS）来存储和管理大数据量。所谓的关系型数据库，是建立在关系模型基础上的数据库，借助于集合代数等数学概念和方法来处理数据库中的数据。\nRDBMS 即关系数据库管理系统(Relational Database Management System)的特点：\n 1.数据以表格的形式出现 2.每行为各种记录名称 3.每列为记录名称所对应的数据域 4.许多的行和列组成一张表单 5.若干的表单组成database   RDBMS 术语 在我们开始学习MySQL 数据库前，让我们先了解下RDBMS的一些术语：\n 数据库： 数据库是一些关联表的集合。 数据表： 表是数据的矩阵。在一个数据库中的表看起来像一个简单的电子表格。 列： 一列(数据元素) 包含了相同类型的数据, 例如邮政编码的数据。 行： 一行（=元组，或记录）是一组相关的数据，例如一条用户订阅的数据。 冗余： 存储两倍数据，冗余降低了性能，但提高了数据的安全性。 主键： 主键是唯一的。一个数据表中只能包含一个主键。你可以使用主键来查询数据。 外键： 外键用于关联两个表。 复合键： 复合键（组合键）将多个列作为一个索引键，一般用于复合索引。 索引： 使用索引可快速访问数据库表中的特定信息。索引是对数据库表中一列或多列的值进行排序的一种结构。类似于书籍的目录。 参照完整性： 参照的完整性要求关系中不允许引用不存在的实体。与实体完整性是关系模型必须满足的完整性约束条件，目的是保证数据的一致性。  MySQL 为关系型数据库(Relational Database Management System), 这种所谓的\x26quot;关系型\x26quot;可以理解为\x26quot;表格\x26quot;的概念, 一个关系型数据库由一个或数个表格组成, 如图所示的一个表格:\n 表头(header)： 每一列的名称; 列(col)： 具有相同数据类型的数据的集合; 行(row)： 每一行用来描述某条记录的具体信息; 值(value)： 行的具体信息, 每个值必须与该列的数据类型相同; 键(key)： 键的值在当前列中具有唯一性。   MySQL数据库 MySQL 是一个关系型数据库管理系统，由瑞典 MySQL AB 公司开发，目前属于 Oracle 公司。MySQL 是一种关联数据库管理系统，关联数据库将数据保存在不同的表中，而不是将所有数据放在一个大仓库内，这样就增加了速度并提高了灵活性。",
+    "inLanguage" : "en-us",
+    "author" : "JadeRong",
+    "creator" : "JadeRong",
+    "publisher": "JadeRong",
+    "accountablePerson" : "JadeRong",
+    "copyrightHolder" : "JadeRong",
+    "copyrightYear" : "2020",
+    "datePublished": "2020-05-16 21:10:41 \x2b0800 CST",
+    "dateModified" : "2020-05-16 21:10:41 \x2b0800 CST",
+    "url" : "https:\/\/rrrwx.github.io\/2020\/%E6%95%B0%E6%8D%AE%E5%BA%93\/",
+    "wordCount" : "148",
+    "keywords" : [ "学习笔记","mysql", "JadeRong"]
+}
+</script>
+
+</head>
+
+  
+
+
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  <body class="">
+    <div class="wrapper">
+        <nav class="navbar">
+    <div class="container">
+        <div class="navbar-header header-logo">
+            <a href="https://rrrwx.github.io">JadeRong</a>&nbsp;
+        	<a href="javascript:void(0);" class="theme-switch"><i class="iconfont icon-table-lamp"></i></a>
+
+        </div>
+        <div class="menu navbar-right">
+                
+                
+                <a class="menu-item" href="/posts/" title="">Blogs</a>
+                
+                <a class="menu-item" href="/categories/" title="">Categories</a>
+                
+                <a class="menu-item" href="/tags/" title="">Tags</a>
+                
+                <a class="menu-item" href="/about/" title="">About</a>
+                
+        </div>
+    </div>
+</nav>
+<nav class="navbar-mobile" id="nav-mobile" style="display: none">
+     <div class="container">
+        <div class="navbar-header">
+            <div>  <a href="javascript:void(0);" class="theme-switch"><i class="iconfont icon-table-lamp"></i></a>&nbsp;<a href="https://rrrwx.github.io">JadeRong</a></div>
+            <div class="menu-toggle">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+     
+          <div class="menu" id="mobile-menu">
+                
+                
+                <a class="menu-item" href="/posts/" title="">Blogs</a>
+                
+                <a class="menu-item" href="/categories/" title="">Categories</a>
+                
+                <a class="menu-item" href="/tags/" title="">Tags</a>
+                
+                <a class="menu-item" href="/about/" title="">About</a>
+                
+        </div>
+    </div>
+</nav>
+    	 <main class="main">
+          <div class="container">
+      		
+<article class="post-warp" itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">数据库介绍</h1>
+
+
+
+                Written by <a itemprop="name" href="https://rrrwx.github.io" rel="author">JadeRong</a>, included in <i class="iconfont icon-folder"></i>
+
+                <span class="post-category">
+                            <a href="https://rrrwx.github.io/categories/mysql%E5%AD%A6%E4%B9%A0/"> mysql学习 </a>
+                            
+                    </span>
+
+        
+        <h1 id="wc" style="font-size: 0.75rem;text-align: left;">约 148 个字    |    预计阅读 1 分钟    |    本文总阅读量<span id="busuanzi_value_page_pv"></span>次</h1>
+    </header>
+    <div class="post-content">
+        
+
+        
+            
+        
+
+        
+        
+     
+          
+          
+          
+
+          
+          
+          
+
+          <p>源自：https://www.runoob.com/mysql/mysql-tutorial.html</p>
+<p><a href="https://my.oschina.net/u/3647687/blog/1534979">https://my.oschina.net/u/3647687/blog/1534979</a></p>
+<p>MySQL是最流行的<!-- raw HTML omitted -->关系型数据库管理系统<!-- raw HTML omitted -->，在 WEB 应用方面 MySQL 是最好的 RDBMS(Relational Database Management System：关系数据库管理系统)应用软件之一。</p>
+<h2 id="什么是数据库">什么是数据库？</h2>
+<p>数据库（Database）是按照数据结构来组织、存储和管理数据的仓库。</p>
+<p>每个数据库都有一个或多个不同的 API 用于创建，访问，管理，搜索和复制所保存的数据。</p>
+<p>我们也可以将数据存储在文件中，但是在文件中读写数据速度相对较慢。</p>
+<p>所以，现在我们使用关系型数据库管理系统（RDBMS）来存储和管理大数据量。所谓的关系型数据库，是建立在关系模型基础上的数据库，借助于集合代数等数学概念和方法来处理数据库中的数据。</p>
+<p>RDBMS 即关系数据库管理系统(Relational Database Management System)的特点：</p>
+<ul>
+<li>1.数据以表格的形式出现</li>
+<li>2.每行为各种记录名称</li>
+<li>3.每列为记录名称所对应的数据域</li>
+<li>4.许多的行和列组成一张表单</li>
+<li>5.若干的表单组成database</li>
+</ul>
+<hr>
+<h2 id="rdbms-术语">RDBMS 术语</h2>
+<p>在我们开始学习MySQL 数据库前，让我们先了解下RDBMS的一些术语：</p>
+<ul>
+<li><strong>数据库：</strong> 数据库是一些关联表的集合。</li>
+<li><strong>数据表：</strong> 表是数据的矩阵。在一个数据库中的表看起来像一个简单的电子表格。</li>
+<li><strong>列：</strong> 一列(数据元素) 包含了相同类型的数据, 例如邮政编码的数据。</li>
+<li><strong>行：</strong> 一行（=元组，或记录）是一组相关的数据，例如一条用户订阅的数据。</li>
+<li><strong>冗余：</strong> 存储两倍数据，冗余降低了性能，但提高了数据的安全性。</li>
+<li><strong>主键：</strong> 主键是唯一的。一个数据表中只能包含一个主键。你可以使用主键来查询数据。</li>
+<li><strong>外键：</strong> 外键用于关联两个表。</li>
+<li><strong>复合键：</strong> 复合键（组合键）将多个列作为一个索引键，一般用于复合索引。</li>
+<li><strong>索引：</strong> 使用索引可快速访问数据库表中的特定信息。索引是对数据库表中一列或多列的值进行排序的一种结构。类似于书籍的目录。</li>
+<li><strong>参照完整性：</strong> 参照的完整性要求关系中不允许引用不存在的实体。与实体完整性是关系模型必须满足的完整性约束条件，目的是保证数据的一致性。</li>
+</ul>
+<p>MySQL 为关系型数据库(Relational Database Management System), <!-- raw HTML omitted -->这种所谓的&quot;关系型&quot;可以理解为&quot;表格&quot;的概念<!-- raw HTML omitted -->, 一个关系型数据库由一个或数个表格组成, 如图所示的一个表格:</p>
+<p><img src="https://www.runoob.com/wp-content/uploads/2014/03/0921_1.jpg" alt="img"></p>
+<ul>
+<li><strong>表头(header)：</strong> 每一列的名称;</li>
+<li><strong>列(col)：</strong> 具有相同数据类型的数据的集合;</li>
+<li><strong>行(row)：</strong> 每一行用来描述某条记录的具体信息;</li>
+<li><strong>值(value)：</strong> 行的具体信息, 每个值必须与该列的数据类型相同;</li>
+<li><strong>键(key)：</strong> 键的值在当前列中具有唯一性。</li>
+</ul>
+<hr>
+<h2 id="mysql数据库">MySQL数据库</h2>
+<p>MySQL 是一个关系型数据库管理系统，由瑞典 MySQL AB 公司开发，目前属于 Oracle 公司。MySQL 是一种关联数据库管理系统，关联数据库将数据保存在不同的表中，而不是将所有数据放在一个大仓库内，这样就增加了速度并提高了灵活性。</p>
+<ul>
+<li>MySQL 是开源的，所以你不需要支付额外的费用。</li>
+<li>MySQL 支持大型的数据库。可以处理拥有上千万条记录的大型数据库。</li>
+<li>MySQL 使用标准的 SQL 数据语言形式。</li>
+<li>MySQL 可以运行于多个系统上，并且支持多种语言。这些编程语言包括 C、C++、Python、Java、Perl、PHP、Eiffel、Ruby 和 Tcl 等。</li>
+<li>MySQL 对PHP有很好的支持，PHP 是目前最流行的 Web 开发语言。</li>
+<li>MySQL 支持大型数据库，支持 5000 万条记录的数据仓库，32 位系统表文件最大可支持 4GB，64 位系统支持最大的表文件为8TB。</li>
+<li>MySQL 是可以定制的，采用了 GPL 协议，你可以修改源码来开发自己的 MySQL 系统。</li>
+</ul>
+<hr>
+<h1 id="关系型数据库与非关系型数据库">关系型数据库与非关系型数据库</h1>
+<table>
+<thead>
+<tr>
+<th>数据库 类型</th>
+<th>特性</th>
+<th>优点</th>
+<th>缺点</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>关系型数据库 SQLite、Oracle、mysql</td>
+<td>1、关系型数据库，是指采用了关系模型来组织 数据的数据库； 2、关系型数据库的最大特点就是事务的一致性； 3、简单来说，关系模型指的就是二维表格模型， 而一个关系型数据库就是由二维表及其之间的联系所组成的一个数据组织。</td>
+<td>1、容易理解：二维表结构是非常贴近逻辑世界一个概念，关系模型相对网状、层次等其他模型来说更容易理解； 2、使用方便：通用的SQL语言使得操作关系型数据库非常方便； 3、易于维护：丰富的完整性(实体完整性、参照完整性和用户定义的完整性)大大减低了数据冗余和数据不一致的概率； 4、支持SQL，可用于复杂的查询。</td>
+<td>1、为了维护一致性所付出的巨大代价就是其读写性能比较差； 2、固定的表结构； 3、高并发读写需求； 4、海量数据的高效率读写；</td>
+</tr>
+<tr>
+<td>非关系型数据库 MongoDb、redis、HBase</td>
+<td>1、使用键值对存储数据； 2、分布式； 3、一般不支持ACID特性； 4、非关系型数据库严格上不是一种数据库，应该是一种数据结构化存储方法的集合。</td>
+<td>1、无需经过sql层的解析，读写性能很高； 2、基于键值对，数据没有耦合性，容易扩展； 3、存储数据的格式：nosql的存储格式是key,value形式、文档形式、图片形式等等，文档形式、图片形式等等，而关系型数据库则只支持基础类型。</td>
+<td>1、不提供sql支持，学习和使用成本较高； 2、无事务处理，附加功能bi和报表等支持也不好；</td>
+</tr>
+</tbody>
+</table>
+<p>注1：数据库事务必须具备ACID特性，ACID是Atomic原子性，Consistency一致性，Isolation隔离性，Durability持久性。</p>
+<p>注2：数据的持久存储，尤其是海量数据的持久存储，还是需要一种关系数据库。</p>
+
+    </div>
+
+
+
+    <div class="post-copyright">
+                
+        
+
+
+        <section>
+            <p class="share-item">
+                <span>Share :</span>
+                
+                <span>
+
+      
+        <a href="//twitter.com/share?url=https%3a%2f%2frrrwx.github.io%2f2020%2f%25E6%2595%25B0%25E6%258D%25AE%25E5%25BA%2593%2f&amp;text=%e6%95%b0%e6%8d%ae%e5%ba%93%e4%bb%8b%e7%bb%8d&amp;via=" target="_blank" title="Share on Twitter">
+          <i class="iconfont icon-twitter"></i>
+        </a>
+        
+
+      
+      
+        <a href="//www.facebook.com/sharer/sharer.php?u=https%3a%2f%2frrrwx.github.io%2f2020%2f%25E6%2595%25B0%25E6%258D%25AE%25E5%25BA%2593%2f" target="_blank" title="Share on Facebook">
+          <i class="iconfont icon-facebook"></i>
+        </a>
+        
+      
+      
+      
+      
+      
+      
+        
+      
+        
+      
+
+          
+
+          
+
+          
+        <a href="//www.douban.com/recommend/?url=https%3a%2f%2frrrwx.github.io%2f2020%2f%25E6%2595%25B0%25E6%258D%25AE%25E5%25BA%2593%2f&amp;title=%e6%95%b0%e6%8d%ae%e5%ba%93%e4%bb%8b%e7%bb%8d" target="_blank" title="Share on Douban ">
+            <i class="iconfont icon-douban"></i>
+          </a>
+          
+
+          
+        <a href="//service.weibo.com/share/share.php?url=https%3a%2f%2frrrwx.github.io%2f2020%2f%25E6%2595%25B0%25E6%258D%25AE%25E5%25BA%2593%2f&amp;appkey=&amp;title=%e6%95%b0%e6%8d%ae%e5%ba%93%e4%bb%8b%e7%bb%8d" target="_blank" title="Share on Douban ">
+            <i class="iconfont icon-weibo"></i>
+          </a>
+          
+
+</span>
+                
+            </p>
+        </section>
+
+
+        <section>
+            <p class="copyright-item">
+                <span>Updated </span>
+                <span class="post-time">
+                on 
+                <time datetime=2020-05-16 itemprop="datePublished">May 16, 2020</time>
+                </span>
+
+            </p>
+        </section>
+    </div>
+
+  
+    <div class="post-tags">
+        
+            <section>
+            
+            <span class="tag"><a href="https://rrrwx.github.io/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">
+                    <i class="iconfont icon-tag"></i>学习笔记</a></span>
+            
+            <span class="tag"><a href="https://rrrwx.github.io/tags/mysql/">
+                    <i class="iconfont icon-tag"></i>mysql</a></span>
+            
+            </section>
+        
+        <section>
+                <a href="javascript:window.history.back();">back</a></span> · 
+                <span><a href="https://rrrwx.github.io">home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav">
+        
+        <a href="https://rrrwx.github.io/2020/%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C/" class="prev" rel="prev" title="mysql基本操作"><i class="iconfont icon-left"></i>&nbsp;mysql基本操作</a>
+         
+        
+        <a href="https://rrrwx.github.io/2020/%E5%B8%B8%E8%A7%81%E5%AD%97%E7%AC%A6%E7%BC%96%E7%A0%81%E6%96%B9%E5%BC%8F%E6%AF%94%E8%BE%83/" class="next" rel="next" title="常见字符编码方式比较">常见字符编码方式比较&nbsp;<i class="iconfont icon-right"></i></a>
+        
+    </div>
+
+    <div class="post-comment">
+          
+                 
+          
+    </div>
+</article>
+          </div>
+		   </main>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="">
+                <i class="fas fa-arrow-up fa-fw"></i>
+            </a>
+        </div>
+
+      <footer class="footer">
+
+
+
+
+    <div class="copyright">
+
+            <div class="footer-line">
+                &copy;<i class="far fa-copyright fa-fw"></i>&nbsp;<span itemprop="copyrightYear">2020</span>&nbsp;&nbsp;<span class="author" itemprop="copyrightHolder"><a href="https://rrrwx.github.io">JadeRong</a></span>&nbsp;|&nbsp;<span class="license">Released under <a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span>
+                &nbsp;|&nbsp;<span>Powered by <a href="https://gohugo.io/" target="_blank" rel="external nofollow">Hugo</a> & <a href="https://github.com/liuzc/leaveit" target="_blank" rel="external nofollow">LeaveIt</a></span>
+            </div>
+
+
+    </div>
+</footer>
+
+
+
+
+
+
+
+
+
+
+
+
+    
+     <link href="//lib.baomitu.com/lightgallery/1.6.11/css/lightgallery.min.css" rel="stylesheet">  
+      
+     <script src="/js/vendor_gallery.min.js" async="" ></script>
+    
+  
+
+
+
+
+     </div>
+  </body>
+</html>

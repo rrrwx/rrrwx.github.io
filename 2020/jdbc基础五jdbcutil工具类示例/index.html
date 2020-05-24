@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+  <meta http-equiv="content-type" content="text/html;charset=utf-8">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noodp"/>
+  <meta name="author" content="JadeRong">
+  <meta name="description" content="主要分享一些平时学习和开发中用到的知识">
+  
+  
+  <link rel="prev" href="https://rrrwx.github.io/2020/jdbc%E5%9F%BA%E7%A1%80%E4%B8%89preparedstatement/" />
+  <link rel="next" href="https://rrrwx.github.io/2020/jdbc%E4%B9%8B%E4%BA%8B%E5%8A%A1/" />
+  <link rel="canonical" href="https://rrrwx.github.io/2020/jdbc%E5%9F%BA%E7%A1%80%E4%BA%94jdbcutil%E5%B7%A5%E5%85%B7%E7%B1%BB%E7%A4%BA%E4%BE%8B/" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+  <meta name="msapplication-TileColor" content="#da532c">
+  <meta name="theme-color" content="#ffffff">
+  <title>
+       
+       
+           JDBC基础五之JDBCUtil工具类示例 | JadeRong
+       
+  </title>
+  <meta name="title" content="JDBC基础五之JDBCUtil工具类示例 | JadeRong">
+    
+  
+  <link rel="stylesheet" href="/font/iconfont.css">
+  <link rel="stylesheet" href="/css/main.min.css">
+
+
+  
+  
+ 
+
+<script type="application/ld+json">
+ "@context" : "http://schema.org",
+    "@type" : "BlogPosting",
+    "mainEntityOfPage": {
+         "@type": "WebPage",
+         "@id": "https:\/\/rrrwx.github.io"
+    },
+    "articleSection" : "posts",
+    "name" : "JDBC基础五之JDBCUtil工具类示例",
+    "headline" : "JDBC基础五之JDBCUtil工具类示例",
+    "description" : "https:\/\/edu.aliyun.com\/roadmap\/java?spm=a2c6h.12999620.1371257.1.5a195738ZJjjex#part1\n为了更方便地使用JDBC来连接各种数据库，可以将数据库的连接与释放操作封装成一个工具类\nimport java.sql.Connection ; import java.sql.DriverManager ; public class JDBCUtil { \/\/加载JDBCUtil类的时候只执行一次，不用每次连接的时候都加载配置文件和驱动类  public static Properties props = null ; static { try { \/\/加载配置文件（不同的数据库有不同的配置文件）  \/\/dbconfig.properties文件通常放在src目录下，也即ClassPath下  InputStream in = JDBCUtil.class.getClassLoader() .getResourceAsStream(\x26#34;dbconfig.properties\x26#34;) ; Properties props = new Properties() ; props.load(in) ; } catch (IOException e) { throw new RuntimeException(e) ; } try { \/\/加载驱动类  Class.forName(props.getProperty(\x26#34;driverClassName\x26#34;)) ; } catch (ClassNotFoundException e) { throw new RuntimeException(e) ; } } public static Connection getConnection() throws SQLException { \/\/获取Connection  return DriverManager.",
+    "inLanguage" : "en-us",
+    "author" : "JadeRong",
+    "creator" : "JadeRong",
+    "publisher": "JadeRong",
+    "accountablePerson" : "JadeRong",
+    "copyrightHolder" : "JadeRong",
+    "copyrightYear" : "2020",
+    "datePublished": "2020-05-21 19:57:24 \x2b0800 CST",
+    "dateModified" : "2020-05-21 19:57:24 \x2b0800 CST",
+    "url" : "https:\/\/rrrwx.github.io\/2020\/jdbc%E5%9F%BA%E7%A1%80%E4%BA%94jdbcutil%E5%B7%A5%E5%85%B7%E7%B1%BB%E7%A4%BA%E4%BE%8B\/",
+    "wordCount" : "81",
+    "keywords" : [ "学习笔记","mysql","JDBC", "JadeRong"]
+}
+</script>
+
+</head>
+
+  
+
+
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  <body class="">
+    <div class="wrapper">
+        <nav class="navbar">
+    <div class="container">
+        <div class="navbar-header header-logo">
+            <a href="https://rrrwx.github.io">JadeRong</a>&nbsp;
+        	<a href="javascript:void(0);" class="theme-switch"><i class="iconfont icon-table-lamp"></i></a>
+
+        </div>
+        <div class="menu navbar-right">
+                
+                
+                <a class="menu-item" href="/posts/" title="">Blogs</a>
+                
+                <a class="menu-item" href="/categories/" title="">Categories</a>
+                
+                <a class="menu-item" href="/tags/" title="">Tags</a>
+                
+                <a class="menu-item" href="/about/" title="">About</a>
+                
+        </div>
+    </div>
+</nav>
+<nav class="navbar-mobile" id="nav-mobile" style="display: none">
+     <div class="container">
+        <div class="navbar-header">
+            <div>  <a href="javascript:void(0);" class="theme-switch"><i class="iconfont icon-table-lamp"></i></a>&nbsp;<a href="https://rrrwx.github.io">JadeRong</a></div>
+            <div class="menu-toggle">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+     
+          <div class="menu" id="mobile-menu">
+                
+                
+                <a class="menu-item" href="/posts/" title="">Blogs</a>
+                
+                <a class="menu-item" href="/categories/" title="">Categories</a>
+                
+                <a class="menu-item" href="/tags/" title="">Tags</a>
+                
+                <a class="menu-item" href="/about/" title="">About</a>
+                
+        </div>
+    </div>
+</nav>
+    	 <main class="main">
+          <div class="container">
+      		
+<article class="post-warp" itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">JDBC基础五之JDBCUtil工具类示例</h1>
+
+
+
+                Written by <a itemprop="name" href="https://rrrwx.github.io" rel="author">JadeRong</a>, included in <i class="iconfont icon-folder"></i>
+
+                <span class="post-category">
+                            <a href="https://rrrwx.github.io/categories/mysql%E5%AD%A6%E4%B9%A0/"> mysql学习 </a>
+                            
+                    </span>
+
+        
+        <h1 id="wc" style="font-size: 0.75rem;text-align: left;">约 81 个字    |    预计阅读 1 分钟    |    本文总阅读量<span id="busuanzi_value_page_pv"></span>次</h1>
+    </header>
+    <div class="post-content">
+        
+
+        
+
+        
+        
+     
+          
+          
+          
+
+          
+          
+          
+
+          <p><a href="https://edu.aliyun.com/roadmap/java?spm=a2c6h.12999620.1371257.1.5a195738ZJjjex#part1">https://edu.aliyun.com/roadmap/java?spm=a2c6h.12999620.1371257.1.5a195738ZJjjex#part1</a></p>
+<p>为了更方便地使用JDBC来连接各种数据库，可以将数据库的连接与释放操作封装成一个工具类</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#f92672">import</span> java.sql.Connection <span style="color:#f92672">;</span>
+<span style="color:#f92672">import</span> java.sql.DriverManager <span style="color:#f92672">;</span>
+
+<span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">JDBCUtil</span> <span style="color:#f92672">{</span>
+    <span style="color:#75715e">//加载JDBCUtil类的时候只执行一次，不用每次连接的时候都加载配置文件和驱动类
+</span><span style="color:#75715e"></span>  	<span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> Properties props <span style="color:#f92672">=</span> <span style="color:#66d9ef">null</span> <span style="color:#f92672">;</span>
+  
+  	<span style="color:#66d9ef">static</span> <span style="color:#f92672">{</span>
+      	<span style="color:#66d9ef">try</span> <span style="color:#f92672">{</span>
+          	<span style="color:#75715e">//加载配置文件（不同的数据库有不同的配置文件）
+</span><span style="color:#75715e"></span>            <span style="color:#75715e">//dbconfig.properties文件通常放在src目录下，也即ClassPath下
+</span><span style="color:#75715e"></span>            InputStream in <span style="color:#f92672">=</span> JDBCUtil<span style="color:#f92672">.</span><span style="color:#a6e22e">class</span><span style="color:#f92672">.</span><span style="color:#a6e22e">getClassLoader</span><span style="color:#f92672">()</span>
+                <span style="color:#f92672">.</span><span style="color:#a6e22e">getResourceAsStream</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;dbconfig.properties&#34;</span><span style="color:#f92672">)</span> <span style="color:#f92672">;</span>
+            Properties props <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> Properties<span style="color:#f92672">()</span> <span style="color:#f92672">;</span>
+            props<span style="color:#f92672">.</span><span style="color:#a6e22e">load</span><span style="color:#f92672">(</span>in<span style="color:#f92672">)</span> <span style="color:#f92672">;</span>
+        <span style="color:#f92672">}</span> <span style="color:#66d9ef">catch</span> <span style="color:#f92672">(</span>IOException e<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+          	<span style="color:#66d9ef">throw</span> <span style="color:#66d9ef">new</span> RuntimeException<span style="color:#f92672">(</span>e<span style="color:#f92672">)</span> <span style="color:#f92672">;</span>
+        <span style="color:#f92672">}</span>
+      
+      	<span style="color:#66d9ef">try</span> <span style="color:#f92672">{</span>
+            <span style="color:#75715e">//加载驱动类
+</span><span style="color:#75715e"></span>            Class<span style="color:#f92672">.</span><span style="color:#a6e22e">forName</span><span style="color:#f92672">(</span>props<span style="color:#f92672">.</span><span style="color:#a6e22e">getProperty</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;driverClassName&#34;</span><span style="color:#f92672">))</span> <span style="color:#f92672">;</span>
+        <span style="color:#f92672">}</span> <span style="color:#66d9ef">catch</span> <span style="color:#f92672">(</span>ClassNotFoundException e<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+          	<span style="color:#66d9ef">throw</span> <span style="color:#66d9ef">new</span> RuntimeException<span style="color:#f92672">(</span>e<span style="color:#f92672">)</span> <span style="color:#f92672">;</span>
+        <span style="color:#f92672">}</span>
+    <span style="color:#f92672">}</span>
+  
+  	<span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> Connection <span style="color:#a6e22e">getConnection</span><span style="color:#f92672">()</span> <span style="color:#66d9ef">throws</span> SQLException <span style="color:#f92672">{</span>
+      	<span style="color:#75715e">//获取Connection
+</span><span style="color:#75715e"></span>      	<span style="color:#66d9ef">return</span> DriverManager<span style="color:#f92672">.</span><span style="color:#a6e22e">getConnection</span><span style="color:#f92672">(</span>props<span style="color:#f92672">.</span><span style="color:#a6e22e">getProperty</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;url&#34;</span><span style="color:#f92672">),</span> 
+                                          props<span style="color:#f92672">.</span><span style="color:#a6e22e">getProperty</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;username&#34;</span><span style="color:#f92672">),</span> 
+                                          props<span style="color:#f92672">.</span><span style="color:#a6e22e">getProperty</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;password&#34;</span><span style="color:#f92672">))</span> <span style="color:#f92672">;</span>
+    <span style="color:#f92672">}</span>
+<span style="color:#f92672">}</span>
+</code></pre></div>
+    </div>
+
+
+
+    <div class="post-copyright">
+                
+        
+
+
+        <section>
+            <p class="share-item">
+                <span>Share :</span>
+                
+                <span>
+
+      
+        <a href="//twitter.com/share?url=https%3a%2f%2frrrwx.github.io%2f2020%2fjdbc%25E5%259F%25BA%25E7%25A1%2580%25E4%25BA%2594jdbcutil%25E5%25B7%25A5%25E5%2585%25B7%25E7%25B1%25BB%25E7%25A4%25BA%25E4%25BE%258B%2f&amp;text=JDBC%e5%9f%ba%e7%a1%80%e4%ba%94%e4%b9%8bJDBCUtil%e5%b7%a5%e5%85%b7%e7%b1%bb%e7%a4%ba%e4%be%8b&amp;via=" target="_blank" title="Share on Twitter">
+          <i class="iconfont icon-twitter"></i>
+        </a>
+        
+
+      
+      
+        <a href="//www.facebook.com/sharer/sharer.php?u=https%3a%2f%2frrrwx.github.io%2f2020%2fjdbc%25E5%259F%25BA%25E7%25A1%2580%25E4%25BA%2594jdbcutil%25E5%25B7%25A5%25E5%2585%25B7%25E7%25B1%25BB%25E7%25A4%25BA%25E4%25BE%258B%2f" target="_blank" title="Share on Facebook">
+          <i class="iconfont icon-facebook"></i>
+        </a>
+        
+      
+      
+      
+      
+      
+      
+        
+      
+        
+      
+
+          
+
+          
+
+          
+        <a href="//www.douban.com/recommend/?url=https%3a%2f%2frrrwx.github.io%2f2020%2fjdbc%25E5%259F%25BA%25E7%25A1%2580%25E4%25BA%2594jdbcutil%25E5%25B7%25A5%25E5%2585%25B7%25E7%25B1%25BB%25E7%25A4%25BA%25E4%25BE%258B%2f&amp;title=JDBC%e5%9f%ba%e7%a1%80%e4%ba%94%e4%b9%8bJDBCUtil%e5%b7%a5%e5%85%b7%e7%b1%bb%e7%a4%ba%e4%be%8b" target="_blank" title="Share on Douban ">
+            <i class="iconfont icon-douban"></i>
+          </a>
+          
+
+          
+        <a href="//service.weibo.com/share/share.php?url=https%3a%2f%2frrrwx.github.io%2f2020%2fjdbc%25E5%259F%25BA%25E7%25A1%2580%25E4%25BA%2594jdbcutil%25E5%25B7%25A5%25E5%2585%25B7%25E7%25B1%25BB%25E7%25A4%25BA%25E4%25BE%258B%2f&amp;appkey=&amp;title=JDBC%e5%9f%ba%e7%a1%80%e4%ba%94%e4%b9%8bJDBCUtil%e5%b7%a5%e5%85%b7%e7%b1%bb%e7%a4%ba%e4%be%8b" target="_blank" title="Share on Douban ">
+            <i class="iconfont icon-weibo"></i>
+          </a>
+          
+
+</span>
+                
+            </p>
+        </section>
+
+
+        <section>
+            <p class="copyright-item">
+                <span>Updated </span>
+                <span class="post-time">
+                on 
+                <time datetime=2020-05-21 itemprop="datePublished">May 21, 2020</time>
+                </span>
+
+            </p>
+        </section>
+    </div>
+
+  
+    <div class="post-tags">
+        
+            <section>
+            
+            <span class="tag"><a href="https://rrrwx.github.io/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">
+                    <i class="iconfont icon-tag"></i>学习笔记</a></span>
+            
+            <span class="tag"><a href="https://rrrwx.github.io/tags/mysql/">
+                    <i class="iconfont icon-tag"></i>mysql</a></span>
+            
+            <span class="tag"><a href="https://rrrwx.github.io/tags/jdbc/">
+                    <i class="iconfont icon-tag"></i>JDBC</a></span>
+            
+            </section>
+        
+        <section>
+                <a href="javascript:window.history.back();">back</a></span> · 
+                <span><a href="https://rrrwx.github.io">home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav">
+        
+        <a href="https://rrrwx.github.io/2020/jdbc%E5%9F%BA%E7%A1%80%E4%B8%89preparedstatement/" class="prev" rel="prev" title="JDBC基础三之PreparedStatement"><i class="iconfont icon-left"></i>&nbsp;JDBC基础三之PreparedStatement</a>
+         
+        
+        <a href="https://rrrwx.github.io/2020/jdbc%E4%B9%8B%E4%BA%8B%E5%8A%A1/" class="next" rel="next" title="JDBC之事务">JDBC之事务&nbsp;<i class="iconfont icon-right"></i></a>
+        
+    </div>
+
+    <div class="post-comment">
+          
+                 
+          
+    </div>
+</article>
+          </div>
+		   </main>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="">
+                <i class="fas fa-arrow-up fa-fw"></i>
+            </a>
+        </div>
+
+      <footer class="footer">
+
+
+
+
+    <div class="copyright">
+
+            <div class="footer-line">
+                &copy;<i class="far fa-copyright fa-fw"></i>&nbsp;<span itemprop="copyrightYear">2020</span>&nbsp;&nbsp;<span class="author" itemprop="copyrightHolder"><a href="https://rrrwx.github.io">JadeRong</a></span>&nbsp;|&nbsp;<span class="license">Released under <a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span>
+                &nbsp;|&nbsp;<span>Powered by <a href="https://gohugo.io/" target="_blank" rel="external nofollow">Hugo</a> & <a href="https://github.com/liuzc/leaveit" target="_blank" rel="external nofollow">LeaveIt</a></span>
+            </div>
+
+
+    </div>
+</footer>
+
+
+
+
+
+
+
+
+
+
+
+
+    
+    
+    <script src="/js/vendor_no_gallery.min.js" async=""></script>
+    
+  
+
+
+
+
+     </div>
+  </body>
+</html>

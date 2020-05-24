@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+  <meta http-equiv="content-type" content="text/html;charset=utf-8">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noodp"/>
+  <meta name="author" content="JadeRong">
+  <meta name="description" content="主要分享一些平时学习和开发中用到的知识">
+  
+  
+  <link rel="prev" href="https://rrrwx.github.io/2020/%E7%BA%A2%E9%BB%91%E6%A0%91/" />
+  <link rel="next" href="https://rrrwx.github.io/2020/%E5%BB%BA%E8%A1%A8%E8%84%9A%E6%9C%AC/" />
+  <link rel="canonical" href="https://rrrwx.github.io/2020/%E6%8E%92%E5%BA%8F/" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+  <meta name="msapplication-TileColor" content="#da532c">
+  <meta name="theme-color" content="#ffffff">
+  <title>
+       
+       
+           排序 | JadeRong
+       
+  </title>
+  <meta name="title" content="排序 | JadeRong">
+    
+  
+  <link rel="stylesheet" href="/font/iconfont.css">
+  <link rel="stylesheet" href="/css/main.min.css">
+
+
+  
+  
+ 
+
+<script type="application/ld+json">
+ "@context" : "http://schema.org",
+    "@type" : "BlogPosting",
+    "mainEntityOfPage": {
+         "@type": "WebPage",
+         "@id": "https:\/\/rrrwx.github.io"
+    },
+    "articleSection" : "posts",
+    "name" : "排序",
+    "headline" : "排序",
+    "description" : "复杂度比较    排序方法 最好时间复杂度 平均时间复杂度 最坏时间复杂度 空间复杂度 是否稳定     直接插入排序 O(n) O(n2) O(n2) O(1) 是   冒泡排序 O(n) O(n2) O(n2) O(1) 是   简单选择排序 O(n2) O(n2) O(n2) O(1) 否   希尔排序    O(1) 否   快速排序 O(nlogn) O(nlogn) O(n2) O(logn) 否   堆排序 O(nlogn) O(nlogn) O(nlogn) O(1) 否   二路归并排序 O(nlogn) O(nlogn) O(nlogn) O(n) 是   基数排序  O(d(n\x2br))  O(n) 是     适用条件 n\x26lt;100: 直插、冒泡、简单选择",
+    "inLanguage" : "en-us",
+    "author" : "JadeRong",
+    "creator" : "JadeRong",
+    "publisher": "JadeRong",
+    "accountablePerson" : "JadeRong",
+    "copyrightHolder" : "JadeRong",
+    "copyrightYear" : "2020",
+    "datePublished": "2020-05-19 00:20:18 \x2b0800 CST",
+    "dateModified" : "2020-05-19 00:20:18 \x2b0800 CST",
+    "url" : "https:\/\/rrrwx.github.io\/2020\/%E6%8E%92%E5%BA%8F\/",
+    "wordCount" : "61",
+    "keywords" : [ "数据结构","学习笔记","算法", "JadeRong"]
+}
+</script>
+
+</head>
+
+  
+
+
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  <body class="">
+    <div class="wrapper">
+        <nav class="navbar">
+    <div class="container">
+        <div class="navbar-header header-logo">
+            <a href="https://rrrwx.github.io">JadeRong</a>&nbsp;
+        	<a href="javascript:void(0);" class="theme-switch"><i class="iconfont icon-table-lamp"></i></a>
+
+        </div>
+        <div class="menu navbar-right">
+                
+                
+                <a class="menu-item" href="/posts/" title="">Blogs</a>
+                
+                <a class="menu-item" href="/categories/" title="">Categories</a>
+                
+                <a class="menu-item" href="/tags/" title="">Tags</a>
+                
+                <a class="menu-item" href="/about/" title="">About</a>
+                
+        </div>
+    </div>
+</nav>
+<nav class="navbar-mobile" id="nav-mobile" style="display: none">
+     <div class="container">
+        <div class="navbar-header">
+            <div>  <a href="javascript:void(0);" class="theme-switch"><i class="iconfont icon-table-lamp"></i></a>&nbsp;<a href="https://rrrwx.github.io">JadeRong</a></div>
+            <div class="menu-toggle">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+     
+          <div class="menu" id="mobile-menu">
+                
+                
+                <a class="menu-item" href="/posts/" title="">Blogs</a>
+                
+                <a class="menu-item" href="/categories/" title="">Categories</a>
+                
+                <a class="menu-item" href="/tags/" title="">Tags</a>
+                
+                <a class="menu-item" href="/about/" title="">About</a>
+                
+        </div>
+    </div>
+</nav>
+    	 <main class="main">
+          <div class="container">
+      		
+<article class="post-warp" itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">排序</h1>
+
+
+
+                Written by <a itemprop="name" href="https://rrrwx.github.io" rel="author">JadeRong</a>, included in <i class="iconfont icon-folder"></i>
+
+                <span class="post-category">
+                            <a href="https://rrrwx.github.io/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/"> 数据结构 </a>
+                            
+                    </span>
+
+        
+        <h1 id="wc" style="font-size: 0.75rem;text-align: left;">约 61 个字    |    预计阅读 1 分钟    |    本文总阅读量<span id="busuanzi_value_page_pv"></span>次</h1>
+    </header>
+    <div class="post-content">
+        
+
+        
+
+        
+        
+     
+          
+          
+          
+
+          
+          
+          
+
+          <h3 id="复杂度比较">复杂度比较</h3>
+<table>
+<thead>
+<tr>
+<th align="center">排序方法</th>
+<th align="center">最好时间复杂度</th>
+<th align="center">平均时间复杂度</th>
+<th align="center">最坏时间复杂度</th>
+<th align="center">空间复杂度</th>
+<th align="center">是否稳定</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center">直接插入排序</td>
+<td align="center">O(n)</td>
+<td align="center">O(n2)</td>
+<td align="center">O(n2)</td>
+<td align="center">O(1)</td>
+<td align="center">是</td>
+</tr>
+<tr>
+<td align="center">冒泡排序</td>
+<td align="center">O(n)</td>
+<td align="center">O(n2)</td>
+<td align="center">O(n2)</td>
+<td align="center">O(1)</td>
+<td align="center">是</td>
+</tr>
+<tr>
+<td align="center">简单选择排序</td>
+<td align="center">O(n2)</td>
+<td align="center">O(n2)</td>
+<td align="center">O(n2)</td>
+<td align="center">O(1)</td>
+<td align="center">否</td>
+</tr>
+<tr>
+<td align="center">希尔排序</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center">O(1)</td>
+<td align="center">否</td>
+</tr>
+<tr>
+<td align="center">快速排序</td>
+<td align="center">O(nlogn)</td>
+<td align="center">O(nlogn)</td>
+<td align="center">O(n2)</td>
+<td align="center">O(logn)</td>
+<td align="center">否</td>
+</tr>
+<tr>
+<td align="center">堆排序</td>
+<td align="center">O(nlogn)</td>
+<td align="center">O(nlogn)</td>
+<td align="center">O(nlogn)</td>
+<td align="center">O(1)</td>
+<td align="center">否</td>
+</tr>
+<tr>
+<td align="center">二路归并排序</td>
+<td align="center">O(nlogn)</td>
+<td align="center">O(nlogn)</td>
+<td align="center">O(nlogn)</td>
+<td align="center">O(n)</td>
+<td align="center">是</td>
+</tr>
+<tr>
+<td align="center">基数排序</td>
+<td align="center"></td>
+<td align="center">O(d(n+r))</td>
+<td align="center"></td>
+<td align="center">O(n)</td>
+<td align="center">是</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h3 id="适用条件">适用条件</h3>
+<p>n&lt;100: 直插、冒泡、简单选择</p>
+<p>n&lt;1000: 希尔</p>
+<p>大量n: 快排、堆排、归并、基数排序</p>
+<h3 id="分类">分类</h3>
+<p>基于插入：直接插入、折半插入、希尔排序</p>
+<p>基于交换：冒泡、快排</p>
+<p>基于选择：简单选择、堆排序</p>
+
+    </div>
+
+
+
+    <div class="post-copyright">
+                
+        
+
+
+        <section>
+            <p class="share-item">
+                <span>Share :</span>
+                
+                <span>
+
+      
+        <a href="//twitter.com/share?url=https%3a%2f%2frrrwx.github.io%2f2020%2f%25E6%258E%2592%25E5%25BA%258F%2f&amp;text=%e6%8e%92%e5%ba%8f&amp;via=" target="_blank" title="Share on Twitter">
+          <i class="iconfont icon-twitter"></i>
+        </a>
+        
+
+      
+      
+        <a href="//www.facebook.com/sharer/sharer.php?u=https%3a%2f%2frrrwx.github.io%2f2020%2f%25E6%258E%2592%25E5%25BA%258F%2f" target="_blank" title="Share on Facebook">
+          <i class="iconfont icon-facebook"></i>
+        </a>
+        
+      
+      
+      
+      
+      
+      
+        
+      
+        
+      
+
+          
+
+          
+
+          
+        <a href="//www.douban.com/recommend/?url=https%3a%2f%2frrrwx.github.io%2f2020%2f%25E6%258E%2592%25E5%25BA%258F%2f&amp;title=%e6%8e%92%e5%ba%8f" target="_blank" title="Share on Douban ">
+            <i class="iconfont icon-douban"></i>
+          </a>
+          
+
+          
+        <a href="//service.weibo.com/share/share.php?url=https%3a%2f%2frrrwx.github.io%2f2020%2f%25E6%258E%2592%25E5%25BA%258F%2f&amp;appkey=&amp;title=%e6%8e%92%e5%ba%8f" target="_blank" title="Share on Douban ">
+            <i class="iconfont icon-weibo"></i>
+          </a>
+          
+
+</span>
+                
+            </p>
+        </section>
+
+
+        <section>
+            <p class="copyright-item">
+                <span>Updated </span>
+                <span class="post-time">
+                on 
+                <time datetime=2020-05-19 itemprop="datePublished">May 19, 2020</time>
+                </span>
+
+            </p>
+        </section>
+    </div>
+
+  
+    <div class="post-tags">
+        
+            <section>
+            
+            <span class="tag"><a href="https://rrrwx.github.io/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/">
+                    <i class="iconfont icon-tag"></i>数据结构</a></span>
+            
+            <span class="tag"><a href="https://rrrwx.github.io/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">
+                    <i class="iconfont icon-tag"></i>学习笔记</a></span>
+            
+            <span class="tag"><a href="https://rrrwx.github.io/tags/%E7%AE%97%E6%B3%95/">
+                    <i class="iconfont icon-tag"></i>算法</a></span>
+            
+            </section>
+        
+        <section>
+                <a href="javascript:window.history.back();">back</a></span> · 
+                <span><a href="https://rrrwx.github.io">home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav">
+        
+        <a href="https://rrrwx.github.io/2020/%E7%BA%A2%E9%BB%91%E6%A0%91/" class="prev" rel="prev" title="红黑树"><i class="iconfont icon-left"></i>&nbsp;红黑树</a>
+         
+        
+        <a href="https://rrrwx.github.io/2020/%E5%BB%BA%E8%A1%A8%E8%84%9A%E6%9C%AC/" class="next" rel="next" title="mysql学习系列之建表脚本">mysql学习系列之建表脚本&nbsp;<i class="iconfont icon-right"></i></a>
+        
+    </div>
+
+    <div class="post-comment">
+          
+                 
+          
+    </div>
+</article>
+          </div>
+		   </main>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="">
+                <i class="fas fa-arrow-up fa-fw"></i>
+            </a>
+        </div>
+
+      <footer class="footer">
+
+
+
+
+    <div class="copyright">
+
+            <div class="footer-line">
+                &copy;<i class="far fa-copyright fa-fw"></i>&nbsp;<span itemprop="copyrightYear">2020</span>&nbsp;&nbsp;<span class="author" itemprop="copyrightHolder"><a href="https://rrrwx.github.io">JadeRong</a></span>&nbsp;|&nbsp;<span class="license">Released under <a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span>
+                &nbsp;|&nbsp;<span>Powered by <a href="https://gohugo.io/" target="_blank" rel="external nofollow">Hugo</a> & <a href="https://github.com/liuzc/leaveit" target="_blank" rel="external nofollow">LeaveIt</a></span>
+            </div>
+
+
+    </div>
+</footer>
+
+
+
+
+
+
+
+
+
+
+
+
+    
+    
+    <script src="/js/vendor_no_gallery.min.js" async=""></script>
+    
+  
+
+
+
+
+     </div>
+  </body>
+</html>

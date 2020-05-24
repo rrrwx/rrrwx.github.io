@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+  <meta http-equiv="content-type" content="text/html;charset=utf-8">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noodp"/>
+  <meta name="author" content="JadeRong">
+  <meta name="description" content="主要分享一些平时学习和开发中用到的知识">
+  
+  
+  <link rel="prev" href="https://rrrwx.github.io/2020/%E5%9F%BA%E7%A1%80%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E4%BA%8C/" />
+  <link rel="next" href="https://rrrwx.github.io/2020/%E5%B0%8F%E8%AE%B0/" />
+  <link rel="canonical" href="https://rrrwx.github.io/2020/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+  <meta name="msapplication-TileColor" content="#da532c">
+  <meta name="theme-color" content="#ffffff">
+  <title>
+       
+       
+           java正则表达式 | JadeRong
+       
+  </title>
+  <meta name="title" content="java正则表达式 | JadeRong">
+    
+  
+  <link rel="stylesheet" href="/font/iconfont.css">
+  <link rel="stylesheet" href="/css/main.min.css">
+
+
+  
+  
+ 
+
+<script type="application/ld+json">
+ "@context" : "http://schema.org",
+    "@type" : "BlogPosting",
+    "mainEntityOfPage": {
+         "@type": "WebPage",
+         "@id": "https:\/\/rrrwx.github.io"
+    },
+    "articleSection" : "posts",
+    "name" : "java正则表达式",
+    "headline" : "java正则表达式",
+    "description" : "JDK1.4之后正则默认被JDK所支持，并且提供java.util.regex开发包，同时String类也支持直接正则处理\n 1.常用正则标记 （1）字符：匹配单个字符。 a：表示匹配字母a； \\\\：转义字符\x26#34;\\\x26#34;； \\t：转义字符\x26#34;\\t\x26#34;； \\n：转义字符\x26#34;\\n\x26#34;； （2）一组字符：任意匹配里面的单个字符 [abc]：可能是字母a、b或c； [^abc]：不是字母a、b或c中的任意一个； [a-zA-Z]：全部字母中的任意一个； [0-9]：全部数字中的任意一个； （3）边界匹配：（JavaScript里面可能会用到） ^：一组正则的开始； $：一组正则的结束； （4）简写表达式：每一位出现的简写标记也只表示一位 .：任意一位字符； \\d：任意一位数字，等价于.[0-9]； \\D：非数字的任意字符，等价于.[^0-9]； \\w：任意一位字母、数字、_，等价于.[a-zA-Z0-9]； \\W：非字母、数字、_以外的任意字符，等价于.[^a-zA-Z0-9]； \\s：任意的一位空格，例如\x26#34;\\n\x26#34;、\x26#34;\\t\x26#34;、\x26#34; \x26#34;； \\s：空格以外的任意字符； （5）数量表示：匹配多位字符 ?：出现0次或1次； *：出现0次、1次或多次； \x2b：出现1次或多次； {n}：出啊先n次； {n,}：出现n次及以上； {n,m}：出现n~m次； （6）逻辑表示：与、或、非 表达式A表达式B：表达式A后面紧跟着表达式B； 表达式A|表达式B：表达式A或表达式B； （表达式）：将多个表达式合成一个表示，作为一组出现； 2.String类对正则的支持 public boolean matches(String regex) \/\/匹配指定正则表达式 public String replaceAll(String regex, String replacement) \/\/替换指定正则的全部内容 public String replaceFirst(String regex, String replacement) \/\/替换指定正则的首个内容 public String[] split(String regex) \/\/按照指定正则全拆分 public String[] split(String regex, int limit) \/\/按照指定的正则拆分为指定个数 3.java.util.regex包支持 该包中有两个核心的正则操作类：Pattern（正则模式）和Matcher（匹配）",
+    "inLanguage" : "en-us",
+    "author" : "JadeRong",
+    "creator" : "JadeRong",
+    "publisher": "JadeRong",
+    "accountablePerson" : "JadeRong",
+    "copyrightHolder" : "JadeRong",
+    "copyrightYear" : "2020",
+    "datePublished": "2020-02-16 00:10:36 \x2b0800 CST",
+    "dateModified" : "2020-02-16 00:10:36 \x2b0800 CST",
+    "url" : "https:\/\/rrrwx.github.io\/2020\/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F\/",
+    "wordCount" : "118",
+    "keywords" : [ "学习笔记","java","正则表达式", "JadeRong"]
+}
+</script>
+
+</head>
+
+  
+
+
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  <body class="">
+    <div class="wrapper">
+        <nav class="navbar">
+    <div class="container">
+        <div class="navbar-header header-logo">
+            <a href="https://rrrwx.github.io">JadeRong</a>&nbsp;
+        	<a href="javascript:void(0);" class="theme-switch"><i class="iconfont icon-table-lamp"></i></a>
+
+        </div>
+        <div class="menu navbar-right">
+                
+                
+                <a class="menu-item" href="/posts/" title="">Blogs</a>
+                
+                <a class="menu-item" href="/categories/" title="">Categories</a>
+                
+                <a class="menu-item" href="/tags/" title="">Tags</a>
+                
+                <a class="menu-item" href="/about/" title="">About</a>
+                
+        </div>
+    </div>
+</nav>
+<nav class="navbar-mobile" id="nav-mobile" style="display: none">
+     <div class="container">
+        <div class="navbar-header">
+            <div>  <a href="javascript:void(0);" class="theme-switch"><i class="iconfont icon-table-lamp"></i></a>&nbsp;<a href="https://rrrwx.github.io">JadeRong</a></div>
+            <div class="menu-toggle">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+     
+          <div class="menu" id="mobile-menu">
+                
+                
+                <a class="menu-item" href="/posts/" title="">Blogs</a>
+                
+                <a class="menu-item" href="/categories/" title="">Categories</a>
+                
+                <a class="menu-item" href="/tags/" title="">Tags</a>
+                
+                <a class="menu-item" href="/about/" title="">About</a>
+                
+        </div>
+    </div>
+</nav>
+    	 <main class="main">
+          <div class="container">
+      		
+<article class="post-warp" itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">java正则表达式</h1>
+
+
+
+                Written by <a itemprop="name" href="https://rrrwx.github.io" rel="author">JadeRong</a>, included in <i class="iconfont icon-folder"></i>
+
+                <span class="post-category">
+                            <a href="https://rrrwx.github.io/categories/java%E5%AD%A6%E4%B9%A0/"> java学习 </a>
+                            
+                    </span>
+
+        
+        <h1 id="wc" style="font-size: 0.75rem;text-align: left;">约 118 个字    |    预计阅读 1 分钟    |    本文总阅读量<span id="busuanzi_value_page_pv"></span>次</h1>
+    </header>
+    <div class="post-content">
+        
+
+        
+
+        
+        
+     
+          
+          
+          
+
+          
+          
+          
+
+          <blockquote>
+<p>JDK1.4之后正则默认被JDK所支持，并且提供java.util.regex开发包，同时String类也支持直接正则处理</p>
+</blockquote>
+<h3 id="1常用正则标记">1.常用正则标记</h3>
+<h4 id="1字符匹配单个字符">（1）字符：匹配单个字符。</h4>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java">a<span style="color:#960050;background-color:#1e0010">：</span>表示匹配字母a<span style="color:#960050;background-color:#1e0010">；</span>
+<span style="color:#960050;background-color:#1e0010">\\：</span>转义字符<span style="color:#e6db74">&#34;\&#34;；
+</span><span style="color:#e6db74">\t：转义字符&#34;</span><span style="color:#960050;background-color:#1e0010">\</span>t<span style="color:#e6db74">&#34;；
+</span><span style="color:#e6db74">\n：转义字符&#34;</span><span style="color:#960050;background-color:#1e0010">\</span>n<span style="color:#960050;background-color:#1e0010">&#34;；</span>
+</code></pre></div><h4 id="2一组字符任意匹配里面的单个字符">（2）一组字符：任意匹配里面的单个字符</h4>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#f92672">[</span>abc<span style="color:#f92672">]</span><span style="color:#960050;background-color:#1e0010">：</span>可能是字母a<span style="color:#960050;background-color:#1e0010">、</span>b或c<span style="color:#960050;background-color:#1e0010">；</span>
+<span style="color:#f92672">[^</span>abc<span style="color:#f92672">]</span><span style="color:#960050;background-color:#1e0010">：</span>不是字母a<span style="color:#960050;background-color:#1e0010">、</span>b或c中的任意一个<span style="color:#960050;background-color:#1e0010">；</span>
+<span style="color:#f92672">[</span>a<span style="color:#f92672">-</span>zA<span style="color:#f92672">-</span>Z<span style="color:#f92672">]</span><span style="color:#960050;background-color:#1e0010">：</span>全部字母中的任意一个<span style="color:#960050;background-color:#1e0010">；</span>
+<span style="color:#f92672">[</span>0<span style="color:#f92672">-</span>9<span style="color:#f92672">]</span><span style="color:#960050;background-color:#1e0010">：</span>全部数字中的任意一个<span style="color:#960050;background-color:#1e0010">；</span>
+</code></pre></div><h4 id="3边界匹配javascript里面可能会用到">（3）边界匹配：（JavaScript里面可能会用到）</h4>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#f92672">^</span><span style="color:#960050;background-color:#1e0010">：</span>一组正则的开始<span style="color:#960050;background-color:#1e0010">；</span>
+$<span style="color:#960050;background-color:#1e0010">：</span>一组正则的结束<span style="color:#960050;background-color:#1e0010">；</span>
+</code></pre></div><h4 id="4简写表达式每一位出现的简写标记也只表示一位">（4）简写表达式：每一位出现的简写标记也只表示一位</h4>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#f92672">.</span><span style="color:#960050;background-color:#1e0010">：</span>任意一位字符<span style="color:#960050;background-color:#1e0010">；</span>
+<span style="color:#960050;background-color:#1e0010">\</span>d<span style="color:#960050;background-color:#1e0010">：</span>任意一位数字<span style="color:#960050;background-color:#1e0010">，</span>等价于<span style="color:#f92672">.[</span>0<span style="color:#f92672">-</span>9<span style="color:#f92672">]</span><span style="color:#960050;background-color:#1e0010">；</span>
+<span style="color:#960050;background-color:#1e0010">\</span>D<span style="color:#960050;background-color:#1e0010">：</span>非数字的任意字符<span style="color:#960050;background-color:#1e0010">，</span>等价于<span style="color:#f92672">.[^</span>0<span style="color:#f92672">-</span>9<span style="color:#f92672">]</span><span style="color:#960050;background-color:#1e0010">；</span>
+<span style="color:#960050;background-color:#1e0010">\</span>w<span style="color:#960050;background-color:#1e0010">：</span>任意一位字母<span style="color:#960050;background-color:#1e0010">、</span>数字<span style="color:#960050;background-color:#1e0010">、</span>_<span style="color:#960050;background-color:#1e0010">，</span>等价于<span style="color:#f92672">.[</span>a<span style="color:#f92672">-</span>zA<span style="color:#f92672">-</span>Z0<span style="color:#f92672">-</span>9<span style="color:#f92672">]</span><span style="color:#960050;background-color:#1e0010">；</span>
+<span style="color:#960050;background-color:#1e0010">\</span>W<span style="color:#960050;background-color:#1e0010">：</span>非字母<span style="color:#960050;background-color:#1e0010">、</span>数字<span style="color:#960050;background-color:#1e0010">、</span>_以外的任意字符<span style="color:#960050;background-color:#1e0010">，</span>等价于<span style="color:#f92672">.[^</span>a<span style="color:#f92672">-</span>zA<span style="color:#f92672">-</span>Z0<span style="color:#f92672">-</span>9<span style="color:#f92672">]</span><span style="color:#960050;background-color:#1e0010">；</span>
+<span style="color:#960050;background-color:#1e0010">\</span>s<span style="color:#960050;background-color:#1e0010">：</span>任意的一位空格<span style="color:#960050;background-color:#1e0010">，</span>例如<span style="color:#e6db74">&#34;\n&#34;</span><span style="color:#960050;background-color:#1e0010">、</span><span style="color:#e6db74">&#34;\t&#34;</span><span style="color:#960050;background-color:#1e0010">、</span><span style="color:#e6db74">&#34; &#34;</span><span style="color:#960050;background-color:#1e0010">；</span>
+<span style="color:#960050;background-color:#1e0010">\</span>s<span style="color:#960050;background-color:#1e0010">：</span>空格以外的任意字符<span style="color:#960050;background-color:#1e0010">；</span>
+</code></pre></div><h4 id="5数量表示匹配多位字符">（5）数量表示：匹配多位字符</h4>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#f92672">?</span><span style="color:#960050;background-color:#1e0010">：</span>出现0次或1次<span style="color:#960050;background-color:#1e0010">；</span>
+<span style="color:#f92672">*</span><span style="color:#960050;background-color:#1e0010">：</span>出现0次<span style="color:#960050;background-color:#1e0010">、</span>1次或多次<span style="color:#960050;background-color:#1e0010">；</span>
+<span style="color:#f92672">+</span><span style="color:#960050;background-color:#1e0010">：</span>出现1次或多次<span style="color:#960050;background-color:#1e0010">；</span>
+<span style="color:#f92672">{</span>n<span style="color:#f92672">}</span><span style="color:#960050;background-color:#1e0010">：</span>出啊先n次<span style="color:#960050;background-color:#1e0010">；</span>
+<span style="color:#f92672">{</span>n<span style="color:#f92672">,}</span><span style="color:#960050;background-color:#1e0010">：</span>出现n次及以上<span style="color:#960050;background-color:#1e0010">；</span>
+<span style="color:#f92672">{</span>n<span style="color:#f92672">,</span>m<span style="color:#f92672">}</span><span style="color:#960050;background-color:#1e0010">：</span>出现n<span style="color:#f92672">~</span>m次<span style="color:#960050;background-color:#1e0010">；</span>
+</code></pre></div><h4 id="6逻辑表示与或非">（6）逻辑表示：与、或、非</h4>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java">表达式A表达式B<span style="color:#960050;background-color:#1e0010">：</span>表达式A后面紧跟着表达式B<span style="color:#960050;background-color:#1e0010">；</span>
+表达式A<span style="color:#f92672">|</span>表达式B<span style="color:#960050;background-color:#1e0010">：</span>表达式A或表达式B<span style="color:#960050;background-color:#1e0010">；</span>
+<span style="color:#960050;background-color:#1e0010">（</span>表达式<span style="color:#960050;background-color:#1e0010">）：</span>将多个表达式合成一个表示<span style="color:#960050;background-color:#1e0010">，</span>作为一组出现<span style="color:#960050;background-color:#1e0010">；</span>
+</code></pre></div><h3 id="2string类对正则的支持">2.String类对正则的支持</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">boolean</span> <span style="color:#a6e22e">matches</span><span style="color:#f92672">(</span>String regex<span style="color:#f92672">)</span>  <span style="color:#75715e">//匹配指定正则表达式
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">public</span> String <span style="color:#a6e22e">replaceAll</span><span style="color:#f92672">(</span>String regex<span style="color:#f92672">,</span> String replacement<span style="color:#f92672">)</span> <span style="color:#75715e">//替换指定正则的全部内容
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">public</span> String <span style="color:#a6e22e">replaceFirst</span><span style="color:#f92672">(</span>String regex<span style="color:#f92672">,</span> String replacement<span style="color:#f92672">)</span> <span style="color:#75715e">//替换指定正则的首个内容
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">public</span> String<span style="color:#f92672">[]</span> <span style="color:#a6e22e">split</span><span style="color:#f92672">(</span>String regex<span style="color:#f92672">)</span> <span style="color:#75715e">//按照指定正则全拆分
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">public</span> String<span style="color:#f92672">[]</span> <span style="color:#a6e22e">split</span><span style="color:#f92672">(</span>String regex<span style="color:#f92672">,</span> <span style="color:#66d9ef">int</span> limit<span style="color:#f92672">)</span> <span style="color:#75715e">//按照指定的正则拆分为指定个数
+</span></code></pre></div><h3 id="3javautilregex包支持">3.java.util.regex包支持</h3>
+<p>该包中有两个核心的正则操作类：Pattern（正则模式）和Matcher（匹配）</p>
+<h4 id="1pattern类进行正则表达式的编译以及获取matcher实例">（1）Pattern类：进行正则表达式的编译以及获取Matcher实例</h4>
+<p><code>public static Pattern compile(String regex) //编译正则表达式，取得Pattern实例</code></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java">Pattern pat <span style="color:#f92672">=</span> Pattern<span style="color:#f92672">.</span><span style="color:#a6e22e">compile</span><span style="color:#f92672">();</span>
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#66d9ef">public</span> Matcher <span style="color:#a6e22e">matcher</span><span style="color:#f92672">(</span>CharSequence input<span style="color:#f92672">)</span> <span style="color:#75715e">//获取Matcher实例
+</span></code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java">Pattern pat <span style="color:#f92672">=</span> Pattern<span style="color:#f92672">.</span><span style="color:#a6e22e">compile</span><span style="color:#f92672">();</span>
+Matcher mat <span style="color:#f92672">=</span> pat<span style="color:#f92672">.</span><span style="color:#a6e22e">matcher</span><span style="color:#f92672">(</span>str<span style="color:#f92672">);</span>
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#66d9ef">public</span> String<span style="color:#f92672">[]</span> <span style="color:#a6e22e">split</span><span style="color:#f92672">(</span>CharSequence input<span style="color:#f92672">)</span> <span style="color:#75715e">//字符串拆分
+</span></code></pre></div><h4 id="2matcher类">（2）Matcher类：</h4>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#66d9ef">public</span> bool <span style="color:#a6e22e">matches</span><span style="color:#f92672">()</span> <span style="color:#75715e">//执行验证
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">public</span> String <span style="color:#a6e22e">replaceAll</span><span style="color:#f92672">(</span>String replacement<span style="color:#f92672">)</span> <span style="color:#75715e">//字符串替换
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">boolean</span> <span style="color:#a6e22e">find</span><span style="color:#f92672">()</span> <span style="color:#75715e">//是否有下一个匹配
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">public</span> String <span style="color:#a6e22e">group</span><span style="color:#f92672">(</span><span style="color:#66d9ef">int</span> group<span style="color:#f92672">)</span> <span style="color:#75715e">//获取指定组编号的数据
+</span></code></pre></div><p>这里group和find方法是String类所实现不了的。</p>
+
+    </div>
+
+
+
+    <div class="post-copyright">
+                
+        
+
+
+        <section>
+            <p class="share-item">
+                <span>Share :</span>
+                
+                <span>
+
+      
+        <a href="//twitter.com/share?url=https%3a%2f%2frrrwx.github.io%2f2020%2f%25E6%25AD%25A3%25E5%2588%2599%25E8%25A1%25A8%25E8%25BE%25BE%25E5%25BC%258F%2f&amp;text=java%e6%ad%a3%e5%88%99%e8%a1%a8%e8%be%be%e5%bc%8f&amp;via=" target="_blank" title="Share on Twitter">
+          <i class="iconfont icon-twitter"></i>
+        </a>
+        
+
+      
+      
+        <a href="//www.facebook.com/sharer/sharer.php?u=https%3a%2f%2frrrwx.github.io%2f2020%2f%25E6%25AD%25A3%25E5%2588%2599%25E8%25A1%25A8%25E8%25BE%25BE%25E5%25BC%258F%2f" target="_blank" title="Share on Facebook">
+          <i class="iconfont icon-facebook"></i>
+        </a>
+        
+      
+      
+      
+      
+      
+      
+        
+      
+        
+      
+
+          
+
+          
+
+          
+        <a href="//www.douban.com/recommend/?url=https%3a%2f%2frrrwx.github.io%2f2020%2f%25E6%25AD%25A3%25E5%2588%2599%25E8%25A1%25A8%25E8%25BE%25BE%25E5%25BC%258F%2f&amp;title=java%e6%ad%a3%e5%88%99%e8%a1%a8%e8%be%be%e5%bc%8f" target="_blank" title="Share on Douban ">
+            <i class="iconfont icon-douban"></i>
+          </a>
+          
+
+          
+        <a href="//service.weibo.com/share/share.php?url=https%3a%2f%2frrrwx.github.io%2f2020%2f%25E6%25AD%25A3%25E5%2588%2599%25E8%25A1%25A8%25E8%25BE%25BE%25E5%25BC%258F%2f&amp;appkey=&amp;title=java%e6%ad%a3%e5%88%99%e8%a1%a8%e8%be%be%e5%bc%8f" target="_blank" title="Share on Douban ">
+            <i class="iconfont icon-weibo"></i>
+          </a>
+          
+
+</span>
+                
+            </p>
+        </section>
+
+
+        <section>
+            <p class="copyright-item">
+                <span>Updated </span>
+                <span class="post-time">
+                on 
+                <time datetime=2020-02-16 itemprop="datePublished">February 16, 2020</time>
+                </span>
+
+            </p>
+        </section>
+    </div>
+
+  
+    <div class="post-tags">
+        
+            <section>
+            
+            <span class="tag"><a href="https://rrrwx.github.io/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">
+                    <i class="iconfont icon-tag"></i>学习笔记</a></span>
+            
+            <span class="tag"><a href="https://rrrwx.github.io/tags/java/">
+                    <i class="iconfont icon-tag"></i>java</a></span>
+            
+            <span class="tag"><a href="https://rrrwx.github.io/tags/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/">
+                    <i class="iconfont icon-tag"></i>正则表达式</a></span>
+            
+            </section>
+        
+        <section>
+                <a href="javascript:window.history.back();">back</a></span> · 
+                <span><a href="https://rrrwx.github.io">home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav">
+        
+        <a href="https://rrrwx.github.io/2020/%E5%9F%BA%E7%A1%80%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E4%BA%8C/" class="prev" rel="prev" title="java基础学习笔记（二）"><i class="iconfont icon-left"></i>&nbsp;java基础学习笔记（二）</a>
+         
+        
+        <a href="https://rrrwx.github.io/2020/%E5%B0%8F%E8%AE%B0/" class="next" rel="next" title="java基础学习笔记之小记">java基础学习笔记之小记&nbsp;<i class="iconfont icon-right"></i></a>
+        
+    </div>
+
+    <div class="post-comment">
+          
+                 
+          
+    </div>
+</article>
+          </div>
+		   </main>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="">
+                <i class="fas fa-arrow-up fa-fw"></i>
+            </a>
+        </div>
+
+      <footer class="footer">
+
+
+
+
+    <div class="copyright">
+
+            <div class="footer-line">
+                &copy;<i class="far fa-copyright fa-fw"></i>&nbsp;<span itemprop="copyrightYear">2020</span>&nbsp;&nbsp;<span class="author" itemprop="copyrightHolder"><a href="https://rrrwx.github.io">JadeRong</a></span>&nbsp;|&nbsp;<span class="license">Released under <a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span>
+                &nbsp;|&nbsp;<span>Powered by <a href="https://gohugo.io/" target="_blank" rel="external nofollow">Hugo</a> & <a href="https://github.com/liuzc/leaveit" target="_blank" rel="external nofollow">LeaveIt</a></span>
+            </div>
+
+
+    </div>
+</footer>
+
+
+
+
+
+
+
+
+
+
+
+
+    
+    
+    <script src="/js/vendor_no_gallery.min.js" async=""></script>
+    
+  
+
+
+
+
+     </div>
+  </body>
+</html>

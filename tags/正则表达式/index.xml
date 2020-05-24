@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>正则表达式 on JadeRong</title>
+    <link>https://rrrwx.github.io/tags/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/</link>
+    <description>Recent content in 正则表达式 on JadeRong</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sun, 16 Feb 2020 00:10:36 +0800</lastBuildDate>
+    
+	<atom:link href="https://rrrwx.github.io/tags/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>java正则表达式</title>
+      <link>https://rrrwx.github.io/2020/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/</link>
+      <pubDate>Sun, 16 Feb 2020 00:10:36 +0800</pubDate>
+      
+      <guid>https://rrrwx.github.io/2020/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/</guid>
+      <description>JDK1.4之后正则默认被JDK所支持，并且提供java.util.regex开发包，同时String类也支持直接正则处理
+ 1.常用正则标记 （1）字符：匹配单个字符。 a：表示匹配字母a； \\：转义字符&amp;#34;\&amp;#34;； \t：转义字符&amp;#34;\t&amp;#34;； \n：转义字符&amp;#34;\n&amp;#34;； （2）一组字符：任意匹配里面的单个字符 [abc]：可能是字母a、b或c； [^abc]：不是字母a、b或c中的任意一个； [a-zA-Z]：全部字母中的任意一个； [0-9]：全部数字中的任意一个； （3）边界匹配：（JavaScript里面可能会用到） ^：一组正则的开始； $：一组正则的结束； （4）简写表达式：每一位出现的简写标记也只表示一位 .：任意一位字符； \d：任意一位数字，等价于.[0-9]； \D：非数字的任意字符，等价于.[^0-9]； \w：任意一位字母、数字、_，等价于.[a-zA-Z0-9]； \W：非字母、数字、_以外的任意字符，等价于.[^a-zA-Z0-9]； \s：任意的一位空格，例如&amp;#34;\n&amp;#34;、&amp;#34;\t&amp;#34;、&amp;#34; &amp;#34;； \s：空格以外的任意字符； （5）数量表示：匹配多位字符 ?：出现0次或1次； *：出现0次、1次或多次； +：出现1次或多次； {n}：出啊先n次； {n,}：出现n次及以上； {n,m}：出现n~m次； （6）逻辑表示：与、或、非 表达式A表达式B：表达式A后面紧跟着表达式B； 表达式A|表达式B：表达式A或表达式B； （表达式）：将多个表达式合成一个表示，作为一组出现； 2.String类对正则的支持 public boolean matches(String regex) //匹配指定正则表达式 public String replaceAll(String regex, String replacement) //替换指定正则的全部内容 public String replaceFirst(String regex, String replacement) //替换指定正则的首个内容 public String[] split(String regex) //按照指定正则全拆分 public String[] split(String regex, int limit) //按照指定的正则拆分为指定个数 3.java.util.regex包支持 该包中有两个核心的正则操作类：Pattern（正则模式）和Matcher（匹配）</description>
+    </item>
+    
+  </channel>
+</rss>

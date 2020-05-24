@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+  <meta http-equiv="content-type" content="text/html;charset=utf-8">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noodp"/>
+  <meta name="author" content="JadeRong">
+  <meta name="description" content="主要分享一些平时学习和开发中用到的知识">
+  
+  
+  <link rel="prev" href="https://rrrwx.github.io/2020/jvm%E5%AD%A6%E4%B9%A0%E5%85%AD%E8%99%9A%E6%8B%9F%E6%9C%BA%E6%80%A7%E8%83%BD%E7%9B%91%E6%8E%A7%E4%B8%8E%E6%95%85%E9%9A%9C%E5%A4%84%E7%90%86%E5%B7%A5%E5%85%B7/" />
+  <link rel="next" href="https://rrrwx.github.io/2020/jvm%E5%AD%A6%E4%B9%A0%E5%85%AB%E5%AD%97%E8%8A%82%E7%A0%81%E6%8C%87%E4%BB%A4/" />
+  <link rel="canonical" href="https://rrrwx.github.io/2020/jvm%E5%AD%A6%E4%B9%A0%E4%B8%83%E7%B1%BB%E6%96%87%E4%BB%B6%E7%BB%93%E6%9E%84/" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+  <meta name="msapplication-TileColor" content="#da532c">
+  <meta name="theme-color" content="#ffffff">
+  <title>
+       
+       
+           JVM学习七之类文件结构 | JadeRong
+       
+  </title>
+  <meta name="title" content="JVM学习七之类文件结构 | JadeRong">
+    
+  
+  <link rel="stylesheet" href="/font/iconfont.css">
+  <link rel="stylesheet" href="/css/main.min.css">
+
+
+  
+  
+ 
+
+<script type="application/ld+json">
+ "@context" : "http://schema.org",
+    "@type" : "BlogPosting",
+    "mainEntityOfPage": {
+         "@type": "WebPage",
+         "@id": "https:\/\/rrrwx.github.io"
+    },
+    "articleSection" : "posts",
+    "name" : "JVM学习七之类文件结构",
+    "headline" : "JVM学习七之类文件结构",
+    "description" : "类文件结构 https:\/\/www.cnblogs.com\/chanshuyi\/p\/jvm_serial_05_jvm_bytecode_analysis.html https:\/\/blog.csdn.net\/A_zhenzhen\/article\/details\/77977345\n Class文件是一组以8位字节为基础单位的二进制流。\n （一）魔数：0xCAFEBABE 用于校验 （二）版本号 （三）常量池： cp_info\n（四）访问标记： 通过相加计算得到访问标记\naccess_flags\n（五）类索引、父类索引、接口索引 （六）字段表：描述接口和类中声明的变量 field_info\n（七）方法表 method_info\n（八）属性表 attribute_info\n虚拟机规范预定义的属性: ",
+    "inLanguage" : "en-us",
+    "author" : "JadeRong",
+    "creator" : "JadeRong",
+    "publisher": "JadeRong",
+    "accountablePerson" : "JadeRong",
+    "copyrightHolder" : "JadeRong",
+    "copyrightYear" : "2020",
+    "datePublished": "2020-03-23 00:10:36 \x2b0800 CST",
+    "dateModified" : "2020-03-23 00:10:36 \x2b0800 CST",
+    "url" : "https:\/\/rrrwx.github.io\/2020\/jvm%E5%AD%A6%E4%B9%A0%E4%B8%83%E7%B1%BB%E6%96%87%E4%BB%B6%E7%BB%93%E6%9E%84\/",
+    "wordCount" : "20",
+    "keywords" : [ "jvm","java","学习笔记", "JadeRong"]
+}
+</script>
+
+</head>
+
+  
+
+
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  <body class="">
+    <div class="wrapper">
+        <nav class="navbar">
+    <div class="container">
+        <div class="navbar-header header-logo">
+            <a href="https://rrrwx.github.io">JadeRong</a>&nbsp;
+        	<a href="javascript:void(0);" class="theme-switch"><i class="iconfont icon-table-lamp"></i></a>
+
+        </div>
+        <div class="menu navbar-right">
+                
+                
+                <a class="menu-item" href="/posts/" title="">Blogs</a>
+                
+                <a class="menu-item" href="/categories/" title="">Categories</a>
+                
+                <a class="menu-item" href="/tags/" title="">Tags</a>
+                
+                <a class="menu-item" href="/about/" title="">About</a>
+                
+        </div>
+    </div>
+</nav>
+<nav class="navbar-mobile" id="nav-mobile" style="display: none">
+     <div class="container">
+        <div class="navbar-header">
+            <div>  <a href="javascript:void(0);" class="theme-switch"><i class="iconfont icon-table-lamp"></i></a>&nbsp;<a href="https://rrrwx.github.io">JadeRong</a></div>
+            <div class="menu-toggle">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+     
+          <div class="menu" id="mobile-menu">
+                
+                
+                <a class="menu-item" href="/posts/" title="">Blogs</a>
+                
+                <a class="menu-item" href="/categories/" title="">Categories</a>
+                
+                <a class="menu-item" href="/tags/" title="">Tags</a>
+                
+                <a class="menu-item" href="/about/" title="">About</a>
+                
+        </div>
+    </div>
+</nav>
+    	 <main class="main">
+          <div class="container">
+      		
+<article class="post-warp" itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">JVM学习七之类文件结构</h1>
+
+
+
+                Written by <a itemprop="name" href="https://rrrwx.github.io" rel="author">JadeRong</a>, included in <i class="iconfont icon-folder"></i>
+
+                <span class="post-category">
+                            <a href="https://rrrwx.github.io/categories/jvm%E5%AD%A6%E4%B9%A0/"> jvm学习 </a>
+                            
+                    </span>
+
+        
+        <h1 id="wc" style="font-size: 0.75rem;text-align: left;">约 20 个字    |    预计阅读 1 分钟    |    本文总阅读量<span id="busuanzi_value_page_pv"></span>次</h1>
+    </header>
+    <div class="post-content">
+        
+
+        
+            
+        
+
+        
+        
+     
+          
+          
+          
+
+          
+          
+          
+
+          <h2 id="类文件结构">类文件结构</h2>
+<p><a href="https://www.cnblogs.com/chanshuyi/p/jvm_serial_05_jvm_bytecode_analysis.html">https://www.cnblogs.com/chanshuyi/p/jvm_serial_05_jvm_bytecode_analysis.html</a>
+<a href="https://blog.csdn.net/A_zhenzhen/article/details/77977345">https://blog.csdn.net/A_zhenzhen/article/details/77977345</a></p>
+<blockquote>
+<p>Class文件是一组以8位字节为基础单位的二进制流。</p>
+</blockquote>
+<p><img src="../../../../images/jvm/ClassFile.png" alt="ClassFile.png"></p>
+<h4 id="一魔数0xcafebabe--用于校验">（一）魔数：0xCAFEBABE  用于校验</h4>
+<h4 id="二版本号">（二）版本号</h4>
+<h4 id="三常量池">（三）常量池：</h4>
+<p>cp_info</p>
+<p><img src="../../../../images/jvm/cp_info.png" alt="cp_info.png"></p>
+<p><img src="../../../../images/jvm/cp_classes_info.png" alt="cp_classes_info.png"></p>
+<h4 id="四访问标记">（四）访问标记：</h4>
+<p>通过相加计算得到访问标记</p>
+<p>access_flags</p>
+<p><img src="../../../../images/jvm/visitFlag.png" alt="visitFlag.png"></p>
+<h4 id="五类索引父类索引接口索引">（五）类索引、父类索引、接口索引</h4>
+<h4 id="六字段表描述接口和类中声明的变量">（六）字段表：描述接口和类中声明的变量</h4>
+<p>field_info</p>
+<p><img src="../../../../images/jvm/field_info.png" alt="field_info.png"></p>
+<h4 id="七方法表">（七）方法表</h4>
+<p>method_info</p>
+<p><img src="../../../../images/jvm/method_info.png" alt="method_info.png"></p>
+<h4 id="八属性表">（八）属性表</h4>
+<p>attribute_info</p>
+<p><img src="../../../../images/jvm/attribute_info.png" alt="attribute_info.png"></p>
+<h5 id="虚拟机规范预定义的属性">虚拟机规范预定义的属性:</h5>
+<p><img src="../../../../images/jvm/attribute_table.png" alt="attribute_table.png"></p>
+
+    </div>
+
+
+
+    <div class="post-copyright">
+                
+        
+
+
+        <section>
+            <p class="share-item">
+                <span>Share :</span>
+                
+                <span>
+
+      
+        <a href="//twitter.com/share?url=https%3a%2f%2frrrwx.github.io%2f2020%2fjvm%25E5%25AD%25A6%25E4%25B9%25A0%25E4%25B8%2583%25E7%25B1%25BB%25E6%2596%2587%25E4%25BB%25B6%25E7%25BB%2593%25E6%259E%2584%2f&amp;text=JVM%e5%ad%a6%e4%b9%a0%e4%b8%83%e4%b9%8b%e7%b1%bb%e6%96%87%e4%bb%b6%e7%bb%93%e6%9e%84&amp;via=" target="_blank" title="Share on Twitter">
+          <i class="iconfont icon-twitter"></i>
+        </a>
+        
+
+      
+      
+        <a href="//www.facebook.com/sharer/sharer.php?u=https%3a%2f%2frrrwx.github.io%2f2020%2fjvm%25E5%25AD%25A6%25E4%25B9%25A0%25E4%25B8%2583%25E7%25B1%25BB%25E6%2596%2587%25E4%25BB%25B6%25E7%25BB%2593%25E6%259E%2584%2f" target="_blank" title="Share on Facebook">
+          <i class="iconfont icon-facebook"></i>
+        </a>
+        
+      
+      
+      
+      
+      
+      
+        
+      
+        
+      
+
+          
+
+          
+
+          
+        <a href="//www.douban.com/recommend/?url=https%3a%2f%2frrrwx.github.io%2f2020%2fjvm%25E5%25AD%25A6%25E4%25B9%25A0%25E4%25B8%2583%25E7%25B1%25BB%25E6%2596%2587%25E4%25BB%25B6%25E7%25BB%2593%25E6%259E%2584%2f&amp;title=JVM%e5%ad%a6%e4%b9%a0%e4%b8%83%e4%b9%8b%e7%b1%bb%e6%96%87%e4%bb%b6%e7%bb%93%e6%9e%84" target="_blank" title="Share on Douban ">
+            <i class="iconfont icon-douban"></i>
+          </a>
+          
+
+          
+        <a href="//service.weibo.com/share/share.php?url=https%3a%2f%2frrrwx.github.io%2f2020%2fjvm%25E5%25AD%25A6%25E4%25B9%25A0%25E4%25B8%2583%25E7%25B1%25BB%25E6%2596%2587%25E4%25BB%25B6%25E7%25BB%2593%25E6%259E%2584%2f&amp;appkey=&amp;title=JVM%e5%ad%a6%e4%b9%a0%e4%b8%83%e4%b9%8b%e7%b1%bb%e6%96%87%e4%bb%b6%e7%bb%93%e6%9e%84" target="_blank" title="Share on Douban ">
+            <i class="iconfont icon-weibo"></i>
+          </a>
+          
+
+</span>
+                
+            </p>
+        </section>
+
+
+        <section>
+            <p class="copyright-item">
+                <span>Updated </span>
+                <span class="post-time">
+                on 
+                <time datetime=2020-03-23 itemprop="datePublished">March 23, 2020</time>
+                </span>
+
+            </p>
+        </section>
+    </div>
+
+  
+    <div class="post-tags">
+        
+            <section>
+            
+            <span class="tag"><a href="https://rrrwx.github.io/tags/jvm/">
+                    <i class="iconfont icon-tag"></i>jvm</a></span>
+            
+            <span class="tag"><a href="https://rrrwx.github.io/tags/java/">
+                    <i class="iconfont icon-tag"></i>java</a></span>
+            
+            <span class="tag"><a href="https://rrrwx.github.io/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">
+                    <i class="iconfont icon-tag"></i>学习笔记</a></span>
+            
+            </section>
+        
+        <section>
+                <a href="javascript:window.history.back();">back</a></span> · 
+                <span><a href="https://rrrwx.github.io">home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav">
+        
+        <a href="https://rrrwx.github.io/2020/jvm%E5%AD%A6%E4%B9%A0%E5%85%AD%E8%99%9A%E6%8B%9F%E6%9C%BA%E6%80%A7%E8%83%BD%E7%9B%91%E6%8E%A7%E4%B8%8E%E6%95%85%E9%9A%9C%E5%A4%84%E7%90%86%E5%B7%A5%E5%85%B7/" class="prev" rel="prev" title="JVM学习六之虚拟机性能监控与故障处理工具"><i class="iconfont icon-left"></i>&nbsp;JVM学习六之虚拟机性能监控与故障处理工具</a>
+         
+        
+        <a href="https://rrrwx.github.io/2020/jvm%E5%AD%A6%E4%B9%A0%E5%85%AB%E5%AD%97%E8%8A%82%E7%A0%81%E6%8C%87%E4%BB%A4/" class="next" rel="next" title="JVM学习八之字节码指令">JVM学习八之字节码指令&nbsp;<i class="iconfont icon-right"></i></a>
+        
+    </div>
+
+    <div class="post-comment">
+          
+                 
+          
+    </div>
+</article>
+          </div>
+		   </main>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="">
+                <i class="fas fa-arrow-up fa-fw"></i>
+            </a>
+        </div>
+
+      <footer class="footer">
+
+
+
+
+    <div class="copyright">
+
+            <div class="footer-line">
+                &copy;<i class="far fa-copyright fa-fw"></i>&nbsp;<span itemprop="copyrightYear">2020</span>&nbsp;&nbsp;<span class="author" itemprop="copyrightHolder"><a href="https://rrrwx.github.io">JadeRong</a></span>&nbsp;|&nbsp;<span class="license">Released under <a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span>
+                &nbsp;|&nbsp;<span>Powered by <a href="https://gohugo.io/" target="_blank" rel="external nofollow">Hugo</a> & <a href="https://github.com/liuzc/leaveit" target="_blank" rel="external nofollow">LeaveIt</a></span>
+            </div>
+
+
+    </div>
+</footer>
+
+
+
+
+
+
+
+
+
+
+
+
+    
+     <link href="//lib.baomitu.com/lightgallery/1.6.11/css/lightgallery.min.css" rel="stylesheet">  
+      
+     <script src="/js/vendor_gallery.min.js" async="" ></script>
+    
+  
+
+
+
+
+     </div>
+  </body>
+</html>

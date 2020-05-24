@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+  <meta http-equiv="content-type" content="text/html;charset=utf-8">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noodp"/>
+  <meta name="author" content="JadeRong">
+  <meta name="description" content="主要分享一些平时学习和开发中用到的知识">
+  
+  
+  <link rel="prev" href="https://rrrwx.github.io/2020/%E4%BA%8C%E5%A4%9A%E8%A1%A8%E6%9F%A5%E8%AF%A2/" />
+  <link rel="next" href="https://rrrwx.github.io/2020/%E6%95%B0%E6%8D%AE%E5%BA%93/" />
+  <link rel="canonical" href="https://rrrwx.github.io/2020/%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C/" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+  <meta name="msapplication-TileColor" content="#da532c">
+  <meta name="theme-color" content="#ffffff">
+  <title>
+       
+       
+           mysql基本操作 | JadeRong
+       
+  </title>
+  <meta name="title" content="mysql基本操作 | JadeRong">
+    
+  
+  <link rel="stylesheet" href="/font/iconfont.css">
+  <link rel="stylesheet" href="/css/main.min.css">
+
+
+  
+  
+ 
+
+<script type="application/ld+json">
+ "@context" : "http://schema.org",
+    "@type" : "BlogPosting",
+    "mainEntityOfPage": {
+         "@type": "WebPage",
+         "@id": "https:\/\/rrrwx.github.io"
+    },
+    "articleSection" : "posts",
+    "name" : "mysql基本操作",
+    "headline" : "mysql基本操作",
+    "description" : "https:\/\/edu.aliyun.com\/roadmap\/java?spm=a2c6h.12999620.1371257.1.5a195738ZJjjex#part1\n（一）服务器操作  开启服务器： net start mysql 关闭服务器： net stop mysql  （二）客户端操作   登录服务器：mysql -uroot -p123 -hlocalhost\n -u: 用户名 -p: 密码 -h: ip地址    退出服务器：exit或quit\n  （三）备份与恢复数据库   数据库 \x26lt;====\x26gt; SQL语句\n  数据库导出SQL副本（备份数据库内容而不是整个数据库）：\n mysqldump -u 用户名 -p 密码 数据库名\x26gt;脚本存储路径 注意： 这里没有登录mysql，是在cmd环境下执行的，因此不用加分号； 生成的脚本文件里面是不包含create database语句的，因此这里备份的是数据库内容而非整个数据库；    执行SQL脚本\n 方法一  mysql -u 用户名 -p 密码 数据库名\x26lt;脚本存储路径 这里同样没有登录mysql，而且是在cmd环境下执行的，因此不用加分号；   方法二  source SQL脚本存储路径; 注意 ：这里需要先登录mysql，进入需要的数据库之后再执行；      --例： --首先导出SQL脚本文件（在cmd环境下执行） mysqldump -u root -p 000 mydb0\x26gt;\/usrs\/name\/mydb0.",
+    "inLanguage" : "en-us",
+    "author" : "JadeRong",
+    "creator" : "JadeRong",
+    "publisher": "JadeRong",
+    "accountablePerson" : "JadeRong",
+    "copyrightHolder" : "JadeRong",
+    "copyrightYear" : "2020",
+    "datePublished": "2020-05-16 20:00:48 \x2b0800 CST",
+    "dateModified" : "2020-05-16 20:00:48 \x2b0800 CST",
+    "url" : "https:\/\/rrrwx.github.io\/2020\/%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C\/",
+    "wordCount" : "87",
+    "keywords" : [ "学习笔记","mysql", "JadeRong"]
+}
+</script>
+
+</head>
+
+  
+
+
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  <body class="">
+    <div class="wrapper">
+        <nav class="navbar">
+    <div class="container">
+        <div class="navbar-header header-logo">
+            <a href="https://rrrwx.github.io">JadeRong</a>&nbsp;
+        	<a href="javascript:void(0);" class="theme-switch"><i class="iconfont icon-table-lamp"></i></a>
+
+        </div>
+        <div class="menu navbar-right">
+                
+                
+                <a class="menu-item" href="/posts/" title="">Blogs</a>
+                
+                <a class="menu-item" href="/categories/" title="">Categories</a>
+                
+                <a class="menu-item" href="/tags/" title="">Tags</a>
+                
+                <a class="menu-item" href="/about/" title="">About</a>
+                
+        </div>
+    </div>
+</nav>
+<nav class="navbar-mobile" id="nav-mobile" style="display: none">
+     <div class="container">
+        <div class="navbar-header">
+            <div>  <a href="javascript:void(0);" class="theme-switch"><i class="iconfont icon-table-lamp"></i></a>&nbsp;<a href="https://rrrwx.github.io">JadeRong</a></div>
+            <div class="menu-toggle">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+     
+          <div class="menu" id="mobile-menu">
+                
+                
+                <a class="menu-item" href="/posts/" title="">Blogs</a>
+                
+                <a class="menu-item" href="/categories/" title="">Categories</a>
+                
+                <a class="menu-item" href="/tags/" title="">Tags</a>
+                
+                <a class="menu-item" href="/about/" title="">About</a>
+                
+        </div>
+    </div>
+</nav>
+    	 <main class="main">
+          <div class="container">
+      		
+<article class="post-warp" itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">mysql基本操作</h1>
+
+
+
+                Written by <a itemprop="name" href="https://rrrwx.github.io" rel="author">JadeRong</a>, included in <i class="iconfont icon-folder"></i>
+
+                <span class="post-category">
+                            <a href="https://rrrwx.github.io/categories/mysql%E5%AD%A6%E4%B9%A0/"> mysql学习 </a>
+                            
+                    </span>
+
+        
+        <h1 id="wc" style="font-size: 0.75rem;text-align: left;">约 87 个字    |    预计阅读 1 分钟    |    本文总阅读量<span id="busuanzi_value_page_pv"></span>次</h1>
+    </header>
+    <div class="post-content">
+        
+
+        
+
+        
+        
+     
+          
+          
+          
+
+          
+          
+          
+
+          <p><a href="https://edu.aliyun.com/roadmap/java?spm=a2c6h.12999620.1371257.1.5a195738ZJjjex#part1">https://edu.aliyun.com/roadmap/java?spm=a2c6h.12999620.1371257.1.5a195738ZJjjex#part1</a></p>
+<h4 id="一服务器操作">（一）服务器操作</h4>
+<ul>
+<li><strong>开启服务器</strong>： <code>net start mysql</code></li>
+<li><strong>关闭服务器</strong>： <code>net stop mysql</code></li>
+</ul>
+<h4 id="二客户端操作">（二）客户端操作</h4>
+<ul>
+<li>
+<p><strong>登录服务器</strong>：<code>mysql -uroot -p123 -hlocalhost</code></p>
+<ul>
+<li>-u: 用户名</li>
+<li>-p: 密码</li>
+<li>-h: ip地址</li>
+</ul>
+</li>
+<li>
+<p><strong>退出服务器</strong>：<code>exit</code>或<code>quit</code></p>
+</li>
+</ul>
+<h4 id="三备份与恢复数据库">（三）备份与恢复数据库</h4>
+<ul>
+<li>
+<p><strong>数据库 &lt;====&gt; SQL语句</strong></p>
+</li>
+<li>
+<p><strong>数据库导出SQL副本（备份数据库内容而不是整个数据库）</strong>：</p>
+<ul>
+<li>mysqldump -u 用户名 -p 密码 数据库名&gt;脚本存储路径</li>
+<li><strong>注意：</strong> 这里没有登录mysql，是在cmd环境下执行的，因此不用加分号；</li>
+<li>生成的脚本文件里面是不包含create database语句的，因此这里备份的是数据库内容而非整个数据库；</li>
+</ul>
+</li>
+<li>
+<p><strong>执行SQL脚本</strong></p>
+<ul>
+<li><strong>方法一</strong>
+<ul>
+<li>mysql -u 用户名 -p 密码 数据库名&lt;脚本存储路径</li>
+<li>这里同样没有登录mysql，而且是在cmd环境下执行的，因此不用加分号；</li>
+</ul>
+</li>
+<li><strong>方法二</strong>
+<ul>
+<li>source SQL脚本存储路径;</li>
+<li><strong>注意</strong> ：这里需要先登录mysql，进入需要的数据库之后再执行；</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-SQL" data-lang="SQL"><span style="color:#75715e">--例：
+</span><span style="color:#75715e">--首先导出SQL脚本文件（在cmd环境下执行）
+</span><span style="color:#75715e"></span>mysqldump <span style="color:#f92672">-</span>u root <span style="color:#f92672">-</span>p <span style="color:#ae81ff">000</span> mydb0<span style="color:#f92672">&gt;/</span>usrs<span style="color:#f92672">/</span>name<span style="color:#f92672">/</span>mydb0.<span style="color:#66d9ef">sql</span>
+<span style="color:#f92672">#</span><span style="color:#960050;background-color:#1e0010">此时可以删除数据库</span>mydb0<span style="color:#960050;background-color:#1e0010">（登录</span>mysql后执行<span style="color:#960050;background-color:#1e0010">）</span>
+<span style="color:#66d9ef">drop</span> <span style="color:#66d9ef">database</span> mydb0;
+
+<span style="color:#75715e">--执行脚本文件
+</span><span style="color:#75715e">----方法一：
+</span><span style="color:#75715e">--首先创建数据库（登录mysql之后执行）
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">create</span> <span style="color:#66d9ef">database</span> mydb0;
+<span style="color:#75715e">--在cmd环境下执行
+</span><span style="color:#75715e"></span>mysql <span style="color:#f92672">-</span>u root <span style="color:#f92672">-</span>p <span style="color:#ae81ff">000</span> mydb0<span style="color:#f92672">&lt;/</span>usrs<span style="color:#f92672">/</span>name<span style="color:#f92672">/</span>mydb0.<span style="color:#66d9ef">sql</span>
+
+<span style="color:#75715e">--方法二：
+</span><span style="color:#75715e">----首先登录mysql，然后创建数据库
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">create</span> <span style="color:#66d9ef">database</span> mydb0;
+<span style="color:#66d9ef">source</span> <span style="color:#f92672">/</span>usrs<span style="color:#f92672">/</span>name<span style="color:#f92672">/</span>mydb0.<span style="color:#66d9ef">sql</span>;
+</code></pre></div><h4 id="整个系列笔记都是参考">整个系列笔记都是参考</h4>
+<p><a href="https://edu.aliyun.com/roadmap/java?spm=a2c6h.12999620.1371257.1.5a195738ZJjjex#part1">https://edu.aliyun.com/roadmap/java?spm=a2c6h.12999620.1371257.1.5a195738ZJjjex#part1</a>
+（阿里云大学：数据库开发）</p>
+<p><a href="https://www.runoob.com/mysql/mysql-data-types.html">https://www.runoob.com/mysql/mysql-data-types.html</a></p>
+
+    </div>
+
+
+
+    <div class="post-copyright">
+                
+        
+
+
+        <section>
+            <p class="share-item">
+                <span>Share :</span>
+                
+                <span>
+
+      
+        <a href="//twitter.com/share?url=https%3a%2f%2frrrwx.github.io%2f2020%2f%25E5%259F%25BA%25E6%259C%25AC%25E6%2593%258D%25E4%25BD%259C%2f&amp;text=mysql%e5%9f%ba%e6%9c%ac%e6%93%8d%e4%bd%9c&amp;via=" target="_blank" title="Share on Twitter">
+          <i class="iconfont icon-twitter"></i>
+        </a>
+        
+
+      
+      
+        <a href="//www.facebook.com/sharer/sharer.php?u=https%3a%2f%2frrrwx.github.io%2f2020%2f%25E5%259F%25BA%25E6%259C%25AC%25E6%2593%258D%25E4%25BD%259C%2f" target="_blank" title="Share on Facebook">
+          <i class="iconfont icon-facebook"></i>
+        </a>
+        
+      
+      
+      
+      
+      
+      
+        
+      
+        
+      
+
+          
+
+          
+
+          
+        <a href="//www.douban.com/recommend/?url=https%3a%2f%2frrrwx.github.io%2f2020%2f%25E5%259F%25BA%25E6%259C%25AC%25E6%2593%258D%25E4%25BD%259C%2f&amp;title=mysql%e5%9f%ba%e6%9c%ac%e6%93%8d%e4%bd%9c" target="_blank" title="Share on Douban ">
+            <i class="iconfont icon-douban"></i>
+          </a>
+          
+
+          
+        <a href="//service.weibo.com/share/share.php?url=https%3a%2f%2frrrwx.github.io%2f2020%2f%25E5%259F%25BA%25E6%259C%25AC%25E6%2593%258D%25E4%25BD%259C%2f&amp;appkey=&amp;title=mysql%e5%9f%ba%e6%9c%ac%e6%93%8d%e4%bd%9c" target="_blank" title="Share on Douban ">
+            <i class="iconfont icon-weibo"></i>
+          </a>
+          
+
+</span>
+                
+            </p>
+        </section>
+
+
+        <section>
+            <p class="copyright-item">
+                <span>Updated </span>
+                <span class="post-time">
+                on 
+                <time datetime=2020-05-16 itemprop="datePublished">May 16, 2020</time>
+                </span>
+
+            </p>
+        </section>
+    </div>
+
+  
+    <div class="post-tags">
+        
+            <section>
+            
+            <span class="tag"><a href="https://rrrwx.github.io/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">
+                    <i class="iconfont icon-tag"></i>学习笔记</a></span>
+            
+            <span class="tag"><a href="https://rrrwx.github.io/tags/mysql/">
+                    <i class="iconfont icon-tag"></i>mysql</a></span>
+            
+            </section>
+        
+        <section>
+                <a href="javascript:window.history.back();">back</a></span> · 
+                <span><a href="https://rrrwx.github.io">home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav">
+        
+        <a href="https://rrrwx.github.io/2020/%E4%BA%8C%E5%A4%9A%E8%A1%A8%E6%9F%A5%E8%AF%A2/" class="prev" rel="prev" title="SQL语法之多表查询"><i class="iconfont icon-left"></i>&nbsp;SQL语法之多表查询</a>
+         
+        
+        <a href="https://rrrwx.github.io/2020/%E6%95%B0%E6%8D%AE%E5%BA%93/" class="next" rel="next" title="数据库介绍">数据库介绍&nbsp;<i class="iconfont icon-right"></i></a>
+        
+    </div>
+
+    <div class="post-comment">
+          
+                 
+          
+    </div>
+</article>
+          </div>
+		   </main>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="">
+                <i class="fas fa-arrow-up fa-fw"></i>
+            </a>
+        </div>
+
+      <footer class="footer">
+
+
+
+
+    <div class="copyright">
+
+            <div class="footer-line">
+                &copy;<i class="far fa-copyright fa-fw"></i>&nbsp;<span itemprop="copyrightYear">2020</span>&nbsp;&nbsp;<span class="author" itemprop="copyrightHolder"><a href="https://rrrwx.github.io">JadeRong</a></span>&nbsp;|&nbsp;<span class="license">Released under <a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span>
+                &nbsp;|&nbsp;<span>Powered by <a href="https://gohugo.io/" target="_blank" rel="external nofollow">Hugo</a> & <a href="https://github.com/liuzc/leaveit" target="_blank" rel="external nofollow">LeaveIt</a></span>
+            </div>
+
+
+    </div>
+</footer>
+
+
+
+
+
+
+
+
+
+
+
+
+    
+    
+    <script src="/js/vendor_no_gallery.min.js" async=""></script>
+    
+  
+
+
+
+
+     </div>
+  </body>
+</html>

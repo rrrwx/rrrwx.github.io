@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>多线程 on JadeRong</title>
+    <link>https://rrrwx.github.io/tags/%E5%A4%9A%E7%BA%BF%E7%A8%8B/</link>
+    <description>Recent content in 多线程 on JadeRong</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Mon, 17 Feb 2020 00:10:36 +0800</lastBuildDate>
+    
+	<atom:link href="https://rrrwx.github.io/tags/%E5%A4%9A%E7%BA%BF%E7%A8%8B/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>java基础学习笔记多线程之线程创建</title>
+      <link>https://rrrwx.github.io/2020/%E7%BA%BF%E7%A8%8B/</link>
+      <pubDate>Mon, 17 Feb 2020 00:10:36 +0800</pubDate>
+      
+      <guid>https://rrrwx.github.io/2020/%E7%BA%BF%E7%A8%8B/</guid>
+      <description>参考
+  &amp;mdash;Runnable Module java.base Package java.lang
+@FunctionalInterface public interface Runnable (since jdk1.0)
+public interface Runnable { public abstract void run(); }   &amp;mdash;Thread Module java.base Package java.lang
+public class Thread extends Object implements Runnable (since jdk1.0)
+  &amp;mdash;Callable Module java.base Package java.util.concurrent
+@FunctionalInterface public interface Callable(since jdk1.5)
+public interface Callable&amp;lt;V&amp;gt; { /** * Computes a result, or throws an exception if unable to do so. * * @return computed result * @throws Exception if unable to compute a result */ V call() throws Exception; }  Future就是对于具体的Runnable或者Callable任务的执行结果进行取消、查询是否完成、获取结果。必要时可以通过get方法获取执行结果，该方法会阻塞直到任务返回结果。</description>
+    </item>
+    
+  </channel>
+</rss>

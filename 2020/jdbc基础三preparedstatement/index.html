@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+  <meta http-equiv="content-type" content="text/html;charset=utf-8">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noodp"/>
+  <meta name="author" content="JadeRong">
+  <meta name="description" content="主要分享一些平时学习和开发中用到的知识">
+  
+  
+  <link rel="prev" href="https://rrrwx.github.io/2020/jdbc%E5%9F%BA%E7%A1%80%E4%BA%8C%E7%BB%93%E6%9E%9C%E9%9B%86/" />
+  <link rel="next" href="https://rrrwx.github.io/2020/jdbc%E5%9F%BA%E7%A1%80%E4%BA%94jdbcutil%E5%B7%A5%E5%85%B7%E7%B1%BB%E7%A4%BA%E4%BE%8B/" />
+  <link rel="canonical" href="https://rrrwx.github.io/2020/jdbc%E5%9F%BA%E7%A1%80%E4%B8%89preparedstatement/" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+  <meta name="msapplication-TileColor" content="#da532c">
+  <meta name="theme-color" content="#ffffff">
+  <title>
+       
+       
+           JDBC基础三之PreparedStatement | JadeRong
+       
+  </title>
+  <meta name="title" content="JDBC基础三之PreparedStatement | JadeRong">
+    
+  
+  <link rel="stylesheet" href="/font/iconfont.css">
+  <link rel="stylesheet" href="/css/main.min.css">
+
+
+  
+  
+ 
+
+<script type="application/ld+json">
+ "@context" : "http://schema.org",
+    "@type" : "BlogPosting",
+    "mainEntityOfPage": {
+         "@type": "WebPage",
+         "@id": "https:\/\/rrrwx.github.io"
+    },
+    "articleSection" : "posts",
+    "name" : "JDBC基础三之PreparedStatement",
+    "headline" : "JDBC基础三之PreparedStatement",
+    "description" : "https:\/\/edu.aliyun.com\/roadmap\/java?spm=a2c6h.12999620.1371257.1.5a195738ZJjjex#part1\nPreparedStatement接口  Statement接口的子接口 防SQL攻击 提高代码可读性、可维护性 提高效率  SQL攻击  在需要用户输入的地方，用户输入的是SQL语句的片段，最终用户输入的SQL片段与DAO中所写的SQL语句合成一个完整的SQL语句！\n 演示 （1）首先创建一张用户表，用来存储用户的信息 CREATE TABLE user ( uid CHAR(32) PRIMARY KEY, username VARCHAR(30) UNIQUE KEY NOT NULL, PASSWORD VARCHAR(30) ); -- 这里的PASSWORD和mysql的关键词重名了，因此需要大写，也可以写成`password`  INSERT INTO user VALUES(\x26#39;zhangSan\x26#39;, \x26#39;123\x26#39;) ; INSERT INTO user VALUES(\x26#39;liSi\x26#39;, \x26#39;123\x26#39;) ; INSERT INTO user VALUES(\x26#39;wangWu\x26#39;, \x26#39;123\x26#39;) ; （2）使用username和password去查询数据 import java.sql.Connection ; import java.sql.DriverManager ; public class Demo { \/** * 使用username和password去查询数据 * 若查到结果集，说明正确，返回true * 若查不到结果，则说明用户名或密码错误，返回false *\/ public boolean login throws Exception (String username, String password) { \/\/准备四大参数  String driverClassName = \x26#34;com.",
+    "inLanguage" : "en-us",
+    "author" : "JadeRong",
+    "creator" : "JadeRong",
+    "publisher": "JadeRong",
+    "accountablePerson" : "JadeRong",
+    "copyrightHolder" : "JadeRong",
+    "copyrightYear" : "2020",
+    "datePublished": "2020-05-21 16:12:49 \x2b0800 CST",
+    "dateModified" : "2020-05-21 16:12:49 \x2b0800 CST",
+    "url" : "https:\/\/rrrwx.github.io\/2020\/jdbc%E5%9F%BA%E7%A1%80%E4%B8%89preparedstatement\/",
+    "wordCount" : "293",
+    "keywords" : [ "学习笔记","mysql","JDBC", "JadeRong"]
+}
+</script>
+
+</head>
+
+  
+
+
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  <body class="">
+    <div class="wrapper">
+        <nav class="navbar">
+    <div class="container">
+        <div class="navbar-header header-logo">
+            <a href="https://rrrwx.github.io">JadeRong</a>&nbsp;
+        	<a href="javascript:void(0);" class="theme-switch"><i class="iconfont icon-table-lamp"></i></a>
+
+        </div>
+        <div class="menu navbar-right">
+                
+                
+                <a class="menu-item" href="/posts/" title="">Blogs</a>
+                
+                <a class="menu-item" href="/categories/" title="">Categories</a>
+                
+                <a class="menu-item" href="/tags/" title="">Tags</a>
+                
+                <a class="menu-item" href="/about/" title="">About</a>
+                
+        </div>
+    </div>
+</nav>
+<nav class="navbar-mobile" id="nav-mobile" style="display: none">
+     <div class="container">
+        <div class="navbar-header">
+            <div>  <a href="javascript:void(0);" class="theme-switch"><i class="iconfont icon-table-lamp"></i></a>&nbsp;<a href="https://rrrwx.github.io">JadeRong</a></div>
+            <div class="menu-toggle">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+     
+          <div class="menu" id="mobile-menu">
+                
+                
+                <a class="menu-item" href="/posts/" title="">Blogs</a>
+                
+                <a class="menu-item" href="/categories/" title="">Categories</a>
+                
+                <a class="menu-item" href="/tags/" title="">Tags</a>
+                
+                <a class="menu-item" href="/about/" title="">About</a>
+                
+        </div>
+    </div>
+</nav>
+    	 <main class="main">
+          <div class="container">
+      		
+<article class="post-warp" itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">JDBC基础三之PreparedStatement</h1>
+
+
+
+                Written by <a itemprop="name" href="https://rrrwx.github.io" rel="author">JadeRong</a>, included in <i class="iconfont icon-folder"></i>
+
+                <span class="post-category">
+                            <a href="https://rrrwx.github.io/categories/mysql%E5%AD%A6%E4%B9%A0/"> mysql学习 </a>
+                            
+                    </span>
+
+        
+        <h1 id="wc" style="font-size: 0.75rem;text-align: left;">约 293 个字    |    预计阅读 2 分钟    |    本文总阅读量<span id="busuanzi_value_page_pv"></span>次</h1>
+    </header>
+    <div class="post-content">
+        
+
+        
+
+        
+        
+     
+          
+          
+          
+
+          
+          
+          
+
+          <p><a href="https://edu.aliyun.com/roadmap/java?spm=a2c6h.12999620.1371257.1.5a195738ZJjjex#part1">https://edu.aliyun.com/roadmap/java?spm=a2c6h.12999620.1371257.1.5a195738ZJjjex#part1</a></p>
+<h1 id="preparedstatement接口">PreparedStatement接口</h1>
+<ul>
+<li><strong>Statement接口的子接口</strong></li>
+<li><strong>防SQL攻击</strong></li>
+<li><strong>提高代码可读性、可维护性</strong></li>
+<li><strong>提高效率</strong></li>
+</ul>
+<h2 id="sql攻击">SQL攻击</h2>
+<blockquote>
+<p>在需要用户输入的地方，用户输入的是SQL语句的片段，最终用户输入的SQL片段与DAO中所写的SQL语句合成一个完整的SQL语句！</p>
+</blockquote>
+<h3 id="演示">演示</h3>
+<h4 id="1首先创建一张用户表用来存储用户的信息">（1）首先创建一张用户表，用来存储用户的信息</h4>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-SQL" data-lang="SQL"><span style="color:#66d9ef">CREATE</span> <span style="color:#66d9ef">TABLE</span> <span style="color:#66d9ef">user</span> (
+		uid CHAR(<span style="color:#ae81ff">32</span>) <span style="color:#66d9ef">PRIMARY</span> <span style="color:#66d9ef">KEY</span>, 
+  	username VARCHAR(<span style="color:#ae81ff">30</span>) <span style="color:#66d9ef">UNIQUE</span> <span style="color:#66d9ef">KEY</span> <span style="color:#66d9ef">NOT</span> <span style="color:#66d9ef">NULL</span>, 
+  	PASSWORD VARCHAR(<span style="color:#ae81ff">30</span>)
+);
+<span style="color:#75715e">-- 这里的PASSWORD和mysql的关键词重名了，因此需要大写，也可以写成`password`
+</span><span style="color:#75715e"></span>
+<span style="color:#66d9ef">INSERT</span> <span style="color:#66d9ef">INTO</span> <span style="color:#66d9ef">user</span> <span style="color:#66d9ef">VALUES</span>(<span style="color:#e6db74">&#39;zhangSan&#39;</span>, <span style="color:#e6db74">&#39;123&#39;</span>) ;
+<span style="color:#66d9ef">INSERT</span> <span style="color:#66d9ef">INTO</span> <span style="color:#66d9ef">user</span> <span style="color:#66d9ef">VALUES</span>(<span style="color:#e6db74">&#39;liSi&#39;</span>, <span style="color:#e6db74">&#39;123&#39;</span>) ;
+<span style="color:#66d9ef">INSERT</span> <span style="color:#66d9ef">INTO</span> <span style="color:#66d9ef">user</span> <span style="color:#66d9ef">VALUES</span>(<span style="color:#e6db74">&#39;wangWu&#39;</span>, <span style="color:#e6db74">&#39;123&#39;</span>) ;
+</code></pre></div><h4 id="2使用username和password去查询数据">（2）使用username和password去查询数据</h4>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#f92672">import</span> java.sql.Connection <span style="color:#f92672">;</span>
+<span style="color:#f92672">import</span> java.sql.DriverManager <span style="color:#f92672">;</span>
+<span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Demo</span> <span style="color:#f92672">{</span>
+  	<span style="color:#75715e">/**
+</span><span style="color:#75715e">  	 * 使用username和password去查询数据
+</span><span style="color:#75715e">  	 * 若查到结果集，说明正确，返回true
+</span><span style="color:#75715e">  	 * 若查不到结果，则说明用户名或密码错误，返回false
+</span><span style="color:#75715e">  	 */</span>
+  	<span style="color:#66d9ef">public</span> <span style="color:#66d9ef">boolean</span> login <span style="color:#66d9ef">throws</span> <span style="color:#a6e22e">Exception</span> <span style="color:#f92672">(</span>String username<span style="color:#f92672">,</span> String password<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+      	<span style="color:#75715e">//准备四大参数
+</span><span style="color:#75715e"></span>      	String driverClassName <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;com.mysql.jdbc.Driver&#34;</span> <span style="color:#f92672">;</span>
+      	String url <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;jdbc:mysql://localhost:3306/mydb000&#34;</span> <span style="color:#f92672">;</span>
+      	String mysqlUsername <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;root&#34;</span> <span style="color:#f92672">;</span>
+      	String mysqlPassword <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;123&#34;</span> <span style="color:#f92672">;</span>
+      	<span style="color:#75715e">//加载驱动类
+</span><span style="color:#75715e"></span>      	Class<span style="color:#f92672">.</span><span style="color:#a6e22e">forName</span><span style="color:#f92672">(</span>driverClassName<span style="color:#f92672">)</span> <span style="color:#f92672">;</span>
+        <span style="color:#75715e">//得到Connection
+</span><span style="color:#75715e"></span>      	Connection con <span style="color:#f92672">=</span> DriverManager<span style="color:#f92672">.</span><span style="color:#a6e22e">getConnection</span><span style="color:#f92672">(</span>url<span style="color:#f92672">,</span> mysqlUserName<span style="color:#f92672">,</span> mysqlPassword<span style="color:#f92672">)</span> <span style="color:#f92672">;</span>
+        <span style="color:#75715e">//得到Statement
+</span><span style="color:#75715e"></span>      	Statement stmt <span style="color:#f92672">=</span> con<span style="color:#f92672">.</span><span style="color:#a6e22e">createStatement</span><span style="color:#f92672">()</span> <span style="color:#f92672">;</span>
+        <span style="color:#75715e">//给出sql语句，得到ResultSet
+</span><span style="color:#75715e"></span>      	String sql <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;SELECT * user WHERE username=&#39;&#34;</span><span style="color:#f92672">+</span>username<span style="color:#e6db74">&#34;&#39; AND password=&#39;&#34;</span><span style="color:#f92672">+</span>password<span style="color:#f92672">+</span><span style="color:#e6db74">&#34;&#39;&#34;</span> <span style="color:#f92672">;</span>
+      	ResultSet rs <span style="color:#f92672">=</span> stmt<span style="color:#f92672">.</span><span style="color:#a6e22e">executeQuery</span><span style="color:#f92672">(</span>sql<span style="color:#f92672">)</span> <span style="color:#f92672">;</span>
+      	<span style="color:#66d9ef">return</span> rs<span style="color:#f92672">.</span><span style="color:#a6e22e">next</span><span style="color:#f92672">()</span> <span style="color:#f92672">;</span>
+    <span style="color:#f92672">}</span>
+  
+  	<span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">fun</span><span style="color:#f92672">()</span> <span style="color:#66d9ef">throws</span> Exception <span style="color:#f92672">{</span>
+      	System<span style="color:#f92672">.</span><span style="color:#a6e22e">out</span><span style="color:#f92672">.</span><span style="color:#a6e22e">println</span><span style="color:#f92672">(</span>login<span style="color:#f92672">(</span><span style="color:#e6db74">&#34;zhangSan&#34;</span><span style="color:#f92672">,</span> <span style="color:#e6db74">&#34;123&#34;</span><span style="color:#f92672">))</span> <span style="color:#f92672">;</span>
+      	<span style="color:#75715e">//SELECT * user WHERE username=&#39;zhangSan&#39; AND password=&#39;123&#39;;
+</span><span style="color:#75715e"></span>    <span style="color:#f92672">}</span>
+<span style="color:#f92672">}</span>
+</code></pre></div><h4 id="3sql攻击演示">（3）SQL攻击演示</h4>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java">  	<span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">fun</span><span style="color:#f92672">()</span> <span style="color:#66d9ef">throws</span> Exception <span style="color:#f92672">{</span>
+      	String username <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;a&#39; or &#39;a&#39;=&#39;a&#34;</span> <span style="color:#f92672">;</span>
+        String password <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;a&#39; or &#39;a&#39;=&#39;a&#34;</span> <span style="color:#f92672">;</span>
+      	System<span style="color:#f92672">.</span><span style="color:#a6e22e">out</span><span style="color:#f92672">.</span><span style="color:#a6e22e">println</span><span style="color:#f92672">(</span>login<span style="color:#f92672">(</span>username<span style="color:#f92672">,</span> password<span style="color:#f92672">))</span> <span style="color:#f92672">;</span>
+      	<span style="color:#75715e">//SELECT * user WHERE username=&#39;a&#39; or &#39;a&#39;=&#39;a&#39; AND password=&#39;a&#39; or &#39;a&#39;=&#39;a&#39;;
+</span><span style="color:#75715e"></span>      	<span style="color:#75715e">//这句查询指令直接就把所有的记录查询出来了
+</span><span style="color:#75715e"></span>    <span style="color:#f92672">}</span>
+</code></pre></div><h4 id="4preparedstatement使用">（4）PreparedStatement使用</h4>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java">  	String sql <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;SELECT * FROM user WHERE username=? AND password=?&#34;</span> <span style="color:#f92672">;</span>
+		PreparedStatement pstmt <span style="color:#f92672">=</span> con<span style="color:#f92672">.</span><span style="color:#a6e22e">preparedStatement</span><span style="color:#f92672">(</span>sql<span style="color:#f92672">)</span> <span style="color:#f92672">;</span>
+
+    pstmt<span style="color:#f92672">.</span><span style="color:#a6e22e">setString</span><span style="color:#f92672">(</span>1<span style="color:#f92672">,</span> username<span style="color:#f92672">)</span> <span style="color:#f92672">;</span>
+		pstmt<span style="color:#f92672">.</span><span style="color:#a6e22e">setString</span><span style="color:#f92672">(</span>2<span style="color:#f92672">,</span> password<span style="color:#f92672">)</span> <span style="color:#f92672">;</span>
+
+		ResultSet rs <span style="color:#f92672">=</span> pstmt<span style="color:#f92672">.</span><span style="color:#a6e22e">executeQuery</span><span style="color:#f92672">()</span> <span style="color:#f92672">;</span>
+</code></pre></div><h2 id="提高性能">提高性能</h2>
+<h4 id="1预处理">（1）预处理</h4>
+<ul>
+<li>服务器的工作：
+<ul>
+<li>校验sql语句的语法；</li>
+<li>编译：一个与函数相似的东西；</li>
+<li>执行：调用函数；</li>
+</ul>
+</li>
+<li>PreparedStatement：
+<ul>
+<li>前提：连接的数据库必须支持预处理！（几乎没有不支持的）</li>
+<li>每个pstmt都与一个sql模板绑定在一起，先把sql模板传给数据库，然后数据库先进行校验，再进行编译。执行时只是把参数传递过去而已；</li>
+<li>若二次执行时，就<strong>不用</strong> 再次校验语法，也<strong>不用</strong> 再次编译，直接执行！</li>
+</ul>
+</li>
+<li>默认是<strong>关闭</strong> 预编译。因此需要在url后面加上设置参数<code>useServicePrepStmts=true</code>。另外，Statement也可以实现预编译，只是会复杂一点。</li>
+</ul>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java">String url <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;jdbc:mysql://localhost:3306/mydb000?useServicePrepStmts=true&#34;</span> <span style="color:#f92672">;</span>
+</code></pre></div><h4 id="2批处理">（2）批处理</h4>
+<ul>
+<li>默认是<strong>关闭</strong>批处理的。因此需要设置参数<code>rewriteBatchedStatements=true</code></li>
+</ul>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java">String url <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;jdbc:mysql://localhost:3306/mydb000?rewriteBatchedStatements=true&#34;</span> <span style="color:#f92672">;</span>
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java">String sql <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;INSERT INTO stu VALUES (?,?,?,?)&#34;</span> <span style="color:#f92672">;</span>
+PreparedStatement pstmt <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> PreparedStatement<span style="color:#f92672">(</span>sql<span style="color:#f92672">)</span> <span style="color:#f92672">;</span>
+
+<span style="color:#66d9ef">for</span> <span style="color:#f92672">(</span><span style="color:#66d9ef">int</span> i <span style="color:#f92672">=</span> 0 <span style="color:#f92672">;</span> i <span style="color:#f92672">&lt;</span> 1000 <span style="color:#f92672">;</span> i<span style="color:#f92672">++)</span> <span style="color:#f92672">{</span>
+  	pstmt<span style="color:#f92672">.</span><span style="color:#a6e22e">setInt</span><span style="color:#f92672">(</span>1<span style="color:#f92672">,</span> i<span style="color:#f92672">+</span>1<span style="color:#f92672">)</span> <span style="color:#f92672">;</span>
+  	pstmt<span style="color:#f92672">.</span><span style="color:#a6e22e">setString</span><span style="color:#f92672">(</span>2<span style="color:#f92672">,</span> <span style="color:#e6db74">&#34;stu_&#34;</span> <span style="color:#f92672">+</span> i<span style="color:#f92672">)</span> <span style="color:#f92672">;</span>
+  	pstmt<span style="color:#f92672">.</span><span style="color:#a6e22e">setInt</span><span style="color:#f92672">(</span>3<span style="color:#f92672">,</span> i<span style="color:#f92672">)</span> <span style="color:#f92672">;</span>
+  	pstmt<span style="color:#f92672">.</span><span style="color:#a6e22e">setString</span><span style="color:#f92672">(</span>4<span style="color:#f92672">,</span> i<span style="color:#f92672">%</span>2<span style="color:#f92672">==</span>0<span style="color:#f92672">?</span><span style="color:#e6db74">&#34;m&#34;</span><span style="color:#f92672">:</span><span style="color:#e6db74">&#34;f&#34;</span><span style="color:#f92672">)</span> <span style="color:#f92672">;</span>
+  	
+  	<span style="color:#75715e">//添加批处理语句，这样参数就保存在集合中了
+</span><span style="color:#75715e"></span>  	pstmt<span style="color:#f92672">.</span><span style="color:#a6e22e">addBatch</span><span style="color:#f92672">()</span> <span style="color:#f92672">;</span>
+<span style="color:#f92672">}</span>
+pstmt<span style="color:#f92672">.</span><span style="color:#a6e22e">executeBatch</span><span style="color:#f92672">()</span> <span style="color:#f92672">;</span> <span style="color:#75715e">//执行批处理语句
+</span></code></pre></div>
+    </div>
+
+
+
+    <div class="post-copyright">
+                
+        
+
+
+        <section>
+            <p class="share-item">
+                <span>Share :</span>
+                
+                <span>
+
+      
+        <a href="//twitter.com/share?url=https%3a%2f%2frrrwx.github.io%2f2020%2fjdbc%25E5%259F%25BA%25E7%25A1%2580%25E4%25B8%2589preparedstatement%2f&amp;text=JDBC%e5%9f%ba%e7%a1%80%e4%b8%89%e4%b9%8bPreparedStatement&amp;via=" target="_blank" title="Share on Twitter">
+          <i class="iconfont icon-twitter"></i>
+        </a>
+        
+
+      
+      
+        <a href="//www.facebook.com/sharer/sharer.php?u=https%3a%2f%2frrrwx.github.io%2f2020%2fjdbc%25E5%259F%25BA%25E7%25A1%2580%25E4%25B8%2589preparedstatement%2f" target="_blank" title="Share on Facebook">
+          <i class="iconfont icon-facebook"></i>
+        </a>
+        
+      
+      
+      
+      
+      
+      
+        
+      
+        
+      
+
+          
+
+          
+
+          
+        <a href="//www.douban.com/recommend/?url=https%3a%2f%2frrrwx.github.io%2f2020%2fjdbc%25E5%259F%25BA%25E7%25A1%2580%25E4%25B8%2589preparedstatement%2f&amp;title=JDBC%e5%9f%ba%e7%a1%80%e4%b8%89%e4%b9%8bPreparedStatement" target="_blank" title="Share on Douban ">
+            <i class="iconfont icon-douban"></i>
+          </a>
+          
+
+          
+        <a href="//service.weibo.com/share/share.php?url=https%3a%2f%2frrrwx.github.io%2f2020%2fjdbc%25E5%259F%25BA%25E7%25A1%2580%25E4%25B8%2589preparedstatement%2f&amp;appkey=&amp;title=JDBC%e5%9f%ba%e7%a1%80%e4%b8%89%e4%b9%8bPreparedStatement" target="_blank" title="Share on Douban ">
+            <i class="iconfont icon-weibo"></i>
+          </a>
+          
+
+</span>
+                
+            </p>
+        </section>
+
+
+        <section>
+            <p class="copyright-item">
+                <span>Updated </span>
+                <span class="post-time">
+                on 
+                <time datetime=2020-05-21 itemprop="datePublished">May 21, 2020</time>
+                </span>
+
+            </p>
+        </section>
+    </div>
+
+  
+    <div class="post-tags">
+        
+            <section>
+            
+            <span class="tag"><a href="https://rrrwx.github.io/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">
+                    <i class="iconfont icon-tag"></i>学习笔记</a></span>
+            
+            <span class="tag"><a href="https://rrrwx.github.io/tags/mysql/">
+                    <i class="iconfont icon-tag"></i>mysql</a></span>
+            
+            <span class="tag"><a href="https://rrrwx.github.io/tags/jdbc/">
+                    <i class="iconfont icon-tag"></i>JDBC</a></span>
+            
+            </section>
+        
+        <section>
+                <a href="javascript:window.history.back();">back</a></span> · 
+                <span><a href="https://rrrwx.github.io">home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav">
+        
+        <a href="https://rrrwx.github.io/2020/jdbc%E5%9F%BA%E7%A1%80%E4%BA%8C%E7%BB%93%E6%9E%9C%E9%9B%86/" class="prev" rel="prev" title="JDBC基础二之结果集"><i class="iconfont icon-left"></i>&nbsp;JDBC基础二之结果集</a>
+         
+        
+        <a href="https://rrrwx.github.io/2020/jdbc%E5%9F%BA%E7%A1%80%E4%BA%94jdbcutil%E5%B7%A5%E5%85%B7%E7%B1%BB%E7%A4%BA%E4%BE%8B/" class="next" rel="next" title="JDBC基础五之JDBCUtil工具类示例">JDBC基础五之JDBCUtil工具类示例&nbsp;<i class="iconfont icon-right"></i></a>
+        
+    </div>
+
+    <div class="post-comment">
+          
+                 
+          
+    </div>
+</article>
+          </div>
+		   </main>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="">
+                <i class="fas fa-arrow-up fa-fw"></i>
+            </a>
+        </div>
+
+      <footer class="footer">
+
+
+
+
+    <div class="copyright">
+
+            <div class="footer-line">
+                &copy;<i class="far fa-copyright fa-fw"></i>&nbsp;<span itemprop="copyrightYear">2020</span>&nbsp;&nbsp;<span class="author" itemprop="copyrightHolder"><a href="https://rrrwx.github.io">JadeRong</a></span>&nbsp;|&nbsp;<span class="license">Released under <a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span>
+                &nbsp;|&nbsp;<span>Powered by <a href="https://gohugo.io/" target="_blank" rel="external nofollow">Hugo</a> & <a href="https://github.com/liuzc/leaveit" target="_blank" rel="external nofollow">LeaveIt</a></span>
+            </div>
+
+
+    </div>
+</footer>
+
+
+
+
+
+
+
+
+
+
+
+
+    
+    
+    <script src="/js/vendor_no_gallery.min.js" async=""></script>
+    
+  
+
+
+
+
+     </div>
+  </body>
+</html>

@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+  <meta http-equiv="content-type" content="text/html;charset=utf-8">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noodp"/>
+  <meta name="author" content="JadeRong">
+  <meta name="description" content="主要分享一些平时学习和开发中用到的知识">
+  
+  
+  <link rel="prev" href="https://rrrwx.github.io/2020/python%E7%88%AC%E8%99%AB%E7%AC%94%E8%AE%B0%E4%B8%80/" />
+  <link rel="next" href="https://rrrwx.github.io/2020/python%E7%88%AC%E8%99%AB%E7%AC%94%E8%AE%B0%E4%B8%89/" />
+  <link rel="canonical" href="https://rrrwx.github.io/2020/python%E7%88%AC%E8%99%AB%E7%AC%94%E8%AE%B0%E4%BA%8C/" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+  <meta name="msapplication-TileColor" content="#da532c">
+  <meta name="theme-color" content="#ffffff">
+  <title>
+       
+       
+           python爬虫笔记（二） | JadeRong
+       
+  </title>
+  <meta name="title" content="python爬虫笔记（二） | JadeRong">
+    
+  
+  <link rel="stylesheet" href="/font/iconfont.css">
+  <link rel="stylesheet" href="/css/main.min.css">
+
+
+  
+  
+ 
+
+<script type="application/ld+json">
+ "@context" : "http://schema.org",
+    "@type" : "BlogPosting",
+    "mainEntityOfPage": {
+         "@type": "WebPage",
+         "@id": "https:\/\/rrrwx.github.io"
+    },
+    "articleSection" : "posts",
+    "name" : "python爬虫笔记（二）",
+    "headline" : "python爬虫笔记（二）",
+    "description" : "网络爬虫引发的问题 1.网络爬虫尺寸 （1）爬取网页 小规模、数据量小、爬取速度不敏感\x26mdash;\x26mdash;Requests库\n（2）爬取网站、系列网站 中规模、数据规模较大、爬取速度敏感\x26mdash;\x26mdash;-Scrapy库\n（3）爬取全网 大规模、搜索引擎、爬取速度关键\x26mdash;\x26mdash;\x26ndash;定制开发\n2.法律风险、骚扰问题、隐私泄露 审查来源\nRobots协议：Robots Exclusion Standard网络爬虫排除标准\n​ 在网站根目录下的robots.txt文件\nUser-agent: *\nDisallow: \/",
+    "inLanguage" : "en-us",
+    "author" : "JadeRong",
+    "creator" : "JadeRong",
+    "publisher": "JadeRong",
+    "accountablePerson" : "JadeRong",
+    "copyrightHolder" : "JadeRong",
+    "copyrightYear" : "2020",
+    "datePublished": "2020-05-02 00:20:18 \x2b0800 CST",
+    "dateModified" : "2020-05-02 00:20:18 \x2b0800 CST",
+    "url" : "https:\/\/rrrwx.github.io\/2020\/python%E7%88%AC%E8%99%AB%E7%AC%94%E8%AE%B0%E4%BA%8C\/",
+    "wordCount" : "19",
+    "keywords" : [ "python爬虫","学习笔记", "JadeRong"]
+}
+</script>
+
+</head>
+
+  
+
+
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  <body class="">
+    <div class="wrapper">
+        <nav class="navbar">
+    <div class="container">
+        <div class="navbar-header header-logo">
+            <a href="https://rrrwx.github.io">JadeRong</a>&nbsp;
+        	<a href="javascript:void(0);" class="theme-switch"><i class="iconfont icon-table-lamp"></i></a>
+
+        </div>
+        <div class="menu navbar-right">
+                
+                
+                <a class="menu-item" href="/posts/" title="">Blogs</a>
+                
+                <a class="menu-item" href="/categories/" title="">Categories</a>
+                
+                <a class="menu-item" href="/tags/" title="">Tags</a>
+                
+                <a class="menu-item" href="/about/" title="">About</a>
+                
+        </div>
+    </div>
+</nav>
+<nav class="navbar-mobile" id="nav-mobile" style="display: none">
+     <div class="container">
+        <div class="navbar-header">
+            <div>  <a href="javascript:void(0);" class="theme-switch"><i class="iconfont icon-table-lamp"></i></a>&nbsp;<a href="https://rrrwx.github.io">JadeRong</a></div>
+            <div class="menu-toggle">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+     
+          <div class="menu" id="mobile-menu">
+                
+                
+                <a class="menu-item" href="/posts/" title="">Blogs</a>
+                
+                <a class="menu-item" href="/categories/" title="">Categories</a>
+                
+                <a class="menu-item" href="/tags/" title="">Tags</a>
+                
+                <a class="menu-item" href="/about/" title="">About</a>
+                
+        </div>
+    </div>
+</nav>
+    	 <main class="main">
+          <div class="container">
+      		
+<article class="post-warp" itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">python爬虫笔记（二）</h1>
+
+
+
+                Written by <a itemprop="name" href="https://rrrwx.github.io" rel="author">JadeRong</a>, included in <i class="iconfont icon-folder"></i>
+
+                <span class="post-category">
+                            <a href="https://rrrwx.github.io/categories/python%E7%88%AC%E8%99%AB%E7%AC%94%E8%AE%B0/"> python爬虫笔记 </a>
+                            
+                    </span>
+
+        
+        <h1 id="wc" style="font-size: 0.75rem;text-align: left;">约 19 个字    |    预计阅读 1 分钟    |    本文总阅读量<span id="busuanzi_value_page_pv"></span>次</h1>
+    </header>
+    <div class="post-content">
+        
+
+        
+
+        
+        
+     
+          
+          
+          
+
+          
+          
+          
+
+          <h1 id="网络爬虫引发的问题">网络爬虫引发的问题</h1>
+<h3 id="1网络爬虫尺寸">1.网络爬虫尺寸</h3>
+<h4 id="1爬取网页">（1）爬取网页</h4>
+<p>小规模、数据量小、爬取速度不敏感&mdash;&mdash;Requests库</p>
+<h4 id="2爬取网站系列网站">（2）爬取网站、系列网站</h4>
+<p>中规模、数据规模较大、爬取速度敏感&mdash;&mdash;-Scrapy库</p>
+<h4 id="3爬取全网">（3）爬取全网</h4>
+<p>大规模、搜索引擎、爬取速度关键&mdash;&mdash;&ndash;定制开发</p>
+<h3 id="2法律风险骚扰问题隐私泄露">2.法律风险、骚扰问题、隐私泄露</h3>
+<p>审查来源</p>
+<p>Robots协议：Robots Exclusion Standard网络爬虫排除标准</p>
+<p>​           在网站根目录下的robots.txt文件</p>
+<p>User-agent: *</p>
+<p>Disallow: /</p>
+
+    </div>
+
+
+
+    <div class="post-copyright">
+                
+        
+
+
+        <section>
+            <p class="share-item">
+                <span>Share :</span>
+                
+                <span>
+
+      
+        <a href="//twitter.com/share?url=https%3a%2f%2frrrwx.github.io%2f2020%2fpython%25E7%2588%25AC%25E8%2599%25AB%25E7%25AC%2594%25E8%25AE%25B0%25E4%25BA%258C%2f&amp;text=python%e7%88%ac%e8%99%ab%e7%ac%94%e8%ae%b0%ef%bc%88%e4%ba%8c%ef%bc%89&amp;via=" target="_blank" title="Share on Twitter">
+          <i class="iconfont icon-twitter"></i>
+        </a>
+        
+
+      
+      
+        <a href="//www.facebook.com/sharer/sharer.php?u=https%3a%2f%2frrrwx.github.io%2f2020%2fpython%25E7%2588%25AC%25E8%2599%25AB%25E7%25AC%2594%25E8%25AE%25B0%25E4%25BA%258C%2f" target="_blank" title="Share on Facebook">
+          <i class="iconfont icon-facebook"></i>
+        </a>
+        
+      
+      
+      
+      
+      
+      
+        
+      
+        
+      
+
+          
+
+          
+
+          
+        <a href="//www.douban.com/recommend/?url=https%3a%2f%2frrrwx.github.io%2f2020%2fpython%25E7%2588%25AC%25E8%2599%25AB%25E7%25AC%2594%25E8%25AE%25B0%25E4%25BA%258C%2f&amp;title=python%e7%88%ac%e8%99%ab%e7%ac%94%e8%ae%b0%ef%bc%88%e4%ba%8c%ef%bc%89" target="_blank" title="Share on Douban ">
+            <i class="iconfont icon-douban"></i>
+          </a>
+          
+
+          
+        <a href="//service.weibo.com/share/share.php?url=https%3a%2f%2frrrwx.github.io%2f2020%2fpython%25E7%2588%25AC%25E8%2599%25AB%25E7%25AC%2594%25E8%25AE%25B0%25E4%25BA%258C%2f&amp;appkey=&amp;title=python%e7%88%ac%e8%99%ab%e7%ac%94%e8%ae%b0%ef%bc%88%e4%ba%8c%ef%bc%89" target="_blank" title="Share on Douban ">
+            <i class="iconfont icon-weibo"></i>
+          </a>
+          
+
+</span>
+                
+            </p>
+        </section>
+
+
+        <section>
+            <p class="copyright-item">
+                <span>Updated </span>
+                <span class="post-time">
+                on 
+                <time datetime=2020-05-02 itemprop="datePublished">May 2, 2020</time>
+                </span>
+
+            </p>
+        </section>
+    </div>
+
+  
+    <div class="post-tags">
+        
+            <section>
+            
+            <span class="tag"><a href="https://rrrwx.github.io/tags/python%E7%88%AC%E8%99%AB/">
+                    <i class="iconfont icon-tag"></i>python爬虫</a></span>
+            
+            <span class="tag"><a href="https://rrrwx.github.io/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">
+                    <i class="iconfont icon-tag"></i>学习笔记</a></span>
+            
+            </section>
+        
+        <section>
+                <a href="javascript:window.history.back();">back</a></span> · 
+                <span><a href="https://rrrwx.github.io">home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav">
+        
+        <a href="https://rrrwx.github.io/2020/python%E7%88%AC%E8%99%AB%E7%AC%94%E8%AE%B0%E4%B8%80/" class="prev" rel="prev" title="python爬虫笔记（一）"><i class="iconfont icon-left"></i>&nbsp;python爬虫笔记（一）</a>
+         
+        
+        <a href="https://rrrwx.github.io/2020/python%E7%88%AC%E8%99%AB%E7%AC%94%E8%AE%B0%E4%B8%89/" class="next" rel="next" title="python爬虫笔记（三）">python爬虫笔记（三）&nbsp;<i class="iconfont icon-right"></i></a>
+        
+    </div>
+
+    <div class="post-comment">
+          
+                 
+          
+    </div>
+</article>
+          </div>
+		   </main>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="">
+                <i class="fas fa-arrow-up fa-fw"></i>
+            </a>
+        </div>
+
+      <footer class="footer">
+
+
+
+
+    <div class="copyright">
+
+            <div class="footer-line">
+                &copy;<i class="far fa-copyright fa-fw"></i>&nbsp;<span itemprop="copyrightYear">2020</span>&nbsp;&nbsp;<span class="author" itemprop="copyrightHolder"><a href="https://rrrwx.github.io">JadeRong</a></span>&nbsp;|&nbsp;<span class="license">Released under <a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span>
+                &nbsp;|&nbsp;<span>Powered by <a href="https://gohugo.io/" target="_blank" rel="external nofollow">Hugo</a> & <a href="https://github.com/liuzc/leaveit" target="_blank" rel="external nofollow">LeaveIt</a></span>
+            </div>
+
+
+    </div>
+</footer>
+
+
+
+
+
+
+
+
+
+
+
+
+    
+    
+    <script src="/js/vendor_no_gallery.min.js" async=""></script>
+    
+  
+
+
+
+
+     </div>
+  </body>
+</html>

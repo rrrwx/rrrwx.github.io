@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+  <meta http-equiv="content-type" content="text/html;charset=utf-8">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noodp"/>
+  <meta name="author" content="JadeRong">
+  <meta name="description" content="主要分享一些平时学习和开发中用到的知识">
+  
+  
+  <link rel="prev" href="https://rrrwx.github.io/2020/%E6%95%B0%E6%8D%AE%E5%BA%93/" />
+  <link rel="next" href="https://rrrwx.github.io/2020/ffmpeg%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/" />
+  <link rel="canonical" href="https://rrrwx.github.io/2020/%E5%B8%B8%E8%A7%81%E5%AD%97%E7%AC%A6%E7%BC%96%E7%A0%81%E6%96%B9%E5%BC%8F%E6%AF%94%E8%BE%83/" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+  <meta name="msapplication-TileColor" content="#da532c">
+  <meta name="theme-color" content="#ffffff">
+  <title>
+       
+       
+           常见字符编码方式比较 | JadeRong
+       
+  </title>
+  <meta name="title" content="常见字符编码方式比较 | JadeRong">
+    
+  
+  <link rel="stylesheet" href="/font/iconfont.css">
+  <link rel="stylesheet" href="/css/main.min.css">
+
+
+  
+  
+ 
+
+<script type="application/ld+json">
+ "@context" : "http://schema.org",
+    "@type" : "BlogPosting",
+    "mainEntityOfPage": {
+         "@type": "WebPage",
+         "@id": "https:\/\/rrrwx.github.io"
+    },
+    "articleSection" : "posts",
+    "name" : "常见字符编码方式比较",
+    "headline" : "常见字符编码方式比较",
+    "description" : "1. ASCII编码 作用：表语英语及西欧语言。\n位数：ASCII是用7位表示的，能表示128个字符；其扩展使用8位表示，表示256个字符。\n范围：ASCII从00到7F，扩展从00到FF。\n2. Iso8859-1编码 属于单字节编码，最多能表示的字符范围是0-255，应用于英文系列。\n作用：扩展ASCII，表示西欧、希腊语等。\n位数：8位，\n范围：从00到FF，兼容ASCII字符集。\n3. GB码字符集 （1）GB码字符集\n 全称是GB2312-80《信息交换用汉字编码字符集基本集》，1980年发布，是中文信息处理的国家标准，在大陆及海外使用简体中文的地区（如新加坡 等）是强制使用的唯一中文编码。P-Windows3.2和苹果OS就是以GB2312为基本汉字编码， Windows 95\/98则以GBK为基本汉字编码、但兼容支持GB2312。\n  双字节编码\n范围：A1A1~FEFE\nA1-A9：符号区，包含682个符号\nB0-F7：汉字区，包含6763个汉字\n （2）GB2312字符集\n GB2312(1980年)一共收录了7445个字符，包括6763个汉字和682个其它符号。汉字区的内码范围高字节从B0-F7，低字节从 A1-FE，占用的码位是72*94=6768。其中有5个空位是D7FA-D7FE。GB2312-80中共收录了7545个字符，用两个字节编码一个 字符。每个字符最高位为0。GB2312-80编码简称国标码 。\nGB2312支持的汉字太少。1995年的汉字扩展规范GBK1.0收录了21886个符号，它分为汉字区和图形符号区。汉字区包括21003个字符。\n 作用：国家简体中文字符集，兼容ASCII。\n位数：使用2个字节表示，能表示7445个符号，包括6763个汉字，几乎覆盖所有高频率汉字。\n范围：高字节从A1到F7, 低字节从A1到FE。将高字节和低字节分别加上0XA0即可得到编码。\n（3）GB12345-90字符集\n 1990年制定了繁体字的编码标准GB12345-90《信息交换用汉字编码字符集第一辅助集》，目的在于规范必须使用繁体字的各种场合，以及古籍整理 等。该标准共收录6866个汉字（比GB2312多103个字，其它厂商的字库大多不包括这些字），纯繁体的字大概有2200余个。\n  双字节编码\n范围：A1A1~FEFE\nA1-A9：符号区，增加竖排符号\nB0-F9：汉字区，包含6866个汉字\n （4）GBK\n GBK编码(Chinese Internal Code Specification)是中国大陆制订的、等同于UCS的新的中文编码扩展国家标准。gbk编码能够用来同时表示==繁体字和简体字==，而gb2312只 能表示简体字，gbk是兼容gb2312编码的。GBK工作小组于1995年10月，同年12月完成GBK规范。该编码标准兼容GB2312，共收录汉字 21003个、符号883个，并提供1894个造字码位，简、繁体字融于一库。Windows95\/98简体中文版的字库表层编码就采用的是GBK，通过 GBK与UCS之间一一对应的码表与底层字库联系。\n  英文名：Chinese Internal Code Specification\n中文名：汉字内码扩展规范1.0版\n双字节编码，GB2312-80的扩充，在码位上和GB2312-80兼容\n范围：8140~FEFE（剔除xx7F）共23940个码位。包含21003个汉字，包含了ISO\/IEC 10646-1中的全部中日韩汉字\n ​\t作用：它是GB2312的扩展，加入对繁体字的支持，兼容GB2312。",
+    "inLanguage" : "en-us",
+    "author" : "JadeRong",
+    "creator" : "JadeRong",
+    "publisher": "JadeRong",
+    "accountablePerson" : "JadeRong",
+    "copyrightHolder" : "JadeRong",
+    "copyrightYear" : "2020",
+    "datePublished": "2020-05-18 13:30:48 \x2b0800 CST",
+    "dateModified" : "2020-05-18 13:30:48 \x2b0800 CST",
+    "url" : "https:\/\/rrrwx.github.io\/2020\/%E5%B8%B8%E8%A7%81%E5%AD%97%E7%AC%A6%E7%BC%96%E7%A0%81%E6%96%B9%E5%BC%8F%E6%AF%94%E8%BE%83\/",
+    "wordCount" : "208",
+    "keywords" : [ "学习笔记","mysql","字符编码方式", "JadeRong"]
+}
+</script>
+
+</head>
+
+  
+
+
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  <body class="">
+    <div class="wrapper">
+        <nav class="navbar">
+    <div class="container">
+        <div class="navbar-header header-logo">
+            <a href="https://rrrwx.github.io">JadeRong</a>&nbsp;
+        	<a href="javascript:void(0);" class="theme-switch"><i class="iconfont icon-table-lamp"></i></a>
+
+        </div>
+        <div class="menu navbar-right">
+                
+                
+                <a class="menu-item" href="/posts/" title="">Blogs</a>
+                
+                <a class="menu-item" href="/categories/" title="">Categories</a>
+                
+                <a class="menu-item" href="/tags/" title="">Tags</a>
+                
+                <a class="menu-item" href="/about/" title="">About</a>
+                
+        </div>
+    </div>
+</nav>
+<nav class="navbar-mobile" id="nav-mobile" style="display: none">
+     <div class="container">
+        <div class="navbar-header">
+            <div>  <a href="javascript:void(0);" class="theme-switch"><i class="iconfont icon-table-lamp"></i></a>&nbsp;<a href="https://rrrwx.github.io">JadeRong</a></div>
+            <div class="menu-toggle">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+     
+          <div class="menu" id="mobile-menu">
+                
+                
+                <a class="menu-item" href="/posts/" title="">Blogs</a>
+                
+                <a class="menu-item" href="/categories/" title="">Categories</a>
+                
+                <a class="menu-item" href="/tags/" title="">Tags</a>
+                
+                <a class="menu-item" href="/about/" title="">About</a>
+                
+        </div>
+    </div>
+</nav>
+    	 <main class="main">
+          <div class="container">
+      		
+<article class="post-warp" itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">常见字符编码方式比较</h1>
+
+
+
+                Written by <a itemprop="name" href="https://rrrwx.github.io" rel="author">JadeRong</a>, included in <i class="iconfont icon-folder"></i>
+
+                <span class="post-category">
+                            <a href="https://rrrwx.github.io/categories/mysql%E5%AD%A6%E4%B9%A0/"> mysql学习 </a>
+                            
+                    </span>
+
+        
+        <h1 id="wc" style="font-size: 0.75rem;text-align: left;">约 208 个字    |    预计阅读 1 分钟    |    本文总阅读量<span id="busuanzi_value_page_pv"></span>次</h1>
+    </header>
+    <div class="post-content">
+        
+
+        
+            
+        
+
+        
+        
+     
+          
+          
+          
+
+          
+          
+          
+
+          <h3 id="1-ascii编码">1. ASCII编码</h3>
+<p>作用：表语英语及西欧语言。</p>
+<p>位数：<strong>ASCII是用7位表示的</strong>，能表示128个字符；其<strong>扩展使用8位表示</strong>，表示256个字符。</p>
+<p>范围：ASCII从00到7F，扩展从00到FF。</p>
+<p><img src="../../../../images/mysql/ascii%E5%AD%97%E7%AC%A6%E4%BB%A3%E7%A0%81%E8%A1%A8.jpeg" alt="字符代码表"></p>
+<p><img src="../../../../images/mysql/ascii%E5%AD%97%E7%AC%A6%E6%89%A9%E5%B1%95%E8%A1%A8.jpeg" alt="字符扩展表"></p>
+<h3 id="2-iso8859-1编码">2. Iso8859-1编码</h3>
+<p>属于单字节编码，最多能表示的字符范围是0-255，应用于英文系列。</p>
+<p>作用：<strong>扩展ASCII</strong>，表示西欧、希腊语等。</p>
+<p>位数：<strong>8位</strong>，</p>
+<p>范围：从00到FF，兼容ASCII字符集。</p>
+<h3 id="3-gb码字符集">3. GB码<em>字符集</em></h3>
+<p><strong>（1）GB码字符集</strong></p>
+<blockquote>
+<p>全称是GB2312-80《信息交换用汉字编码字符集基本集》，1980年发布，是中文信息处理的国家标准，在大陆及海外使用简体中文的地区（如新加坡 等）是强制使用的唯一中文编码。P-Windows3.2和苹果OS就是以GB2312为基本汉字编码， Windows 95/98则以GBK为基本汉字编码、但兼容支持GB2312。</p>
+</blockquote>
+<blockquote>
+<p>双字节编码</p>
+<p>范围：A1A1~FEFE</p>
+<p>A1-A9：符号区，包含682个符号</p>
+<p>B0-F7：汉字区，包含6763个汉字</p>
+</blockquote>
+<p><strong>（2）GB2312字符集</strong></p>
+<blockquote>
+<p>GB2312(1980年)一共收录了7445个字符，包括6763个汉字和682个其它符号。汉字区的内码范围高字节从B0-F7，低字节从 A1-FE，占用的码位是72*94=6768。其中有5个空位是D7FA-D7FE。GB2312-80中共收录了7545个字符，用两个字节编码一个 字符。每个字符最高位为0。GB2312-80编码简称<strong>国标码</strong> 。</p>
+<p>GB2312支持的汉字太少。1995年的汉字扩展规范GBK1.0收录了21886个符号，它分为汉字区和图形符号区。汉字区包括21003个字符。</p>
+</blockquote>
+<p>作用：国家简体中文字符集，兼容ASCII。</p>
+<p>位数：使用<strong>2个字节</strong>表示，能表示7445个符号，包括6763个汉字，几乎覆盖所有高频率汉字。</p>
+<p>范围：高字节从A1到F7, 低字节从A1到FE。将高字节和低字节分别加上0XA0即可得到编码。</p>
+<p><strong>（3）GB12345-90字符集</strong></p>
+<blockquote>
+<p>1990年制定了繁体字的编码标准GB12345-90《信息交换用汉字编码字符集第一辅助集》，目的在于规范必须使用繁体字的各种场合，以及古籍整理 等。该标准共收录6866个汉字（比GB2312多103个字，其它厂商的字库大多不包括这些字），纯繁体的字大概有2200余个。</p>
+</blockquote>
+<blockquote>
+<p>双字节编码</p>
+<p>范围：A1A1~FEFE</p>
+<p>A1-A9：符号区，增加竖排符号</p>
+<p>B0-F9：汉字区，包含6866个汉字</p>
+</blockquote>
+<p><strong>（4）GBK</strong></p>
+<blockquote>
+<p>GBK编码(Chinese Internal Code Specification)是中国大陆制订的、等同于UCS的新的中文编码扩展国家标准。gbk编码能够用来同时表示==繁体字和简体字==，而gb2312只 能表示简体字，gbk是兼容gb2312编码的。GBK工作小组于1995年10月，同年12月完成GBK规范。该编码标准兼容GB2312，共收录汉字 21003个、符号883个，并提供1894个造字码位，简、繁体字融于一库。Windows95/98简体中文版的字库表层编码就采用的是GBK，通过 GBK与UCS之间一一对应的码表与底层字库联系。</p>
+</blockquote>
+<blockquote>
+<p>英文名：Chinese Internal Code Specification</p>
+<p>中文名：汉字内码扩展规范1.0版</p>
+<p>双字节编码，GB2312-80的扩充，在码位上和GB2312-80兼容</p>
+<p>范围：8140~FEFE（剔除xx7F）共23940个码位。包含21003个汉字，包含了ISO/IEC 10646-1中的全部中日韩汉字</p>
+</blockquote>
+<p>​			作用：它是GB2312的扩展，加入对繁体字的支持，兼容GB2312。</p>
+<p>​			位数：使用2个字节表示，可表示21886个字符。</p>
+<p>​			范围：高字节从81到FE，低字节从40到FE。</p>
+<h3 id="4-通用字符集ucs">4. 通用字符集（UCS）</h3>
+<blockquote>
+<p>ISO/IEC 10646-1 [ISO-10646]定义了一种<strong>多于8比特字节</strong>的字符集，称作通用字符集（UCS），它包含了世界上大多数可书写的字符系统。已定义了两种多8比特字节 编码，对每一个字符采用四个8比特字节编码的称为UCS-4，对每一个字符采用两个8比特字节编码的称为UCS-2。它们仅能够对UCS的前64K字符进 行编址，超出此范围的其它部分当前还没有分配编址。</p>
+</blockquote>
+<p>作用：国际标准 ISO 10646 定义了通用字符集 (Universal Character Set)。它是与UNICODE同类的组织，<strong>UCS-2</strong>和UNICODE兼容。</p>
+<p>位数：它有UCS-2和UCS-4两种格式，分别是2字节和4字节。</p>
+<p>范围：目前，UCS-4只是在UCS-2前面加了0x0000。</p>
+<h3 id="5-unicode字符集">5. Unicode字符集</h3>
+<blockquote>
+<p>Unicode字符集（简称为UCS）,国际标准组织于1984年4月成立ISO/IEC JTC1/SC2/WG2工作组，针对各国文字、符号进行统一性编码。1991年美国跨国公司成立Unicode Consortium，并于1991年10月与WG2达成协议，采用同一编码字集。目前Unicode是采用16位编码体系，其字符集内容与 ISO10646的BMP（Basic Multilingual Plane）相同。Unicode于1992年6月通过DIS（Draf International Standard），目前版本V2.0于1996公布，内容包含符号6811个，汉字20902个，韩文拼音11172个，造字区6400个，保留 20249个，共计65534个。Unicode编码后的大小是一样的.例如一个英文字母 &ldquo;a&rdquo; 和一个汉字 &ldquo;好&rdquo;，编码后都是占用的空间大小是一样的，都是两个字节！</p>
+</blockquote>
+<blockquote>
+<p>Unicode可以<strong>用来表示所有语言的字符</strong>，而且是<em><strong>定长双字节</strong></em>（也有四字节的）编码，包括英文字母在内。所以可以说它是不兼容iso8859-1编码的， 也不兼容任何编码。不过，相对于iso8859-1编码来说，uniocode编码只是在前面增加了一个0字节，比如字母&rsquo;a&rsquo;为&quot;00 61&rdquo;。</p>
+</blockquote>
+<p>需要说明的是，定长编码便于计算机处理（注意GB2312/GBK不是定长编码），而unicode又可以用来表示所有字符，所以在很多软件内部是使用unicode编码来处理的，比如<em><strong>java</strong></em>。</p>
+<p>UNICODE字符集有多个<em><strong>编码方式</strong></em>，分别是UTF-8，UTF-16，UTF-32和UTF-7编码。</p>
+<p><strong>（1）UTF-8</strong></p>
+<blockquote>
+<p>UTF:UCS Transformation Format.考虑到unicode编码不兼容iso8859-1编码，而且容易占用更多的空间：因为对于英文字母，unicode也需要两个字节来表 示。所以unicode不便于传输和存储。因此而产生了utf编码，utf编码兼容iso8859-1编码，同时也可以用来表示所有语言的字符，不过，<strong>utf编码是不定长编码</strong>，每一个字符的长度从1-6个字节不等。另外，utf编码自带简单的校验功能。<em><strong>一般来讲，英文字母都是用一个字节表示，而汉字使用三个字节。</strong></em></p>
+</blockquote>
+<blockquote>
+<p>注意，虽然说utf是为了使用更少的空间而使用的，但那只是相对于unicode编码来说，如果已经知道是汉字，则使用GB2312/GBK无疑是 最节省的。不过另一方面，值得说明的是，虽然utf编码对汉字使用3个字节，但即使对于汉字网页，utf编码也会比unicode编码节省，因为网页中包 含了很多的英文字符。</p>
+</blockquote>
+<blockquote>
+<p>UTF8编码后的大小是不一定,例如一个英文字母&quot;a&rdquo; 和一个汉字 &ldquo;好&rdquo;，编码后占用的空间大小就不样了，前者是一个字节，后者是三个字节！编码的方法是从低位到高位。</p>
+</blockquote>
+<p><strong>（2）UTF-16</strong></p>
+<blockquote>
+<p>采用2 字节，Unicode中不同部分的字符都同样基于现有的标准。这是为了便于转换。从 0x0000到0x007F是ASCII字符，从0x0080到0x00FF是ISO-8859-1对ASCII的扩展。希腊字母表使用从0x0370到 0x03FF 的代码，斯拉夫语使用从0x0400到0x04FF的代码，美国使用从0x0530到0x058F的代码，希伯来语使用从0x0590到0x05FF的代 码。中国、日本和韩国的象形文字（总称为CJK）占用了从0x3000到0x9FFF的代码；</p>
+</blockquote>
+<blockquote>
+<p><strong>由于0x00在c语言及操作系统文件名等中有特殊意义，故很多情况下需要UTF-8编码保存文本，去掉这个0x00。</strong></p>
+</blockquote>
+<p><strong>（3）UTF-32</strong></p>
+<blockquote>
+<p>采用4字节。</p>
+</blockquote>
+<p><strong>（4）UTF-7</strong></p>
+<blockquote>
+<p>A Mail-Safe Transformation Format of Unicode(RFC1642)。这是一种使用 7 位 ASCII 码对 Unicode 码进行转换的编码。它的设计目的仍然是为了在只能传递 7 为编码的邮件网关中传递信息。 UTF-7 对英语字母、数字和常见符号直接显示，而对其他符号用修正的 Base64 编码。符号 + 和 - 号控制编码过程的开始和暂停。所以乱码中如果夹有英文单词，并且相伴有 + 号和 - 号，这就有可能是 UTF-7 编码。</p>
+</blockquote>
+<p>作用：为世界650种语言进行统一编码，兼容ISO-8859-1。</p>
+<p>位数：UNICODE字符集有多个编码方式，分别是UTF-8，UTF-16和UTF-32。</p>
+<p>很多人以为UTF-8等和Unicode都是字符集或都是编码方式，其实这是误区。</p>
+<h3 id="6-mime-编码">6. MIME 编码</h3>
+<p>​    MIME 是“多用途网际邮件扩充协议”的缩写，在 MIME 协议之前，邮件的编码曾经有过 UUENCODE等编码方式，但是由于MIME协议算法简单，并且易于扩展，现在已经成为邮件编码方式的主流，<strong>不仅是用来传输 8 bit 的字符，也可以用来传送二进制的文件</strong>，如邮件附件中的图像、音频等信息，而且扩展了很多基于MIME 的应用。从编码方式来说，MIME 定义了两种<em><strong>编码方法</strong></em>Base64与QP(Quote-Printable)</p>
+<p><strong>（1）Base64</strong></p>
+<blockquote>
+<p>按照RFC2045的定义，Base64被定义为：Base64内容传送编码被设计用来把任意序列的<strong>8位字节</strong>描述为一种不易被人直接识别的形式。</p>
+</blockquote>
+<blockquote>
+<p>为什么要使用Base64？</p>
+<p>在设计这个编码的时候，</p>
+<p>1.是否加密？</p>
+<p>2.加密算法复杂程度和效率</p>
+<p>3.如何处理传输？</p>
+</blockquote>
+<blockquote>
+<p>加密是肯定的，但是加密的目的不是让用户发送非常安全的Email。这种加密方式主要就是<strong>防君子不防小人</strong> 。即达到一眼望去完全看不出内容即可。</p>
+<p>基于这个目的加密算法的复杂程度和效率也就不能太大和太低。和上一个理由类似，MIME协议等用于发送Email的协议解决的是如何收发Email，而并不是如何安全的收发Email。因此算法的复杂程度要小，效率要高，否则因为发送Email而大量占用资源，路就有点走歪了。</p>
+<p>但是，如果是基于以上两点，那么我们使用最简单的恺撒法即可，为什么Base64看起来要比恺撒法复杂呢？这是因为在Email的传送过程中，由于历史原 因，Email只被允许传送ASCII字符，即一个8位字节的低7位。因此，如果您发送了一封带有非ASCII字符（即字节的最高位是1）的Email通 过有“历史问题”的网关时就可能会出现问题。网关可能会把最高位置为0！很明显，问题就这样产生了！因此，为了能够正常的传送Email，这个问题就必须考虑！所以，单单靠改变字母的位置的恺撒之类的方案也就不行了。关于这一点可以参考RFC2046。</p>
+<p>基于以上的一些主要原因产生了Base64编码。</p>
+</blockquote>
+<p><strong>Base64编码要求把3个8位字节（3<em>8=24）转化为4个6位的字节（4</em>6=24），之后在6位的前面补两个0，形成8位一个字节的形式。</strong></p>
+<p><strong>（2）QP(Quote-Printable)</strong></p>
+<blockquote>
+<p>通常缩写为“Q”方法，其原理是把一个 8 bit 的字符用两个16进制数值表示，然后在前面加“=”。所以我们看到经过QP编码后的文件通常是这个样子：=B3=C2=BF=A1=C7=E5=A3=AC=C4=FA=BA=C3=A3=A1。</p>
+</blockquote>
+<p>utf-8这类是为了解析 unicode这种字符集而制定，而base64这类是为了解决实际的网络应用而制定。为了让你便于记忆，对先前介绍的字符集进行统计和分类：</p>
+<table>
+<thead>
+<tr>
+<th><strong>语言</strong></th>
+<th><strong>字符集</strong></th>
+<th><strong>正式名称</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>英语、西欧语</td>
+<td>ASCII，ISO-8859-1</td>
+<td>MBCS 多字节</td>
+</tr>
+<tr>
+<td>简体中文</td>
+<td>GB2312</td>
+<td>MBCS 多字节</td>
+</tr>
+<tr>
+<td>简繁中文</td>
+<td>GBK</td>
+<td>MBCS 多字节</td>
+</tr>
+<tr>
+<td>中文、日文及朝鲜语</td>
+<td>GB18030</td>
+<td>MBCS 多字节</td>
+</tr>
+<tr>
+<td>各国语言</td>
+<td>UNICODE，UCS</td>
+<td>DBCS 宽字节</td>
+</tr>
+</tbody>
+</table>
+
+    </div>
+
+
+
+    <div class="post-copyright">
+                
+        
+
+
+        <section>
+            <p class="share-item">
+                <span>Share :</span>
+                
+                <span>
+
+      
+        <a href="//twitter.com/share?url=https%3a%2f%2frrrwx.github.io%2f2020%2f%25E5%25B8%25B8%25E8%25A7%2581%25E5%25AD%2597%25E7%25AC%25A6%25E7%25BC%2596%25E7%25A0%2581%25E6%2596%25B9%25E5%25BC%258F%25E6%25AF%2594%25E8%25BE%2583%2f&amp;text=%e5%b8%b8%e8%a7%81%e5%ad%97%e7%ac%a6%e7%bc%96%e7%a0%81%e6%96%b9%e5%bc%8f%e6%af%94%e8%be%83&amp;via=" target="_blank" title="Share on Twitter">
+          <i class="iconfont icon-twitter"></i>
+        </a>
+        
+
+      
+      
+        <a href="//www.facebook.com/sharer/sharer.php?u=https%3a%2f%2frrrwx.github.io%2f2020%2f%25E5%25B8%25B8%25E8%25A7%2581%25E5%25AD%2597%25E7%25AC%25A6%25E7%25BC%2596%25E7%25A0%2581%25E6%2596%25B9%25E5%25BC%258F%25E6%25AF%2594%25E8%25BE%2583%2f" target="_blank" title="Share on Facebook">
+          <i class="iconfont icon-facebook"></i>
+        </a>
+        
+      
+      
+      
+      
+      
+      
+        
+      
+        
+      
+
+          
+
+          
+
+          
+        <a href="//www.douban.com/recommend/?url=https%3a%2f%2frrrwx.github.io%2f2020%2f%25E5%25B8%25B8%25E8%25A7%2581%25E5%25AD%2597%25E7%25AC%25A6%25E7%25BC%2596%25E7%25A0%2581%25E6%2596%25B9%25E5%25BC%258F%25E6%25AF%2594%25E8%25BE%2583%2f&amp;title=%e5%b8%b8%e8%a7%81%e5%ad%97%e7%ac%a6%e7%bc%96%e7%a0%81%e6%96%b9%e5%bc%8f%e6%af%94%e8%be%83" target="_blank" title="Share on Douban ">
+            <i class="iconfont icon-douban"></i>
+          </a>
+          
+
+          
+        <a href="//service.weibo.com/share/share.php?url=https%3a%2f%2frrrwx.github.io%2f2020%2f%25E5%25B8%25B8%25E8%25A7%2581%25E5%25AD%2597%25E7%25AC%25A6%25E7%25BC%2596%25E7%25A0%2581%25E6%2596%25B9%25E5%25BC%258F%25E6%25AF%2594%25E8%25BE%2583%2f&amp;appkey=&amp;title=%e5%b8%b8%e8%a7%81%e5%ad%97%e7%ac%a6%e7%bc%96%e7%a0%81%e6%96%b9%e5%bc%8f%e6%af%94%e8%be%83" target="_blank" title="Share on Douban ">
+            <i class="iconfont icon-weibo"></i>
+          </a>
+          
+
+</span>
+                
+            </p>
+        </section>
+
+
+        <section>
+            <p class="copyright-item">
+                <span>Updated </span>
+                <span class="post-time">
+                on 
+                <time datetime=2020-05-18 itemprop="datePublished">May 18, 2020</time>
+                </span>
+
+            </p>
+        </section>
+    </div>
+
+  
+    <div class="post-tags">
+        
+            <section>
+            
+            <span class="tag"><a href="https://rrrwx.github.io/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">
+                    <i class="iconfont icon-tag"></i>学习笔记</a></span>
+            
+            <span class="tag"><a href="https://rrrwx.github.io/tags/mysql/">
+                    <i class="iconfont icon-tag"></i>mysql</a></span>
+            
+            <span class="tag"><a href="https://rrrwx.github.io/tags/%E5%AD%97%E7%AC%A6%E7%BC%96%E7%A0%81%E6%96%B9%E5%BC%8F/">
+                    <i class="iconfont icon-tag"></i>字符编码方式</a></span>
+            
+            </section>
+        
+        <section>
+                <a href="javascript:window.history.back();">back</a></span> · 
+                <span><a href="https://rrrwx.github.io">home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav">
+        
+        <a href="https://rrrwx.github.io/2020/%E6%95%B0%E6%8D%AE%E5%BA%93/" class="prev" rel="prev" title="数据库介绍"><i class="iconfont icon-left"></i>&nbsp;数据库介绍</a>
+         
+        
+        <a href="https://rrrwx.github.io/2020/ffmpeg%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/" class="next" rel="next" title="ffmpeg常用命令">ffmpeg常用命令&nbsp;<i class="iconfont icon-right"></i></a>
+        
+    </div>
+
+    <div class="post-comment">
+          
+                 
+          
+    </div>
+</article>
+          </div>
+		   </main>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="">
+                <i class="fas fa-arrow-up fa-fw"></i>
+            </a>
+        </div>
+
+      <footer class="footer">
+
+
+
+
+    <div class="copyright">
+
+            <div class="footer-line">
+                &copy;<i class="far fa-copyright fa-fw"></i>&nbsp;<span itemprop="copyrightYear">2020</span>&nbsp;&nbsp;<span class="author" itemprop="copyrightHolder"><a href="https://rrrwx.github.io">JadeRong</a></span>&nbsp;|&nbsp;<span class="license">Released under <a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span>
+                &nbsp;|&nbsp;<span>Powered by <a href="https://gohugo.io/" target="_blank" rel="external nofollow">Hugo</a> & <a href="https://github.com/liuzc/leaveit" target="_blank" rel="external nofollow">LeaveIt</a></span>
+            </div>
+
+
+    </div>
+</footer>
+
+
+
+
+
+
+
+
+
+
+
+
+    
+     <link href="//lib.baomitu.com/lightgallery/1.6.11/css/lightgallery.min.css" rel="stylesheet">  
+      
+     <script src="/js/vendor_gallery.min.js" async="" ></script>
+    
+  
+
+
+
+
+     </div>
+  </body>
+</html>

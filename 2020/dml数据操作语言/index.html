@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+  <meta http-equiv="content-type" content="text/html;charset=utf-8">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noodp"/>
+  <meta name="author" content="JadeRong">
+  <meta name="description" content="主要分享一些平时学习和开发中用到的知识">
+  
+  
+  <link rel="prev" href="https://rrrwx.github.io/2020/ddl%E6%95%B0%E6%8D%AE%E5%AE%9A%E4%B9%89%E8%AF%AD%E8%A8%80/" />
+  <link rel="next" href="https://rrrwx.github.io/2020/dql%E6%95%B0%E6%8D%AE%E6%9F%A5%E8%AF%A2%E8%AF%AD%E8%A8%80/" />
+  <link rel="canonical" href="https://rrrwx.github.io/2020/dml%E6%95%B0%E6%8D%AE%E6%93%8D%E4%BD%9C%E8%AF%AD%E8%A8%80/" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+  <meta name="msapplication-TileColor" content="#da532c">
+  <meta name="theme-color" content="#ffffff">
+  <title>
+       
+       
+           SQL语法之DML | JadeRong
+       
+  </title>
+  <meta name="title" content="SQL语法之DML | JadeRong">
+    
+  
+  <link rel="stylesheet" href="/font/iconfont.css">
+  <link rel="stylesheet" href="/css/main.min.css">
+
+
+  
+  
+ 
+
+<script type="application/ld+json">
+ "@context" : "http://schema.org",
+    "@type" : "BlogPosting",
+    "mainEntityOfPage": {
+         "@type": "WebPage",
+         "@id": "https:\/\/rrrwx.github.io"
+    },
+    "articleSection" : "posts",
+    "name" : "SQL语法之DML",
+    "headline" : "SQL语法之DML",
+    "description" : "https:\/\/edu.aliyun.com\/roadmap\/java?spm=a2c6h.12999620.1371257.1.5a195738ZJjjex#part1\nDML（Data Manipulation Language） 数据操作语言，用来定义数据库记录（数据）\n增删改：表记录；\n1. 插入数据   INSERT INTO 表名 (列名1, 列名2, \x26hellip;) VALUES (列值1, 列值2, \x26hellip;) [, (列值1, 列值2, \x26hellip;), \x26hellip;]；\n 在表名后面给出要插入的列名，其他没有指定的列等同于插入null值； 在VALUES后面给出列值，值得顺序和个数与前面指定的列名对应； 例：INSERT INTO stu (number, name, age, gender) VALUES (\x26lsquo;ITCAST_0001\x26rsquo;, \x26lsquo;jade\x26rsquo;, 22, \x26lsquo;m\x26rsquo;);    INSERT INTO 表名 VALUES(列值1, 列值2)\n 没有给出列名则说明要插入所有列； 列值的顺序与个数与表创建时给出的列顺序相同；    2. 修改数据  UPDATE 表名 SET 列名1=列值1, 列名2=列值2, 。。。 [WHERE 条件]；  条件（可选）：  条件必须是boolean类型的值或表达式； 运算符：=, !",
+    "inLanguage" : "en-us",
+    "author" : "JadeRong",
+    "creator" : "JadeRong",
+    "publisher": "JadeRong",
+    "accountablePerson" : "JadeRong",
+    "copyrightHolder" : "JadeRong",
+    "copyrightYear" : "2020",
+    "datePublished": "2020-05-15 17:30:48 \x2b0800 CST",
+    "dateModified" : "2020-05-15 17:30:48 \x2b0800 CST",
+    "url" : "https:\/\/rrrwx.github.io\/2020\/dml%E6%95%B0%E6%8D%AE%E6%93%8D%E4%BD%9C%E8%AF%AD%E8%A8%80\/",
+    "wordCount" : "88",
+    "keywords" : [ "学习笔记","mysql","SQL语法", "JadeRong"]
+}
+</script>
+
+</head>
+
+  
+
+
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  <body class="">
+    <div class="wrapper">
+        <nav class="navbar">
+    <div class="container">
+        <div class="navbar-header header-logo">
+            <a href="https://rrrwx.github.io">JadeRong</a>&nbsp;
+        	<a href="javascript:void(0);" class="theme-switch"><i class="iconfont icon-table-lamp"></i></a>
+
+        </div>
+        <div class="menu navbar-right">
+                
+                
+                <a class="menu-item" href="/posts/" title="">Blogs</a>
+                
+                <a class="menu-item" href="/categories/" title="">Categories</a>
+                
+                <a class="menu-item" href="/tags/" title="">Tags</a>
+                
+                <a class="menu-item" href="/about/" title="">About</a>
+                
+        </div>
+    </div>
+</nav>
+<nav class="navbar-mobile" id="nav-mobile" style="display: none">
+     <div class="container">
+        <div class="navbar-header">
+            <div>  <a href="javascript:void(0);" class="theme-switch"><i class="iconfont icon-table-lamp"></i></a>&nbsp;<a href="https://rrrwx.github.io">JadeRong</a></div>
+            <div class="menu-toggle">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+     
+          <div class="menu" id="mobile-menu">
+                
+                
+                <a class="menu-item" href="/posts/" title="">Blogs</a>
+                
+                <a class="menu-item" href="/categories/" title="">Categories</a>
+                
+                <a class="menu-item" href="/tags/" title="">Tags</a>
+                
+                <a class="menu-item" href="/about/" title="">About</a>
+                
+        </div>
+    </div>
+</nav>
+    	 <main class="main">
+          <div class="container">
+      		
+<article class="post-warp" itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">SQL语法之DML</h1>
+
+
+
+                Written by <a itemprop="name" href="https://rrrwx.github.io" rel="author">JadeRong</a>, included in <i class="iconfont icon-folder"></i>
+
+                <span class="post-category">
+                            <a href="https://rrrwx.github.io/categories/mysql%E5%AD%A6%E4%B9%A0/"> mysql学习 </a>
+                            <a href="https://rrrwx.github.io/categories/sql%E8%AF%AD%E6%B3%95/"> SQL语法 </a>
+                            
+                    </span>
+
+        
+        <h1 id="wc" style="font-size: 0.75rem;text-align: left;">约 88 个字    |    预计阅读 1 分钟    |    本文总阅读量<span id="busuanzi_value_page_pv"></span>次</h1>
+    </header>
+    <div class="post-content">
+        
+
+        
+
+        
+        
+     
+          
+          
+          
+
+          
+          
+          
+
+          <p><a href="https://edu.aliyun.com/roadmap/java?spm=a2c6h.12999620.1371257.1.5a195738ZJjjex#part1">https://edu.aliyun.com/roadmap/java?spm=a2c6h.12999620.1371257.1.5a195738ZJjjex#part1</a></p>
+<h2 id="dmldata-manipulation-language">DML（Data Manipulation Language）</h2>
+<p>数据操作语言，用来定义数据库记录（数据）</p>
+<p>增删改：<!-- raw HTML omitted --><strong>表记录</strong><!-- raw HTML omitted -->；</p>
+<h4 id="1--插入数据">1.  插入数据</h4>
+<ul>
+<li>
+<p>INSERT INTO 表名 (列名1, 列名2, &hellip;) VALUES (列值1, 列值2, &hellip;) [, (列值1, 列值2, &hellip;), &hellip;]；</p>
+<ul>
+<li>在表名后面给出要插入的列名，其他没有指定的列等同于插入null值；</li>
+<li>在VALUES后面给出列值，值得顺序和个数与前面指定的列名对应；</li>
+<li>例：INSERT INTO stu (number, name, age, gender) VALUES (&lsquo;ITCAST_0001&rsquo;, &lsquo;jade&rsquo;, 22, &lsquo;m&rsquo;);</li>
+</ul>
+</li>
+<li>
+<p>INSERT INTO 表名 VALUES(列值1, 列值2)</p>
+<ul>
+<li>没有给出列名则说明要插入所有列；</li>
+<li>列值的顺序与个数与表创建时给出的列顺序相同；</li>
+</ul>
+</li>
+</ul>
+<h4 id="2--修改数据">2.  修改数据</h4>
+<ul>
+<li>UPDATE 表名 SET 列名1=列值1, 列名2=列值2, 。。。 [WHERE 条件]；
+<ul>
+<li>条件（可选）：
+<ul>
+<li>条件必须是boolean类型的值或表达式；</li>
+<li>运算符：=, !=, &lt;&gt;, &lt;, &gt;, &lt;=, &gt;=, BETWEEN&hellip;AND, IN(&hellip;), IS NULL, NOT, OR, AND</li>
+<li>例：UPDATE t_person SET gender='m&rsquo;, age=age+1 WHERE sid='1&rsquo;;</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h4 id="3--删除数据">3.  删除数据</h4>
+<ul>
+<li>DELETE FROM 表名 [WHERE 条件]；</li>
+<li>TRUNCATE TABLE 表名
+<ul>
+<li>TRUNCATE是DDL语句，是先删除drop该表，然后create该表。而且<!-- raw HTML omitted -->无法回滚<!-- raw HTML omitted -->；</li>
+</ul>
+</li>
+</ul>
+
+    </div>
+
+
+
+    <div class="post-copyright">
+                
+        
+
+
+        <section>
+            <p class="share-item">
+                <span>Share :</span>
+                
+                <span>
+
+      
+        <a href="//twitter.com/share?url=https%3a%2f%2frrrwx.github.io%2f2020%2fdml%25E6%2595%25B0%25E6%258D%25AE%25E6%2593%258D%25E4%25BD%259C%25E8%25AF%25AD%25E8%25A8%2580%2f&amp;text=SQL%e8%af%ad%e6%b3%95%e4%b9%8bDML&amp;via=" target="_blank" title="Share on Twitter">
+          <i class="iconfont icon-twitter"></i>
+        </a>
+        
+
+      
+      
+        <a href="//www.facebook.com/sharer/sharer.php?u=https%3a%2f%2frrrwx.github.io%2f2020%2fdml%25E6%2595%25B0%25E6%258D%25AE%25E6%2593%258D%25E4%25BD%259C%25E8%25AF%25AD%25E8%25A8%2580%2f" target="_blank" title="Share on Facebook">
+          <i class="iconfont icon-facebook"></i>
+        </a>
+        
+      
+      
+      
+      
+      
+      
+        
+      
+        
+      
+
+          
+
+          
+
+          
+        <a href="//www.douban.com/recommend/?url=https%3a%2f%2frrrwx.github.io%2f2020%2fdml%25E6%2595%25B0%25E6%258D%25AE%25E6%2593%258D%25E4%25BD%259C%25E8%25AF%25AD%25E8%25A8%2580%2f&amp;title=SQL%e8%af%ad%e6%b3%95%e4%b9%8bDML" target="_blank" title="Share on Douban ">
+            <i class="iconfont icon-douban"></i>
+          </a>
+          
+
+          
+        <a href="//service.weibo.com/share/share.php?url=https%3a%2f%2frrrwx.github.io%2f2020%2fdml%25E6%2595%25B0%25E6%258D%25AE%25E6%2593%258D%25E4%25BD%259C%25E8%25AF%25AD%25E8%25A8%2580%2f&amp;appkey=&amp;title=SQL%e8%af%ad%e6%b3%95%e4%b9%8bDML" target="_blank" title="Share on Douban ">
+            <i class="iconfont icon-weibo"></i>
+          </a>
+          
+
+</span>
+                
+            </p>
+        </section>
+
+
+        <section>
+            <p class="copyright-item">
+                <span>Updated </span>
+                <span class="post-time">
+                on 
+                <time datetime=2020-05-15 itemprop="datePublished">May 15, 2020</time>
+                </span>
+
+            </p>
+        </section>
+    </div>
+
+  
+    <div class="post-tags">
+        
+            <section>
+            
+            <span class="tag"><a href="https://rrrwx.github.io/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">
+                    <i class="iconfont icon-tag"></i>学习笔记</a></span>
+            
+            <span class="tag"><a href="https://rrrwx.github.io/tags/mysql/">
+                    <i class="iconfont icon-tag"></i>mysql</a></span>
+            
+            <span class="tag"><a href="https://rrrwx.github.io/tags/sql%E8%AF%AD%E6%B3%95/">
+                    <i class="iconfont icon-tag"></i>SQL语法</a></span>
+            
+            </section>
+        
+        <section>
+                <a href="javascript:window.history.back();">back</a></span> · 
+                <span><a href="https://rrrwx.github.io">home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav">
+        
+        <a href="https://rrrwx.github.io/2020/ddl%E6%95%B0%E6%8D%AE%E5%AE%9A%E4%B9%89%E8%AF%AD%E8%A8%80/" class="prev" rel="prev" title="SQL语法之DDL"><i class="iconfont icon-left"></i>&nbsp;SQL语法之DDL</a>
+         
+        
+        <a href="https://rrrwx.github.io/2020/dql%E6%95%B0%E6%8D%AE%E6%9F%A5%E8%AF%A2%E8%AF%AD%E8%A8%80/" class="next" rel="next" title="SQL语法之DQL">SQL语法之DQL&nbsp;<i class="iconfont icon-right"></i></a>
+        
+    </div>
+
+    <div class="post-comment">
+          
+                 
+          
+    </div>
+</article>
+          </div>
+		   </main>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="">
+                <i class="fas fa-arrow-up fa-fw"></i>
+            </a>
+        </div>
+
+      <footer class="footer">
+
+
+
+
+    <div class="copyright">
+
+            <div class="footer-line">
+                &copy;<i class="far fa-copyright fa-fw"></i>&nbsp;<span itemprop="copyrightYear">2020</span>&nbsp;&nbsp;<span class="author" itemprop="copyrightHolder"><a href="https://rrrwx.github.io">JadeRong</a></span>&nbsp;|&nbsp;<span class="license">Released under <a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span>
+                &nbsp;|&nbsp;<span>Powered by <a href="https://gohugo.io/" target="_blank" rel="external nofollow">Hugo</a> & <a href="https://github.com/liuzc/leaveit" target="_blank" rel="external nofollow">LeaveIt</a></span>
+            </div>
+
+
+    </div>
+</footer>
+
+
+
+
+
+
+
+
+
+
+
+
+    
+    
+    <script src="/js/vendor_no_gallery.min.js" async=""></script>
+    
+  
+
+
+
+
+     </div>
+  </body>
+</html>

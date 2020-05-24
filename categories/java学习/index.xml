@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>java学习 on JadeRong</title>
+    <link>https://rrrwx.github.io/categories/java%E5%AD%A6%E4%B9%A0/</link>
+    <description>Recent content in java学习 on JadeRong</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Mon, 17 Feb 2020 00:10:36 +0800</lastBuildDate>
+    
+	<atom:link href="https://rrrwx.github.io/categories/java%E5%AD%A6%E4%B9%A0/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>java基础学习笔记多线程之线程创建</title>
+      <link>https://rrrwx.github.io/2020/%E7%BA%BF%E7%A8%8B/</link>
+      <pubDate>Mon, 17 Feb 2020 00:10:36 +0800</pubDate>
+      
+      <guid>https://rrrwx.github.io/2020/%E7%BA%BF%E7%A8%8B/</guid>
+      <description>参考
+  &amp;mdash;Runnable Module java.base Package java.lang
+@FunctionalInterface public interface Runnable (since jdk1.0)
+public interface Runnable { public abstract void run(); }   &amp;mdash;Thread Module java.base Package java.lang
+public class Thread extends Object implements Runnable (since jdk1.0)
+  &amp;mdash;Callable Module java.base Package java.util.concurrent
+@FunctionalInterface public interface Callable(since jdk1.5)
+public interface Callable&amp;lt;V&amp;gt; { /** * Computes a result, or throws an exception if unable to do so. * * @return computed result * @throws Exception if unable to compute a result */ V call() throws Exception; }  Future就是对于具体的Runnable或者Callable任务的执行结果进行取消、查询是否完成、获取结果。必要时可以通过get方法获取执行结果，该方法会阻塞直到任务返回结果。</description>
+    </item>
+    
+    <item>
+      <title>java基础学习笔记之小记</title>
+      <link>https://rrrwx.github.io/2020/%E5%B0%8F%E8%AE%B0/</link>
+      <pubDate>Sun, 16 Feb 2020 00:18:36 +0800</pubDate>
+      
+      <guid>https://rrrwx.github.io/2020/%E5%B0%8F%E8%AE%B0/</guid>
+      <description>想到什么，看到什么，就记什么 参考教程尚学堂、阿里云课堂等
+1.比较comparator和comparable  Comparable是排序接口，若一个类实现了Comparable接口，就意味着“该类支持排序”。而Comparator是比较器，我们若需要控制某个类的次序，可以建立一个“该类的比较器”来进行排序。
+Comparable相当于“内部比较器”，而Comparator相当于“外部比较器”。
+两种方法各有优劣， 用Comparable 简单， 只要实现Comparable 接口的对象直接就成为一个可以比较的对象，但是需要修改源代码。 用Comparator 的好处是不需要修改源代码， 而是另外实现一个比较器， 当某个自定义的对象需要作比较的时候，把比较器和对象一起传递过去就可以比大小了， 并且在Comparator 里面用户可以自己实现复杂的可以通用的逻辑，使其可以匹配一些比较简单的对象，那样就可以节省很多重复劳动了。
+ 2.ArrayList和数组  ArrayList就是“动态数组”，也是一个对象。
+创建一个ArrayList对象，该对象存放在堆内存中，且是一个内存连续的内存区域。
+1、ArrayList是用数组实现的，这个数组的内存是连续的，不存在相邻元素之间还隔着其他内存。
+2、索引ArrayList时，速度比原生数组慢是因为你要用get方法，这是一个“函数调用”，而数组直接用[ ]访问，相当于直接操作内存地址，速度当然比函数调用快。
+ 3.this和方法调用  java里面的this可以省略，因为编译器会自动加上。 java的方法里面不能再定义方法，不过可以定义类，在类里又可以定义新的方法。（python的函数里面可以定义函数）
+ 4.PATH和CLASSPATH区别  PATH：操作系统提供的路径配置，定义所有可执行文件的类加载路径；
+CLASSPATH：由JRE提供的，用于定义java程序解释时类加载路径，可以用“CLASSPATH=路径”的命令形式来定义；
+JVM -&amp;gt; CLASSPATH定义的路径 -&amp;gt; 加载字节码文件。
+ 5.java数据类型    数据类型 大小/位 表示的数值范围     long(长整型) 64 -2E63 ~ 2E63-1   int(整型) 32 -2147483648 ~ 21474483647   short(短整型) 16 -32768~32767   byte(位) 8 -128 ~ 127   char(字符) 16 0 ~ 65536   float(单精度) 32 -3.</description>
+    </item>
+    
+    <item>
+      <title>java正则表达式</title>
+      <link>https://rrrwx.github.io/2020/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/</link>
+      <pubDate>Sun, 16 Feb 2020 00:10:36 +0800</pubDate>
+      
+      <guid>https://rrrwx.github.io/2020/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/</guid>
+      <description>JDK1.4之后正则默认被JDK所支持，并且提供java.util.regex开发包，同时String类也支持直接正则处理
+ 1.常用正则标记 （1）字符：匹配单个字符。 a：表示匹配字母a； \\：转义字符&amp;#34;\&amp;#34;； \t：转义字符&amp;#34;\t&amp;#34;； \n：转义字符&amp;#34;\n&amp;#34;； （2）一组字符：任意匹配里面的单个字符 [abc]：可能是字母a、b或c； [^abc]：不是字母a、b或c中的任意一个； [a-zA-Z]：全部字母中的任意一个； [0-9]：全部数字中的任意一个； （3）边界匹配：（JavaScript里面可能会用到） ^：一组正则的开始； $：一组正则的结束； （4）简写表达式：每一位出现的简写标记也只表示一位 .：任意一位字符； \d：任意一位数字，等价于.[0-9]； \D：非数字的任意字符，等价于.[^0-9]； \w：任意一位字母、数字、_，等价于.[a-zA-Z0-9]； \W：非字母、数字、_以外的任意字符，等价于.[^a-zA-Z0-9]； \s：任意的一位空格，例如&amp;#34;\n&amp;#34;、&amp;#34;\t&amp;#34;、&amp;#34; &amp;#34;； \s：空格以外的任意字符； （5）数量表示：匹配多位字符 ?：出现0次或1次； *：出现0次、1次或多次； +：出现1次或多次； {n}：出啊先n次； {n,}：出现n次及以上； {n,m}：出现n~m次； （6）逻辑表示：与、或、非 表达式A表达式B：表达式A后面紧跟着表达式B； 表达式A|表达式B：表达式A或表达式B； （表达式）：将多个表达式合成一个表示，作为一组出现； 2.String类对正则的支持 public boolean matches(String regex) //匹配指定正则表达式 public String replaceAll(String regex, String replacement) //替换指定正则的全部内容 public String replaceFirst(String regex, String replacement) //替换指定正则的首个内容 public String[] split(String regex) //按照指定正则全拆分 public String[] split(String regex, int limit) //按照指定的正则拆分为指定个数 3.java.util.regex包支持 该包中有两个核心的正则操作类：Pattern（正则模式）和Matcher（匹配）</description>
+    </item>
+    
+    <item>
+      <title>java基础学习笔记（二）</title>
+      <link>https://rrrwx.github.io/2020/%E5%9F%BA%E7%A1%80%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E4%BA%8C/</link>
+      <pubDate>Sat, 15 Feb 2020 00:15:36 +0800</pubDate>
+      
+      <guid>https://rrrwx.github.io/2020/%E5%9F%BA%E7%A1%80%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E4%BA%8C/</guid>
+      <description>12.字符编码 System.out.println(&amp;#34;系统默认编码：&amp;#34;+ System.getProperty(&amp;#34;file.encoding&amp;#34;);//获取本地系统默认编码 //系统默认编码：UTF-8 （从JDK1.9起）  ISO8859-1：一种国际通用的单字节编码，最多只能表示0~255的字符范围，主要在英文传输中使用；
+GBK/GB2312：中文的国标编码，专门用来表示汉字，是双字节编码，如果在此编码器中出现了中文，则使用ISO8859-1编码。GBK可以表示简体中文和繁体中文，而GB2312只能表示简体中文，GBK兼容GBK2312；
+UNICODE：十六进制编码，可以准确地表示出任何语言文字，此编码不兼容ISO8859-1编码；
+UTF-8编码：由于UNICODE不支持ISO8859-1编码，而且占用空间较多，英文字母也需要双字节去编码，不便于存储和传输，于是产生了UTF编码。UTF兼容ISO8859-1编码，同时也可以用来表示所有语言字符，但是UTF编码是不定长的编码，每一个字符的长度从1~6个字节不等，一般在中文网页使用此编码，可以节省空间。
+ 13.String.intern() https://blog.csdn.net/tyyking/article/details/82496901
+ new String都是在堆上创建字符串对象。当调用 intern() 方法时，编译器会将字符串添加到常量池中（stringTable维护），并返回指向该常量的引用。
+JDK 1.7后，intern方法还是会先去查询常量池中是否有已经存在，如果存在，则返回常量池中的引用，这一点与之前没有区别，区别在于，如果在常量池找不到对应的字符串，则不会再将字符串拷贝到常量池，而只是在常量池中生成一个对原字符串的引用。简单的说，就是往常量池放的东西变了：原来在常量池中找不到时，复制一个副本放到常量池，1.7后则是将在堆上的地址引用复制到常量池。
+ //Q：下列程序的输出结果： String s1 = “abc”; String s2 = “abc”; System.out.println(s1 == s2); //A：true，均指向常量池中对象。  //Q：下列程序的输出结果： String s1 = new String(“abc”); String s2 = new String(“abc”); System.out.println(s1 == s2); //A：false，两个引用指向堆中的不同对象。  //Q：下列程序的输出结果： String s1 = “abc”; String s2 = “a”; String s3 = “bc”; String s4 = s2 + s3; System.</description>
+    </item>
+    
+    <item>
+      <title>java基础学习笔记（一）</title>
+      <link>https://rrrwx.github.io/2020/%E5%9F%BA%E7%A1%80%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E4%B8%80/</link>
+      <pubDate>Sat, 15 Feb 2020 00:10:36 +0800</pubDate>
+      
+      <guid>https://rrrwx.github.io/2020/%E5%9F%BA%E7%A1%80%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E4%B8%80/</guid>
+      <description>1.方法可变参数： int &amp;hellip; data (JDK1.5以后提供，相当于数组的变相应用)
+int sum(int ... data){} sum(1,2,3); sum(new int [] {1,2,3}); 方法中可变参数只能定义在最后，并且只能定义一个
+2.类在java中是一种引用数据类型； String类的实现都是通过数组的形式进行保存的，因此对于String内部的数据一定是无法改变的；另外在jdk1.8以前，使用char数组来保存，而jdk1.9以后都使用byte数组来保存 String类的比较应该使用equals (https://blog.csdn.net/barryhappy/article/details/6082823)； String.intern()可以将对象手动入池，但麻烦，因此直接赋值比构造方法更节省空间。
+3.override（覆写）和overloading（重载）    区别 overloading（重载） override（覆写）     定义 方法名称相同，参数类型和个数不同 方法名称、参数类型及个数、返回值类型全部相同   权限 无权限要求 被子类覆写的方法不能拥有比父类更严格的访问控制权限   范围 发生在同一个类中 发生在继承关系类中     构造方法不能被继承，因此不能被覆写，但可以被重载； 父类方法定义private时，子类无法覆写该方法
+4.this和super （1）this表示先从本类查找所需要的属性或者方法，弱国本类不存在则查找父类定义，而super表示不查找子类，直接查找父类； （2）this()调用的是本类构造，super调用的是父类构造，而且都必须放在构造方法的首行，所以不能同时出现； （3）this可以表示当前对象；
+5.volatile和synchronized的区别 （1）volatile主要使用于属性上，而synchronized应用于方法和代码块上； （2）volatile无法描述同步的处理，只是一种直接内存的处理，避免了副本的操作，节约了复制变量副本和同步的时间，而synchronized是实现同步操作的关键字（同步的时候使用volatile的同时还是要使用synchronized）。
+6.String和StringBuffer、StringBuilder  String类是字符串的首选类型，其最大特点是内容不允许修改，StringBuffer和StringBuilder类的内容允许修改
+在开发中，大部分情况都优先考虑String类，只有在频繁修改字符串的操作上才会考虑使用StringBuffer和StringBuilder类。
+ （1）StringBuffer是线程安全的
+ StringBuffer是在jdk1.0版本中提供的，但是jdk1.5之后又提供了StringBuilder类，两个类的唯一区别在于：StringBuffer类中的方法使用了synchronized关键字定义，适合多线程并发访问时的同步操作，因此属于线程安全的方法；而StringBuilder类没有这样做，属于非线程安全的方法
+ （2）字符串静态常量池
+String str=&amp;#34;hello &amp;#34;+&amp;#34;java&amp;#34;+&amp;#34; world&amp;#34;; 这句程序的本质操作实际上是由StringBuffer来完成的，其中所有的“+”操作都变成“append”</description>
+    </item>
+    
+  </channel>
+</rss>

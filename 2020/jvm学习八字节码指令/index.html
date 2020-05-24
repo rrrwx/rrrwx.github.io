@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+  <meta http-equiv="content-type" content="text/html;charset=utf-8">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noodp"/>
+  <meta name="author" content="JadeRong">
+  <meta name="description" content="主要分享一些平时学习和开发中用到的知识">
+  
+  
+  <link rel="prev" href="https://rrrwx.github.io/2020/jvm%E5%AD%A6%E4%B9%A0%E4%B8%83%E7%B1%BB%E6%96%87%E4%BB%B6%E7%BB%93%E6%9E%84/" />
+  <link rel="next" href="https://rrrwx.github.io/2020/python%E7%88%AC%E8%99%AB%E7%AC%94%E8%AE%B0%E4%B8%80/" />
+  <link rel="canonical" href="https://rrrwx.github.io/2020/jvm%E5%AD%A6%E4%B9%A0%E5%85%AB%E5%AD%97%E8%8A%82%E7%A0%81%E6%8C%87%E4%BB%A4/" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+  <meta name="msapplication-TileColor" content="#da532c">
+  <meta name="theme-color" content="#ffffff">
+  <title>
+       
+       
+           JVM学习八之字节码指令 | JadeRong
+       
+  </title>
+  <meta name="title" content="JVM学习八之字节码指令 | JadeRong">
+    
+  
+  <link rel="stylesheet" href="/font/iconfont.css">
+  <link rel="stylesheet" href="/css/main.min.css">
+
+
+  
+  
+ 
+
+<script type="application/ld+json">
+ "@context" : "http://schema.org",
+    "@type" : "BlogPosting",
+    "mainEntityOfPage": {
+         "@type": "WebPage",
+         "@id": "https:\/\/rrrwx.github.io"
+    },
+    "articleSection" : "posts",
+    "name" : "JVM学习八之字节码指令",
+    "headline" : "JVM学习八之字节码指令",
+    "description" : " Java虚拟机的指令由一个字节长度（u1）、代表着某种特定操作含义的数字（操作码，Opcode）以及跟随其后的零至多个代表此操作所需参数（操作数，Operands）而构成。\nJava虚拟机采用面向操作数栈而不是寄存器的架构，大多数指令都不包含操作数，只有一个操作码。\n  大部分指令都没有支持byte、char、short、boolean类型。是因为编译器在编译期或运行期将byte、short类型直接带符号扩展(Sign-Extend)，对boolean、char类型零位扩展(Zero-Extend)。\n因此在实际操作时都是使用相应的int类型作为运算类型。\n 指令分为：\n1、加载和存储指令 用于将数据在栈帧中的局部变量表和操作数栈之间来回传输。\n比如iload_, istore_, iconst_, wide等\n2、运算指令 对两个操作数栈上的值进行某种特定运算，并重新存入到操作数栈顶。\n如iadd, isub, idiv, imul, irem, ineg, ior, ishl, iinc, dcmog(比较)等\n3、类型转换指令 将两种不同的数值类型进行相互转换，这些转换操作一般用于实现用户代码中的显示类型转换操作，或者用来处理字节码指令集中数据类型相关指令无法与数据类型一一对应的问题。 如i2b, i2c, i2s等;\n进行窄化类型转换的时候，可能导致转换结果产生不同的正负号（简单丢弃多出的高位）、不同的数量级的情况，转换过程很可能会导致数值的精度丢失。\n另外浮点值NaN会转换成整型的0。\n4、对象创建与访问指令 类实例和数组的创建和操作使用不同的指令。\n创建类实例：new；\n创建数组：newarray、anewarray、multianewarray；\n访问类字段和实例字段：getfield、getstatic等；\n数组元素加载到操作数栈：iaload等；\n操作数栈的值加载到数元素中：iastore等；\n取数组长度：arraylength；\n检查类实例类型：instanceof、checkcast。\n5、操作数栈管理指令 直接操作操作数栈。\n出栈：pop，pop2；\n入栈：dup，dup2等；\n交换：swap。\n6、控制转移指令 让Java虚拟机有条件或无条件地从指定的位置指令而不是控制转移指令的吓一跳继续执行指令。即修改PC寄存器的值。\n条件分支：ifeq、iflt、ifnull、if_cmpeq等；\n复合条件分支：tableswitch、lookupswitch；\n无条件分支：goto、jsr、ret等。\n7、方法调用和返回指令 invokevirtual调用对象的实例方法；\ninvokeinterface调用接口方法；\ninokespecial调用需要特殊处理的方法，你如实例初始化方法、私有方法和父类方法等；\ninvokestatic调用类方法；\ninvokedynamic在运行时动态解析出调用点限定符所引用的方法，并执行该方法；\n返回指令：return、ireturn等。\n8、异常处理指令 显式抛出异常的操作（throw语句）都由athrow指令来实现。\n9、同步指令 支持synchronized方法块的同步\nJava虚拟机支持方法级的同步以及方法内部一段指令的同步。使用管程（Monitor）来支持。\n使用monitorenter和moniterexit两条指令来支持synchronized关键字的语义。\n 另外，为了保证在方法异常完成时monitorenter和monitorexit指令依然可以正确配对执行，编译器会自动产生一个异常处理器，这个异常处理器声明可以处理所有的异常，目的就是用来执行monitorexit指令。\n ",
+    "inLanguage" : "en-us",
+    "author" : "JadeRong",
+    "creator" : "JadeRong",
+    "publisher": "JadeRong",
+    "accountablePerson" : "JadeRong",
+    "copyrightHolder" : "JadeRong",
+    "copyrightYear" : "2020",
+    "datePublished": "2020-03-25 00:10:36 \x2b0800 CST",
+    "dateModified" : "2020-03-25 00:10:36 \x2b0800 CST",
+    "url" : "https:\/\/rrrwx.github.io\/2020\/jvm%E5%AD%A6%E4%B9%A0%E5%85%AB%E5%AD%97%E8%8A%82%E7%A0%81%E6%8C%87%E4%BB%A4\/",
+    "wordCount" : "63",
+    "keywords" : [ "jvm","java","学习笔记", "JadeRong"]
+}
+</script>
+
+</head>
+
+  
+
+
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  <body class="">
+    <div class="wrapper">
+        <nav class="navbar">
+    <div class="container">
+        <div class="navbar-header header-logo">
+            <a href="https://rrrwx.github.io">JadeRong</a>&nbsp;
+        	<a href="javascript:void(0);" class="theme-switch"><i class="iconfont icon-table-lamp"></i></a>
+
+        </div>
+        <div class="menu navbar-right">
+                
+                
+                <a class="menu-item" href="/posts/" title="">Blogs</a>
+                
+                <a class="menu-item" href="/categories/" title="">Categories</a>
+                
+                <a class="menu-item" href="/tags/" title="">Tags</a>
+                
+                <a class="menu-item" href="/about/" title="">About</a>
+                
+        </div>
+    </div>
+</nav>
+<nav class="navbar-mobile" id="nav-mobile" style="display: none">
+     <div class="container">
+        <div class="navbar-header">
+            <div>  <a href="javascript:void(0);" class="theme-switch"><i class="iconfont icon-table-lamp"></i></a>&nbsp;<a href="https://rrrwx.github.io">JadeRong</a></div>
+            <div class="menu-toggle">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+     
+          <div class="menu" id="mobile-menu">
+                
+                
+                <a class="menu-item" href="/posts/" title="">Blogs</a>
+                
+                <a class="menu-item" href="/categories/" title="">Categories</a>
+                
+                <a class="menu-item" href="/tags/" title="">Tags</a>
+                
+                <a class="menu-item" href="/about/" title="">About</a>
+                
+        </div>
+    </div>
+</nav>
+    	 <main class="main">
+          <div class="container">
+      		
+<article class="post-warp" itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">JVM学习八之字节码指令</h1>
+
+
+
+                Written by <a itemprop="name" href="https://rrrwx.github.io" rel="author">JadeRong</a>, included in <i class="iconfont icon-folder"></i>
+
+                <span class="post-category">
+                            <a href="https://rrrwx.github.io/categories/jvm%E5%AD%A6%E4%B9%A0/"> jvm学习 </a>
+                            
+                    </span>
+
+        
+        <h1 id="wc" style="font-size: 0.75rem;text-align: left;">约 63 个字    |    预计阅读 1 分钟    |    本文总阅读量<span id="busuanzi_value_page_pv"></span>次</h1>
+    </header>
+    <div class="post-content">
+        
+
+        
+
+        
+        
+     
+          
+          
+          
+
+          
+          
+          
+
+          <blockquote>
+<p>Java虚拟机的指令由<code>一个字节长度</code>（u1）、代表着某种特定操作含义的数字（<code>操作码</code>，Opcode）以及跟随其后的零至多个代表此操作所需参数（<code>操作数</code>，Operands）而构成。</p>
+<p>Java虚拟机采用<code>面向操作数栈</code>而不是寄存器的架构，大多数指令都不包含操作数，只有一个操作码。</p>
+</blockquote>
+<blockquote>
+<p>大部分指令都没有支持byte、char、short、boolean类型。是因为编译器在编译期或运行期将byte、short类型直接<code>带符号扩展(Sign-Extend)</code>，对boolean、char类型<code>零位扩展(Zero-Extend)</code>。</p>
+<p>因此在实际操作时都是使用相应的int类型作为运算类型。</p>
+</blockquote>
+<p>指令分为：</p>
+<h4 id="1加载和存储指令">1、<code>加载和存储指令</code></h4>
+<p>用于将数据在栈帧中的局部变量表和操作数栈之间来回传输。</p>
+<p>比如iload_<!-- raw HTML omitted -->, istore_<!-- raw HTML omitted -->, iconst_<!-- raw HTML omitted -->, wide等</p>
+<h4 id="2运算指令">2、<code>运算指令</code></h4>
+<p>对两个操作数栈上的值进行某种特定运算，并重新存入到操作数栈顶。</p>
+<p>如iadd, isub, idiv, imul, irem, ineg, ior, ishl, iinc, dcmog(比较)等</p>
+<h4 id="3类型转换指令">3、<code>类型转换指令</code></h4>
+<p>将两种不同的数值类型进行相互转换，这些转换操作一般用于实现用户代码中的显示类型转换操作，或者用来处理字节码指令集中数据类型相关指令无法与数据类型一一对应的问题。
+如i2b, i2c, i2s等;</p>
+<p>进行窄化类型转换的时候，可能导致转换结果产生不同的正负号（简单丢弃多出的高位）、不同的数量级的情况，转换过程很可能会导致数值的精度丢失。</p>
+<p><code>另外浮点值NaN会转换成整型的0。</code></p>
+<h4 id="4对象创建与访问指令">4、<code>对象创建与访问指令</code></h4>
+<p>类实例和数组的创建和操作使用不同的指令。</p>
+<p>创建类实例：new；</p>
+<p>创建数组：newarray、anewarray、multianewarray；</p>
+<p>访问类字段和实例字段：getfield、getstatic等；</p>
+<p>数组元素加载到操作数栈：iaload等；</p>
+<p>操作数栈的值加载到数元素中：iastore等；</p>
+<p>取数组长度：arraylength；</p>
+<p>检查类实例类型：instanceof、checkcast。</p>
+<h4 id="5操作数栈管理指令">5、<code>操作数栈管理指令</code></h4>
+<p>直接操作操作数栈。</p>
+<p>出栈：pop，pop2；</p>
+<p>入栈：dup，dup2等；</p>
+<p>交换：swap。</p>
+<h4 id="6控制转移指令">6、<code>控制转移指令</code></h4>
+<p>让Java虚拟机<code>有条件</code>或<code>无条件</code>地从指定的位置指令而不是控制转移指令的吓一跳继续执行指令。即修改PC寄存器的值。</p>
+<p>条件分支：ifeq、iflt、ifnull、if_cmpeq等；</p>
+<p>复合条件分支：tableswitch、lookupswitch；</p>
+<p>无条件分支：goto、jsr、ret等。</p>
+<h4 id="7方法调用和返回指令">7、<code>方法调用和返回指令</code></h4>
+<p>invokevirtual调用对象的实例方法；</p>
+<p>invokeinterface调用接口方法；</p>
+<p>inokespecial调用需要特殊处理的方法，你如实例初始化方法、私有方法和父类方法等；</p>
+<p>invokestatic调用类方法；</p>
+<p>invokedynamic在运行时动态解析出调用点限定符所引用的方法，并执行该方法；</p>
+<p>返回指令：return、ireturn等。</p>
+<h4 id="8异常处理指令">8、<code>异常处理指令</code></h4>
+<p><code>显式</code>抛出异常的操作（throw语句）都由<code>athrow</code>指令来实现。</p>
+<h4 id="9同步指令">9、<code>同步指令</code></h4>
+<p>支持synchronized方法块的同步</p>
+<p>Java虚拟机支持方法级的同步以及方法内部一段指令的同步。使用管程（Monitor）来支持。</p>
+<p>使用monitorenter和moniterexit两条指令来支持synchronized关键字的语义。</p>
+<blockquote>
+<p>另外，为了保证在方法异常完成时monitorenter和monitorexit指令依然可以正确配对执行，编译器会自动产生一个异常处理器，这个异常处理器声明可以处理所有的异常，目的就是用来执行monitorexit指令。</p>
+</blockquote>
+
+    </div>
+
+
+
+    <div class="post-copyright">
+                
+        
+
+
+        <section>
+            <p class="share-item">
+                <span>Share :</span>
+                
+                <span>
+
+      
+        <a href="//twitter.com/share?url=https%3a%2f%2frrrwx.github.io%2f2020%2fjvm%25E5%25AD%25A6%25E4%25B9%25A0%25E5%2585%25AB%25E5%25AD%2597%25E8%258A%2582%25E7%25A0%2581%25E6%258C%2587%25E4%25BB%25A4%2f&amp;text=JVM%e5%ad%a6%e4%b9%a0%e5%85%ab%e4%b9%8b%e5%ad%97%e8%8a%82%e7%a0%81%e6%8c%87%e4%bb%a4&amp;via=" target="_blank" title="Share on Twitter">
+          <i class="iconfont icon-twitter"></i>
+        </a>
+        
+
+      
+      
+        <a href="//www.facebook.com/sharer/sharer.php?u=https%3a%2f%2frrrwx.github.io%2f2020%2fjvm%25E5%25AD%25A6%25E4%25B9%25A0%25E5%2585%25AB%25E5%25AD%2597%25E8%258A%2582%25E7%25A0%2581%25E6%258C%2587%25E4%25BB%25A4%2f" target="_blank" title="Share on Facebook">
+          <i class="iconfont icon-facebook"></i>
+        </a>
+        
+      
+      
+      
+      
+      
+      
+        
+      
+        
+      
+
+          
+
+          
+
+          
+        <a href="//www.douban.com/recommend/?url=https%3a%2f%2frrrwx.github.io%2f2020%2fjvm%25E5%25AD%25A6%25E4%25B9%25A0%25E5%2585%25AB%25E5%25AD%2597%25E8%258A%2582%25E7%25A0%2581%25E6%258C%2587%25E4%25BB%25A4%2f&amp;title=JVM%e5%ad%a6%e4%b9%a0%e5%85%ab%e4%b9%8b%e5%ad%97%e8%8a%82%e7%a0%81%e6%8c%87%e4%bb%a4" target="_blank" title="Share on Douban ">
+            <i class="iconfont icon-douban"></i>
+          </a>
+          
+
+          
+        <a href="//service.weibo.com/share/share.php?url=https%3a%2f%2frrrwx.github.io%2f2020%2fjvm%25E5%25AD%25A6%25E4%25B9%25A0%25E5%2585%25AB%25E5%25AD%2597%25E8%258A%2582%25E7%25A0%2581%25E6%258C%2587%25E4%25BB%25A4%2f&amp;appkey=&amp;title=JVM%e5%ad%a6%e4%b9%a0%e5%85%ab%e4%b9%8b%e5%ad%97%e8%8a%82%e7%a0%81%e6%8c%87%e4%bb%a4" target="_blank" title="Share on Douban ">
+            <i class="iconfont icon-weibo"></i>
+          </a>
+          
+
+</span>
+                
+            </p>
+        </section>
+
+
+        <section>
+            <p class="copyright-item">
+                <span>Updated </span>
+                <span class="post-time">
+                on 
+                <time datetime=2020-03-25 itemprop="datePublished">March 25, 2020</time>
+                </span>
+
+            </p>
+        </section>
+    </div>
+
+  
+    <div class="post-tags">
+        
+            <section>
+            
+            <span class="tag"><a href="https://rrrwx.github.io/tags/jvm/">
+                    <i class="iconfont icon-tag"></i>jvm</a></span>
+            
+            <span class="tag"><a href="https://rrrwx.github.io/tags/java/">
+                    <i class="iconfont icon-tag"></i>java</a></span>
+            
+            <span class="tag"><a href="https://rrrwx.github.io/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">
+                    <i class="iconfont icon-tag"></i>学习笔记</a></span>
+            
+            </section>
+        
+        <section>
+                <a href="javascript:window.history.back();">back</a></span> · 
+                <span><a href="https://rrrwx.github.io">home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav">
+        
+        <a href="https://rrrwx.github.io/2020/jvm%E5%AD%A6%E4%B9%A0%E4%B8%83%E7%B1%BB%E6%96%87%E4%BB%B6%E7%BB%93%E6%9E%84/" class="prev" rel="prev" title="JVM学习七之类文件结构"><i class="iconfont icon-left"></i>&nbsp;JVM学习七之类文件结构</a>
+         
+        
+        <a href="https://rrrwx.github.io/2020/python%E7%88%AC%E8%99%AB%E7%AC%94%E8%AE%B0%E4%B8%80/" class="next" rel="next" title="python爬虫笔记（一）">python爬虫笔记（一）&nbsp;<i class="iconfont icon-right"></i></a>
+        
+    </div>
+
+    <div class="post-comment">
+          
+                 
+          
+    </div>
+</article>
+          </div>
+		   </main>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="">
+                <i class="fas fa-arrow-up fa-fw"></i>
+            </a>
+        </div>
+
+      <footer class="footer">
+
+
+
+
+    <div class="copyright">
+
+            <div class="footer-line">
+                &copy;<i class="far fa-copyright fa-fw"></i>&nbsp;<span itemprop="copyrightYear">2020</span>&nbsp;&nbsp;<span class="author" itemprop="copyrightHolder"><a href="https://rrrwx.github.io">JadeRong</a></span>&nbsp;|&nbsp;<span class="license">Released under <a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span>
+                &nbsp;|&nbsp;<span>Powered by <a href="https://gohugo.io/" target="_blank" rel="external nofollow">Hugo</a> & <a href="https://github.com/liuzc/leaveit" target="_blank" rel="external nofollow">LeaveIt</a></span>
+            </div>
+
+
+    </div>
+</footer>
+
+
+
+
+
+
+
+
+
+
+
+
+    
+    
+    <script src="/js/vendor_no_gallery.min.js" async=""></script>
+    
+  
+
+
+
+
+     </div>
+  </body>
+</html>

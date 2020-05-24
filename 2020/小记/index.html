@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+  <meta http-equiv="content-type" content="text/html;charset=utf-8">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noodp"/>
+  <meta name="author" content="JadeRong">
+  <meta name="description" content="主要分享一些平时学习和开发中用到的知识">
+  
+  
+  <link rel="prev" href="https://rrrwx.github.io/2020/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/" />
+  <link rel="next" href="https://rrrwx.github.io/2020/%E7%BA%BF%E7%A8%8B/" />
+  <link rel="canonical" href="https://rrrwx.github.io/2020/%E5%B0%8F%E8%AE%B0/" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+  <meta name="msapplication-TileColor" content="#da532c">
+  <meta name="theme-color" content="#ffffff">
+  <title>
+       
+       
+           java基础学习笔记之小记 | JadeRong
+       
+  </title>
+  <meta name="title" content="java基础学习笔记之小记 | JadeRong">
+    
+  
+  <link rel="stylesheet" href="/font/iconfont.css">
+  <link rel="stylesheet" href="/css/main.min.css">
+
+
+  
+  
+ 
+
+<script type="application/ld+json">
+ "@context" : "http://schema.org",
+    "@type" : "BlogPosting",
+    "mainEntityOfPage": {
+         "@type": "WebPage",
+         "@id": "https:\/\/rrrwx.github.io"
+    },
+    "articleSection" : "posts",
+    "name" : "java基础学习笔记之小记",
+    "headline" : "java基础学习笔记之小记",
+    "description" : "想到什么，看到什么，就记什么 参考教程尚学堂、阿里云课堂等\n1.比较comparator和comparable  Comparable是排序接口，若一个类实现了Comparable接口，就意味着“该类支持排序”。而Comparator是比较器，我们若需要控制某个类的次序，可以建立一个“该类的比较器”来进行排序。\nComparable相当于“内部比较器”，而Comparator相当于“外部比较器”。\n两种方法各有优劣， 用Comparable 简单， 只要实现Comparable 接口的对象直接就成为一个可以比较的对象，但是需要修改源代码。 用Comparator 的好处是不需要修改源代码， 而是另外实现一个比较器， 当某个自定义的对象需要作比较的时候，把比较器和对象一起传递过去就可以比大小了， 并且在Comparator 里面用户可以自己实现复杂的可以通用的逻辑，使其可以匹配一些比较简单的对象，那样就可以节省很多重复劳动了。\n 2.ArrayList和数组  ArrayList就是“动态数组”，也是一个对象。\n创建一个ArrayList对象，该对象存放在堆内存中，且是一个内存连续的内存区域。\n1、ArrayList是用数组实现的，这个数组的内存是连续的，不存在相邻元素之间还隔着其他内存。\n2、索引ArrayList时，速度比原生数组慢是因为你要用get方法，这是一个“函数调用”，而数组直接用[ ]访问，相当于直接操作内存地址，速度当然比函数调用快。\n 3.this和方法调用  java里面的this可以省略，因为编译器会自动加上。 java的方法里面不能再定义方法，不过可以定义类，在类里又可以定义新的方法。（python的函数里面可以定义函数）\n 4.PATH和CLASSPATH区别  PATH：操作系统提供的路径配置，定义所有可执行文件的类加载路径；\nCLASSPATH：由JRE提供的，用于定义java程序解释时类加载路径，可以用“CLASSPATH=路径”的命令形式来定义；\nJVM -\x26gt; CLASSPATH定义的路径 -\x26gt; 加载字节码文件。\n 5.java数据类型    数据类型 大小\/位 表示的数值范围     long(长整型) 64 -2E63 ~ 2E63-1   int(整型) 32 -2147483648 ~ 21474483647   short(短整型) 16 -32768~32767   byte(位) 8 -128 ~ 127   char(字符) 16 0 ~ 65536   float(单精度) 32 -3.",
+    "inLanguage" : "en-us",
+    "author" : "JadeRong",
+    "creator" : "JadeRong",
+    "publisher": "JadeRong",
+    "accountablePerson" : "JadeRong",
+    "copyrightHolder" : "JadeRong",
+    "copyrightYear" : "2020",
+    "datePublished": "2020-02-16 00:18:36 \x2b0800 CST",
+    "dateModified" : "2020-02-16 00:18:36 \x2b0800 CST",
+    "url" : "https:\/\/rrrwx.github.io\/2020\/%E5%B0%8F%E8%AE%B0\/",
+    "wordCount" : "143",
+    "keywords" : [ "java","学习笔记", "JadeRong"]
+}
+</script>
+
+</head>
+
+  
+
+
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  <body class="">
+    <div class="wrapper">
+        <nav class="navbar">
+    <div class="container">
+        <div class="navbar-header header-logo">
+            <a href="https://rrrwx.github.io">JadeRong</a>&nbsp;
+        	<a href="javascript:void(0);" class="theme-switch"><i class="iconfont icon-table-lamp"></i></a>
+
+        </div>
+        <div class="menu navbar-right">
+                
+                
+                <a class="menu-item" href="/posts/" title="">Blogs</a>
+                
+                <a class="menu-item" href="/categories/" title="">Categories</a>
+                
+                <a class="menu-item" href="/tags/" title="">Tags</a>
+                
+                <a class="menu-item" href="/about/" title="">About</a>
+                
+        </div>
+    </div>
+</nav>
+<nav class="navbar-mobile" id="nav-mobile" style="display: none">
+     <div class="container">
+        <div class="navbar-header">
+            <div>  <a href="javascript:void(0);" class="theme-switch"><i class="iconfont icon-table-lamp"></i></a>&nbsp;<a href="https://rrrwx.github.io">JadeRong</a></div>
+            <div class="menu-toggle">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+     
+          <div class="menu" id="mobile-menu">
+                
+                
+                <a class="menu-item" href="/posts/" title="">Blogs</a>
+                
+                <a class="menu-item" href="/categories/" title="">Categories</a>
+                
+                <a class="menu-item" href="/tags/" title="">Tags</a>
+                
+                <a class="menu-item" href="/about/" title="">About</a>
+                
+        </div>
+    </div>
+</nav>
+    	 <main class="main">
+          <div class="container">
+      		
+<article class="post-warp" itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">java基础学习笔记之小记</h1>
+
+
+
+                Written by <a itemprop="name" href="https://rrrwx.github.io" rel="author">JadeRong</a>, included in <i class="iconfont icon-folder"></i>
+
+                <span class="post-category">
+                            <a href="https://rrrwx.github.io/categories/java%E5%AD%A6%E4%B9%A0/"> java学习 </a>
+                            
+                    </span>
+
+        
+        <h1 id="wc" style="font-size: 0.75rem;text-align: left;">约 143 个字    |    预计阅读 1 分钟    |    本文总阅读量<span id="busuanzi_value_page_pv"></span>次</h1>
+    </header>
+    <div class="post-content">
+        
+
+        
+            
+        
+
+        
+        
+     
+          
+          
+          
+
+          
+          
+          
+
+          <p><em><strong>想到什么，看到什么，就记什么</strong></em>
+参考教程<a href="%5Bhttps://www.sxt.cn/Java_jQuery_in_action/Java_integer_variable.html%5D(https://www.sxt.cn/Java_jQuery_in_action/Java_integer_variable.html)">尚学堂</a>、<a href="%5Bhttps://edu.aliyun.com/roadmap/java?spm=a2c6h.12999620.1371257.1.5a195738ZJjjex&amp;accounttraceid=7b738f015d6549c094669a7115c51606dmec#part1%5D(https://edu.aliyun.com/roadmap/java?spm=a2c6h.12999620.1371257.1.5a195738ZJjjex&amp;accounttraceid=7b738f015d6549c094669a7115c51606dmec#part1)">阿里云课堂</a>等</p>
+<h3 id="1比较comparator和comparable"><em>1.比较comparator和comparable</em></h3>
+<blockquote>
+<p>Comparable是排序接口，若一个类实现了Comparable接口，就意味着“该类支持排序”。而Comparator是比较器，我们若需要控制某个类的次序，可以建立一个“该类的比较器”来进行排序。</p>
+<p>Comparable相当于“内部比较器”，而Comparator相当于“外部比较器”。</p>
+<p>两种方法各有优劣， 用Comparable 简单， 只要实现Comparable 接口的对象直接就成为一个可以比较的对象，但是需要修改源代码。 用Comparator 的好处是不需要修改源代码， 而是另外实现一个比较器， 当某个自定义的对象需要作比较的时候，把比较器和对象一起传递过去就可以比大小了， 并且在Comparator 里面用户可以自己实现复杂的可以通用的逻辑，使其可以匹配一些比较简单的对象，那样就可以节省很多重复劳动了。</p>
+</blockquote>
+<h3 id="2arraylist和数组"><em>2.ArrayList和数组</em></h3>
+<blockquote>
+<p>ArrayList就是“动态数组”，也是一个对象。</p>
+<p>创建一个ArrayList对象，该对象存放在堆内存中，且是一个内存连续的内存区域。</p>
+<p>1、ArrayList是用数组实现的，这个数组的内存是连续的，不存在相邻元素之间还隔着其他内存。</p>
+<p>2、索引ArrayList时，速度比原生数组慢是因为你要用get方法，这是一个“函数调用”，而数组直接用[ ]访问，相当于直接操作内存地址，速度当然比函数调用快。</p>
+</blockquote>
+<h3 id="3this和方法调用"><em>3.this和方法调用</em></h3>
+<blockquote>
+<p>java里面的this可以省略，因为编译器会自动加上。
+java的方法里面不能再定义方法，不过可以定义类，在类里又可以定义新的方法。（python的函数里面可以定义函数）</p>
+</blockquote>
+<h3 id="4path和classpath区别"><em>4.PATH和CLASSPATH区别</em></h3>
+<blockquote>
+<p>PATH：操作系统提供的路径配置，定义所有可执行文件的类加载路径；</p>
+<p>CLASSPATH：由JRE提供的，用于定义java程序解释时类加载路径，可以用“CLASSPATH=路径”的命令形式来定义；</p>
+<p>JVM -&gt; CLASSPATH定义的路径 -&gt; 加载字节码文件。</p>
+</blockquote>
+<h3 id="5java数据类型"><em>5.java数据类型</em></h3>
+<p><img src="../../../../../images/%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B.png" alt="数据类型.png"></p>
+<table>
+<thead>
+<tr>
+<th>数据类型</th>
+<th align="center">大小/位</th>
+<th align="right">表示的数值范围</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>long(长整型)</td>
+<td align="center">64</td>
+<td align="right">-2E63 ~ 2E63-1</td>
+</tr>
+<tr>
+<td>int(整型)</td>
+<td align="center">32</td>
+<td align="right">-2147483648 ~ 21474483647</td>
+</tr>
+<tr>
+<td>short(短整型)</td>
+<td align="center">16</td>
+<td align="right">-32768~32767</td>
+</tr>
+<tr>
+<td>byte(位)</td>
+<td align="center">8</td>
+<td align="right">-128 ~ 127</td>
+</tr>
+<tr>
+<td>char(字符)</td>
+<td align="center">16</td>
+<td align="right">0 ~ 65536</td>
+</tr>
+<tr>
+<td>float(单精度)</td>
+<td align="center">32</td>
+<td align="right">-3.4E38 ~ 3.4E38</td>
+</tr>
+<tr>
+<td>double(双精度)</td>
+<td align="center">64</td>
+<td align="right">-1.7E308 ~ 1.7E308</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>如果描述数字，首选int、double；</p>
+<p>如果对数据传输或者文字编码转换，使用byte；</p>
+<p>如果处理中文，优先char；</p>
+<p>如果描述内存或文件大小、描述表的主键列（自动增长），可以选long；</p>
+<p><em><strong>java里面的小数是默认double;</strong></em></p>
+</blockquote>
+<blockquote>
+<p>在Java中char可以保存中文字符：char c = &lsquo;书&rsquo;;</p>
+<p>但是在c++里面char是一个字节的，而中文需要2个字节，因此保存中文会被截断，一般会用string来保存中文。</p>
+</blockquote>
+<h3 id="6继承与多态"><em>6.继承与多态</em></h3>
+<p><a href="https://www.cnblogs.com/chenssy/p/3372798.html">https://www.cnblogs.com/chenssy/p/3372798.html</a>
+<a href="http://blog.csdn.net/thinkGhoster/archive/2008/04/19/2307001.aspx">http://blog.csdn.net/thinkGhoster/archive/2008/04/19/2307001.aspx</a></p>
+<blockquote>
+<p>指向子类的父类引用由于向上转型了，它只能访问父类中拥有的方法和属性，而对于子类中存在而父类中不存在的方法，该引用是不能使用的，尽管是重载该方法。若子类重写了父类中的某些方法，在调用该些方法的时候，必定是使用子类中定义的这些方法（动态连接、动态调用）。</p>
+<p><em><strong>当超类（父类）对象引用变量引用子类对象时，被引用对象的类型而不是引用变量的类型决定了调用谁的成员方法，但是这个被调用的方法必须是在超类中定义过的，也就是说被子类覆盖的方法，但是它仍然要根据继承链中方法调用的优先级来确认方法，该优先级为：<!-- raw HTML omitted -->this.show(O)、super.show(O)、this.show((super)O)、super.show((super)O)<!-- raw HTML omitted --></strong></em></p>
+</blockquote>
+<h3 id="7autoclosable接口"><em>7.AutoClosable接口</em></h3>
+<p>在项目开发中，资源的关闭问题往往会使用AutoClosable接口去实现自动释放功能，但是使用的时候必须<em><strong>结合异常处理结构</strong></em></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">interface</span> <span style="color:#a6e22e">AutoClosable</span> <span style="color:#f92672">{</span>
+  <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span>  <span style="color:#a6e22e">close</span><span style="color:#f92672">()</span> <span style="color:#66d9ef">throws</span> Exception<span style="color:#f92672">;</span>
+<span style="color:#f92672">}</span>
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#75715e">// 自动关闭处理机制需要在try语句中获取实例化对象，而后才会在执行完毕后自动调用close()
+</span><span style="color:#75715e">// 不管是否产生异常，最终都会调用AutoClosable接口的close()方法
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">try</span><span style="color:#f92672">(</span>IMessage msg <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> NetMessage<span style="color:#f92672">(</span><span style="color:#e6db74">&#34;www&#34;</span><span style="color:#f92672">)){</span>
+  msg<span style="color:#f92672">.</span><span style="color:#a6e22e">send</span><span style="color:#f92672">();</span>
+<span style="color:#f92672">}</span> <span style="color:#66d9ef">catch</span> <span style="color:#f92672">(</span>Exception e<span style="color:#f92672">){</span>
+  e<span style="color:#f92672">.</span><span style="color:#a6e22e">printStackTrace</span><span style="color:#f92672">();</span>
+<span style="color:#f92672">}</span>
+</code></pre></div><h3 id="8jvmjava解释器java编译器"><em>8.JVM、Java解释器、Java编译器</em></h3>
+<p><a href="https://www.jianshu.com/p/2698d5a2603c">https://www.jianshu.com/p/2698d5a2603c</a>
+<a href="https://blog.csdn.net/wangaiheng/article/details/78343260">https://blog.csdn.net/wangaiheng/article/details/78343260</a></p>
+<blockquote>
+<p>JVM：够运行Java字节码（Java bytecode）的虚拟机；</p>
+<p>Java编译器：将Java源文件（.java文件）编译成字节码文件（.class文件，是特殊的二进制文件，二进制字节码文件），这种字节码就是JVM的“机器语言”。javac.exe可以简单看成是Java编译器。</p>
+<p>Java解释器：是JVM的一部分。Java解释器用来解释执行Java编译器编译后的程序。java.exe可以简单看成是Java解释器。</p>
+<p>补充：通常情况下，一个平台上的二进制可执行文件不能在其他平台上工作，因为此可执行文件包含了对目标处理器的机器语言。而Class文件这种特殊的二进制文件，是可以运行在任何支持Java虚拟机的硬件平台和操作系统上的！</p>
+</blockquote>
+<h3 id="9try后面带括号-java7新特性"><em>9.try后面带括号 (java7新特性)</em></h3>
+<blockquote>
+<p>try括号内的资源会在try语句结束后自动释放，前提是这些可关闭的资源必须实现 java.lang.AutoCloseable 接口。<a href="https://blog.csdn.net/kangkangwanwan/article/details/78668132">https://blog.csdn.net/kangkangwanwan/article/details/78668132</a></p>
+</blockquote>
+<h3 id="10字符流和字节流区别"><em>10.字符流和字节流区别</em></h3>
+<blockquote>
+<p>字节流和字符流两个处理支持类在数据的传输时所操作的数据都是字节数据，其中字符流是通过缓冲区进行处理后得到的内容。</p>
+<p>两类操作流的最大区别就是字符流使用到了缓冲区（更适合中文数据的操作），而字节流是直接进行数据处理操作。</p>
+<p>所以使用字符输出流进行输出时就必须使用Flushable接口中提供的flush()方法强制性刷新缓冲区中的内容，否则数据将不会输出。另外，close()方法会自动进行缓冲区的强制刷新，因此数据能正常地保存到文件中。</p>
+</blockquote>
+<h3 id="11面试题请编写单例设计模式"><em>11.面试题：请编写单例设计模式</em></h3>
+<p>【50%】直接编写一个饿汉式单例设计模式，并且实现构造方法私有化；</p>
+<p>【70%】在java中那些地方使用到了单例设计模式？Runtime类，Spring框架等；</p>
+<p>【100%】懒汉式单例设计模式的问题？</p>
+<p>【120%】Unsafe工具类能绕过JVM的内存管理机制改变单例设计模式，不用通过实例化对象就可以调用类中的普通方法（非静态方法）</p>
+<h3 id="12反射机制"><em>12.反射机制</em></h3>
+<p>类中的构造、方法、成员属性都可以通过反射实现调用，但是对于成员的反射调用很少这样直接处理，大部分操作都应该通过setter或getter处理（主要使用setter）；而对于Field类，最常用的方法是获取成员类型：<code>public Class&lt;?&gt; getType()</code>
+（另外，在反射的方法所继承的AccessibleObject类中有<code>public void setAccessible(boolean flag)</code>方法能解除封装，如private修改成public）</p>
+
+    </div>
+
+
+
+    <div class="post-copyright">
+                
+        
+
+
+        <section>
+            <p class="share-item">
+                <span>Share :</span>
+                
+                <span>
+
+      
+        <a href="//twitter.com/share?url=https%3a%2f%2frrrwx.github.io%2f2020%2f%25E5%25B0%258F%25E8%25AE%25B0%2f&amp;text=java%e5%9f%ba%e7%a1%80%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0%e4%b9%8b%e5%b0%8f%e8%ae%b0&amp;via=" target="_blank" title="Share on Twitter">
+          <i class="iconfont icon-twitter"></i>
+        </a>
+        
+
+      
+      
+        <a href="//www.facebook.com/sharer/sharer.php?u=https%3a%2f%2frrrwx.github.io%2f2020%2f%25E5%25B0%258F%25E8%25AE%25B0%2f" target="_blank" title="Share on Facebook">
+          <i class="iconfont icon-facebook"></i>
+        </a>
+        
+      
+      
+      
+      
+      
+      
+        
+      
+        
+      
+
+          
+
+          
+
+          
+        <a href="//www.douban.com/recommend/?url=https%3a%2f%2frrrwx.github.io%2f2020%2f%25E5%25B0%258F%25E8%25AE%25B0%2f&amp;title=java%e5%9f%ba%e7%a1%80%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0%e4%b9%8b%e5%b0%8f%e8%ae%b0" target="_blank" title="Share on Douban ">
+            <i class="iconfont icon-douban"></i>
+          </a>
+          
+
+          
+        <a href="//service.weibo.com/share/share.php?url=https%3a%2f%2frrrwx.github.io%2f2020%2f%25E5%25B0%258F%25E8%25AE%25B0%2f&amp;appkey=&amp;title=java%e5%9f%ba%e7%a1%80%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0%e4%b9%8b%e5%b0%8f%e8%ae%b0" target="_blank" title="Share on Douban ">
+            <i class="iconfont icon-weibo"></i>
+          </a>
+          
+
+</span>
+                
+            </p>
+        </section>
+
+
+        <section>
+            <p class="copyright-item">
+                <span>Updated </span>
+                <span class="post-time">
+                on 
+                <time datetime=2020-02-16 itemprop="datePublished">February 16, 2020</time>
+                </span>
+
+            </p>
+        </section>
+    </div>
+
+  
+    <div class="post-tags">
+        
+            <section>
+            
+            <span class="tag"><a href="https://rrrwx.github.io/tags/java/">
+                    <i class="iconfont icon-tag"></i>java</a></span>
+            
+            <span class="tag"><a href="https://rrrwx.github.io/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">
+                    <i class="iconfont icon-tag"></i>学习笔记</a></span>
+            
+            </section>
+        
+        <section>
+                <a href="javascript:window.history.back();">back</a></span> · 
+                <span><a href="https://rrrwx.github.io">home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav">
+        
+        <a href="https://rrrwx.github.io/2020/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/" class="prev" rel="prev" title="java正则表达式"><i class="iconfont icon-left"></i>&nbsp;java正则表达式</a>
+         
+        
+        <a href="https://rrrwx.github.io/2020/%E7%BA%BF%E7%A8%8B/" class="next" rel="next" title="java基础学习笔记多线程之线程创建">java基础学习笔记多线程之线程创建&nbsp;<i class="iconfont icon-right"></i></a>
+        
+    </div>
+
+    <div class="post-comment">
+          
+                 
+          
+    </div>
+</article>
+          </div>
+		   </main>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="">
+                <i class="fas fa-arrow-up fa-fw"></i>
+            </a>
+        </div>
+
+      <footer class="footer">
+
+
+
+
+    <div class="copyright">
+
+            <div class="footer-line">
+                &copy;<i class="far fa-copyright fa-fw"></i>&nbsp;<span itemprop="copyrightYear">2020</span>&nbsp;&nbsp;<span class="author" itemprop="copyrightHolder"><a href="https://rrrwx.github.io">JadeRong</a></span>&nbsp;|&nbsp;<span class="license">Released under <a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span>
+                &nbsp;|&nbsp;<span>Powered by <a href="https://gohugo.io/" target="_blank" rel="external nofollow">Hugo</a> & <a href="https://github.com/liuzc/leaveit" target="_blank" rel="external nofollow">LeaveIt</a></span>
+            </div>
+
+
+    </div>
+</footer>
+
+
+
+
+
+
+
+
+
+
+
+
+    
+     <link href="//lib.baomitu.com/lightgallery/1.6.11/css/lightgallery.min.css" rel="stylesheet">  
+      
+     <script src="/js/vendor_gallery.min.js" async="" ></script>
+    
+  
+
+
+
+
+     </div>
+  </body>
+</html>
